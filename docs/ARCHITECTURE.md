@@ -1,0 +1,82 @@
+# Architecture
+
+Status as of Phase 0. Sections marked **planned** are not built; do not describe them as working
+anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
+
+## The shape of the thing
+
+A question arrives in one of six languages. It is classified — regulatorily, before anything else,
+because what a formulation *is* determines what intellectual property is available to it. It is
+routed to exactly one jurisdiction namespace. Passages are retrieved from a versioned corpus of
+published legal and regulatory sources, reranked, and packed with their metadata. An answer is
+generated from those passages and nothing else, with every factual sentence mapped back to the
+passage that supports it. Confidence is computed from the retrieval result, not asserted. If the
+passages do not support an answer, the system abstains and says which of four reasons applies.
+
+## Two layers of data, never mixed
+
+| | Layer 1 — corpus | Layer 2 — records |
+| --- | --- | --- |
+| Answers | what is *required* | what has been *filed or granted* |
+| Examples | Acts, Rules, treaties, pharmacopoeias | patent applications, GI registrations |
+| Status | normative; citable as authority | evidential; never citable |
+| Storage | chunk store + vector index | relational, full-text only |
+| Embedded? | yes | **no** |
+| Effect on confidence | sets it | none |
+
+The separation is enforced in the type system: `Record.citable_in_answers` is `Literal[False]`, so
+a record cannot occupy a citation slot. See `docs/DECISIONS.md`.
+
+## Two jurisdiction namespaces, never merged
+
+India and International are separate indexes. A single retrieval call reads one of them. A
+cross-border question runs two retrievals and returns two `Answer` objects — the UI shows them as
+two surfaces, never one blended paragraph. `Answer.jurisdiction` is a single value by design; there
+is no "both".
+
+## Layout
+
+    /backend     FastAPI app, services, retrieval pipeline, records store
+      app/models domain model (Pydantic) — one half of the frontend contract
+      app/core   settings, read from environment
+      app/api    HTTP surface
+      app/services   pipeline stages (planned, Phase 10)
+      app/records    records store and service (planned, Phase 12)
+    /corpus      source manifests and ingestion configs
+    /data        generated indexes, chunk stores, demo fixtures (gitignored)
+    /evals       gold question set, scoring, reports
+    /frontend    React app
+      src/types  domain model (TypeScript) — the other half of the contract
+    /schemas     domain.schema.json, generated; the contract both halves are checked against
+    /scripts     schema generation, ingestion, corpus refresh
+    /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
+
+## Built as of Phase 0
+
+- Domain model on both sides, with a drift test that was verified to fail on drift.
+- FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
+  documents, because there is no corpus yet.
+- Vite + React + TypeScript strict + Tailwind + React Router scaffold. No screens.
+- Settings from environment with a committed `.env.example` and no committed secrets.
+
+## Planned
+
+| Component | Phase |
+| --- | --- |
+| Design system and primitives | 1 |
+| Shell, routing, six-language i18n | 2 |
+| Homepage, "what's covered", "how it works", "sources" | 3–6 |
+| Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
+| Product classification, ABS orientation, prior-art orientation | 9 |
+| Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |
+| Corpus ingestion, section-aware chunking, versioning, refresh diff | 11 |
+| Records store, snapshots, portal link-out | 12 |
+| Evaluation harness, privacy and consent surfaces, hardening | 13 |
+| Knowledge graph, agentic multi-source orchestration, subscription connectors | not scheduled |
+
+## The mock boundary
+
+Until Phase 10 the frontend talks to a mock service layer that satisfies the same interfaces the
+real API will satisfy. Mock modules are named `*.mock.ts`, carry the header
+`// DEMO DATA — not a legal source`, and every answer they produce sets `is_demo: true`, which the
+UI renders as a visible "Illustrative example" chip. Demo content must never look verified.

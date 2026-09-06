@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+.vite/
+coverage/
+
+# Secrets and local config
+.env
+.env.local
+*.local
+
+# Generated indexes, chunk stores, raw fetched documents.
+# The manifest and the fetch recipe are committed; the documents are not.
+/data/index/
+/data/chunks/
+/corpus/raw/
+/evals/reports/*.json
+
+# OS
+.DS_Store
+Thumbs.db

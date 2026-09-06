@@ -1,0 +1,13 @@
+# Lints both /backend and /scripts. Run from the repo root.
+line-length = 100
+target-version = "py311"
+extend-exclude = [".venv", "node_modules", "dist"]
+
+[lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[lint.per-file-ignores]
+"backend/tests/*" = ["E501"]
+
+[lint.isort]
+known-first-party = ["app"]

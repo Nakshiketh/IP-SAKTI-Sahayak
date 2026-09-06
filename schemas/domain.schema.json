@@ -1,0 +1,875 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IP-SAKTI Sahayak domain model",
+  "description": "Generated from backend/app/models/domain.py by scripts/gen_schema.py. Do not edit by hand.",
+  "$defs": {
+    "Jurisdiction": {
+      "title": "Jurisdiction",
+      "type": "string",
+      "enum": [
+        "IN",
+        "INTL"
+      ]
+    },
+    "IPRight": {
+      "title": "IPRight",
+      "type": "string",
+      "enum": [
+        "patent",
+        "trademark",
+        "geographical_indication",
+        "copyright",
+        "design",
+        "plant_variety",
+        "trade_secret",
+        "traditional_knowledge"
+      ]
+    },
+    "RegulatoryArea": {
+      "title": "RegulatoryArea",
+      "type": "string",
+      "enum": [
+        "licensing",
+        "manufacturing_gmp",
+        "quality_standards",
+        "labelling",
+        "advertising",
+        "food_nutraceutical",
+        "cosmetic",
+        "clinical_evidence",
+        "import_export",
+        "abs_compliance"
+      ]
+    },
+    "ProductClass": {
+      "title": "ProductClass",
+      "type": "string",
+      "enum": [
+        "classical_generic",
+        "patent_proprietary",
+        "new_non_classical_drug",
+        "phytopharmaceutical",
+        "ayurveda_aahar",
+        "cosmetic",
+        "undetermined"
+      ]
+    },
+    "Confidence": {
+      "title": "Confidence",
+      "type": "string",
+      "enum": [
+        "high",
+        "moderate",
+        "low",
+        "abstain"
+      ]
+    },
+    "DocumentType": {
+      "title": "DocumentType",
+      "type": "string",
+      "enum": [
+        "act",
+        "rules",
+        "regulation",
+        "treaty",
+        "guideline",
+        "pharmacopoeia",
+        "case_law",
+        "form",
+        "notification"
+      ]
+    },
+    "VerificationStatus": {
+      "title": "VerificationStatus",
+      "type": "string",
+      "enum": [
+        "verified",
+        "unverified",
+        "demo"
+      ]
+    },
+    "RecordType": {
+      "title": "RecordType",
+      "type": "string",
+      "enum": [
+        "patent_application",
+        "patent_grant",
+        "gi_registration",
+        "trademark",
+        "design",
+        "plant_variety",
+        "abs_approval",
+        "aggregate_statistic"
+      ]
+    },
+    "AnswerBlockKind": {
+      "title": "AnswerBlockKind",
+      "type": "string",
+      "enum": [
+        "answer",
+        "why",
+        "what_to_check",
+        "caveat"
+      ]
+    },
+    "AbstainReason": {
+      "title": "AbstainReason",
+      "type": "string",
+      "enum": [
+        "nothing_relevant",
+        "out_of_scope",
+        "sources_conflict",
+        "sources_out_of_date",
+        "needs_more_facts"
+      ]
+    },
+    "Document": {
+      "additionalProperties": false,
+      "description": "A Layer 1 source. Normative. Citable as authority.",
+      "properties": {
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "short_title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Short Title"
+        },
+        "organization": {
+          "title": "Organization",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction"
+        },
+        "regime_family": {
+          "title": "Regime Family",
+          "type": "string"
+        },
+        "document_type": {
+          "$ref": "#/$defs/DocumentType"
+        },
+        "language": {
+          "default": "en",
+          "title": "Language",
+          "type": "string"
+        },
+        "source_url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Url"
+        },
+        "version_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Label"
+        },
+        "effective_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective From"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective To"
+        },
+        "supersedes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Supersedes",
+          "type": "array"
+        },
+        "superseded_by": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Superseded By"
+        },
+        "publication_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publication Date"
+        },
+        "retrieved_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieved At"
+        },
+        "verification_status": {
+          "$ref": "#/$defs/VerificationStatus",
+          "default": "unverified"
+        },
+        "checksum": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Checksum"
+        }
+      },
+      "required": [
+        "document_id",
+        "title",
+        "organization",
+        "jurisdiction",
+        "regime_family",
+        "document_type"
+      ],
+      "title": "Document",
+      "type": "object"
+    },
+    "Chunk": {
+      "additionalProperties": false,
+      "description": "A section-aware passage. ``section_path`` is what makes a citation precise.",
+      "properties": {
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "section_path": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Section Path",
+          "type": "array"
+        },
+        "page_from": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page From"
+        },
+        "page_to": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page To"
+        },
+        "heading": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Heading"
+        },
+        "token_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Token Count"
+        },
+        "embedding_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Embedding Ref"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction"
+        },
+        "ip_rights": {
+          "items": {
+            "$ref": "#/$defs/IPRight"
+          },
+          "title": "Ip Rights",
+          "type": "array"
+        },
+        "regulatory_areas": {
+          "items": {
+            "$ref": "#/$defs/RegulatoryArea"
+          },
+          "title": "Regulatory Areas",
+          "type": "array"
+        },
+        "product_classes": {
+          "items": {
+            "$ref": "#/$defs/ProductClass"
+          },
+          "title": "Product Classes",
+          "type": "array"
+        },
+        "effective_from": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective From"
+        },
+        "effective_to": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Effective To"
+        }
+      },
+      "required": [
+        "chunk_id",
+        "document_id",
+        "text",
+        "jurisdiction"
+      ],
+      "title": "Chunk",
+      "type": "object"
+    },
+    "Citation": {
+      "additionalProperties": false,
+      "description": "What a claim points at. Rendered claim-level, never as a footer.",
+      "properties": {
+        "citation_id": {
+          "title": "Citation Id",
+          "type": "string"
+        },
+        "chunk_id": {
+          "title": "Chunk Id",
+          "type": "string"
+        },
+        "document_id": {
+          "title": "Document Id",
+          "type": "string"
+        },
+        "document_title": {
+          "title": "Document Title",
+          "type": "string"
+        },
+        "organization": {
+          "title": "Organization",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction"
+        },
+        "section_label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section Label"
+        },
+        "page": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Page"
+        },
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        },
+        "retrieval_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieval Score"
+        },
+        "rerank_score": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rerank Score"
+        },
+        "verification_status": {
+          "$ref": "#/$defs/VerificationStatus",
+          "default": "unverified"
+        },
+        "as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of Date"
+        }
+      },
+      "required": [
+        "citation_id",
+        "chunk_id",
+        "document_id",
+        "document_title",
+        "organization",
+        "jurisdiction"
+      ],
+      "title": "Citation",
+      "type": "object"
+    },
+    "Record": {
+      "additionalProperties": false,
+      "description": "Layer 2 — evidential, never authority.\n\n``citable_in_answers`` is pinned false at the schema level so no code path can\npromote a filed or granted record into a citation.",
+      "properties": {
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction"
+        },
+        "record_type": {
+          "$ref": "#/$defs/RecordType"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "applicant": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Applicant"
+        },
+        "inventor_or_proprietor": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Inventor Or Proprietor"
+        },
+        "filing_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Filing Date"
+        },
+        "publication_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Publication Date"
+        },
+        "grant_or_registration_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Grant Or Registration Date"
+        },
+        "status": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Status"
+        },
+        "classification_codes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Classification Codes",
+          "type": "array"
+        },
+        "goods_or_field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Goods Or Field"
+        },
+        "abstract_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Abstract Text"
+        },
+        "snapshot_at": {
+          "anyOf": [
+            {
+              "format": "date-time",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Snapshot At"
+        },
+        "citable_in_answers": {
+          "const": false,
+          "default": false,
+          "title": "Citable In Answers",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "record_id",
+        "source_id",
+        "jurisdiction",
+        "record_type",
+        "title"
+      ],
+      "title": "Record",
+      "type": "object"
+    },
+    "AnswerBlock": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "$ref": "#/$defs/AnswerBlockKind"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "text"
+      ],
+      "title": "AnswerBlock",
+      "type": "object"
+    },
+    "Answer": {
+      "additionalProperties": false,
+      "description": "One answer, for one jurisdiction. Never merged across jurisdictions.",
+      "properties": {
+        "answer_id": {
+          "title": "Answer Id",
+          "type": "string"
+        },
+        "query_id": {
+          "title": "Query Id",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "$ref": "#/$defs/Jurisdiction"
+        },
+        "language": {
+          "default": "en",
+          "title": "Language",
+          "type": "string"
+        },
+        "product_class": {
+          "$ref": "#/$defs/ProductClass",
+          "default": "undetermined"
+        },
+        "ip_rights": {
+          "items": {
+            "$ref": "#/$defs/IPRight"
+          },
+          "title": "Ip Rights",
+          "type": "array"
+        },
+        "regulatory_areas": {
+          "items": {
+            "$ref": "#/$defs/RegulatoryArea"
+          },
+          "title": "Regulatory Areas",
+          "type": "array"
+        },
+        "blocks": {
+          "items": {
+            "$ref": "#/$defs/AnswerBlock"
+          },
+          "title": "Blocks",
+          "type": "array"
+        },
+        "citations": {
+          "items": {
+            "$ref": "#/$defs/Citation"
+          },
+          "title": "Citations",
+          "type": "array"
+        },
+        "related_records": {
+          "items": {
+            "$ref": "#/$defs/Record"
+          },
+          "title": "Related Records",
+          "type": "array"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence"
+        },
+        "abstained": {
+          "default": false,
+          "title": "Abstained",
+          "type": "boolean"
+        },
+        "abstain_reason": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AbstainReason"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "escalation_offered": {
+          "default": true,
+          "title": "Escalation Offered",
+          "type": "boolean"
+        },
+        "as_of_date": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "As Of Date"
+        },
+        "corpus_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Corpus Version"
+        },
+        "latency_ms": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Latency Ms"
+        },
+        "is_demo": {
+          "default": false,
+          "title": "Is Demo",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "answer_id",
+        "query_id",
+        "jurisdiction",
+        "confidence"
+      ],
+      "title": "Answer",
+      "type": "object"
+    }
+  }
+}
