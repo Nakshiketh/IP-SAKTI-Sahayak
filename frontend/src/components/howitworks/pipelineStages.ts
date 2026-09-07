@@ -1,4 +1,4 @@
-import type { BuildState } from '@/components/howitworks/StageStatus';
+import type { BuildState } from '@/components/ui';
 
 /**
  * Stage ids are a literal union, not `string`, so `t('pipeline.stages.' + id)`

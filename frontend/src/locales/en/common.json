@@ -93,5 +93,10 @@
     "ayurveda_aahar": "Ayurveda-Aahar",
     "cosmetic": "Cosmetic",
     "undetermined": "Product type not yet identified"
+  },
+  "buildState": {
+    "live": "running",
+    "demo": "built, on illustrative data",
+    "planned": "designed, not built"
   }
 }

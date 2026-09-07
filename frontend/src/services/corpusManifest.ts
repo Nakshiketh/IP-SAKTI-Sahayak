@@ -22,14 +22,26 @@ export interface ManifestDocument {
   jurisdiction: Jurisdiction;
   regime_family: string;
   document_type: DocumentType;
+  /** Which section of the sources page this belongs under. Set by the generator. */
+  group: GroupKey;
   source_url: string | null;
   effective_from: string | null;
   retrieved_at: string | null;
   verification_status: VerificationStatus;
 }
 
+export type GroupKey =
+  | 'indian_ip'
+  | 'indian_drug_food_cosmetic'
+  | 'biodiversity_abs'
+  | 'pharmacopoeial'
+  | 'traditional_knowledge'
+  | 'international_ip'
+  | 'market_access';
+
 interface Manifest {
   corpus_version: string;
+  group_order: GroupKey[];
   documents: ManifestDocument[];
 }
 
@@ -37,6 +49,14 @@ const typed = manifest as unknown as Manifest;
 
 export const CORPUS_VERSION = typed.corpus_version;
 export const CORPUS_DOCUMENTS: readonly ManifestDocument[] = typed.documents;
+
+/** Group order comes from the manifest, so a new group needs no code change. */
+export const GROUP_ORDER: readonly GroupKey[] = typed.group_order;
+
+/** Distinct values actually present, for building a facet's options. */
+export function facetValues<K extends keyof ManifestDocument>(field: K): string[] {
+  return [...new Set(CORPUS_DOCUMENTS.map((doc) => String(doc[field])))].sort();
+}
 
 const BY_ID = new Map(typed.documents.map((doc) => [doc.document_id, doc]));
 

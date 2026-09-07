@@ -74,7 +74,10 @@ switch ($Target) {
     Push-Location "$Root\frontend"; & npm run format; Pop-Location
   }
   'schema' { & $Py "$Root\scripts\gen_schema.py" }
-  'manifest' { & $Py "$Root\scriptsuild_manifest.py" }
+  'manifest' {
+    & $Py "$Root\scriptsuild_manifest.py"
+    & $Py "$Root\scriptsuild_records_manifest.py"
+  }
   'i18n' {
     & node "$Root\scripts\i18n-seed.ts"
     & node "$Root\scripts\i18n-coverage.ts"

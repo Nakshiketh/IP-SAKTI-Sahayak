@@ -515,3 +515,70 @@ animates itself takes that away. Thirteen buttons each in the tab order would al
 the page unreachable in any reasonable number of key presses.
 
 **Revisit when.** Never.
+
+---
+
+## [6] Every list on the sources page is derived from a manifest
+
+**Decision.** `/sources` reads `corpus/manifest.json` and `corpus/records-manifest.json` and holds no
+list of its own: not the documents, not the groups, not the group order, not the facet options. Group
+membership is derived in the generator from `regime_family`, and a regime family with no group is a
+build error rather than a silently ungrouped document.
+
+**Alternatives.** Curate the groups in the page, which is easier to read.
+
+**Why.** The build document's done-when is that adding a source changes the page with no code edit.
+That was verified rather than assumed: a document was appended to the manifest, the suite was run,
+and the page rendered it, grouped it, counted it and filtered it — then the document was removed.
+The exercise also caught a hard-coded total of 37 in the test file, which is the same defect the page
+forbids, so the tests now derive their totals too.
+
+**Revisit when.** Never; this is the property the page exists to have.
+
+---
+
+## [6] No licence has been read, so nothing is ingested
+
+**Decision.** Every `licence` in the records manifest is null, `isIngested` returns false for all
+seventeen sources, and each card says "not yet read — nothing is ingested until it is".
+
+**Alternatives.** Record the licence I believe applies to each source.
+
+**Why.** The corpus policy says a source with an unclear licence is treated as link-out only, and
+that open government data typically requires verbatim attribution. A licence written from memory is
+the same class of error as a section number written from memory — and here it would also be a
+statement about someone else's terms. Reading them is Phase 12's work.
+
+**Revisit when.** Phase 12, one source at a time, as each licence is actually read.
+
+---
+
+## [6] Portal-only sources have nothing for a fetcher to attach to
+
+**Decision.** A `portal_link_only` entry carries no `parser`, no `field_map` and a null
+`link_template`. The generator refuses to emit one that does. Two tests enforce it: one on the
+manifest's shape, and one that greps every Python file under `scripts/` and `backend/app/` for a
+portal source id appearing in a file that also contains fetch code.
+
+**Alternatives.** A note in the documentation saying not to write one.
+
+**Why.** The pre-demo checklist asks for exactly this grep. A checklist item run by hand once is a
+checklist item that stops being run; as a test it runs on every commit. Verified by adding a
+`requests` import to the generator and confirming the test named the file and the source it had
+found next to it.
+
+**Revisit when.** Phase 12 builds real fetchers, when this guard matters most.
+
+---
+
+## [6] The honesty section marks which mechanisms exist
+
+**Decision.** Each of the eight commitments renders with a build-state badge. One is `running`, two
+are `built, on illustrative data`, five are `designed, not built`.
+
+**Why.** A commitment with no machinery behind it is a hope, and a page titled "how this is kept
+honest" is the worst possible place to overstate. The `BuildStateBadge` moved out of the
+how-it-works page into the design system for this, because more than one surface now has to say what
+is and is not built.
+
+**Revisit when.** Each phase that builds a mechanism flips its badge.

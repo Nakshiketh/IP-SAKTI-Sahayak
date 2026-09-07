@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AnswerView } from '@/components/answer';
 import { PipelineDiagram } from '@/components/howitworks/PipelineDiagram';
-import { StageStatus, type BuildState } from '@/components/howitworks/StageStatus';
+import { BuildStateBadge, type BuildState } from '@/components/ui';
 import { Callout } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { DEMO_ANSWERS } from '@/services/answers.mock';
@@ -167,7 +167,7 @@ export default function HowItWorks() {
             >
               <div className="flex flex-wrap items-center gap-3">
                 <h3 className="text-md">{t(`architecture.layers.${layer.key}.name`)}</h3>
-                <StageStatus state={layer.state} />
+                <BuildStateBadge state={layer.state} />
               </div>
               <p className="mt-1 max-w-measure text-muted">
                 {t(`architecture.layers.${layer.key}.items`)}

@@ -135,3 +135,73 @@ def test_corpus_manifest_validates_against_the_document_model() -> None:
         assert document.source_url is None
         assert document.effective_from is None
         assert document.verification_status.value == "unverified"
+
+
+def test_records_manifest_is_evidential_only() -> None:
+    """Layer 2 rules, checked where they can actually be enforced.
+
+    Records are evidence of what was filed or granted. They are never authority,
+    they are never fetched from an interactive portal, and a source whose licence
+    nobody has read is not ingested.
+    """
+    import json
+
+    manifest_path = REPO_ROOT / "corpus" / "records-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    sources = manifest["sources"]
+    assert len(sources) > 0
+
+    ids = [entry["source_id"] for entry in sources]
+    assert len(ids) == len(set(ids)), "duplicate source ids"
+
+    for entry in sources:
+        assert entry["citable_in_answers"] is False, entry["source_id"]
+        # No licence has been read, so nothing may claim to have been ingested.
+        assert entry["licence"] is None, entry["source_id"]
+        assert entry["last_snapshot_at"] is None, entry["source_id"]
+        assert entry["record_count"] is None, entry["source_id"]
+
+        if entry["access_mode"] == "portal_link_only":
+            # Nothing here for a fetcher to be written against.
+            assert "parser" not in entry, entry["source_id"]
+            assert "field_map" not in entry, entry["source_id"]
+            assert entry.get("link_template") is None, entry["source_id"]
+
+
+def test_no_fetcher_exists_for_a_portal_only_source() -> None:
+    """The pre-demo checklist asks for this grep. Here it is, as a test.
+
+    An interactive portal's terms generally forbid automated retrieval. The
+    product links out and does not run the search, and the way to keep that true
+    is for no code anywhere to name one of these sources next to a fetch.
+    """
+    import json
+    import re
+
+    manifest = json.loads(
+        (REPO_ROOT / "corpus" / "records-manifest.json").read_text(encoding="utf-8")
+    )
+    portal_ids = [
+        entry["source_id"]
+        for entry in manifest["sources"]
+        if entry["access_mode"] == "portal_link_only"
+    ]
+    assert portal_ids
+
+    fetch_pattern = re.compile(
+        r"\b(requests\.|httpx\.|urlopen|urlretrieve|aiohttp|fetch\(|curl\b|wget\b)"
+    )
+
+    searched = 0
+    for path in (*(REPO_ROOT / "scripts").rglob("*.py"), *(REPO_ROOT / "backend" / "app").rglob("*.py")):
+        text = path.read_text(encoding="utf-8")
+        searched += 1
+        for source_id in portal_ids:
+            if source_id not in text:
+                continue
+            # A mention is fine; a mention in a file that fetches is not.
+            assert not fetch_pattern.search(text), (
+                f"{path.name} names portal-only source {source_id} and contains fetch code"
+            )
+
+    assert searched > 0, "found no Python files to check"

@@ -59,6 +59,7 @@ schema:
 
 manifest:
 	$(PY) scripts/build_manifest.py
+	$(PY) scripts/build_records_manifest.py
 
 i18n:
 	node scripts/i18n-seed.ts

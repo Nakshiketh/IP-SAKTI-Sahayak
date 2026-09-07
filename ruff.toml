@@ -12,6 +12,7 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 # (Registration and Protection) Act, 1999" across lines to satisfy a line length
 # makes the source set harder to read and easier to typo.
 "scripts/build_manifest.py" = ["E501"]
+"scripts/build_records_manifest.py" = ["E501"]
 
 [lint.isort]
 known-first-party = ["app"]

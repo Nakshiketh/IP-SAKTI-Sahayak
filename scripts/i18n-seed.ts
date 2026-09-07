@@ -4,8 +4,12 @@
  * Adds keys English has and the locale does not, using the English string as the
  * placeholder and setting `__untranslated: true` on the file. Never overwrites a
  * value that already differs from English — a real translation is safe from this
- * script. Reports keys the locale has that English does not, but does not delete
- * them; that is a decision for a person.
+ * script.
+ *
+ * Keys the locale has and English does not are pruned only from files still
+ * carrying `__untranslated`, where they are certainly English placeholders left
+ * behind by a key that moved. In a file someone has actually translated they are
+ * reported and kept, because deleting a human's work is not a script's decision.
  *
  *   node scripts/i18n-seed.ts          write
  *   node scripts/i18n-seed.ts --check  exit non-zero if anything is out of sync
@@ -69,8 +73,14 @@ for (const locale of LOCALES) {
         : { [UNTRANSLATED_FLAG]: true as unknown as string, ...merged };
 
     if (existing) {
+      const stillPlaceholder = existing[UNTRANSLATED_FLAG] === true;
       for (const key of Object.keys(flatten(existing))) {
-        if (!(key in sourceKeys)) {
+        if (key in sourceKeys) continue;
+        if (stillPlaceholder) {
+          // `merged` was built from the English tree, so the stale key is
+          // already gone; nothing to do but say so.
+          console.log(`  pruned placeholder ${locale}/${namespace}.json: ${key}`);
+        } else {
           console.warn(`  extra key in ${locale}/${namespace}.json: ${key}`);
           extras += 1;
         }

@@ -25,6 +25,39 @@ sys.path.insert(0, str(REPO_ROOT / "backend"))
 
 MANIFEST_PATH = REPO_ROOT / "corpus" / "manifest.json"
 
+# Groups the sources page renders under. Derived from regime_family rather than
+# set per document, so adding a source cannot land it in no group. The keys are
+# translated in the interface; no display text lives in the manifest.
+GROUP_BY_REGIME = {
+    "patents": "indian_ip",
+    "geographical_indications": "indian_ip",
+    "trade_marks": "indian_ip",
+    "copyright": "indian_ip",
+    "designs": "indian_ip",
+    "plant_varieties": "indian_ip",
+    "drug_regulation": "indian_drug_food_cosmetic",
+    "advertising": "indian_drug_food_cosmetic",
+    "food_regulation": "indian_drug_food_cosmetic",
+    "labelling": "indian_drug_food_cosmetic",
+    "biodiversity": "biodiversity_abs",
+    "pharmacopoeia": "pharmacopoeial",
+    "traditional_knowledge": "traditional_knowledge",
+    "international_ip": "international_ip",
+    "market_access": "market_access",
+}
+
+#: The order groups appear in. A regime family missing from either mapping is a
+#: build error rather than a silently ungrouped document.
+GROUP_ORDER = [
+    "indian_ip",
+    "indian_drug_food_cosmetic",
+    "biodiversity_abs",
+    "pharmacopoeial",
+    "traditional_knowledge",
+    "international_ip",
+    "market_access",
+]
+
 # (document_id, title, short_title, organization, jurisdiction, regime_family,
 #  document_type, ip_rights, regulatory_areas)
 SOURCES: list[tuple[str, str, str, str, str, str, str, list[str], list[str]]] = [
@@ -445,6 +478,10 @@ SOURCES: list[tuple[str, str, str, str, str, str, str, list[str], list[str]]] = 
 
 
 def build() -> dict:
+    unmapped = {regime for (_, _, _, _, _, regime, _, _, _) in SOURCES} - set(GROUP_BY_REGIME)
+    if unmapped:
+        raise SystemExit(f"regime families with no group: {sorted(unmapped)}")
+
     documents = []
     for (
         document_id,
@@ -466,6 +503,7 @@ def build() -> dict:
                 "jurisdiction": jurisdiction,
                 "regime_family": regime_family,
                 "document_type": document_type,
+                "group": GROUP_BY_REGIME[regime_family],
                 "language": "en",
                 # Filled only from the document actually fetched — see the
                 # module docstring. Nulls here are the honest state, not a to-do.
@@ -493,6 +531,7 @@ def build() -> dict:
     return {
         "corpus_version": "0.0.0-unbuilt",
         "generated_by": "scripts/build_manifest.py",
+        "group_order": GROUP_ORDER,
         "note": (
             "The planned Layer 1 source set. Nothing here has been fetched: "
             "source_url, effective dates and checksums are filled by the "

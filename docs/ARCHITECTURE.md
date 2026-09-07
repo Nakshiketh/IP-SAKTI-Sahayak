@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 5. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 6. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 5
+## Built as of Phase 6
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -85,12 +85,17 @@ is no "both".
   jurisdictions side by side, the architecture layers, and the evaluation axes. Every stage and layer
   carries its build state; twelve of thirteen stages are `designed, not built`, and no evaluation
   numbers are shown because none have been produced.
+- `corpus/records-manifest.json`: 17 Layer 2 sources, 4 bulk and 13 portal-only. No licence has been
+  read, so none is ingested; portal-only entries carry no parser, field map or link template, and a
+  test greps the repo to keep it that way.
+- `/sources`: both manifests rendered with search and five facets, the records section visually
+  distinct and never citable, the honesty commitments each marked with whether their mechanism
+  exists, and what the product does not cover. No list on the page is hard-coded.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| "Sources" | 6 |
 | Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |
