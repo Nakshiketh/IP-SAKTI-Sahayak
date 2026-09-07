@@ -106,3 +106,88 @@ Both files must be updated together — if they drift, the Makefile wins.
 
 **Revisit when.** CI is set up, or the target list grows enough that keeping two runners in sync
 becomes the larger cost.
+
+---
+
+## [1] `--sap` is not a text colour, and the system says so out loud
+
+**Decision.** `--sap` on `--bone` measures 4.45:1 — under the 4.5:1 WCAG AA needs for body
+text, over the 3:1 it needs as a user-interface colour. So sap draws interactive states, borders,
+success marks and graphical objects, and never a paragraph or a label. In `ConfidenceMeter` this
+splits the component's colour in two: the ticks carry the level (sap at "moderate"), the words stay
+in `--ink`.
+
+**Alternatives.** Darken the token; use sap as text anyway at 4.45; only use sap at large sizes.
+
+**Why.** The palette is specified in the build document and is not mine to redefine over 0.05 of a
+contrast point. The honest move is to bound where the colour may be used and encode the bound. An
+axe pass in a real browser found exactly one violation on the specimen page — `.text-sap` — which is
+the same finding `src/styles/contrast.test.ts` had already predicted from the token file.
+
+**Revisit when.** Never, unless the palette changes.
+
+---
+
+## [1] `--rule-strong` was raised from 0.34 to 0.50 alpha
+
+**Decision.** The token that draws the dashed "illustrative" edge and the incised category lines now
+clears 3:1 against the page (3.32:1). `--rule` and `--rule-faint` stay faint.
+
+**Alternatives.** Leave it at 0.34 and treat every hairline as decorative.
+
+**Why.** WCAG 1.4.11 applies to boundaries that carry information, and these do: the dashed rule is
+the only thing saying a passage is not from a source. `--rule` separates things that are already
+distinguishable another way, so it does not need the same weight. The distinction between a line
+that means something and a line that merely divides is now in the token names.
+
+**Revisit when.** A third class of line appears.
+
+---
+
+## [1] `Tabs` takes an `idBase` instead of minting one
+
+**Decision.** `Tabs` and `TabPanel` both require the caller's `idBase`.
+
+**Alternatives.** `useId()` inside `Tabs`, which is what it did first.
+
+**Why.** A `Tabs` that generates its own id cannot tell its panels what that id was, so
+`aria-controls` and `aria-labelledby` pointed at elements that did not exist. Nothing visible broke;
+axe caught it as `aria-valid-attr-value`. Making the id an input makes the association impossible to
+get wrong silently.
+
+**Revisit when.** A compound-component API with context replaces the flat one.
+
+---
+
+## [1] Heading level is a prop, not a hardcoded tag
+
+**Decision.** `Callout` and `RecordCard` take `titleLevel`, defaulting to 3, via a small `Heading`
+component. Visual size comes from a class; document level comes from where the component sits.
+
+**Alternatives.** Hardcode `h4`, which is what they did first and what axe flagged as
+`heading-order`.
+
+**Why.** A component that hardcodes its heading level produces a broken outline the moment it is
+reused one level up or down, and a broken outline is how a screen-reader user loses the shape of a
+page. This is the sort of thing that is nearly free to fix now and expensive to retrofit across
+eight pages.
+
+**Revisit when.** Never.
+
+---
+
+## [1] Fonts are self-hosted and imported per script; per-locale preload is deferred
+
+**Decision.** Tiro (display) and IBM Plex Sans with Noto Sans (body) are installed from
+`@fontsource` and imported one script subset at a time, so an English reader never downloads Telugu
+outlines. Each `:lang()` block names a fallback for that same script, so the swap fallback for a
+Telugu heading is a Telugu-capable system face rather than Latin.
+
+**Not done:** per-locale `<link rel="preload">`.
+
+**Why the deferral.** The preload has to name the file for the *active* locale, and the active
+locale is not known until the i18n layer exists. Adding a preload now would either preload the wrong
+script or preload all six, which is worse than none. It lands in Phase 2 with the language selector.
+Recorded here rather than left implicit so the honesty audit has something to check it against.
+
+**Revisit when.** Phase 2.

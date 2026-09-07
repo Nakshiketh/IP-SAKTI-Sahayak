@@ -1,0 +1,39 @@
+/**
+ * Type, self-hosted and subset per script.
+ *
+ * Display is one designed family across scripts — Tiro — so a Telugu heading has
+ * the same voice as an English one. Body is IBM Plex Sans, with Noto Sans per
+ * script.
+ *
+ * Only the subsets actually used are imported. Each @font-face carries its own
+ * unicode-range, so a reader of the English page never downloads Telugu outlines
+ * and a reader of the Telugu page never downloads a Latin face it will not show.
+ *
+ * The fallback stacks in tokens.css are per script, not global: the swap fallback
+ * for a Telugu heading is a Telugu-capable system face, never Latin. Per-locale
+ * <link rel="preload"> follows in Phase 2, where the active locale is known at
+ * document load.
+ */
+
+/* Display — Tiro. Latin and Devanagari come from the same cut. */
+@import '@fontsource/tiro-devanagari-hindi/latin-400.css';
+@import '@fontsource/tiro-devanagari-hindi/devanagari-400.css';
+@import '@fontsource/tiro-telugu/telugu-400.css';
+@import '@fontsource/tiro-tamil/tamil-400.css';
+@import '@fontsource/tiro-bangla/bengali-400.css';
+
+/* UI and body — IBM Plex Sans. */
+@import '@fontsource/ibm-plex-sans/latin-400.css';
+@import '@fontsource/ibm-plex-sans/latin-500.css';
+@import '@fontsource/ibm-plex-sans/latin-600.css';
+@import '@fontsource/ibm-plex-sans/latin-ext-400.css';
+
+/* Body, per script. */
+@import '@fontsource/noto-sans-devanagari/devanagari-400.css';
+@import '@fontsource/noto-sans-devanagari/devanagari-500.css';
+@import '@fontsource/noto-sans-telugu/telugu-400.css';
+@import '@fontsource/noto-sans-telugu/telugu-500.css';
+@import '@fontsource/noto-sans-tamil/tamil-400.css';
+@import '@fontsource/noto-sans-tamil/tamil-500.css';
+@import '@fontsource/noto-sans-bengali/bengali-400.css';
+@import '@fontsource/noto-sans-bengali/bengali-500.css';

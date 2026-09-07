@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 0. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 1. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,19 +51,22 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 0
+## Built as of Phase 1
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
   documents, because there is no corpus yet.
 - Vite + React + TypeScript strict + Tailwind + React Router scaffold. No screens.
 - Settings from environment with a committed `.env.example` and no committed secrets.
+- Design system: six palette tokens with their contrast measured by a test over the token file
+  itself, type self-hosted and subset per script with per-`:lang()` families, and eighteen
+  primitives on a development-only `/design` route. Zero axe violations in a real browser with the
+  colour-contrast rule active.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| Design system and primitives | 1 |
 | Shell, routing, six-language i18n | 2 |
 | Homepage, "what's covered", "how it works", "sources" | 3–6 |
 | Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |

@@ -1,0 +1,86 @@
+/**
+ * Structural devices.
+ *
+ * These carry meaning. They are not ornament, and none of them should ever be
+ * applied because a block "needed something".
+ *
+ *   .rule-sourced       this content came from a retrieved passage
+ *   .rule-illustrative  this content is an example, not a source
+ *   .incised--ip        intellectual-property content
+ *   .incised--reg       regulatory content
+ *
+ * The two incised variants differ by stroke pattern, not only by colour, so the
+ * distinction survives for a reader who cannot separate the hues.
+ */
+
+@layer components {
+  /* -- The sourcing device. Runs through the whole product. ----------------- */
+  .rule-sourced {
+    border-left: 2px solid rgb(var(--stamp-rgb));
+    padding-left: 1rem;
+  }
+
+  .rule-illustrative {
+    border-left: 1px dashed var(--rule-strong);
+    padding-left: 1rem;
+  }
+
+  /* -- Category marking: two incised lines for IP, one incised and one broken
+        for regulation. Paired with <IncisedMark>, which differs in shape. ---- */
+  .incised {
+    position: relative;
+    padding-top: 0.875rem;
+  }
+
+  .incised::before,
+  .incised::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .incised::before {
+    top: 0;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .incised--ip::after {
+    top: 3px;
+    border-top: 1px solid var(--rule-strong);
+  }
+
+  .incised--reg::after {
+    top: 3px;
+    border-top: 1px dashed var(--rule-strong);
+  }
+
+  /* -- Reading measure ------------------------------------------------------ */
+  .measure {
+    max-width: var(--measure);
+  }
+
+  /* -- Waiting state.
+        A blank ruled leaf, not a shimmer. The pulse is opacity only; there is no
+        gradient sweeping across the page. ------------------------------------ */
+  .leaf-line {
+    height: 1px;
+    background-color: var(--rule);
+    animation: leaf-breathe 1600ms var(--ease-incise) infinite;
+  }
+
+  .leaf-block {
+    background-color: var(--surface-sunk);
+    animation: leaf-breathe 1600ms var(--ease-incise) infinite;
+  }
+
+  @keyframes leaf-breathe {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.45;
+    }
+  }
+}

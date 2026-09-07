@@ -1,3 +1,10 @@
+/* Order matters: fonts and tokens are inlined by postcss-import before Tailwind
+   runs, and their element styles sit inside @layer base so they land after
+   preflight rather than being reset by it. */
+@import './styles/fonts.css';
+@import './styles/tokens.css';
+@import './styles/structures.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
