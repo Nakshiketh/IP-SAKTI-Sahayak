@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 4. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 5. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 4
+## Built as of Phase 5
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -80,12 +80,17 @@ is no "both".
   access and benefit sharing. Every statement carries a marker naming the instrument it will rest on,
   in a pending state until that document is ingested. Sticky contents, working deep links, a print
   stylesheet.
+- `/how-it-works`: the thirteen-stage pipeline as a keyboard-navigable diagram, why retrieval and
+  what it does not fix, the five abstention states in the surface they will use, the two
+  jurisdictions side by side, the architecture layers, and the evaluation axes. Every stage and layer
+  carries its build state; twelve of thirteen stages are `designed, not built`, and no evaluation
+  numbers are shown because none have been produced.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| "How it works", "sources" | 5–6 |
+| "Sources" | 6 |
 | Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |

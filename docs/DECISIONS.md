@@ -447,3 +447,71 @@ page is the most tempting place in the product to write one. Numbers and dates c
 document or they do not appear.
 
 **Revisit when.** Never. When documents are ingested, numbers come from the passage, not the copy.
+
+---
+
+## [5] The pipeline page states what is not built, in three places
+
+**Decision.** `/how-it-works` carries a build state on every pipeline stage and every architecture
+layer: `running`, `built, on illustrative data`, or `designed, not built`. Twelve of thirteen stages
+and four of five layers are the last of those. A counted line above the stage list says so, computed
+from the model rather than typed, and a callout under the h1 says it again in prose.
+
+**Alternatives.** Describe the pipeline in the present tense, which is what an architecture page
+normally does; or omit the unbuilt stages entirely.
+
+**Why.** This page's whole job is to let someone decide whether to trust the product, and describing
+an ambition in the present tense is the fastest way to forfeit that. Omitting the stages would be
+honest but useless — the design is the thing worth assessing. The counted line exists because the
+state was originally only visible in the detail panel, which meant a reader had to click thirteen
+stages to learn how little runs; the most important message on the page was hidden behind
+interaction.
+
+**Revisit when.** Each phase that builds a stage flips its state, and the count updates itself.
+
+---
+
+## [5] The evaluation section shows no numbers, and reads them at runtime
+
+**Decision.** `useEvalSummary` fetches `/evals-summary.json` at runtime. There is no such file, so
+all ten metrics render "not measured" against a callout saying no evaluation has been run. When
+Phase 13's harness writes the summary, the same table fills in.
+
+**Alternatives.** Omit the section; or show illustrative figures.
+
+**Why.** Illustrative evaluation figures would be the single most dishonest thing this product could
+do — the whole argument is that a plausible number without a source is worse than none. A runtime
+read rather than a build-time import means a missing file is an ordinary state the page renders,
+and the numbers are whatever the last run produced rather than whatever was true when someone typed
+them. The section is worth keeping now because the *axes* are the commitment.
+
+**Revisit when.** Phase 13 runs the harness and the build starts emitting the summary.
+
+---
+
+## [5] A malformed evaluation summary is treated as no summary
+
+**Decision.** `isEvalSummary` validates the shape before the page accepts it. Anything else falls
+back to "no evaluation has been run".
+
+**Why.** Not hypothetical: a stubbed fetch returning a different endpoint's JSON crashed the whole
+page with `Cannot read properties of undefined`, and a misrouted proxy would do the same in
+production. The same discipline the answer surface applies to sources — do not render what you
+cannot verify — applies to the page's own data.
+
+**Revisit when.** Never; validate at every boundary.
+
+---
+
+## [5] The pipeline diagram advances on selection, never on a timer
+
+**Decision.** A vertical tablist with a roving tabindex: one stop in the tab order, arrow keys to
+move, Home and End to the ends. A test runs thirty seconds of fake timers and asserts the selection
+has not moved.
+
+**Why.** The build document asks for this explicitly, and the reason is sound: someone assessing the
+engineering wants to stop on one stage and read what happens when it fails, and a diagram that
+animates itself takes that away. Thirteen buttons each in the tab order would also make the rest of
+the page unreachable in any reasonable number of key presses.
+
+**Revisit when.** Never.
