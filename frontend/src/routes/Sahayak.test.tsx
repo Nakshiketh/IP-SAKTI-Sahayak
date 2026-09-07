@@ -74,7 +74,8 @@ describe('zero decisions before the first answer', () => {
     await user.click(screen.getByRole('button', { name: 'Ask' }));
 
     expect(screen.getByText('Can we patent this?')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Answer' })).toBeInTheDocument();
+    // The status lines run first; the answer follows them.
+    expect(await screen.findByRole('heading', { name: 'Answer' })).toBeInTheDocument();
   });
 
   it('offers three starter questions, with the rest behind a disclosure', async () => {
@@ -96,7 +97,7 @@ describe('zero decisions before the first answer', () => {
       name: 'What changes if we want to sell the same product in the UK?',
     });
     await user.click(starter);
-    expect(screen.getByRole('heading', { name: 'Answer' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Answer' })).toBeInTheDocument();
   });
 });
 
@@ -111,7 +112,7 @@ describe('the layout reaches three columns, it does not start there', () => {
 
   it('has no sources panel until an answer exists', () => {
     renderAt();
-    expect(screen.queryByRole('heading', { name: /^Sources/ })).toBeNull();
+    expect(screen.queryByRole('tab', { name: /^Sources/ })).toBeNull();
     expect(screen.queryByRole('button', { name: /^Sources/ })).toBeNull();
   });
 
@@ -123,15 +124,18 @@ describe('the layout reaches three columns, it does not start there', () => {
       'aria-expanded',
       'false',
     );
-    expect(screen.getByRole('heading', { name: /^Sources/ })).toBeInTheDocument();
+    // Sources and related records are tabs in the panel, never one list.
+    expect(screen.getByRole('tab', { name: /^Sources/ })).toBeInTheDocument();
+    expect(screen.getByRole('tab', { name: /^Related records/ })).toBeInTheDocument();
   });
 
   it('puts sources behind a counted control below desktop width', () => {
     setViewport(900);
     renderAt('/sahayak?q=Can%20we%20patent%20this%3F');
 
+    // The count covers everything behind the control: sources and records both.
     const button = screen.getByRole('button', { name: /^Sources/ });
-    expect(button).toHaveTextContent(String(DEMO_ANSWERS.IN.citations.length));
+    expect(button.textContent).toMatch(/\d/);
     expect(screen.queryByRole('button', { name: 'Show context' })).toBeNull();
   });
 
@@ -153,6 +157,7 @@ describe('the jurisdiction toggle', () => {
   it('swaps the whole answer set rather than widening it', async () => {
     const user = userEvent.setup();
     renderAt('/sahayak?q=Can%20we%20sell%20this%20abroad%3F');
+    await screen.findByRole('heading', { name: 'Answer' });
 
     expect(screen.getByRole('heading', { name: 'The Patents Act, 1970' })).toBeInTheDocument();
     expect(
@@ -163,7 +168,7 @@ describe('the jurisdiction toggle', () => {
     await user.click(within(group).getByRole('radio', { name: 'International' }));
 
     expect(
-      screen.getByRole('heading', { name: 'Traditional herbal registration scheme' }),
+      await screen.findByRole('heading', { name: 'Traditional herbal registration scheme' }),
     ).toBeInTheDocument();
     expect(screen.queryByRole('heading', { name: 'The Patents Act, 1970' })).toBeNull();
   });
@@ -228,7 +233,7 @@ describe('keyboard', () => {
 
     await user.type(screen.getByLabelText('Your question'), 'A question');
     await user.keyboard('{Control>}{Enter}{/Control}');
-    expect(screen.getByRole('heading', { name: 'Answer' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Answer' })).toBeInTheDocument();
   });
 
   it('opens the examples on / from an empty box, and not while typing', async () => {

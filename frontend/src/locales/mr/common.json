@@ -54,7 +54,20 @@
     "abstain": "Not answered",
     "meter": "{{label}}: {{filled}} of {{total}}",
     "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
-    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document."
+    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document.",
+    "reasons": {
+      "high": "Based on {{passages}} passages from {{documents}} current sources.",
+      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
+      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
+      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
+      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
+      "lowContradiction": "The passages found disagree with each other.",
+      "abstainNothing": "Nothing in these sources answers this reliably.",
+      "abstainScope": "This is outside what these sources cover.",
+      "abstainConflict": "The only passages found point different ways.",
+      "abstainStale": "Everything found sits outside its effective window.",
+      "abstainFacts": "The answer turns on something only you can tell me."
+    }
   },
   "sourceRule": {
     "unsourcedTooltip": "General explanation, not from a specific source."
@@ -99,5 +112,15 @@
     "live": "running",
     "demo": "built, on illustrative data",
     "planned": "designed, not built"
+  },
+  "recordType": {
+    "patent_application": "Patent application",
+    "patent_grant": "Granted patent",
+    "gi_registration": "GI registration",
+    "trademark": "Trade mark",
+    "design": "Design",
+    "plant_variety": "Plant variety",
+    "abs_approval": "ABS approval",
+    "aggregate_statistic": "Aggregate statistic"
   }
 }

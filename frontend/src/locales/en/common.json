@@ -53,7 +53,20 @@
     "abstain": "Not answered",
     "meter": "{{label}}: {{filled}} of {{total}}",
     "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
-    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document."
+    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document.",
+    "reasons": {
+      "high": "Based on {{passages}} passages from {{documents}} current sources.",
+      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
+      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
+      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
+      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
+      "lowContradiction": "The passages found disagree with each other.",
+      "abstainNothing": "{{passages}} passages considered; none cleared the threshold.",
+      "abstainScope": "No sources were searched — the question is outside the corpus.",
+      "abstainConflict": "{{passages}} passages considered; two of them are in tension.",
+      "abstainStale": "{{passages}} passages considered; all of them outside their effective window.",
+      "abstainFacts": "{{passages}} passages considered; which of them governs depends on the product type."
+    }
   },
   "sourceRule": {
     "unsourcedTooltip": "General explanation, not from a specific source."
@@ -98,5 +111,15 @@
     "live": "running",
     "demo": "built, on illustrative data",
     "planned": "designed, not built"
+  },
+  "recordType": {
+    "patent_application": "Patent application",
+    "patent_grant": "Granted patent",
+    "gi_registration": "GI registration",
+    "trademark": "Trade mark",
+    "design": "Design",
+    "plant_variety": "Plant variety",
+    "abs_approval": "ABS approval",
+    "aggregate_statistic": "Aggregate statistic"
   }
 }

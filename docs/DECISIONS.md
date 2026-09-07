@@ -648,3 +648,96 @@ than decorating a meta string, which is the distinction the banned list is drawi
 **Why.** The `/` shortcut opens the starter questions, and the first version forced that by changing
 the component's `key` to remount it — which throws away focus and any state inside. A controlled
 mode is four lines and does not lie to React about identity.
+
+---
+
+## [8] Confidence is a function, and the case set lives outside the frontend
+
+**Decision.** `scoreConfidence` takes the retrieval evidence and returns a level, a reason key and an
+abstention reason. Thresholds are named constants. `evals/confidence-cases.json` holds twelve cases
+covering every level and every abstention reason, and the TypeScript test reads that file rather
+than restating the cases.
+
+**Why the case set is in `/evals` rather than beside the code.** Phase 10 ports this function to
+Python. Two implementations of a rule, each with its own tests, is two rules. The shared file means
+the port is checked against the same twelve cases, and a disagreement is a test failure rather than
+a discrepancy nobody notices.
+
+**Rule 7, enforced by the signature.** `RetrievalEvidence` has no records field. There is no
+parameter through which a filed or granted record could reach the scoring function, which is
+cheaper than remembering not to pass one. A test asserts the same question with and without records
+attached scores identically.
+
+**Revisit when.** Phase 10 ports it; the thresholds are then tuned against the gold set in Phase 13.
+
+---
+
+## [8] An abstention has no answer above it
+
+**Decision.** When the system declines, `QueryResult.answer` is `null`. There is no partial answer,
+no "here is what I found anyway" section, and the region carries `data-abstained` and
+`data-abstain-reason` so tests assert on the state rather than on prose.
+
+**Why.** A decline with an answer above it is an answer. The whole value of abstention is that a
+reader cannot act on something the sources do not support, and softening it is how that gets lost.
+Two of the five states — conflict and staleness — do show their passages, because a conflict is only
+useful if you can see both sides and a stale source is only useful with its date. That is showing the
+evidence for the decline, not answering anyway.
+
+**Revisit when.** Never.
+
+---
+
+## [8] Records are attached to abstentions on purpose
+
+**Decision.** The mock returns related records for abstention cases as readily as for answers, and
+the records tab adds a line saying the system still declined and they are shown only because they
+exist.
+
+**Why.** The build document calls this out as critical, and the way to be sure it holds is to make
+the case reachable rather than avoid it. A test asks a question that both abstains and matches
+records, and asserts the abstention still reads as one. Avoiding the combination would have left the
+rule untested.
+
+**Revisit when.** Phase 12 replaces the fixture records with real ones.
+
+---
+
+## [8] The confidence reason states the evidence; the callout states the decision
+
+**Decision.** For an abstention the meter reads "4 passages considered; two of them are in tension"
+while the callout reads "The only passages I found point different ways".
+
+**The defect this fixed:** the first version had both saying the same sentence, one under the other.
+It was caught by a test finding two matching elements — which read as a test that was too loose, and
+was actually a copy defect. Splitting them by role removed the duplication and made both more
+useful.
+
+**Revisit when.** New abstention states are added.
+
+---
+
+## [8] Simulated latency lives in the mock, in one named constant
+
+**Decision.** `MOCK_LATENCY_MS` in `query.mock.ts` drives the two status lines. The component reads
+it; nothing else invents a delay.
+
+**Why.** It stands in for work the pipeline will actually do, and it is the one piece of theatre in
+the answer surface, so it should be in one place with a name that says what it is and a comment
+saying which phase deletes it. There is no typing animation and no progress bar — the stage timings
+shown in the expanded detail are the ones the fixture reports.
+
+**Revisit when.** Phase 10 replaces it with a real stream.
+
+---
+
+## [8] The UK fixture's evidence was changed to match its own caveat
+
+**Decision.** The UK demo answer's caveat says "confidence here is low". The retrieval scores I first
+gave it produced `moderate` from the rule, so the meter would have contradicted the answer's own
+text. The evidence changed — two passages, neither strong — rather than the rule or the caveat.
+
+**Why it is worth recording.** It is the first time the scoring function disagreed with a fixture,
+and the right resolution was to fix the fixture's evidence. Had I adjusted the rule to fit the
+fixture, the rule would have started encoding what the demo wanted rather than what the retrieval
+showed.

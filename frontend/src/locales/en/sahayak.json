@@ -73,5 +73,91 @@
     "expand": "Show context",
     "collapse": "Hide context",
     "title": "Context"
+  },
+  "status": {
+    "searchingIn": "Searching Indian sources…",
+    "searchingIntl": "Searching international sources…",
+    "reading": "Reading {{passages}} passages from {{documents}} documents…",
+    "summary": "{{passages}} passages from {{documents}} documents · {{jurisdiction}} · {{seconds}}s",
+    "summaryNone": "No passages cleared the threshold · {{jurisdiction}} · {{seconds}}s",
+    "expand": "Show what happened",
+    "detailHeading": "Stage by stage",
+    "passagesHeading": "Passages considered",
+    "scoreRetrieval": "retrieval",
+    "scoreRerank": "rerank",
+    "belowFloor": "below the floor",
+    "outOfWindow": "outside its effective window",
+    "stages": {
+      "detect": "Language detection",
+      "understand": "Query understanding",
+      "route": "Jurisdiction routing",
+      "retrieve": "Retrieval",
+      "rerank": "Reranking",
+      "context": "Context assembly",
+      "generate": "Generation",
+      "map": "Citation mapping"
+    },
+    "milliseconds": "{{ms}} ms"
+  },
+  "abstention": {
+    "offersHeading": "What you can do",
+    "nothing_relevant": {
+      "title": "I couldn't find anything in these sources that answers this reliably",
+      "body": "Try narrowing the jurisdiction, naming the product type, or rephrasing. You can also see what's covered, or send this to a human IP facilitator with the context already filled in."
+    },
+    "out_of_scope": {
+      "title": "This is outside what I can answer",
+      "body": "I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, individual legal opinions, or predictions about whether an application will succeed."
+    },
+    "sources_conflict": {
+      "title": "The only passages I found point different ways",
+      "body": "Rather than pick one, here are both, with the documents they came from. Which governs is the question to put to someone qualified."
+    },
+    "sources_out_of_date": {
+      "title": "What I found sits outside its effective window",
+      "body": "The position on record here may have changed. The passages and their dates are below, and the corpus version is on the answer."
+    },
+    "needs_more_facts": {
+      "title": "This turns on something only you can tell me",
+      "body": "What your product is regulatorily decides the answer, and answering for every possibility would be worse than asking."
+    },
+    "offers": {
+      "rephrase": "Rephrase the question",
+      "jurisdiction": "Pick a jurisdiction",
+      "product": "Name the product type",
+      "covered": "See what's covered",
+      "escalate": "Send this to a human"
+    }
+  },
+  "records": {
+    "tab": "Related records",
+    "sourcesTab": "Sources",
+    "note": "Filed or granted records. Evidence of what was filed, not a statement of law, and never part of the answer above.",
+    "empty": "No related records for this question.",
+    "stillAbstained": "These records do not answer the question. The system still declined, and they are shown only because they exist.",
+    "noSnapshot": "never taken"
+  },
+  "escalate": {
+    "open": "Get someone to look at this",
+    "title": "Send this to a human",
+    "intro": "This packages what you asked and what the system found into a summary you can copy or send. There is no expert network behind this button — it is an honest handoff, not a queue.",
+    "summaryLabel": "Summary",
+    "copy": "Copy the summary",
+    "copied": "Copied",
+    "channels": "Official facilitation channels are listed on the sources page."
+  },
+  "answerActions": {
+    "copy": "Copy the answer",
+    "copied": "Copied",
+    "link": "Copy a link to this answer",
+    "linked": "Link copied"
+  },
+  "followUps": {
+    "heading": "Where this leaves off",
+    "classify": "What is my product, regulatorily?",
+    "switchToExport": "What changes if we sell it abroad?",
+    "switchToIndia": "What is the Indian position?",
+    "abs": "What access and benefit-sharing duties apply?",
+    "priorArt": "What is already on the record for this?"
   }
 }

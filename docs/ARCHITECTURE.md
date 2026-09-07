@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 7. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 8. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 7
+## Built as of Phase 8
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -95,12 +95,17 @@ is no "both".
   it does, sources in a drawer at tablet width and a bottom sheet on a phone. Jurisdiction toggle,
   context line, script-based language detection with a correction control, three starter questions
   with the rest behind a disclosure, and the Ctrl+K / Ctrl+Enter / Esc / "/" shortcuts.
+- The answer experience: confidence computed by `scoreConfidence` from retrieval evidence and checked
+  against a shared case set in `/evals`; all five abstention states, each with what the reader is
+  offered next; retrieval status as two lines collapsing to one that expands to stage timings and
+  passage scores; sources and related records as separate tabs; follow-ups derived from the answer;
+  copy-as-text with citations intact; and an escalation handoff that packages the question and every
+  source without pretending a queue exists.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| Answers, citations, confidence, abstention (mock data) | 8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |
 | Corpus ingestion, section-aware chunking, versioning, refresh diff | 11 |
