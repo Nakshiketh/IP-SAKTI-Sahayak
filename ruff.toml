@@ -8,6 +8,10 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [lint.per-file-ignores]
 "backend/tests/*" = ["E501"]
+# Document titles are data. Wrapping "The Geographical Indications of Goods
+# (Registration and Protection) Act, 1999" across lines to satisfy a line length
+# makes the source set harder to read and easier to typo.
+"scripts/build_manifest.py" = ["E501"]
 
 [lint.isort]
 known-first-party = ["app"]

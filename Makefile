@@ -17,6 +17,7 @@ help:
 	@echo "lint            ruff, eslint, prettier and tsc"
 	@echo "schema          regenerate schemas/domain.schema.json from the Pydantic model"
 	@echo "i18n            sync every locale with the English key set, then report coverage"
+	@echo "manifest        regenerate corpus/manifest.json from the planned source set"
 	@echo "ingest          build the source corpus from corpus/manifest.json (Phase 11)"
 	@echo "ingest-records  load the records layer from corpus/records-manifest.json (Phase 12)"
 	@echo "evals           run the evaluation harness and write a report (Phase 13)"
@@ -55,6 +56,9 @@ format:
 
 schema:
 	$(PY) scripts/gen_schema.py
+
+manifest:
+	$(PY) scripts/build_manifest.py
 
 i18n:
 	node scripts/i18n-seed.ts

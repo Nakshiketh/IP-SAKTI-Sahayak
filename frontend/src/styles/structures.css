@@ -73,6 +73,40 @@
     max-width: var(--measure);
   }
 
+  /* -- Print.
+        People print regulatory reference material and read it away from a
+        screen. Navigation, the in-page contents and interactive affordances are
+        useless on paper; the source lists are the most useful part of it, so
+        they stay. Sections are kept off page breaks where the browser allows. */
+  @media print {
+    body {
+      background: #fff;
+      color: #000;
+    }
+
+    header nav,
+    footer a,
+    .print\:hidden {
+      display: none !important;
+    }
+
+    section {
+      break-inside: avoid-page;
+    }
+
+    h1,
+    h2,
+    h3 {
+      break-after: avoid-page;
+    }
+
+    /* A marker is meaningless in ink unless the reader can see what it points
+       at, and the section source list beneath it is what supplies that. */
+    sup {
+      font-size: 0.7em;
+    }
+  }
+
   /* -- Waiting state.
         A blank ruled leaf, not a shimmer. The pulse is opacity only; there is no
         gradient sweeping across the page. ------------------------------------ */

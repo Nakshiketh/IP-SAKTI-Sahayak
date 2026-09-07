@@ -38,6 +38,7 @@ switch ($Target) {
     Write-Host 'lint            ruff, eslint, prettier and tsc'
     Write-Host 'schema          regenerate schemas/domain.schema.json from the Pydantic model'
     Write-Host 'i18n            sync every locale with the English key set, then report coverage'
+    Write-Host 'manifest        regenerate corpus/manifest.json from the planned source set'
     Write-Host 'ingest          build the source corpus (Phase 11)'
     Write-Host 'ingest-records  load the records layer (Phase 12)'
     Write-Host 'evals           run the evaluation harness (Phase 13)'
@@ -73,6 +74,7 @@ switch ($Target) {
     Push-Location "$Root\frontend"; & npm run format; Pop-Location
   }
   'schema' { & $Py "$Root\scripts\gen_schema.py" }
+  'manifest' { & $Py "$Root\scriptsuild_manifest.py" }
   'i18n' {
     & node "$Root\scripts\i18n-seed.ts"
     & node "$Root\scripts\i18n-coverage.ts"

@@ -104,3 +104,34 @@ def test_block_text_must_match_its_claims() -> None:
             citation_ids=[],
             claims=[Claim(text="First sentence.", citation_ids=["c1"])],
         )
+
+
+def test_corpus_manifest_validates_against_the_document_model() -> None:
+    """The manifest is what the interface resolves citations against.
+
+    A malformed entry there surfaces as a broken citation on a reference page,
+    which is the worst place to find it.
+    """
+    import json
+
+    from app.models.domain import Document
+
+    manifest_path = REPO_ROOT / "corpus" / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+
+    documents = manifest["documents"]
+    assert len(documents) > 0
+
+    ids = [entry["document_id"] for entry in documents]
+    assert len(ids) == len(set(ids)), "duplicate document ids in the manifest"
+
+    for entry in documents:
+        fields = {k: v for k, v in entry.items() if k in Document.model_fields}
+        document = Document.model_validate(fields)
+
+        # Nothing has been fetched, so nothing may claim to have been. These
+        # fields are filled by the ingestion pipeline from the document itself.
+        assert document.retrieved_at is None
+        assert document.source_url is None
+        assert document.effective_from is None
+        assert document.verification_status.value == "unverified"

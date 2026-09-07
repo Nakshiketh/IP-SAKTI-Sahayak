@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 3. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 4. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 3
+## Built as of Phase 4
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -74,12 +74,18 @@ is no "both".
 - The answer surface: claim-level citation with numbered markers, unsourced sentences marked and
   keyboard-reachable, confidence with its reason, and source cards whose demo state is a different
   edge rather than a smaller badge.
+- `corpus/manifest.json`: the 37 planned Layer 1 documents, all unverified with null URLs and dates.
+  Nothing is fetched, and a backend test asserts nothing claims to be.
+- `/what-is-covered`: the coupling matrix, eight rights as ledger entries, ten regulatory topics, and
+  access and benefit sharing. Every statement carries a marker naming the instrument it will rest on,
+  in a pending state until that document is ingested. Sticky contents, working deep links, a print
+  stylesheet.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| "What's covered", "how it works", "sources" | 4–6 |
+| "How it works", "sources" | 5–6 |
 | Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |

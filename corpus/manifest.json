@@ -1,0 +1,1157 @@
+{
+  "corpus_version": "0.0.0-unbuilt",
+  "generated_by": "scripts/build_manifest.py",
+  "note": "The planned Layer 1 source set. Nothing here has been fetched: source_url, effective dates and checksums are filled by the ingestion pipeline in Phase 11, from the document itself.",
+  "documents": [
+    {
+      "document_id": "in-patents-act-1970",
+      "title": "The Patents Act, 1970",
+      "short_title": "Patents Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "patents",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-patents-rules-2003",
+      "title": "The Patents Rules, 2003",
+      "short_title": "Patents Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "patents",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-patent-office-manual",
+      "title": "Manual of Patent Office Practice and Procedure",
+      "short_title": "Patent Office Manual",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks",
+      "jurisdiction": "IN",
+      "regime_family": "patents",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-tk-biological-material-guidelines",
+      "title": "Guidelines for Examination of Patent Applications Relating to Traditional Knowledge and Biological Material",
+      "short_title": "TK examination guidelines",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks",
+      "jurisdiction": "IN",
+      "regime_family": "patents",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-gi-act-1999",
+      "title": "The Geographical Indications of Goods (Registration and Protection) Act, 1999",
+      "short_title": "GI Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "geographical_indications",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "geographical_indication"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-gi-rules-2002",
+      "title": "The Geographical Indications of Goods (Registration and Protection) Rules, 2002",
+      "short_title": "GI Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "geographical_indications",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "geographical_indication"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-trade-marks-act-1999",
+      "title": "The Trade Marks Act, 1999",
+      "short_title": "Trade Marks Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "trade_marks",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "trademark"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-trade-marks-rules-2017",
+      "title": "The Trade Marks Rules, 2017",
+      "short_title": "Trade Marks Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "trade_marks",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "trademark"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-copyright-act-1957",
+      "title": "The Copyright Act, 1957",
+      "short_title": "Copyright Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "copyright",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "copyright"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-designs-act-2000",
+      "title": "The Designs Act, 2000",
+      "short_title": "Designs Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "designs",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "design"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-ppvfr-act-2001",
+      "title": "The Protection of Plant Varieties and Farmers' Rights Act, 2001",
+      "short_title": "Plant Varieties Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "plant_varieties",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "plant_variety"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-biological-diversity-act-2002",
+      "title": "The Biological Diversity Act, 2002",
+      "short_title": "Biological Diversity Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "biodiversity",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-biological-diversity-rules-2024",
+      "title": "The Biological Diversity Rules, 2024",
+      "short_title": "Biological Diversity Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "biodiversity",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-nba-abs-guidelines",
+      "title": "National Biodiversity Authority guidelines and access and benefit-sharing forms",
+      "short_title": "NBA ABS guidelines",
+      "organization": "National Biodiversity Authority",
+      "jurisdiction": "IN",
+      "regime_family": "biodiversity",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-drugs-and-cosmetics-act-1940",
+      "title": "The Drugs and Cosmetics Act, 1940",
+      "short_title": "Drugs and Cosmetics Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "drug_regulation",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "manufacturing_gmp",
+          "quality_standards",
+          "cosmetic"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-drugs-and-cosmetics-rules-1945",
+      "title": "The Drugs and Cosmetics Rules, 1945",
+      "short_title": "Drugs and Cosmetics Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "drug_regulation",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "manufacturing_gmp",
+          "labelling",
+          "clinical_evidence",
+          "cosmetic"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-magic-remedies-act-1954",
+      "title": "The Drugs and Magic Remedies (Objectionable Advertisements) Act, 1954",
+      "short_title": "Magic Remedies Act",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "advertising",
+      "document_type": "act",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "advertising"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-fssai-ayurveda-aahara-2022",
+      "title": "Food Safety and Standards (Ayurveda Aahara) Regulations, 2022",
+      "short_title": "Ayurveda Aahara Regulations",
+      "organization": "Food Safety and Standards Authority of India",
+      "jurisdiction": "IN",
+      "regime_family": "food_regulation",
+      "document_type": "regulation",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "food_nutraceutical",
+          "labelling"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-fssai-labelling-claims",
+      "title": "Food Safety and Standards (Labelling and Display) Regulations and the Advertising and Claims Regulations",
+      "short_title": "FSSAI labelling and claims",
+      "organization": "Food Safety and Standards Authority of India",
+      "jurisdiction": "IN",
+      "regime_family": "food_regulation",
+      "document_type": "regulation",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "labelling",
+          "advertising",
+          "food_nutraceutical"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-legal-metrology-packaged-2011",
+      "title": "The Legal Metrology (Packaged Commodities) Rules, 2011",
+      "short_title": "Packaged Commodities Rules",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "regime_family": "labelling",
+      "document_type": "rules",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "labelling"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-ayurvedic-pharmacopoeia",
+      "title": "The Ayurvedic Pharmacopoeia of India",
+      "short_title": "Ayurvedic Pharmacopoeia",
+      "organization": "Ministry of Ayush",
+      "jurisdiction": "IN",
+      "regime_family": "pharmacopoeia",
+      "document_type": "pharmacopoeia",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "quality_standards"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-ayurvedic-formulary",
+      "title": "The Ayurvedic Formulary of India",
+      "short_title": "Ayurvedic Formulary",
+      "organization": "Ministry of Ayush",
+      "jurisdiction": "IN",
+      "regime_family": "pharmacopoeia",
+      "document_type": "pharmacopoeia",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "quality_standards"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "in-tkdl-access-model",
+      "title": "Traditional Knowledge Digital Library: access model and agreements",
+      "short_title": "TKDL access model",
+      "organization": "Council of Scientific and Industrial Research",
+      "jurisdiction": "IN",
+      "regime_family": "traditional_knowledge",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "traditional_knowledge",
+          "patent"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-trips",
+      "title": "Agreement on Trade-Related Aspects of Intellectual Property Rights",
+      "short_title": "TRIPS",
+      "organization": "World Trade Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "trademark",
+          "geographical_indication",
+          "copyright"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-paris-convention",
+      "title": "Paris Convention for the Protection of Industrial Property",
+      "short_title": "Paris Convention",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "trademark",
+          "design"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-cbd",
+      "title": "Convention on Biological Diversity",
+      "short_title": "CBD",
+      "organization": "United Nations",
+      "jurisdiction": "INTL",
+      "regime_family": "biodiversity",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-nagoya-protocol",
+      "title": "Nagoya Protocol on Access to Genetic Resources and the Fair and Equitable Sharing of Benefits",
+      "short_title": "Nagoya Protocol",
+      "organization": "United Nations",
+      "jurisdiction": "INTL",
+      "regime_family": "biodiversity",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-wipo-gratk-2024",
+      "title": "WIPO Treaty on Intellectual Property, Genetic Resources and Associated Traditional Knowledge",
+      "short_title": "WIPO GRATK Treaty",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent",
+          "traditional_knowledge"
+        ],
+        "regulatory_areas": [
+          "abs_compliance"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-pct",
+      "title": "Patent Cooperation Treaty",
+      "short_title": "PCT",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-madrid-protocol",
+      "title": "Protocol Relating to the Madrid Agreement Concerning the International Registration of Marks",
+      "short_title": "Madrid Protocol",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "trademark"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-hague-agreement",
+      "title": "Hague Agreement Concerning the International Registration of Industrial Designs",
+      "short_title": "Hague Agreement",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "design"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "intl-budapest-treaty",
+      "title": "Budapest Treaty on the International Recognition of the Deposit of Micro-organisms",
+      "short_title": "Budapest Treaty",
+      "organization": "World Intellectual Property Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent"
+        ],
+        "regulatory_areas": [],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "uk-traditional-herbal-registration",
+      "title": "Traditional herbal registration scheme",
+      "short_title": "UK traditional herbal registration",
+      "organization": "Medicines and Healthcare products Regulatory Agency",
+      "jurisdiction": "INTL",
+      "regime_family": "market_access",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "labelling",
+          "import_export"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "eu-traditional-herbal-directive",
+      "title": "Directive on traditional herbal medicinal products",
+      "short_title": "EU traditional herbal directive",
+      "organization": "European Union",
+      "jurisdiction": "INTL",
+      "regime_family": "market_access",
+      "document_type": "regulation",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "quality_standards",
+          "import_export"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "eu-health-claims-regulation",
+      "title": "Regulation on nutrition and health claims made on foods",
+      "short_title": "EU health claims regulation",
+      "organization": "European Union",
+      "jurisdiction": "INTL",
+      "regime_family": "market_access",
+      "document_type": "regulation",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "labelling",
+          "advertising",
+          "food_nutraceutical"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "us-dietary-supplement-framework",
+      "title": "Dietary supplement framework, current good manufacturing practice and new dietary ingredient notification",
+      "short_title": "US dietary supplement framework",
+      "organization": "Food and Drug Administration",
+      "jurisdiction": "INTL",
+      "regime_family": "market_access",
+      "document_type": "regulation",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "manufacturing_gmp",
+          "labelling",
+          "food_nutraceutical",
+          "import_export"
+        ],
+        "product_classes": []
+      }
+    },
+    {
+      "document_id": "who-herbal-quality-guidance",
+      "title": "Quality control methods for herbal materials, and good agricultural and collection practices for medicinal plants",
+      "short_title": "WHO herbal quality guidance",
+      "organization": "World Health Organization",
+      "jurisdiction": "INTL",
+      "regime_family": "market_access",
+      "document_type": "guideline",
+      "language": "en",
+      "source_url": null,
+      "access_mode": "open",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "unverified",
+      "checksum": null,
+      "parser": "pdf_layout",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "quality_standards"
+        ],
+        "product_classes": []
+      }
+    }
+  ]
+}

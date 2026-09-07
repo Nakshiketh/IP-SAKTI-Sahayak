@@ -9,6 +9,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // The corpus manifest is repo-level data, not frontend source. Aliased so
+      // there is one copy of it rather than a duplicate under src/.
+      '@corpus': fileURLToPath(new URL('../corpus', import.meta.url)),
     },
   },
   server: {
