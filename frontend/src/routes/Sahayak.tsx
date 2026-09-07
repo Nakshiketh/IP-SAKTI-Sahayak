@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { AnswerView } from '@/components/answer';
+import { AbsFlow } from '@/components/flows/AbsFlow';
+import { ClassificationFlow } from '@/components/flows/ClassificationFlow';
+import { FlowOffers, type FlowKind } from '@/components/flows/FlowOffer';
+import { PriorArtFlow } from '@/components/flows/PriorArtFlow';
 import { Abstention } from '@/components/sahayak/Abstention';
 import { AnswerPanel } from '@/components/sahayak/AnswerPanel';
 import { Composer } from '@/components/sahayak/Composer';
@@ -67,6 +71,7 @@ export default function Sahayak() {
   const [railOpen, setRailOpen] = useState(false);
   const [escalateOpen, setEscalateOpen] = useState(false);
   const [phase, setPhase] = useState<StatusPhase>('done');
+  const [openFlow, setOpenFlow] = useState<FlowKind | null>(null);
   const [copied, setCopied] = useState<'answer' | 'link' | null>(null);
 
   const composerRef = useRef<HTMLTextAreaElement>(null);
@@ -81,6 +86,24 @@ export default function Sahayak() {
     [hasAnswer, question, jurisdiction],
   );
   const abstained = result !== null && result.answer === null;
+
+  /**
+   * Which flows this particular answer leaves open. An offer appears because the
+   * answer needed it, at the moment the reader has just met the gap it fills.
+   */
+  const offeredFlows = useMemo<FlowKind[]>(() => {
+    if (!result) return [];
+    const kinds: FlowKind[] = [];
+    if (productClass === 'undetermined') kinds.push('classify');
+    const answer = result.answer;
+    if (answer?.regulatory_areas.includes('abs_compliance')) kinds.push('abs');
+    if (answer?.ip_rights.includes('patent')) kinds.push('priorArt');
+    // An abstention that turns on the product type is exactly when to offer it.
+    if (result.confidence.abstainReason === 'needs_more_facts' && !kinds.includes('classify')) {
+      kinds.unshift('classify');
+    }
+    return kinds;
+  }, [result, productClass]);
 
   const ask = useCallback(
     (text: string) => {
@@ -295,13 +318,16 @@ export default function Sahayak() {
                   ) : null}
 
                   {abstained ? (
-                    <Abstention
-                      result={result}
-                      onRephrase={() => composerRef.current?.focus()}
-                      onPickJurisdiction={focusJurisdiction}
-                      onNameProduct={() => setContextOpen(true)}
-                      onEscalate={() => setEscalateOpen(true)}
-                    />
+                    <>
+                      <Abstention
+                        result={result}
+                        onRephrase={() => composerRef.current?.focus()}
+                        onPickJurisdiction={focusJurisdiction}
+                        onNameProduct={() => setContextOpen(true)}
+                        onEscalate={() => setEscalateOpen(true)}
+                      />
+                      <FlowOffers kinds={offeredFlows} onOpen={setOpenFlow} />
+                    </>
                   ) : (
                     <>
                       <AnswerView
@@ -314,6 +340,8 @@ export default function Sahayak() {
                         )}
                         hideSources
                       />
+
+                      <FlowOffers kinds={offeredFlows} onOpen={setOpenFlow} />
 
                       {result.followUps.length > 0 ? (
                         <div className="mt-6">
@@ -377,6 +405,14 @@ export default function Sahayak() {
           <AnswerPanel result={result} />
         </BottomSheet>
       ) : null}
+
+      <ClassificationFlow
+        open={openFlow === 'classify'}
+        onClose={() => setOpenFlow(null)}
+        onApply={(next) => setProductClass(next)}
+      />
+      <AbsFlow open={openFlow === 'abs'} onClose={() => setOpenFlow(null)} />
+      <PriorArtFlow open={openFlow === 'priorArt'} onClose={() => setOpenFlow(null)} />
 
       {result ? (
         <EscalationForm

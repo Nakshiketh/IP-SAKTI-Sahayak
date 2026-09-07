@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 8. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 9. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 8
+## Built as of Phase 9
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -101,12 +101,15 @@ is no "both".
   passage scores; sources and related records as separate tabs; follow-ups derived from the answer;
   copy-as-text with citations intact; and an escalation handoff that packages the question and every
   source without pretending a queue exists.
+- Three guided flows, offered by answers rather than from navigation: product classification walking
+  a decision graph that is a data file read by both halves; access and benefit-sharing orientation;
+  and prior-art orientation defined by what it refuses to do. Consequence panels carry pending
+  markers, because the graph decides the class and the corpus supplies what follows from it.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |
 | Corpus ingestion, section-aware chunking, versioning, refresh diff | 11 |
 | Records store, snapshots, portal link-out | 12 |

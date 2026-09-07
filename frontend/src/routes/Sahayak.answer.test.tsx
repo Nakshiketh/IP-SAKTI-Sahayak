@@ -225,3 +225,57 @@ describe('accessibility of the answer surface', () => {
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   }, 30_000);
 });
+
+describe('flows are offered by answers, never from navigation', () => {
+  it('offers the classification flow while the product type is unknown', () => {
+    ask('What should we work out first?');
+    // One heading for the group, however many flows are offered.
+    expect(screen.getAllByText('This depends on something the answer does not know')).toHaveLength(
+      1,
+    );
+    expect(screen.getByRole('button', { name: 'Work out the product type' })).toBeInTheDocument();
+  });
+
+  it('offers it on an abstention that turns on the product type', () => {
+    ask('Is our product a medicine or a food?');
+    expect(document.querySelector('[data-abstained="true"]')).toBeTruthy();
+    // The gap the abstention names is exactly the gap the flow fills.
+    expect(
+      screen.getAllByText(/depends on what your product is regulatorily/i).length,
+    ).toBeGreaterThan(0);
+  });
+
+  it('opens the flow and sets the product type into the session context', async () => {
+    const user = userEvent.setup();
+    ask('What should we work out first?');
+
+    await user.click(screen.getByRole('button', { name: 'Work out the product type' }));
+    const dialog = screen.getByRole('dialog', { name: 'What is your product, regulatorily?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Yes' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Use this as my product type' }));
+
+    // The context line above the composer now names it.
+    expect(screen.getByRole('button', { name: /product: Cosmetic/ })).toBeInTheDocument();
+  });
+
+  it('stops offering the classification flow once the product type is known', async () => {
+    const user = userEvent.setup();
+    ask('What should we work out first?');
+
+    await user.click(screen.getByRole('button', { name: 'Work out the product type' }));
+    const dialog = screen.getByRole('dialog', { name: 'What is your product, regulatorily?' });
+    await user.click(within(dialog).getByRole('button', { name: 'Yes' }));
+    await user.click(within(dialog).getByRole('button', { name: 'Use this as my product type' }));
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('button', { name: 'Work out the product type' })).toBeNull();
+  });
+
+  it('is reachable from nowhere else — the flows are not navigation', () => {
+    ask('What should we work out first?');
+    const nav = screen.queryByRole('navigation');
+    if (nav) {
+      expect(within(nav).queryByText(/Work out the product type/)).toBeNull();
+    }
+  });
+});

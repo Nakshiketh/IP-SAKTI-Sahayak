@@ -1,0 +1,65 @@
+{
+  "version": "1",
+  "note": "The decision graph for 'what is your product, regulatorily?'. Structure only — every piece of text is a key into the locale files, and no legal consequence is stated here. The graph decides the class; the corpus supplies what follows from it. Editing this file changes the flow without a deploy.",
+  "start": "external_use",
+  "questions": {
+    "external_use": {
+      "options": [
+        { "value": "yes", "outcome": "cosmetic" },
+        { "value": "no", "question": "food_route" }
+      ]
+    },
+    "food_route": {
+      "options": [
+        { "value": "yes", "question": "therapeutic_claim" },
+        { "value": "no", "question": "purified_fraction" }
+      ]
+    },
+    "therapeutic_claim": {
+      "options": [
+        { "value": "yes", "outcome": "food_or_drug" },
+        { "value": "no", "outcome": "ayurveda_aahar" }
+      ]
+    },
+    "purified_fraction": {
+      "options": [
+        { "value": "yes", "outcome": "phytopharmaceutical" },
+        { "value": "no", "question": "classical_unmodified" }
+      ]
+    },
+    "classical_unmodified": {
+      "options": [
+        { "value": "yes", "outcome": "classical_generic" },
+        { "value": "no", "question": "novel_ingredient" }
+      ]
+    },
+    "novel_ingredient": {
+      "options": [
+        { "value": "yes", "question": "human_evidence" },
+        { "value": "no", "question": "changed_formulation" }
+      ]
+    },
+    "human_evidence": {
+      "options": [
+        { "value": "yes", "outcome": "new_non_classical_drug" },
+        { "value": "no", "outcome": "new_non_classical_drug_no_evidence" }
+      ]
+    },
+    "changed_formulation": {
+      "options": [
+        { "value": "yes", "outcome": "patent_proprietary" },
+        { "value": "no", "outcome": "classical_generic" }
+      ]
+    }
+  },
+  "outcomes": {
+    "cosmetic": { "classes": ["cosmetic"] },
+    "ayurveda_aahar": { "classes": ["ayurveda_aahar"] },
+    "food_or_drug": { "classes": ["ayurveda_aahar", "patent_proprietary"] },
+    "phytopharmaceutical": { "classes": ["phytopharmaceutical"] },
+    "classical_generic": { "classes": ["classical_generic"] },
+    "patent_proprietary": { "classes": ["patent_proprietary"] },
+    "new_non_classical_drug": { "classes": ["new_non_classical_drug"] },
+    "new_non_classical_drug_no_evidence": { "classes": ["new_non_classical_drug"] }
+  }
+}

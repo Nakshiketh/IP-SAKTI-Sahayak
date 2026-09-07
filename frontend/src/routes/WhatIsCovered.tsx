@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-import { SectionSourceList, SourceScope, Src } from '@/components/covered/Sourced';
+import { SectionSourceList, SourceScope, Src } from '@/components/sourcing/Sourced';
 import { Callout, IncisedMark } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { CORPUS_VERSION } from '@/services/corpusManifest';

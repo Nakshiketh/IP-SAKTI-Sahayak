@@ -23,7 +23,7 @@
 
     "types": ["vitest/globals", "@testing-library/jest-dom"],
     "baseUrl": ".",
-    "paths": { "@/*": ["./src/*"], "@corpus/*": ["../corpus/*"] }
+    "paths": { "@/*": ["./src/*"], "@corpus/*": ["../corpus/*"], "@classification/*": ["../backend/app/services/classification/*"] }
   },
   "include": ["src", "vite.config.ts"]
 }

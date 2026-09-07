@@ -12,6 +12,11 @@ export default defineConfig({
       // The corpus manifest is repo-level data, not frontend source. Aliased so
       // there is one copy of it rather than a duplicate under src/.
       '@corpus': fileURLToPath(new URL('../corpus', import.meta.url)),
+      // The classification graph lives with the service that will walk it in
+      // Phase 10. The frontend reads the same file rather than a copy.
+      '@classification': fileURLToPath(
+        new URL('../backend/app/services/classification', import.meta.url),
+      ),
     },
   },
   server: {

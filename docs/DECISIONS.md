@@ -741,3 +741,86 @@ text. The evidence changed — two passages, neither strong — rather than the 
 and the right resolution was to fix the fixture's evidence. Had I adjusted the rule to fit the
 fixture, the rule would have started encoding what the demo wanted rather than what the retrieval
 showed.
+
+---
+
+## [9] The classification graph is a data file, read by both halves
+
+**Decision.** `backend/app/services/classification/graph.json` holds the decision graph. The backend
+service loads it; the frontend imports the same file through a `@classification` alias. It carries
+structure only — question ids, options, outcomes — and every string in it is a key into the locale
+files.
+
+**Why one file rather than two.** A copy would drift, and the flow a reader walks would stop being
+the flow the API walks. Aliasing across the repo boundary is the same trade already made for the
+corpus manifest: repo-level data that both halves read.
+
+**Backed by tests on both sides.** Every outcome reachable, every question reachable, no path longer
+than the eight the build document allows, no cycles, and every class a real `ProductClass` — never
+`undetermined`, because that is the absence of a classification rather than a result.
+
+**Revisit when.** Phase 10 exposes `/api/v1/classify`, at which point the frontend can call it
+instead of walking locally; the graph stays where it is.
+
+---
+
+## [9] The graph decides the class; it is forbidden from stating the consequences
+
+**Decision.** A test greps the graph for "licence", "section", "must", "required" and fails if any
+appears. The consequence panels are rendered from the corpus with pending markers, and the flow says
+so: "a classification flow does not get to state law from a lookup table".
+
+**Why the test exists.** A decision graph with a `consequences` field beside each outcome is the
+obvious shortcut, and it would be a hard-coded legal assertion with no source — the exact thing this
+product argues against. Making it a test means the shortcut fails the build rather than looking
+tidy.
+
+**Where the panel text comes from meanwhile.** The same product-class matrix already on
+`/what-is-covered`, which is itself marked pending against named instruments. It is orientation with
+its status visible, not an assertion, and the note above the panels says it is replaced by retrieved
+passages once the corpus exists.
+
+**Revisit when.** Phase 11 ingests documents and the panels start rendering actual passages.
+
+---
+
+## [9] The ABS flow asserts nothing at all
+
+**Decision.** Its four output panels carry a pending marker naming the instrument and no text.
+
+**Why it goes further than the classification flow.** Every ABS output is a statement about a duty
+someone owes. There is no equivalent of the product-class matrix to fall back on that would not
+amount to writing the duty myself, so the honest rendering is the marker alone. It closes on the
+effective date, because the regime was amended recently and this corpus has no dates.
+
+**Revisit when.** Phase 11.
+
+---
+
+## [9] The prior-art flow is defined by three refusals
+
+**Decision.** It never states a novelty conclusion; it reports finding nothing as "not a result — it
+is the absence of one". It never implies the traditional knowledge digital library was searched, and
+says plainly that this product cannot search it and what to do instead. It builds no link it has not
+verified — the records manifest has null link templates, so every portal reads "link not yet
+verified" rather than carrying a guessed URL.
+
+**Tested as refusals.** One test asserts there are zero `http` links in the panel; another that the
+banner has no dismiss control; another that finding nothing is not reported as a result.
+
+**Revisit when.** Phase 12 reads the portals' terms and fills the link templates.
+
+---
+
+## [9] Flows are offered by answers, never from navigation
+
+**Decision.** `FlowOffers` renders beneath an answer or an abstention, and which flows appear is
+computed from that answer: the classification flow while the product type is unknown, ABS when the
+answer touches it, prior art when a patent is in play. An abstention for `needs_more_facts` offers
+classification first, because that is the gap it just named.
+
+**Two defects fixed on the way.** All three offer buttons read "Work it out", which is three
+identical buttons in a row — each now says what it works out. And the offer heading repeated once
+per card; it belongs to the group.
+
+**Revisit when.** A fourth flow appears and the rules for offering them need to move out of the page.
