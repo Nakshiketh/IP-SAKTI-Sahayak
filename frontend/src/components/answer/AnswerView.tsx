@@ -25,6 +25,12 @@ interface AnswerViewProps {
   /** One sentence saying why confidence is what it is. Never optional. */
   confidenceReason: string;
   headingLevel?: HeadingLevel;
+  /**
+   * Render the blocks only. The workspace positions sources itself — inline at
+   * desktop width, in a drawer or a sheet below it — so it needs the answer
+   * without the column.
+   */
+  hideSources?: boolean;
   className?: string;
 }
 
@@ -32,6 +38,7 @@ export function AnswerView({
   answer,
   confidenceReason,
   headingLevel = 3,
+  hideSources = false,
   className,
 }: AnswerViewProps) {
   const { t } = useTranslation('common');
@@ -55,7 +62,7 @@ export function AnswerView({
   }
 
   return (
-    <div className={cn('grid gap-8 lg:grid-cols-[1fr_20rem]', className)}>
+    <div className={cn('grid gap-8', hideSources ? null : 'lg:grid-cols-[1fr_20rem]', className)}>
       <div>
         <div className="flex flex-wrap items-center gap-2 border-b border-rule pb-3">
           <Badge>{t(`jurisdiction.${answer.jurisdiction}`)}</Badge>
@@ -101,27 +108,29 @@ export function AnswerView({
         wrong and reported by axe as landmark-complementary-is-top-level. The
         heading is what gives this region its structure.
       */}
-      <div>
-        <Heading level={headingLevel} className="text-base text-muted">
-          {t('answer.sourcesHeading')}{' '}
-          <span className="text-xs">
-            {t('answer.sourceCount', { count: answer.citations.length })}
-          </span>
-        </Heading>
-        <ul className="mt-3 m-0 list-none space-y-3 p-0">
-          {answer.citations.map((citation, index) => (
-            <li key={citation.citation_id}>
-              <SourceCard
-                id={`${answer.answer_id}-source-${citation.citation_id}`}
-                citation={citation}
-                number={index + 1}
-                titleLevel={Math.min(headingLevel + 1, 6) as HeadingLevel}
-                active={activeCitationId === citation.citation_id}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      {hideSources ? null : (
+        <div>
+          <Heading level={headingLevel} className="text-base text-muted">
+            {t('answer.sourcesHeading')}{' '}
+            <span className="text-xs">
+              {t('answer.sourceCount', { count: answer.citations.length })}
+            </span>
+          </Heading>
+          <ul className="mt-3 m-0 list-none space-y-3 p-0">
+            {answer.citations.map((citation, index) => (
+              <li key={citation.citation_id}>
+                <SourceCard
+                  id={`${answer.answer_id}-source-${citation.citation_id}`}
+                  citation={citation}
+                  number={index + 1}
+                  titleLevel={Math.min(headingLevel + 1, 6) as HeadingLevel}
+                  active={activeCitationId === citation.citation_id}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

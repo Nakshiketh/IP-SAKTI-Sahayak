@@ -11,5 +11,68 @@
   "demoNotice": "This is the illustrative answer from the homepage. Retrieval over real sources arrives with the corpus; until then every question shows this example, marked as such.",
   "emptyHeading": "Nothing asked yet",
   "emptyBody": "Type a question on the homepage, or use the example below.",
-  "tryExample": "See the example answer"
+  "tryExample": "See the example answer",
+  "context": {
+    "label": "What this answer assumes",
+    "jurisdiction": "{{jurisdiction}}",
+    "language": "answering in {{language}}",
+    "productKnown": "product: {{productClass}}",
+    "productUnknown": "product not yet identified",
+    "changeJurisdiction": "Change jurisdiction",
+    "changeLanguage": "Change answer language",
+    "changeProduct": "Set the product type",
+    "close": "Done"
+  },
+  "composer": {
+    "label": "Your question",
+    "placeholder": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product…",
+    "send": "Ask",
+    "detected": "Detected: {{language}}",
+    "detectedAmbiguous": "Detected {{script}} script: could be {{languages}}",
+    "change": "change",
+    "detectionNote": "Detected from the script you typed in. Correct it if it is wrong.",
+    "shortcutHint": "Ctrl+K to focus, Ctrl+Enter to send, / for examples"
+  },
+  "jurisdictionLabel": "Jurisdiction",
+  "marketLabel": "Market",
+  "markets": {
+    "uk": "United Kingdom",
+    "eu": "European Union",
+    "us": "United States"
+  },
+  "starters": {
+    "heading": "Try one of these",
+    "more": "More examples",
+    "groups": {
+      "protecting": "Protecting an innovation",
+      "market": "Getting to market",
+      "biological": "Using biological resources",
+      "abroad": "Going abroad"
+    },
+    "items": {
+      "reformulated": "We reformulated a classical preparation — is there anything patentable in it?",
+      "manufacturing": "What do we need in place before manufacturing an Ayurvedic product in India?",
+      "uk": "What changes if we want to sell the same product in the UK?",
+      "brandName": "Can we register our brand name if it contains a classical formulation name?",
+      "gi": "Does our regional herb qualify for a geographical indication?",
+      "healthClaim": "Our product has a health claim on the label — what are the limits?",
+      "classification": "Is our product a medicine, a nutraceutical or a cosmetic?",
+      "wildCollect": "We wild-collect a herb — what compliance applies before we commercialise?",
+      "bioSource": "Do we need to declare the biological source in a patent application?",
+      "multiCountry": "How do we protect the brand in several countries at once?"
+    }
+  },
+  "answer": {
+    "heading": "Answer",
+    "questionLabel": "You asked",
+    "announced": "Answer ready, with {{count}} sources.",
+    "sourcesButton": "Sources",
+    "sourcesTitle": "Sources",
+    "newQuestion": "Ask another question"
+  },
+  "rail": {
+    "expand": "Show context",
+    "collapse": "Hide context",
+    "title": "Context"
+  }
 }

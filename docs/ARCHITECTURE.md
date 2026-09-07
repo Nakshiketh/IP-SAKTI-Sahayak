@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 6. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 7. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 6
+## Built as of Phase 7
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -91,12 +91,16 @@ is no "both".
 - `/sources`: both manifests rendered with search and five facets, the records section visually
   distinct and never citable, the honesty commitments each marked with whether their mechanism
   exists, and what the product does not cover. No list on the page is hard-coded.
+- `/sahayak`: the workspace. One centred column until an answer exists, three at desktop width once
+  it does, sources in a drawer at tablet width and a bottom sheet on a phone. Jurisdiction toggle,
+  context line, script-based language detection with a correction control, three starter questions
+  with the rest behind a disclosure, and the Ctrl+K / Ctrl+Enter / Esc / "/" shortcuts.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
+| Answers, citations, confidence, abstention (mock data) | 8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |
 | Corpus ingestion, section-aware chunking, versioning, refresh diff | 11 |

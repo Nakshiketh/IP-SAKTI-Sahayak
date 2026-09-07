@@ -582,3 +582,69 @@ how-it-works page into the design system for this, because more than one surface
 is and is not built.
 
 **Revisit when.** Each phase that builds a mechanism flips its badge.
+
+---
+
+## [7] Script detection is built; language identification is not
+
+**Decision.** `src/lib/detectScript.ts` counts characters in Unicode blocks to decide which of the
+six languages a question is written in, and the composer shows the result with a correction control.
+Where the script cannot decide — Devanagari carries both Hindi and Marathi — it says which languages
+it is between rather than picking one.
+
+**Alternatives.** Wait for Phase 10 and leave the indicator out; or show a fixed "English" and let
+the reader change it.
+
+**Why.** The zero-config rule says a reader configures nothing before their first question, and that
+includes the language. Script detection is a real capability that can be built now and covers the
+case that matters: someone typing Telugu should not have to tell the product they are typing Telugu.
+Naming it precisely matters — this is script detection, not language identification, and the
+Devanagari case is where the difference shows. Reporting the ambiguity is the same discipline the
+answer surface applies to a thin source.
+
+**Revisit when.** Phase 10's language-identification stage replaces it, at which point this becomes
+the fallback rather than the mechanism.
+
+---
+
+## [7] One column until there is an answer, and the header shares its edge
+
+**Decision.** The workspace opens as a single centred column and becomes three only when an answer
+exists *and* the viewport is at least 1280px. `data-layout` names the state so tests assert it
+directly rather than matching a Tailwind arbitrary-value class.
+
+**The fix worth recording:** the first version put the heading and the jurisdiction toggle at full
+width while the composer column was centred, so they did not line up — the toggle sat at the page's
+left edge and the question box a third of the way across. Before an answer, all of it now shares one
+column edge.
+
+**Why.** "Three columns is a state the product reaches, not a state it starts in." A first-time
+reader should see a question box, not a cockpit. The alignment defect only showed in a browser; it
+passed every test, because tests do not look at a page.
+
+**Revisit when.** Never; verified at 360, 768, 1280 and 1500px.
+
+---
+
+## [7] The context line states what the answer assumes rather than asking
+
+**Decision.** One line above the composer — "India · answering in English · product not yet
+identified" — with each part a control. The product type is settable manually now; the guided flow
+that determines it is Phase 9.
+
+**Why.** The zero-config rule again: the answer assumes India and says so, instead of demanding a
+choice before it will work. Three parts is deliberately the whole context interface; anything more
+lives in the rail, which stays collapsed. The middle dots here separate three live controls rather
+than decorating a meta string, which is the distinction the banned list is drawing.
+
+**Revisit when.** Phase 9 wires the product part to the classification flow.
+
+---
+
+## [7] `Disclosure` gained a controlled mode
+
+**Decision.** It now accepts `open` and `onOpenChange` alongside `defaultOpen`.
+
+**Why.** The `/` shortcut opens the starter questions, and the first version forced that by changing
+the component's `key` to remount it — which throws away focus and any state inside. A controlled
+mode is four lines and does not lie to React about identity.

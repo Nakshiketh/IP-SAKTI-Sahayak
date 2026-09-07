@@ -14,12 +14,34 @@ interface DisclosureProps {
   summary: React.ReactNode;
   children: React.ReactNode;
   defaultOpen?: boolean;
+  /**
+   * Controlled mode. Pass both to drive it from outside — the workspace opens
+   * the examples from a keyboard shortcut, and a remount to force the state
+   * would throw away focus.
+   */
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   className?: string;
 }
 
-export function Disclosure({ summary, children, defaultOpen = false, className }: DisclosureProps) {
-  const [open, setOpen] = useState(defaultOpen);
+export function Disclosure({
+  summary,
+  children,
+  defaultOpen = false,
+  open: controlledOpen,
+  onOpenChange,
+  className,
+}: DisclosureProps) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : uncontrolledOpen;
   const panelId = useId();
+
+  function toggle() {
+    const next = !open;
+    if (!isControlled) setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  }
 
   return (
     <div className={className}>
@@ -27,7 +49,7 @@ export function Disclosure({ summary, children, defaultOpen = false, className }
         type="button"
         aria-expanded={open}
         aria-controls={panelId}
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
         className="flex w-full items-center gap-2 rounded-data py-1 text-left text-base hover:text-leaf"
       >
         <ChevronRight
