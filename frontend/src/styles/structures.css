@@ -55,6 +55,19 @@
     border-top: 1px dashed var(--rule-strong);
   }
 
+  /* -- The hero composition -------------------------------------------------
+        Each stroke is dashed to its own length via --len, so the draw-on follows
+        the real geometry rather than a shared guess. Seals scale from their own
+        centre; an SVG circle otherwise scales from the origin of the viewBox. */
+  .incise-stroke {
+    stroke-dasharray: var(--len);
+  }
+
+  .seal-mark {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
   /* -- Reading measure ------------------------------------------------------ */
   .measure {
     max-width: var(--measure);

@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 2. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 3. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 2
+## Built as of Phase 3
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -68,12 +68,18 @@ is no "both".
 - i18n across six languages and seven namespaces, with `<html lang>` driving the per-script font
   stacks. English is complete; the other five are seeded placeholders, flagged as such, and reported
   at 0% by `make i18n`. An ESLint rule fails the build on a user-facing string written into JSX.
+- Homepage: six sections, each a different shape — a hero with a working question box beside one
+  drawn composition, a comparison table, two panels and a band, a real answer on demo fixtures, a
+  specimen list, a closing paragraph. The question box carries what a reader typed into `/sahayak`.
+- The answer surface: claim-level citation with numbered markers, unsourced sentences marked and
+  keyboard-reachable, confidence with its reason, and source cards whose demo state is a different
+  edge rather than a smaller badge.
 
 ## Planned
 
 | Component | Phase |
 | --- | --- |
-| Homepage, "what's covered", "how it works", "sources" | 3–6 |
+| "What's covered", "how it works", "sources" | 4–6 |
 | Ask Sahayak workspace, answers, citations, confidence, abstention (mock data) | 7–8 |
 | Product classification, ABS orientation, prior-art orientation | 9 |
 | Real API: language detection, query understanding, routing, hybrid retrieval, rerank, context assembly, constrained generation, citation mapping, confidence scoring, translation, audit | 10 |

@@ -189,11 +189,26 @@ export interface Record_ {
   citable_in_answers: false;
 }
 
+/**
+ * One sentence, and the passages that support it — or none.
+ *
+ * Citation is claim-level, not answer-level. A claim with no `citation_ids`
+ * renders as general explanation and is marked as such, never quietly mixed in
+ * with sourced text.
+ */
+export interface Claim {
+  text: string;
+  citation_ids: string[];
+}
+
 export interface AnswerBlock {
   id: string;
   kind: AnswerBlockKind;
+  /** The flat rendering of `claims`; the backend rejects the two disagreeing. */
   text: string;
+  /** The union of the claims' citation ids. */
   citation_ids: string[];
+  claims: Claim[];
 }
 
 /** One answer, for one jurisdiction. Never merged across jurisdictions. */
@@ -308,7 +323,8 @@ export const DOMAIN_FIELDS = {
     'snapshot_at',
     'citable_in_answers',
   ],
-  AnswerBlock: ['id', 'kind', 'text', 'citation_ids'],
+  Claim: ['text', 'citation_ids'],
+  AnswerBlock: ['id', 'kind', 'text', 'citation_ids', 'claims'],
   Answer: [
     'answer_id',
     'query_id',

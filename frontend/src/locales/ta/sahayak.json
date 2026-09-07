@@ -6,5 +6,10 @@
   },
   "heading": "Sahayak",
   "standfirst": "Ask about intellectual property or regulation for an Ayurvedic product. Answers are built from cited sources.",
-  "notLegalAdvice": "Information, not legal advice"
+  "notLegalAdvice": "Information, not legal advice",
+  "questionLabel": "Your question",
+  "demoNotice": "This is the illustrative answer from the homepage. Retrieval over real sources arrives with the corpus; until then every question shows this example, marked as such.",
+  "emptyHeading": "Nothing asked yet",
+  "emptyBody": "Type a question on the homepage, or use the example below.",
+  "tryExample": "See the example answer"
 }

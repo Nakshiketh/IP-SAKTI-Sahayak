@@ -20,7 +20,7 @@ from datetime import date, datetime
 from enum import Enum, StrEnum
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 class Jurisdiction(StrEnum):
@@ -207,11 +207,55 @@ class Record(DomainModel):
     citable_in_answers: Literal[False] = False
 
 
+class Claim(DomainModel):
+    """One sentence, and the passages that support it — or none.
+
+    Citation is claim-level, not answer-level: a reader has to be able to see
+    which sentence rests on which passage, and which sentence rests on nothing.
+    A claim with an empty ``citation_ids`` renders as general explanation and is
+    marked as such, never silently mixed in with sourced text.
+    """
+
+    text: str
+    citation_ids: list[str] = Field(default_factory=list)
+
+
 class AnswerBlock(DomainModel):
     id: str
     kind: AnswerBlockKind
     text: str
     citation_ids: list[str] = Field(default_factory=list)
+    claims: list[Claim] = Field(default_factory=list)
+
+    @model_validator(mode="after")
+    def _text_matches_claims(self) -> AnswerBlock:
+        """``text`` is the flat rendering of ``claims``; they cannot disagree.
+
+        ``text`` is what a copy-to-clipboard produces and what an evaluator
+        scores. Letting it drift from the claims would mean the scored text and
+        the cited text were different things.
+        """
+        if not self.claims:
+            return self
+        joined = " ".join(claim.text.strip() for claim in self.claims).strip()
+        if joined != self.text.strip():
+            raise ValueError(
+                "AnswerBlock.text must be the claims joined by a space; "
+                f"got {self.text!r}, expected {joined!r}"
+            )
+        return self
+
+    @model_validator(mode="after")
+    def _citation_ids_cover_claims(self) -> AnswerBlock:
+        """The block's ids are the union of its claims' ids."""
+        if not self.claims:
+            return self
+        from_claims = {cid for claim in self.claims for cid in claim.citation_ids}
+        if from_claims != set(self.citation_ids):
+            raise ValueError(
+                "AnswerBlock.citation_ids must be the union of its claims' citation_ids"
+            )
+        return self
 
 
 class Answer(DomainModel):
@@ -243,6 +287,7 @@ CONTRACT_MODELS: tuple[type[DomainModel], ...] = (
     Chunk,
     Citation,
     Record,
+    Claim,
     AnswerBlock,
     Answer,
 )

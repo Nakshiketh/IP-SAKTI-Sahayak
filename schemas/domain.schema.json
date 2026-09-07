@@ -706,6 +706,28 @@
       "title": "Record",
       "type": "object"
     },
+    "Claim": {
+      "additionalProperties": false,
+      "description": "One sentence, and the passages that support it — or none.\n\nCitation is claim-level, not answer-level: a reader has to be able to see\nwhich sentence rests on which passage, and which sentence rests on nothing.\nA claim with an empty ``citation_ids`` renders as general explanation and is\nmarked as such, never silently mixed in with sourced text.",
+      "properties": {
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "text"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
     "AnswerBlock": {
       "additionalProperties": false,
       "properties": {
@@ -725,6 +747,13 @@
             "type": "string"
           },
           "title": "Citation Ids",
+          "type": "array"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
           "type": "array"
         }
       },

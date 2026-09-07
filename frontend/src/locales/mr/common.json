@@ -52,9 +52,47 @@
     "moderate": "Moderate confidence",
     "low": "Low confidence",
     "abstain": "Not answered",
-    "meter": "{{label}}: {{filled}} of {{total}}"
+    "meter": "{{label}}: {{filled}} of {{total}}",
+    "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
+    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document."
   },
   "sourceRule": {
     "unsourcedTooltip": "General explanation, not from a specific source."
+  },
+  "answer": {
+    "blocks": {
+      "answer": "Answer",
+      "why": "Why this matters",
+      "what_to_check": "What to check",
+      "caveat": "Caveats"
+    },
+    "demoChip": "Illustrative example — demo sources, not a legal source",
+    "noSourceDate": "No source date yet",
+    "asOf": "Sources as of {{date}}",
+    "citationMarker": "Source {{number}}: {{title}}",
+    "uncited": "General explanation, not from a specific source.",
+    "sourcesHeading": "Sources",
+    "sourceCount_one": "{{count}} source",
+    "sourceCount_other": "{{count}} sources",
+    "showPassage": "Show the passage",
+    "hidePassage": "Hide the passage",
+    "openSource": "Open the source",
+    "openSourceUnavailable": "No link yet",
+    "demoBadge": "demo",
+    "sourceNumber": "Source {{number}}",
+    "verifiedBadge": "verified"
+  },
+  "jurisdiction": {
+    "IN": "India",
+    "INTL": "International"
+  },
+  "productClass": {
+    "classical_generic": "Classical formulation",
+    "patent_proprietary": "Patent or proprietary medicine",
+    "new_non_classical_drug": "New non-classical drug",
+    "phytopharmaceutical": "Phytopharmaceutical",
+    "ayurveda_aahar": "Ayurveda-Aahar",
+    "cosmetic": "Cosmetic",
+    "undetermined": "Product type not yet identified"
   }
 }

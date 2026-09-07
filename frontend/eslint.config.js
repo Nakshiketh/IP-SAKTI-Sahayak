@@ -51,6 +51,10 @@ export default tseslint.config(
           'jsx-attributes': {
             include: ['alt', 'aria-label', 'aria-placeholder', 'placeholder', 'title'],
           },
+          // `tc` is the house alias for the common namespace when a component
+          // already holds a `t` for its own one. Without this the rule reads the
+          // key inside tc('...') as a hard-coded string.
+          callees: { exclude: ['t', 'tc', 'i18n.t', 'require', 'import'] },
           message: 'User-facing strings belong in src/locales, not in JSX.',
         },
       ],

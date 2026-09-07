@@ -7,6 +7,97 @@
     "line1": "Ancient knowledge.",
     "line2": "Protected innovation.",
     "line3": "Grounded guidance.",
-    "standfirst": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product, and get an answer built from published sources — with every claim cited, and the Indian and international positions kept separate."
+    "standfirst": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product, and get an answer built from published sources — with every claim cited, and the Indian and international positions kept separate.",
+    "questionLabel": "Your question",
+    "questionPlaceholder": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product…",
+    "submit": "Ask",
+    "visualAlt": "A palm-leaf manuscript page whose incised writing lines resolve into a graph of linked sources."
+  },
+  "coupling": {
+    "heading": "What a formulation is decides what you can protect",
+    "standfirst": "The same polyherbal preparation for joint pain can be three different products, and each one opens and closes different doors. This is why the assistant works out the regulatory classification before it answers anything else.",
+    "illustrative": "Illustrative example",
+    "columnProduct": "If the product is",
+    "columnIp": "Intellectual property realistically available",
+    "columnRegulatory": "Regulatory route",
+    "columnAbs": "Access and benefit sharing",
+    "rows": {
+      "classical": {
+        "product": "A classical formulation, taken unchanged from an authoritative text",
+        "ip": "Not the composition — it is documented traditional knowledge. The brand name, the packaging and the artwork can still be yours.",
+        "regulatory": "The classical route, resting on the authoritative texts.",
+        "abs": "Using a biological resource can still carry duties, whatever the formulation's status."
+      },
+      "proprietary": {
+        "product": "A proprietary medicine, with ingredients or dosage form changed",
+        "ip": "Arguable on what you actually changed, but the classical formulation stands as prior art against the rest.",
+        "regulatory": "The patent-or-proprietary route, with its own licensing conditions.",
+        "abs": "Same duties, and they now interact with anything you file."
+      },
+      "newDrug": {
+        "product": "A new non-classical drug, or a standardised extract",
+        "ip": "The most room — a purified fraction or a novel process can be claimed on its own merits.",
+        "regulatory": "The new-drug route, which asks for evidence rather than textual authority.",
+        "abs": "Duties apply, and disclosure of the biological source becomes part of the filing."
+      }
+    },
+    "note": "Deliberately general. The detail belongs in an answer with sources attached, not on a homepage."
+  },
+  "covers": {
+    "heading": "Two questions, asked of the same product",
+    "ipHeading": "Intellectual property",
+    "ipQuestion": "How do I secure or understand rights in this?",
+    "ipItems": {
+      "patents": "Patents",
+      "trademarks": "Trademarks",
+      "gi": "Geographical indications",
+      "copyright": "Copyright",
+      "designs": "Designs",
+      "plantVariety": "Plant variety rights",
+      "tradeSecrets": "Trade secrets",
+      "tk": "Traditional knowledge"
+    },
+    "regHeading": "Regulation",
+    "regQuestion": "What am I required to do before I can sell this?",
+    "regItems": {
+      "classification": "Product classification",
+      "licensing": "Licensing",
+      "gmp": "Manufacturing and GMP",
+      "quality": "Quality standards",
+      "labelling": "Labelling",
+      "advertising": "Advertising",
+      "foodCosmetic": "Food and cosmetic routes",
+      "abs": "Access and benefit sharing"
+    },
+    "band": "Across borders, the Indian answer and the export answer are produced separately, from different sources, and are never merged into one paragraph."
+  },
+  "answer": {
+    "heading": "What an answer looks like",
+    "standfirst": "Every claim points at the passage behind it. Sentences that rest on no source are marked as such. Switching jurisdiction swaps the answer rather than widening it.",
+    "question": "We have modified a classical polyherbal formulation and want to sell it in India and the UK. What should we work out first?",
+    "questionLabel": "The question",
+    "tabsLabel": "Jurisdiction",
+    "tabIndia": "India",
+    "tabUk": "United Kingdom",
+    "tryIt": "Ask your own question"
+  },
+  "languages": {
+    "heading": "Ask in the language you work in",
+    "standfirst": "The language is detected from what you type; you can correct it. Answers come back in the same language, and the source documents stay in the language they were published in, so you can check them.",
+    "autoDetect": "Detected automatically",
+    "note": "The translation layer sits behind an interface, so it can be served by national language infrastructure such as Bhashini. Source passages are never translated — a translated citation is no longer a citation.",
+    "samples": {
+      "en": "Can we register our brand name if it contains a classical formulation name?",
+      "hi": "हमारे ब्रांड नाम को कैसे सुरक्षित कर सकते हैं?",
+      "te": "మా ఆయుర్వేద ఉత్పత్తులను ఎగుమతి చేయాలంటే ఏమి కావాలి?",
+      "ta": "எங்கள் மூலிகைப் பொருளுக்கு உரிமம் தேவையா?",
+      "bn": "আমাদের পণ্যের লেবেলে কী লেখা যাবে?",
+      "mr": "आमचे उत्पादन औषध आहे की अन्न?"
+    }
+  },
+  "closing": {
+    "heading": "What this will not do",
+    "body": "It will not tell you whether an application will succeed, draft one for you, or give clinical advice. It answers from a fixed set of published sources, so a question outside them gets no answer rather than a plausible one. Where the sources are thin, it says so and offers to hand the question to someone qualified.",
+    "cta": "Ask a question"
   }
 }

@@ -65,6 +65,16 @@ export default {
           from: { transform: 'translateY(100%)' },
           to: { transform: 'translateY(0)' },
         },
+        // The hero's draw-on. A stroke incised along its own length, not faded
+        // in: opacity would read as decoration, this reads as writing.
+        incise: {
+          from: { strokeDashoffset: 'var(--len)' },
+          to: { strokeDashoffset: '0' },
+        },
+        seal: {
+          from: { opacity: '0', transform: 'scale(0.6)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
       },
       animation: {
         // Motion that answers an action: a panel arriving from the edge it lives on.

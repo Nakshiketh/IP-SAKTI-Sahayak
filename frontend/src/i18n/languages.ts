@@ -5,8 +5,17 @@
  * cost is one field; the cost of discovering the assumption later, when a
  * right-to-left locale is added, is every layout at once.
  */
+/**
+ * The six codes, as a union rather than `string`.
+ *
+ * This is what lets `t(`languages.samples.${locale.code}`)` typecheck: with a
+ * bare `string` the key is unknowable, and a locale added here without a
+ * matching sample key would only be discovered by a reader seeing a raw key.
+ */
+export type LocaleCode = 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'mr';
+
 export interface LocaleDefinition {
-  code: string;
+  code: LocaleCode;
   /** The language's name in its own script — never transliterated. */
   nativeName: string;
   /** For places that must name the language in English, such as a test. */
@@ -23,9 +32,9 @@ export const LOCALES: readonly LocaleDefinition[] = [
   { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', dir: 'ltr' },
 ] as const;
 
-export const LOCALE_CODES = LOCALES.map((locale) => locale.code);
+export const LOCALE_CODES: readonly LocaleCode[] = LOCALES.map((locale) => locale.code);
 
-export const DEFAULT_LOCALE = 'en';
+export const DEFAULT_LOCALE: LocaleCode = 'en';
 
 export const NAMESPACES = [
   'common',

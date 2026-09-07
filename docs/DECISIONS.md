@@ -279,3 +279,89 @@ says so in a number.
 
 **Revisit when.** A speaker of each language reviews a translation, at which point the flag comes off
 that file.
+
+---
+
+## [3] `AnswerBlock` gained a `claims` list, and the schema moved
+
+**Decision.** `Claim { text, citation_ids[] }` was added, and `AnswerBlock` now carries
+`claims[]` alongside `text` and `citation_ids`. Two Pydantic validators keep them honest: `text`
+must equal the claims joined by a space, and the block's `citation_ids` must be the union of its
+claims' ids.
+
+**Alternatives.** Keep the Phase 0 shape and carry inline markers inside `text`, parsed at render
+time.
+
+**Why.** The build document specifies both a block-level `AnswerBlock` (Phase 0) and claim-level
+citation (Phases 3 and 8). Block-level ids cannot express "this sentence rests on a passage and that
+one does not", which is the single most important thing an answer conveys. Parsing markers out of
+prose was the other option, and Phase 10 rules it out explicitly — structured output, not prose
+parsing. `text` is kept because it is what a copy-to-clipboard produces and what Phase 13 scores;
+the validators stop the scored text and the cited text becoming different things.
+
+**Revisit when.** Phase 10, if the model's claim-to-passage map turns out to need per-claim
+confidence too.
+
+---
+
+## [3] Demo fixtures quote nothing
+
+**Decision.** Every demo citation's passage reads "Demo passage. The retrieved provision would
+appear here…". Demo documents are named by their real published titles and pointed at by section
+heading rather than by number, and no demo answer carries an as-of date or corpus version.
+
+**Alternatives.** Write plausible statutory wording so the homepage looks fuller.
+
+**Why.** A fabricated provision is the exact failure mode this product exists to prevent, and a
+screenshot does not carry the word "demo" with it. Naming a real Act is a public fact; inventing
+what it says is not. Section numbers are omitted for the same reason — "Section 3(p)" typed from
+memory is a fabricated citation even when it happens to be right. A test asserts every demo passage
+begins "Demo passage." and every demo answer has a null as-of date.
+
+**Revisit when.** Phase 11 ingests real documents and the fixtures are replaced rather than
+elaborated.
+
+---
+
+## [3] The five non-English sample questions need a native speaker before demo
+
+**Decision.** `home.languages.samples` carries one specimen question per script. The Hindi and
+Telugu strings come from the gold set in `docs/CORPUS_POLICY.md`. The Tamil, Bengali and Marathi
+strings are my own composition.
+
+**Status: unverified.** They are short, simple sentences, but I cannot check them the way a speaker
+can, and they sit on the homepage where a wrong one is embarrassing in exactly the way this project
+should not be.
+
+**Why it is recorded rather than fixed.** The alternative was to show only English specimens on a
+page whose subject is answering in six languages, or to quietly ship text I cannot vouch for. This
+records the third option: ship it, and say plainly which strings need checking.
+
+**Revisit when.** Before any demo. A speaker of each language reads these five lines.
+
+---
+
+## [3] The workspace answers with the demo fixture, and says so
+
+**Decision.** `/sahayak` reads `?q`, echoes the question, and renders the illustrative answer under
+a caution callout stating that every question currently returns this example.
+
+**Alternatives.** Have the hero navigate to a page that ignores the question; or hold the hero input
+back until Phase 7.
+
+**Why.** Phase 3 requires a working question box, and a box that navigates somewhere the question
+disappears is not working. Rendering a demo answer without saying it is the same answer for every
+question would be worse — that is a product pretending to retrieve. The callout is the honest third
+option, and it costs one sentence.
+
+**Revisit when.** Phase 7 builds the real workspace and Phase 10 puts retrieval behind it.
+
+---
+
+## [3] No arrow on the Ask button
+
+**Decision.** The submit button reads "Ask", with no trailing arrow glyph.
+
+**Why.** The banned list rules out "->" appended to link and button text. An `ArrowRight` icon is
+the same tell wearing an icon font, and it was in the first version of this button until the browser
+pass. Recorded because it is the kind of thing that creeps back in.

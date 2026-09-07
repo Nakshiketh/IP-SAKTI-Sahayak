@@ -68,3 +68,39 @@ def test_record_is_never_citable() -> None:
             title="Another",
             citable_in_answers=True,  # type: ignore[arg-type]
         )
+
+
+def test_block_text_must_match_its_claims() -> None:
+    """Citation is claim-level; the flat text cannot drift from the claims."""
+    from app.models.domain import AnswerBlock, AnswerBlockKind, Claim
+
+    block = AnswerBlock(
+        id="b1",
+        kind=AnswerBlockKind.ANSWER,
+        text="First sentence. Second sentence.",
+        citation_ids=["c1"],
+        claims=[
+            Claim(text="First sentence.", citation_ids=["c1"]),
+            Claim(text="Second sentence.", citation_ids=[]),
+        ],
+    )
+    assert len(block.claims) == 2
+    # A claim with no citations is allowed, and renders as general explanation.
+    assert block.claims[1].citation_ids == []
+
+    with pytest.raises(ValidationError):
+        AnswerBlock(
+            id="b2",
+            kind=AnswerBlockKind.ANSWER,
+            text="Something else entirely.",
+            claims=[Claim(text="First sentence.")],
+        )
+
+    with pytest.raises(ValidationError):
+        AnswerBlock(
+            id="b3",
+            kind=AnswerBlockKind.ANSWER,
+            text="First sentence.",
+            citation_ids=[],
+            claims=[Claim(text="First sentence.", citation_ids=["c1"])],
+        )
