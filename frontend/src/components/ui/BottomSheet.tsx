@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { cn } from '@/lib/cn';
@@ -16,6 +17,7 @@ interface BottomSheetProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  /** Defaults to the translated "Close". */
   closeLabel?: string;
   className?: string;
 }
@@ -25,9 +27,10 @@ export function BottomSheet({
   onClose,
   title,
   children,
-  closeLabel = 'Close',
+  closeLabel,
   className,
 }: BottomSheetProps) {
+  const { t } = useTranslation('common');
   const panel = useRef<HTMLDivElement>(null);
   useFocusTrap(panel, open, onClose);
 
@@ -58,7 +61,7 @@ export function BottomSheet({
           <button
             type="button"
             onClick={onClose}
-            aria-label={closeLabel}
+            aria-label={closeLabel ?? t('actions.close')}
             className="rounded-data p-1 text-muted hover:bg-surface-sunk hover:text-ink"
           >
             <X size={16} aria-hidden="true" />

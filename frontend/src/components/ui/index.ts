@@ -1,6 +1,7 @@
 export { Badge, type BadgeTone } from './Badge';
 export { BottomSheet } from './BottomSheet';
-export { Button, type ButtonVariant } from './Button';
+export { Button } from './Button';
+export { buttonStyles, type ButtonVariant } from './buttonStyles';
 export { Callout, type CalloutTone } from './Callout';
 export { Card, CardRow, LedgerEntry, type CardVariant } from './Card';
 export { Chip, type ChipTone } from './Chip';

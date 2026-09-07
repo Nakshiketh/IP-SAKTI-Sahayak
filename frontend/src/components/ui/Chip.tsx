@@ -1,4 +1,5 @@
 import { X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 import { cn } from '@/lib/cn';
 
@@ -38,6 +39,7 @@ export function Chip({
   selected = false,
   className,
 }: ChipProps) {
+  const { t } = useTranslation('common');
   const shared = cn(
     'inline-flex items-center gap-1.5 rounded-control border px-2.5 py-1 text-xs',
     'transition-colors duration-quick ease-incise',
@@ -53,7 +55,7 @@ export function Chip({
         <button
           type="button"
           onClick={onRemove}
-          aria-label={removeLabel ?? 'Remove'}
+          aria-label={removeLabel ?? t('actions.remove')}
           className="-mr-0.5 rounded-data p-0.5 hover:bg-ink/10"
         >
           <X size={12} aria-hidden="true" />

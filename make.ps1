@@ -37,6 +37,7 @@ switch ($Target) {
     Write-Host 'test            run every test suite, including the schema-drift contract'
     Write-Host 'lint            ruff, eslint, prettier and tsc'
     Write-Host 'schema          regenerate schemas/domain.schema.json from the Pydantic model'
+    Write-Host 'i18n            sync every locale with the English key set, then report coverage'
     Write-Host 'ingest          build the source corpus (Phase 11)'
     Write-Host 'ingest-records  load the records layer (Phase 12)'
     Write-Host 'evals           run the evaluation harness (Phase 13)'
@@ -72,6 +73,14 @@ switch ($Target) {
     Push-Location "$Root\frontend"; & npm run format; Pop-Location
   }
   'schema' { & $Py "$Root\scripts\gen_schema.py" }
+  'i18n' {
+    & node "$Root\scripts\i18n-seed.ts"
+    & node "$Root\scripts\i18n-coverage.ts"
+  }
+  'i18n-check' {
+    & node "$Root\scripts\i18n-seed.ts" --check
+    & node "$Root\scripts\i18n-coverage.ts"
+  }
   'ingest' {
     Write-Host 'The corpus pipeline arrives in Phase 11. Nothing is ingested yet, and no'
     Write-Host 'index is built. See docs/MASTER_BUILD.md, Phase 11.'

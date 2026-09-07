@@ -191,3 +191,91 @@ script or preload all six, which is worse than none. It lands in Phase 2 with th
 Recorded here rather than left implicit so the honesty audit has something to check it against.
 
 **Revisit when.** Phase 2.
+
+---
+
+## [2] An ESLint rule enforces "no hard-coded user-facing strings"
+
+**Decision.** `i18next/no-literal-string` runs over `src/**/*.tsx` in `jsx-only` mode, covering JSX
+text and the attributes a reader can perceive (`alt`, `aria-label`, `placeholder`, `title`). Two
+exclusions: the `/design` specimen, which is a development surface not registered in a production
+build, and test files.
+
+**Alternatives.** Review discipline; a pre-commit grep.
+
+**Why.** The sixth language stops being a real translation the first time someone types a word
+straight into JSX, and nobody notices, because the person who typed it reads English. The rule was
+verified by injecting a literal heading and an `alt` attribute and confirming both were reported.
+
+**Revisit when.** The exclusion list grows past those two entries — that would mean it is being used
+to avoid the rule rather than to scope it.
+
+---
+
+## [2] Some copy belongs to a component, not to its caller
+
+**Decision.** `RecordCard` owns the "filed or granted record — not a statement of law" label and
+`ConfidenceMeter` owns the four level names. Both read them from the `common` namespace themselves
+rather than taking them as props.
+
+**Alternatives.** Pass them in, which is the usual way to keep a primitive presentational.
+
+**Why.** These strings state product rules. A prop can be omitted, or passed something else; a
+string the component fetches itself cannot. It is the same reasoning as typing `citable_in_answers`
+as `Literal[False]` — put the rule where it cannot be routed around. The cost is that two primitives
+now depend on i18n, which is why the test setup initialises it.
+
+**Revisit when.** A caller has a legitimate need to vary one of these, which would mean the rule
+itself has changed.
+
+---
+
+## [2] The footer says "no sources indexed yet" rather than "0 documents"
+
+**Decision.** The source line reads `/api/v1/corpus-version` through `useCorpusStatus`. With zero
+documents it renders "No sources indexed yet · v{version}"; when the API cannot be reached it says
+the information is unavailable. The specified "Sources as of {date} · {n} documents · v{version}"
+form is used once there is a corpus.
+
+**Alternatives.** Render the specified string with a zero in it; or bake a build-time constant.
+
+**Why.** "0 documents" presents a count as though a count were the fact, when the fact is that
+nothing has been ingested. And a baked constant would duplicate the value the backend already owns,
+which is precisely how a footer ends up stating something that stopped being true. The unavailable
+case follows the same rule the answer surface follows: say you do not know rather than guess.
+
+**Revisit when.** Phase 11, when a corpus exists and the first branch starts being used.
+
+---
+
+## [2] The mobile menu contributes no `nav` landmark
+
+**Decision.** The links inside the mobile dialog sit in a plain `<ul>`, not a second `<nav>`.
+
+**Alternatives.** A second `<nav>` with the same "Main" label, or with a different one.
+
+**Why.** Both navigations are in the DOM at once — they are separated by CSS breakpoints, not by
+rendering — so a `<nav aria-label="Main">` in each produced two landmarks with one name, which axe
+reports as `landmark-unique` and which a screen-reader user has to disambiguate for no reason. The
+dialog is already named "Menu" and traps focus, which is what a reader on a phone needs.
+
+**Revisit when.** The two navigations stop coexisting in the DOM.
+
+---
+
+## [2] Locale files are seeded with English and flagged, never machine-translated
+
+**Decision.** `node scripts/i18n-seed.ts` copies the English string into every other locale and sets
+`__untranslated: true` on the file. Coverage currently reports 0% for hi, te, ta, bn and mr, and
+`scripts/i18n-coverage.ts` prints that table.
+
+**Alternatives.** Machine-translate the interface copy now so the demo shows six working languages.
+
+**Why.** This product's whole claim is that it does not assert what it cannot support. Shipping an
+unreviewed machine translation of "It does not provide legal advice, grant intellectual-property
+rights, approve products" would be exactly the failure the product exists to avoid — in the one
+sentence where it matters most. The seeded English is visibly a placeholder, and the coverage table
+says so in a number.
+
+**Revisit when.** A speaker of each language reviews a translation, at which point the flag comes off
+that file.

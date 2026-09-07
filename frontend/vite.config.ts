@@ -14,10 +14,10 @@ export default defineConfig({
   server: {
     port: 5173,
     proxy: {
-      // The frontend talks to the mock service layer until Phase 10. This proxy
-      // exists so flipping one env var is all it takes to talk to the real API.
+      // Where the dev server forwards /api. Override with SAHAYAK_API_TARGET when
+      // the backend is not on its default port — port 8000 is popular.
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: process.env.SAHAYAK_API_TARGET ?? 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },

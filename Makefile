@@ -16,6 +16,7 @@ help:
 	@echo "test            run every test suite, including the schema-drift contract"
 	@echo "lint            ruff, eslint, prettier and tsc"
 	@echo "schema          regenerate schemas/domain.schema.json from the Pydantic model"
+	@echo "i18n            sync every locale with the English key set, then report coverage"
 	@echo "ingest          build the source corpus from corpus/manifest.json (Phase 11)"
 	@echo "ingest-records  load the records layer from corpus/records-manifest.json (Phase 12)"
 	@echo "evals           run the evaluation harness and write a report (Phase 13)"
@@ -45,6 +46,7 @@ test-frontend:
 
 lint:
 	$(PY) -m ruff check .
+	node scripts/i18n-seed.ts --check
 	cd frontend && npm run lint && npm run format:check && npm run typecheck
 
 format:
@@ -53,6 +55,14 @@ format:
 
 schema:
 	$(PY) scripts/gen_schema.py
+
+i18n:
+	node scripts/i18n-seed.ts
+	node scripts/i18n-coverage.ts
+
+i18n-check:
+	node scripts/i18n-seed.ts --check
+	node scripts/i18n-coverage.ts
 
 ingest:
 	@echo "The corpus pipeline arrives in Phase 11. Nothing is ingested yet, and"

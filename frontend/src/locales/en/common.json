@@ -1,0 +1,59 @@
+{
+  "brand": {
+    "name": "IP-SAKTI Sahayak",
+    "descriptor": "Ayurveda, intellectual property and regulation"
+  },
+  "nav": {
+    "label": "Main",
+    "home": "Home",
+    "sahayak": "Ask Sahayak",
+    "covered": "What's covered",
+    "howItWorks": "How it works",
+    "sources": "Sources",
+    "about": "About"
+  },
+  "cta": {
+    "ask": "Ask Sahayak"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Close menu",
+    "title": "Menu"
+  },
+  "language": {
+    "label": "Language",
+    "changed": "Language changed to {{language}}"
+  },
+  "skipToContent": "Skip to content",
+  "footer": {
+    "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
+    "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
+    "sourceMetaEmpty": "No sources indexed yet · v{{version}}",
+    "sourceMetaUnavailable": "Source information is unavailable right now."
+  },
+  "notFound": {
+    "title": "There is no page here",
+    "body": "The address may be mistyped, or the page may have been renamed.",
+    "action": "Go to the homepage"
+  },
+  "actions": {
+    "close": "Close",
+    "remove": "Remove"
+  },
+  "record": {
+    "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
+    "recordType": "Record type",
+    "applicant": "Applicant",
+    "status": "Status"
+  },
+  "confidence": {
+    "high": "High confidence",
+    "moderate": "Moderate confidence",
+    "low": "Low confidence",
+    "abstain": "Not answered",
+    "meter": "{{label}}: {{filled}} of {{total}}"
+  },
+  "sourceRule": {
+    "unsourcedTooltip": "General explanation, not from a specific source."
+  }
+}

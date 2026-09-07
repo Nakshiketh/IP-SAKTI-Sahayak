@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+
 import { cn } from '@/lib/cn';
 import type { Confidence } from '@/types/domain';
 
@@ -28,15 +30,19 @@ interface ConfidenceMeterProps {
   className?: string;
 }
 
-const LEVELS: Record<Confidence, { ticks: number; label: string; mark: string; word: string }> = {
-  high: { ticks: 4, label: 'High confidence', mark: 'text-leaf', word: 'text-ink' },
-  moderate: { ticks: 3, label: 'Moderate confidence', mark: 'text-sap', word: 'text-ink' },
-  low: { ticks: 2, label: 'Low confidence', mark: 'text-ink/60', word: 'text-ink' },
-  abstain: { ticks: 0, label: 'Not answered', mark: 'text-lac', word: 'text-lac' },
+const TOTAL_TICKS = 4;
+
+const LEVELS: Record<Confidence, { ticks: number; mark: string; word: string }> = {
+  high: { ticks: 4, mark: 'text-leaf', word: 'text-ink' },
+  moderate: { ticks: 3, mark: 'text-sap', word: 'text-ink' },
+  low: { ticks: 2, mark: 'text-ink/60', word: 'text-ink' },
+  abstain: { ticks: 0, mark: 'text-lac', word: 'text-lac' },
 };
 
 export function ConfidenceMeter({ level, reason, className }: ConfidenceMeterProps) {
-  const { ticks, label, mark, word } = LEVELS[level];
+  const { t } = useTranslation('common');
+  const { ticks, mark, word } = LEVELS[level];
+  const label = t(`confidence.${level}`);
 
   return (
     <div className={cn('flex flex-wrap items-baseline gap-x-2 gap-y-1', className)}>
@@ -44,9 +50,9 @@ export function ConfidenceMeter({ level, reason, className }: ConfidenceMeterPro
         <span
           className={cn('inline-flex items-end gap-[2px]', mark)}
           role="img"
-          aria-label={`${label}: ${ticks} of 4`}
+          aria-label={t('confidence.meter', { label, filled: ticks, total: TOTAL_TICKS })}
         >
-          {[0, 1, 2, 3].map((i) => (
+          {Array.from({ length: TOTAL_TICKS }, (_, i) => (
             <span
               key={i}
               className={cn(

@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { cn } from '@/lib/cn';
@@ -16,18 +17,13 @@ interface DrawerProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+  /** Defaults to the translated "Close". */
   closeLabel?: string;
   className?: string;
 }
 
-export function Drawer({
-  open,
-  onClose,
-  title,
-  children,
-  closeLabel = 'Close',
-  className,
-}: DrawerProps) {
+export function Drawer({ open, onClose, title, children, closeLabel, className }: DrawerProps) {
+  const { t } = useTranslation('common');
   const panel = useRef<HTMLDivElement>(null);
   useFocusTrap(panel, open, onClose);
 
@@ -58,7 +54,7 @@ export function Drawer({
           <button
             type="button"
             onClick={onClose}
-            aria-label={closeLabel}
+            aria-label={closeLabel ?? t('actions.close')}
             className="rounded-data p-1 text-muted hover:bg-surface-sunk hover:text-ink"
           >
             <X size={16} aria-hidden="true" />
