@@ -80,7 +80,10 @@ def test_the_graph_states_no_legal_consequence() -> None:
     ("answers", "expected"),
     [
         ({"external_use": "yes"}, ("cosmetic",)),
-        ({"external_use": "no", "food_route": "yes", "therapeutic_claim": "no"}, ("ayurveda_aahar",)),
+        (
+            {"external_use": "no", "food_route": "yes", "therapeutic_claim": "no"},
+            ("ayurveda_aahar",),
+        ),
         (
             {"external_use": "no", "food_route": "yes", "therapeutic_claim": "yes"},
             ("ayurveda_aahar", "patent_proprietary"),

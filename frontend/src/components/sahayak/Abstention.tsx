@@ -3,9 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { Button, Callout, ConfidenceMeter, buttonStyles } from '@/components/ui';
 import { SourceCard } from '@/components/answer/SourceCard';
-import type { QueryResult } from '@/services/query.mock';
-import { DEMO_ANSWERS } from '@/services/answers.mock';
-import type { AbstainReason } from '@/types/domain';
+import type { QueryResult } from '@/services/query';
+import type { AbstainReason, Citation } from '@/types/domain';
 
 /**
  * The system declining to answer. A state, not an error.
@@ -41,18 +40,22 @@ export function Abstention({
   const { t: tc } = useTranslation('common');
 
   const reason = result.confidence.abstainReason ?? 'nothing_relevant';
-  const citations = DEMO_ANSWERS[result.jurisdiction].citations;
 
-  const involved = SHOWS_PASSAGES.includes(reason)
-    ? citations.filter((citation) =>
-        result.evidence.passages.some(
-          (passage) =>
-            passage.citation_id === citation.citation_id &&
-            (reason === 'sources_out_of_date'
-              ? !passage.within_effective_window
-              : result.evidence.contradictions.flat().includes(passage.citation_id)),
-        ),
-      )
+  /**
+   * The passages that caused this abstention, taken from what was actually
+   * retrieved. There is no answer to read citations off — that is what
+   * abstaining means — so the card is built from the retrieval evidence and the
+   * source metadata the result carries with it.
+   */
+  const involved: Citation[] = SHOWS_PASSAGES.includes(reason)
+    ? result.evidence.passages
+        .filter((passage) =>
+          reason === 'sources_out_of_date'
+            ? !passage.within_effective_window
+            : result.evidence.contradictions.flat().includes(passage.citation_id),
+        )
+        .map((passage) => result.sources[passage.citation_id])
+        .filter((citation): citation is Citation => citation !== undefined)
     : [];
 
   return (
@@ -74,7 +77,14 @@ export function Abstention({
         <ul className="m-0 mt-4 list-none space-y-3 p-0">
           {involved.map((citation, index) => (
             <li key={citation.citation_id}>
-              <SourceCard citation={citation} number={index + 1} titleLevel={3} />
+              <SourceCard
+                citation={citation}
+                number={index + 1}
+                titleLevel={3}
+                {...(result.passages[citation.citation_id]
+                  ? { passage: result.passages[citation.citation_id] as string }
+                  : {})}
+              />
             </li>
           ))}
         </ul>

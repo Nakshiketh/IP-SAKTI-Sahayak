@@ -1,0 +1,390 @@
+{
+  "note": "Domain vocabulary for the understanding stage. Surface forms a reader might type, mapped to the domain's own terms. It records how people phrase things; it states no legal consequence and asserts nothing about what any instrument says.",
+  "ip_rights": {
+    "patent": [
+      "patent",
+      "patents",
+      "patentable",
+      "patentability",
+      "invention",
+      "inventions",
+      "inventive step",
+      "novelty",
+      "novel",
+      "prior art",
+      "specification",
+      "provisional",
+      "claims",
+      "pct",
+      "granted patent"
+    ],
+    "trademark": [
+      "trademark",
+      "trade mark",
+      "brand",
+      "brand name",
+      "mark",
+      "logo",
+      "wordmark",
+      "class 5",
+      "nice classification",
+      "opposition",
+      "passing off"
+    ],
+    "geographical_indication": [
+      "geographical indication",
+      "gi",
+      "gi tag",
+      "origin",
+      "regional",
+      "terroir",
+      "authorised user",
+      "registered proprietor"
+    ],
+    "copyright": [
+      "copyright",
+      "literary work",
+      "artwork",
+      "packaging artwork",
+      "manual",
+      "monograph text"
+    ],
+    "design": [
+      "design registration",
+      "industrial design",
+      "shape of the article",
+      "surface ornamentation",
+      "bottle shape",
+      "packaging shape"
+    ],
+    "plant_variety": [
+      "plant variety",
+      "ppvfr",
+      "farmers rights",
+      "extant variety",
+      "new variety",
+      "denomination",
+      "seed"
+    ],
+    "trade_secret": [
+      "trade secret",
+      "confidential",
+      "know how",
+      "know-how",
+      "undisclosed",
+      "non disclosure",
+      "nda",
+      "process secrecy"
+    ],
+    "traditional_knowledge": [
+      "traditional knowledge",
+      "tk",
+      "classical text",
+      "classical formulation",
+      "authoritative text",
+      "tkdl",
+      "documented knowledge",
+      "community knowledge",
+      "folk",
+      "ethnomedicine"
+    ]
+  },
+  "regulatory_areas": {
+    "licensing": [
+      "licence",
+      "license",
+      "licensing",
+      "manufacturing licence",
+      "loan licence",
+      "approval to manufacture",
+      "state licensing authority",
+      "form 25",
+      "permission to manufacture"
+    ],
+    "manufacturing_gmp": [
+      "gmp",
+      "good manufacturing practice",
+      "premises",
+      "plant and machinery",
+      "manufacturing site",
+      "in house testing",
+      "schedule t",
+      "hygiene",
+      "qualified technical staff"
+    ],
+    "quality_standards": [
+      "standards",
+      "pharmacopoeia",
+      "pharmacopoeial",
+      "identity purity strength",
+      "heavy metals",
+      "pesticide residue",
+      "microbial limits",
+      "shelf life",
+      "stability",
+      "assay",
+      "specification of the drug"
+    ],
+    "labelling": [
+      "label",
+      "labelling",
+      "labeling",
+      "pack",
+      "packaging",
+      "carton",
+      "leaflet",
+      "insert",
+      "declaration on the label",
+      "batch number",
+      "date of manufacture",
+      "caution statement"
+    ],
+    "advertising": [
+      "advertisement",
+      "advertising",
+      "advert",
+      "claim on the pack",
+      "health claim",
+      "therapeutic claim",
+      "objectionable advertisement",
+      "endorsement",
+      "influencer",
+      "magic remedies"
+    ],
+    "food_nutraceutical": [
+      "food",
+      "nutraceutical",
+      "supplement",
+      "dietary supplement",
+      "health supplement",
+      "fssai",
+      "aahar",
+      "ayurveda aahar",
+      "food business operator",
+      "fbo"
+    ],
+    "cosmetic": [
+      "cosmetic",
+      "cosmetics",
+      "skin",
+      "hair oil",
+      "external application",
+      "toiletry",
+      "beauty",
+      "appearance"
+    ],
+    "clinical_evidence": [
+      "clinical",
+      "clinical trial",
+      "safety and effectiveness",
+      "human evidence",
+      "toxicity",
+      "pharmacology",
+      "pilot study",
+      "ethics committee",
+      "informed consent"
+    ],
+    "import_export": [
+      "import",
+      "export",
+      "customs",
+      "shipment",
+      "consignment",
+      "certificate of pharmaceutical product",
+      "free sale certificate",
+      "registration in the destination",
+      "overseas",
+      "abroad",
+      "foreign market"
+    ],
+    "abs_compliance": [
+      "access and benefit sharing",
+      "abs",
+      "benefit sharing",
+      "biological resource",
+      "biological diversity",
+      "nagoya",
+      "biodiversity board",
+      "national biodiversity authority",
+      "nba",
+      "wild collect",
+      "wild collection",
+      "bioresource",
+      "prior informed consent",
+      "disclosure of source"
+    ]
+  },
+  "product_class_hints": {
+    "classical_generic": [
+      "classical",
+      "classical formulation",
+      "authoritative text",
+      "unmodified",
+      "as in the text",
+      "generic ayurvedic"
+    ],
+    "patent_proprietary": [
+      "proprietary",
+      "patent or proprietary",
+      "our own formulation",
+      "modified formulation",
+      "reformulated",
+      "changed the proportions",
+      "new dosage form"
+    ],
+    "new_non_classical_drug": [
+      "new drug",
+      "novel ingredient",
+      "non classical",
+      "not in any text",
+      "new molecule"
+    ],
+    "phytopharmaceutical": [
+      "phytopharmaceutical",
+      "purified fraction",
+      "standardised extract",
+      "standardized extract",
+      "isolated compound",
+      "enriched extract"
+    ],
+    "ayurveda_aahar": [
+      "ayurveda aahar",
+      "food route",
+      "supplement route",
+      "nutraceutical route"
+    ],
+    "cosmetic": [
+      "cosmetic route",
+      "beauty product",
+      "skincare",
+      "hair care"
+    ]
+  },
+  "entities": {
+    "dosage_form": [
+      "churna",
+      "vati",
+      "gutika",
+      "asava",
+      "arishta",
+      "taila",
+      "ghrita",
+      "lehya",
+      "avaleha",
+      "bhasma",
+      "rasayana",
+      "kwatha",
+      "capsule",
+      "tablet",
+      "syrup",
+      "oil",
+      "powder",
+      "granule",
+      "ointment",
+      "cream"
+    ],
+    "market": [
+      "india",
+      "united kingdom",
+      "uk",
+      "european union",
+      "eu",
+      "united states",
+      "usa",
+      "us",
+      "canada",
+      "australia",
+      "japan",
+      "brazil",
+      "china",
+      "russia",
+      "nigeria",
+      "kenya",
+      "indonesia",
+      "gulf",
+      "uae"
+    ],
+    "actor": [
+      "manufacturer",
+      "exporter",
+      "startup",
+      "researcher",
+      "practitioner",
+      "farmer",
+      "cooperative",
+      "community",
+      "trader"
+    ]
+  },
+  "expansions": {
+    "gi": [
+      "geographical",
+      "indication"
+    ],
+    "tk": [
+      "traditional",
+      "knowledge"
+    ],
+    "abs": [
+      "access",
+      "benefit",
+      "sharing"
+    ],
+    "gmp": [
+      "good",
+      "manufacturing",
+      "practice"
+    ],
+    "nba": [
+      "national",
+      "biodiversity",
+      "authority"
+    ],
+    "ip": [
+      "intellectual",
+      "property"
+    ],
+    "ipr": [
+      "intellectual",
+      "property"
+    ],
+    "sme": [
+      "small",
+      "enterprise"
+    ],
+    "nda": [
+      "non",
+      "disclosure",
+      "agreement"
+    ],
+    "tkdl": [
+      "traditional",
+      "knowledge",
+      "digital",
+      "library"
+    ]
+  },
+  "clarification": {
+    "note": "A question that turns on which of these routes a product is on cannot be answered until the reader says. Two or more of these families in one question, with no product class set, is the signal.",
+    "families": {
+      "medicine": [
+        "medicine",
+        "drug",
+        "ayurvedic medicine",
+        "therapeutic"
+      ],
+      "food": [
+        "food",
+        "nutraceutical",
+        "supplement",
+        "aahar",
+        "dietary"
+      ],
+      "cosmetic": [
+        "cosmetic",
+        "beauty",
+        "toiletry"
+      ]
+    }
+  }
+}

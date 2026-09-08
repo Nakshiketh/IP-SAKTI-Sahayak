@@ -61,6 +61,11 @@ export interface ConfidenceResult {
 export function scoreConfidence(evidence: RetrievalEvidence): ConfidenceResult {
   const candidates = evidence.passages.filter((p) => p.rerank_score >= RERANK_FLOOR);
   const strong = candidates.filter((p) => p.rerank_score >= RERANK_STRONG);
+  // A contradiction only counts between passages that cleared the floor. Two
+  // passages that disagree, neither of which bears on the question, is not a
+  // disagreement about the answer — it is noise that happens to be in tension.
+  const ids = new Set(candidates.map((p) => p.citation_id));
+  const contradictions = evidence.contradictions.filter(([a, b]) => ids.has(a) && ids.has(b));
   const documents = new Set(candidates.map((p) => p.document_id));
   const strongDocuments = new Set(strong.map((p) => p.document_id));
   const allInWindow = candidates.every((p) => p.within_effective_window);
@@ -89,7 +94,7 @@ export function scoreConfidence(evidence: RetrievalEvidence): ConfidenceResult {
 
   // A contradiction between the only passages available is not a weak answer,
   // it is two answers. Showing one of them would be picking a side silently.
-  if (evidence.contradictions.length > 0 && strong.length < 2) {
+  if (contradictions.length > 0 && strong.length < 2) {
     return {
       level: 'abstain',
       reasonKey: 'abstainConflict',
@@ -119,7 +124,7 @@ export function scoreConfidence(evidence: RetrievalEvidence): ConfidenceResult {
   }
 
   // A surviving contradiction caps the answer at low, whatever else is true.
-  if (evidence.contradictions.length > 0) {
+  if (contradictions.length > 0) {
     return {
       level: 'low',
       reasonKey: 'lowContradiction',

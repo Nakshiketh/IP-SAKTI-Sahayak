@@ -1,6 +1,16 @@
 """Runtime settings, read from the environment or a local .env file.
 
 Nothing secret is committed. `.env.example` lists the keys; `.env` is gitignored.
+
+Phase 10 adds the pipeline's settings. Two of them decide how much of the system
+is real on any given machine:
+
+* ``llm_provider`` picks the generator. ``fixture`` is the offline default and
+  refuses to write over anything but demo passages, so an unconfigured install
+  can demo but can never dress a fixture answer up as retrieval from a real
+  document.
+* ``translator`` picks the translation implementation. ``passthrough`` returns
+  the text unchanged and says so, rather than pretending to translate.
 """
 
 from __future__ import annotations
@@ -38,13 +48,72 @@ class Settings(BaseSettings):
     data_dir: Path = Field(default=REPO_ROOT / "data")
     corpus_dir: Path = Field(default=REPO_ROOT / "corpus")
 
-    #: Set in Phase 10. Absent here on purpose — nothing calls a model yet.
+    # -- retrieval ---------------------------------------------------------
+
+    #: Candidates each channel contributes before fusion.
+    retrieval_candidates: int = 30
+    #: Passages that survive reranking and are packed into the context.
+    rerank_keep: int = 8
+    #: Reciprocal rank fusion constant. 60 is the value the method was published
+    #: with; named here so a change to it is a decision rather than a tweak.
+    fusion_k: int = 60
+    #: Token budget for the packed passages, and the most any one document may
+    #: take of it. The second number is what stops one long act filling the
+    #: window and turning a four-source answer into a one-source answer.
+    context_token_budget: int = 6000
+    context_max_share_per_document: float = 0.5
+
+    # -- generation --------------------------------------------------------
+
+    #: "fixture" | "anthropic". See `app.llm.registry`.
+    llm_provider: str = "fixture"
+    llm_model: str = "claude-sonnet-5"
     llm_api_key: str | None = None
+    llm_base_url: str = "https://api.anthropic.com"
+    llm_timeout_seconds: float = 60.0
+    llm_max_output_tokens: int = 2000
+    #: Recorded on every audit row, so an answer can be traced to the exact
+    #: instruction that produced it.
+    prompt_version: str = "2026-09-08.1"
+
+    # -- translation -------------------------------------------------------
+
+    #: "passthrough" | "bhashini". See `app.services.translation`.
+    translator: str = "passthrough"
     bhashini_api_key: str | None = None
+    bhashini_base_url: str = "https://dhruva-api.bhashini.gov.in"
+    bhashini_pipeline_id: str | None = None
+
+    # -- limits ------------------------------------------------------------
+
+    #: Requests a session may make per window, and the window in seconds.
+    rate_limit_requests: int = 30
+    rate_limit_window_seconds: int = 60
+    #: Largest request body the API will read, in bytes.
+    max_request_bytes: int = 32_768
+    #: Longest question accepted, in characters.
+    max_question_chars: int = 2_000
+
+    # -- audit -------------------------------------------------------------
+
+    audit_enabled: bool = True
 
     @property
     def cors_origin_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
+
+    @property
+    def index_dir(self) -> Path:
+        """Where Phase 11 writes the built index. Absent until it runs."""
+        return self.data_dir / "index"
+
+    @property
+    def fixtures_dir(self) -> Path:
+        return self.data_dir / "fixtures"
+
+    @property
+    def audit_db_path(self) -> Path:
+        return self.data_dir / "audit.sqlite3"
 
 
 @lru_cache

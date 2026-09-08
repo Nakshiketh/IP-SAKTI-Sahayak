@@ -22,6 +22,7 @@ coverage/
 # The manifest and the fetch recipe are committed; the documents are not.
 /data/index/
 /data/chunks/
+/data/audit.sqlite3
 /corpus/raw/
 /evals/reports/*.json
 

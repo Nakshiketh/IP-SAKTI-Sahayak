@@ -56,13 +56,19 @@ export function AnswerView({
 
   function selectCitation(citationId: string) {
     setActiveCitationId(citationId);
+    // `scrollIntoView` is optional: jsdom does not implement it, and neither
+    // do some embedded browsers. Following a marker still selects the card;
+    // only the scroll is skipped.
     document
       .getElementById(`${answer.answer_id}-source-${citationId}`)
-      ?.scrollIntoView({ block: 'nearest' });
+      ?.scrollIntoView?.({ block: 'nearest' });
   }
 
   return (
-    <div className={cn('grid gap-8', hideSources ? null : 'lg:grid-cols-[1fr_20rem]', className)}>
+    <div
+      data-answered="true"
+      className={cn('grid gap-8', hideSources ? null : 'lg:grid-cols-[1fr_20rem]', className)}
+    >
       <div>
         <div className="flex flex-wrap items-center gap-2 border-b border-rule pb-3">
           <Badge>{t(`jurisdiction.${answer.jurisdiction}`)}</Badge>

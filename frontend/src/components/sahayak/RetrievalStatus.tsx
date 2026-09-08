@@ -2,7 +2,8 @@ import { useTranslation } from 'react-i18next';
 
 import { Disclosure, LiveRegion } from '@/components/ui';
 import { RERANK_FLOOR } from '@/services/confidence';
-import type { QueryResult } from '@/services/query.mock';
+import type { QueryResult } from '@/services/query';
+import type { Jurisdiction } from '@/types/domain';
 import { cn } from '@/lib/cn';
 
 /**
@@ -20,33 +21,46 @@ import { cn } from '@/lib/cn';
 
 export type StatusPhase = 'searching' | 'reading' | 'done';
 
+/** What retrieval reported it found, before the answer itself arrives. */
+export interface RetrievalCount {
+  passages: number;
+  documents: number;
+}
+
 interface RetrievalStatusProps {
   phase: StatusPhase;
-  result: QueryResult;
+  /** Null while the query is still running. */
+  result: QueryResult | null;
+  jurisdiction: Jurisdiction;
+  /** The live count, so the second line is a report rather than a guess. */
+  found?: RetrievalCount | null;
   className?: string;
 }
 
-export function RetrievalStatus({ phase, result, className }: RetrievalStatusProps) {
+export function RetrievalStatus({
+  phase,
+  result,
+  jurisdiction,
+  found = null,
+  className,
+}: RetrievalStatusProps) {
   const { t } = useTranslation('sahayak');
   const { t: tc } = useTranslation('common');
 
-  const candidates = result.evidence.passages.filter((p) => p.rerank_score >= RERANK_FLOOR);
-  const documents = new Set(candidates.map((p) => p.document_id)).size;
-  const seconds = (result.totalMs / 1000).toFixed(1);
-  const jurisdictionName = tc(`jurisdiction.${result.jurisdiction}`);
+  const jurisdictionName = tc(`jurisdiction.${jurisdiction}`);
 
-  if (phase !== 'done') {
+  if (phase !== 'done' || result === null) {
     return (
       <div className={cn('text-xs text-muted', className)}>
         {/* Assertive, and only on a state change — this is the one thing a
             reader is actively waiting on. */}
         <LiveRegion urgency="assertive">
           <p className="max-w-none">
-            {result.jurisdiction === 'IN' ? t('status.searchingIn') : t('status.searchingIntl')}
+            {jurisdiction === 'IN' ? t('status.searchingIn') : t('status.searchingIntl')}
           </p>
-          {phase === 'reading' ? (
+          {found ? (
             <p className="mt-1 max-w-none">
-              {t('status.reading', { passages: candidates.length, documents })}
+              {t('status.reading', { passages: found.passages, documents: found.documents })}
             </p>
           ) : null}
         </LiveRegion>
@@ -54,8 +68,21 @@ export function RetrievalStatus({ phase, result, className }: RetrievalStatusPro
     );
   }
 
+  const candidates = result.evidence.passages.filter((p) => p.rerank_score >= RERANK_FLOOR);
+  const documents = new Set(candidates.map((p) => p.document_id)).size;
+  const seconds = (result.totalMs / 1000).toFixed(1);
+
   return (
     <div className={cn('text-xs text-muted', className)}>
+      {result.route.inferred && result.route.marker ? (
+        <p className="mb-2 max-w-none border-l-2 border-stamp pl-2 text-xs">
+          {t('status.routedElsewhere', {
+            marker: result.route.marker,
+            jurisdiction: jurisdictionName,
+          })}
+        </p>
+      ) : null}
+
       <Disclosure
         summary={
           <span>

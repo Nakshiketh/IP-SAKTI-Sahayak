@@ -7,7 +7,7 @@
  * from a field somebody typed.
  */
 
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { MemoryRouter } from 'react-router-dom';
@@ -15,7 +15,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { i18n } from '@/i18n';
 import Sahayak from '@/routes/Sahayak';
-import { classifyQuestion, runQuery } from '@/services/query.mock';
+import { buildMockResult, classifyQuestion } from '@/services/query.mock';
 
 function setViewport(width: number) {
   vi.stubGlobal('matchMedia', (query: string) => {
@@ -33,12 +33,23 @@ function setViewport(width: number) {
   });
 }
 
-function ask(question: string) {
-  return render(
+/**
+ * Asking is a request now, even against the mock, so every call settles first.
+ * The three markers below are the three terminal states of the workspace, and
+ * waiting for any of them is what "the query finished" means.
+ */
+async function ask(question: string) {
+  const view = render(
     <MemoryRouter initialEntries={[`/sahayak?q=${encodeURIComponent(question)}`]}>
       <Sahayak />
     </MemoryRouter>,
   );
+  await waitFor(() =>
+    expect(
+      document.querySelector('[data-answered], [data-abstained], [data-failed]'),
+    ).not.toBeNull(),
+  );
+  return view;
 }
 
 beforeEach(async () => {
@@ -65,19 +76,19 @@ describe('all five abstention states can be reached', () => {
       'needs_more_facts',
       'turns on something only you can tell me',
     ],
-  ])('%s abstains with reason %s', (question, reason, heading) => {
-    const result = runQuery(question, 'IN');
+  ])('%s abstains with reason %s', async (question, reason, heading) => {
+    const result = buildMockResult(question, 'IN');
     expect(result.answer).toBeNull();
     expect(result.confidence.level).toBe('abstain');
     expect(result.confidence.abstainReason).toBe(reason);
 
-    const { container } = ask(question);
+    const { container } = await ask(question);
     const region = container.querySelector('[data-abstained="true"]') as HTMLElement;
     expect(within(region).getByText(new RegExp(heading, 'i'))).toBeInTheDocument();
   });
 
-  it('marks the abstention in the DOM so it cannot be mistaken for an answer', () => {
-    const { container } = ask('What dose should a 60-year-old take?');
+  it('marks the abstention in the DOM so it cannot be mistaken for an answer', async () => {
+    const { container } = await ask('What dose should a 60-year-old take?');
     const region = container.querySelector('[data-abstained="true"]');
     expect(region).toBeTruthy();
     expect(region).toHaveAttribute('data-abstain-reason', 'out_of_scope');
@@ -86,8 +97,8 @@ describe('all five abstention states can be reached', () => {
     expect(screen.queryByRole('heading', { name: 'What to check' })).toBeNull();
   });
 
-  it('offers a way forward rather than a dead end', () => {
-    ask('What are the rules in Brazil?');
+  it('offers a way forward rather than a dead end', async () => {
+    await ask('What are the rules in Brazil?');
     for (const label of [
       'Rephrase the question',
       'Pick a jurisdiction',
@@ -101,8 +112,8 @@ describe('all five abstention states can be reached', () => {
     }
   });
 
-  it('shows both passages when the sources disagree, rather than picking one', () => {
-    ask('Do the sources conflict on this?');
+  it('shows both passages when the sources disagree, rather than picking one', async () => {
+    await ask('Do the sources conflict on this?');
     const region = document.querySelector('[data-abstained="true"]')!;
     expect(within(region as HTMLElement).getAllByRole('article').length).toBeGreaterThanOrEqual(2);
   });
@@ -113,13 +124,13 @@ describe('records never rescue an abstention', () => {
     const user = userEvent.setup();
     // This question routes to "nothing relevant" and also matches records.
     const question = 'What are the rules in Brazil for our herbal formulation patent?';
-    const result = runQuery(question, 'IN');
+    const result = buildMockResult(question, 'IN');
 
     expect(result.relatedRecords.length).toBeGreaterThan(0);
     expect(result.answer).toBeNull();
     expect(result.confidence.level).toBe('abstain');
 
-    ask(question);
+    await ask(question);
     expect(document.querySelector('[data-abstained="true"]')).toBeTruthy();
 
     await user.click(screen.getByRole('tab', { name: /Related records/ }));
@@ -127,9 +138,9 @@ describe('records never rescue an abstention', () => {
     expect(screen.getByText(/The system still declined/)).toBeInTheDocument();
   });
 
-  it('gives the confidence function no way to see them', () => {
-    const withRecords = runQuery('our herbal formulation patent in Brazil', 'IN');
-    const withoutRecords = runQuery('the rules in Brazil', 'IN');
+  it('gives the confidence function no way to see them', async () => {
+    const withRecords = buildMockResult('our herbal formulation patent in Brazil', 'IN');
+    const withoutRecords = buildMockResult('the rules in Brazil', 'IN');
     expect(withRecords.relatedRecords.length).toBeGreaterThan(0);
     expect(withoutRecords.relatedRecords).toHaveLength(0);
     // Same evidence, same level, whatever records came along.
@@ -138,16 +149,16 @@ describe('records never rescue an abstention', () => {
 });
 
 describe('confidence comes from the scoring function', () => {
-  it('differs between jurisdictions because their evidence differs', () => {
-    const india = runQuery('What should we work out first?', 'IN');
-    const uk = runQuery('What should we work out first?', 'INTL');
+  it('differs between jurisdictions because their evidence differs', async () => {
+    const india = buildMockResult('What should we work out first?', 'IN');
+    const uk = buildMockResult('What should we work out first?', 'INTL');
     expect(india.confidence.level).toBe('high');
     expect(uk.confidence.level).toBe('low');
     expect(india.answer?.confidence).toBe('high');
   });
 
-  it('shows the level with its reason, never a bare number', () => {
-    ask('What should we work out first?');
+  it('shows the level with its reason, never a bare number', async () => {
+    await ask('What should we work out first?');
     expect(screen.getByRole('img', { name: /High confidence: 4 of 4/ })).toBeInTheDocument();
     expect(screen.getByText(/Based on 4 passages from 4 current sources\./)).toBeInTheDocument();
     expect(screen.queryByText(/%$/)).toBeNull();
@@ -157,7 +168,7 @@ describe('confidence comes from the scoring function', () => {
 describe('retrieval status', () => {
   it('collapses to one summary line that expands to the scores', async () => {
     const user = userEvent.setup();
-    ask('What should we work out first?');
+    await ask('What should we work out first?');
 
     const summary = screen.getByRole('button', { name: /passages from .* documents/ });
     expect(summary).toHaveAttribute('aria-expanded', 'false');
@@ -169,23 +180,23 @@ describe('retrieval status', () => {
     expect(screen.getAllByText(/retrieval 0\.\d\d · rerank 0\.\d\d/).length).toBeGreaterThan(0);
   });
 
-  it('says plainly when nothing cleared the threshold', () => {
-    ask('What are the rules in Brazil?');
+  it('says plainly when nothing cleared the threshold', async () => {
+    await ask('What are the rules in Brazil?');
     expect(screen.getByText(/No passages cleared the threshold/)).toBeInTheDocument();
   });
 });
 
 describe('follow-ups and handoff', () => {
-  it('offers follow-ups drawn from what the answer left open', () => {
-    const result = runQuery('What should we work out first?', 'IN');
+  it('offers follow-ups drawn from what the answer left open', async () => {
+    const result = buildMockResult('What should we work out first?', 'IN');
     expect(result.followUps.length).toBeGreaterThan(0);
-    ask('What should we work out first?');
+    await ask('What should we work out first?');
     expect(screen.getByText('Where this leaves off')).toBeInTheDocument();
   });
 
   it('packages the question and every source into a handoff summary', async () => {
     const user = userEvent.setup();
-    ask('What should we work out first?');
+    await ask('What should we work out first?');
 
     await user.click(screen.getByRole('button', { name: 'Get someone to look at this' }));
     const dialog = screen.getByRole('dialog', { name: 'Send this to a human' });
@@ -201,34 +212,34 @@ describe('follow-ups and handoff', () => {
 });
 
 describe('classification of questions', () => {
-  it('routes clinical and outcome questions out of scope', () => {
+  it('routes clinical and outcome questions out of scope', async () => {
     expect(classifyQuestion('What dosage is safe?')).toBe('out_of_scope');
     expect(classifyQuestion('Will our patent be granted?')).toBe('out_of_scope');
     expect(classifyQuestion('Can you draft the application for us?')).toBe('out_of_scope');
   });
 
-  it('answers an ordinary question', () => {
+  it('answers an ordinary question', async () => {
     expect(classifyQuestion('Can we register our brand name?')).toBe('answer');
   });
 });
 
 describe('accessibility of the answer surface', () => {
   it('has no axe violations on an answer', async () => {
-    const { container } = ask('What should we work out first?');
+    const { container } = await ask('What should we work out first?');
     const results = await axe.run(container, { resultTypes: ['violations'] });
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   }, 30_000);
 
   it('has no axe violations on an abstention', async () => {
-    const { container } = ask('What dose should a 60-year-old take?');
+    const { container } = await ask('What dose should a 60-year-old take?');
     const results = await axe.run(container, { resultTypes: ['violations'] });
     expect(results.violations.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
   }, 30_000);
 });
 
 describe('flows are offered by answers, never from navigation', () => {
-  it('offers the classification flow while the product type is unknown', () => {
-    ask('What should we work out first?');
+  it('offers the classification flow while the product type is unknown', async () => {
+    await ask('What should we work out first?');
     // One heading for the group, however many flows are offered.
     expect(screen.getAllByText('This depends on something the answer does not know')).toHaveLength(
       1,
@@ -236,8 +247,8 @@ describe('flows are offered by answers, never from navigation', () => {
     expect(screen.getByRole('button', { name: 'Work out the product type' })).toBeInTheDocument();
   });
 
-  it('offers it on an abstention that turns on the product type', () => {
-    ask('Is our product a medicine or a food?');
+  it('offers it on an abstention that turns on the product type', async () => {
+    await ask('Is our product a medicine or a food?');
     expect(document.querySelector('[data-abstained="true"]')).toBeTruthy();
     // The gap the abstention names is exactly the gap the flow fills.
     expect(
@@ -247,7 +258,7 @@ describe('flows are offered by answers, never from navigation', () => {
 
   it('opens the flow and sets the product type into the session context', async () => {
     const user = userEvent.setup();
-    ask('What should we work out first?');
+    await ask('What should we work out first?');
 
     await user.click(screen.getByRole('button', { name: 'Work out the product type' }));
     const dialog = screen.getByRole('dialog', { name: 'What is your product, regulatorily?' });
@@ -260,7 +271,7 @@ describe('flows are offered by answers, never from navigation', () => {
 
   it('stops offering the classification flow once the product type is known', async () => {
     const user = userEvent.setup();
-    ask('What should we work out first?');
+    await ask('What should we work out first?');
 
     await user.click(screen.getByRole('button', { name: 'Work out the product type' }));
     const dialog = screen.getByRole('dialog', { name: 'What is your product, regulatorily?' });
@@ -271,8 +282,8 @@ describe('flows are offered by answers, never from navigation', () => {
     expect(screen.queryByRole('button', { name: 'Work out the product type' })).toBeNull();
   });
 
-  it('is reachable from nowhere else — the flows are not navigation', () => {
-    ask('What should we work out first?');
+  it('is reachable from nowhere else — the flows are not navigation', async () => {
+    await ask('What should we work out first?');
     const nav = screen.queryByRole('navigation');
     if (nav) {
       expect(within(nav).queryByText(/Work out the product type/)).toBeNull();

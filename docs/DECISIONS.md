@@ -824,3 +824,197 @@ identical buttons in a row — each now says what it works out. And the offer he
 per card; it belongs to the group.
 
 **Revisit when.** A fourth flow appears and the rules for offering them need to move out of the page.
+
+---
+
+## [10] The mock boundary moved to the index, not to the API
+
+**Decision.** The API is real end to end. Refusal, language detection, query understanding,
+jurisdiction routing, hybrid retrieval, fusion, reranking, context assembly, citation verification,
+confidence scoring, translation selection and auditing all run on every question. What is still
+fixture is the *store retrieval reads*: `data/fixtures/demo-corpus.json`, whose chunks carry real
+document titles, organizations and section headings with placeholder passage bodies, every one
+marked `demo`.
+
+**Alternatives.** Keep the whole query path mocked behind the API and swap it in Phase 11; or ship
+retrieval against an empty index and let every question abstain until the corpus lands.
+
+**Why.** The second is honest and undemoable — an assistant that abstains on everything cannot be
+shown, evaluated or tuned. The first is demoable and dishonest in the way that matters: it looks
+like retrieval working. Putting the boundary at the index gets both. Retrieval genuinely scores a
+question against the fixture's metadata, so which passages come back, how many clear the floor and
+what confidence is reached all fall out of the question asked — a question about Brazil abstains
+because nothing scored, not because a keyword said so. And what Phase 11 replaces is one file behind
+one interface.
+
+**The rule that keeps it honest.** `FixtureLLMClient` refuses to generate unless *every* packed
+passage is marked demo. Hand it one real retrieved passage and it raises. So a checked-in answer can
+never end up sitting on top of a real document, which is the failure this arrangement would
+otherwise invite.
+
+**Revisit when.** Phase 11 builds the index. `Namespaces` already prefers a built store per
+jurisdiction and falls back to the fixture independently, so a half-ingested corpus serves real
+passages for India and demo passages for International without either passing for the other.
+
+---
+
+## [10] A refusal to generate is an error, not an abstention
+
+**Decision.** Two failure surfaces, never merged. Abstaining is the system working: it retrieved, it
+judged the evidence too thin, and it says which of five reasons applies and what the reader can do
+next. A failure is the system not working — nothing reachable, or nothing configured that is allowed
+to write an answer. Those arrive as HTTP errors with a machine `code`, render through
+`QueryFailure` rather than `Abstention`, and offer a retry rather than a rephrase.
+
+**Alternatives.** Add `model_unavailable` to `AbstainReason` and let the abstention surface carry it.
+
+**Why.** "I could not find anything in these sources that answers this reliably" is a statement
+about the corpus. Saying it when the real problem is an unset API key blames the sources for a
+deployment gap, and a reader would reasonably conclude their question is not covered. It also
+degrades the one signal the abstention surface exists to carry. Rephrasing fixes an abstention; it
+fixes nothing here, so the affordance differs too.
+
+**Revisit when.** A failure mode appears that is genuinely about the evidence rather than the
+deployment.
+
+---
+
+## [10] Citation ids are chunk ids
+
+**Decision.** `Citation.citation_id == Citation.chunk_id`. A citation is a pointer to a passage, and
+it is given no second identity.
+
+**Alternatives.** Generate per-answer ids and keep a mapping.
+
+**Why.** A generated id is one more thing to keep in step and one more place a claim can end up
+pointing at nothing. With the chunk id, verifying a claim is a set-membership test against the ids
+that were actually packed, and a citation in a log traces to a passage with no lookup table. The
+cost is that ids are long and appear in DOM ids, so chunk ids are constrained to `[a-z0-9-]`.
+
+**Revisit when.** The same chunk needs citing twice in one answer under different section labels,
+which section-aware chunking is specifically meant to avoid.
+
+---
+
+## [10] A contradiction only counts between passages that cleared the floor
+
+**Decision.** `score_confidence` filters `contradictions` to pairs where both passages are
+candidates. Two passages in declared tension, neither of which bears on the question, no longer
+abstain the answer. The rule changed in both implementations, and the shared case set in
+`evals/confidence-cases.json` gained a case for it.
+
+**Why.** Found by running the pipeline over the demo corpus: a question about declaring a biological
+source in a patent application retrieved two conflicting fixture passages at rerank scores around
+0.14 — well under the 0.35 floor — and abstained with `sources_conflict`. The reader would have been
+told the sources disagree about their question when neither source was about their question. A
+contradiction is only a contradiction *about this answer* if both sides are evidence for it.
+
+**Revisit when.** Ingestion starts populating `conflicts_with` from real instruments and the shape
+of a genuine conflict is visible.
+
+---
+
+## [10] Contradictions come from ingestion, never from reading the text
+
+**Decision.** `find_contradictions` reports a pair only where a chunk names another retrieved chunk
+in `conflicts_with`, or where one retrieved chunk is superseded by a document another belongs to.
+Two passages that read as opposites, with nothing declared, are not a contradiction, and a test
+asserts that.
+
+**Alternatives.** Detect tension by comparing wording, with the model or with a heuristic.
+
+**Why.** Guessing is expensive in one direction: a missed contradiction shows one side of a genuine
+disagreement as settled. Rather than guess in the safe direction and abstain constantly, the signal
+is made explicit and put where it can be reviewed — ingestion, where a person decides that two
+instruments conflict.
+
+**Revisit when.** Phase 11 has to populate it, and the question becomes what evidence justifies the
+flag.
+
+---
+
+## [10] Only candidates are packed into the context
+
+**Decision.** Passages below `RERANK_FLOOR` are retrieved, shown in the "passages considered" list
+with their scores, and never packed. So no claim can cite one.
+
+**Why.** Also found by running the pipeline: an answer came back citing four passages when only one
+had cleared the floor, because everything reranked was packed and the generator was free to hang a
+claim on any of it. The confidence rule had already discounted those passages; letting a citation
+rest on one meant the number shown and the sources shown disagreed about the same evidence.
+
+**Revisit when.** The floor is tuned against the gold set in Phase 13.
+
+---
+
+## [10] The reranker scores reach, standing and labelling — and needs two words
+
+**Decision.** `LexicalReranker` blends how much of the question a passage covers (reach, 0.3), how
+much of what the candidate set *can speak to at all* it covers (standing, 0.45), and whether the
+passage's own title, section path and topics are about the question (labelling, 0.25). A passage
+matching fewer than two distinct query terms has its whole score scaled down in proportion.
+
+**Alternatives.** Reach alone, normalised over every word typed.
+
+**Why.** Reach alone punishes long questions for containing words the corpus never uses: the
+homepage's own demo question scored every passage under the floor and abstained. Standing alone is
+worse — a question sharing one word with one passage gives that passage everything the corpus can
+offer, and "what are the patent rules in Brazil" scored 0.59 against a document titled
+"...composition rules". The breadth gate closes that: one word in common is a coincidence, two is
+the beginning of a match.
+
+**Revisit when.** A cross-encoder is configured. This is the contract it has to honour — a
+calibrated score in [0, 1], because the confidence thresholds are stated against that scale.
+
+---
+
+## [10] The audit log holds no question text
+
+**Decision.** Rows carry the session id, jurisdiction, retrieved passage ids, model, prompt version,
+corpus version, latency, confidence, abstention reason, neutralised-span count and dropped-claim
+count. They do not carry the question, the answer, any user identity or any address. A truncated
+unsalted SHA-256 of the question is kept so the same question can be recognised as the same one.
+
+**Alternatives.** Store the question, to enable evaluation on real traffic.
+
+**Why.** The audit exists to answer "did this system behave the way it says it does" — which
+passages, which version, which decision — and none of those need the reader's words. A store of the
+questions would be a store of what people are worried about in their own businesses, which is not a
+thing to accumulate by default. Evaluation runs against the authored gold set in `/evals`.
+
+**Revisit when.** Someone wants evaluation on real traffic, at which point it needs consent, a
+retention window and a deletion path — not a quiet change to this table.
+
+---
+
+## [10] The tokeniser keeps combining marks, and folds Latin suffixes
+
+**Decision.** A token is a run of alphanumerics *plus* Unicode marks (Mn, Mc, Me) and the two
+joiners. Latin-script tokens then lose one English inflectional suffix and a trailing vowel, so
+"manufacturing" and "manufacture" meet at "manufactur". Non-Latin tokens are returned untouched.
+
+**Why.** The mark rule is not a nicety. `str.isalnum()` is false for every Indic vowel sign and
+virama, so a scan trusting it alone cut the Devanagari for "medicine" after its consonant and split
+the Tamil for "product" at its virama — most of the text in four of the six languages this product
+serves. A test caught it. The suffix folder is the smallest thing that stops a question missing the
+section it is asking about; morphology beyond that is the dense channel's job, and terms of art are
+the lexicon's.
+
+**Revisit when.** The dense channel is built, at which point the folder can probably shrink.
+
+---
+
+## [10] The frontend chooses its service with one variable
+
+**Decision.** `VITE_SAHAYAK_API` is `live` (the default) or `mock`. `runQuery` in
+`src/services/query.ts` imports one implementation or the other; nothing above it knows which. The
+test suite defaults to `mock`.
+
+**Alternatives.** Delete the mock now that the API is real; or keep the mock as the default until
+the corpus lands.
+
+**Why.** Deleting it would make every component test depend on a running Python process, which is a
+slow and flaky thing to assert a rendering rule through. Keeping it as the default would mean the
+API path is the one nobody exercises. Live by default, mock under test, one switch.
+
+**Revisit when.** Phase 13, when the mock has outlived the demo it was written for.

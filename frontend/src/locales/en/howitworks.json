@@ -7,7 +7,7 @@
   "standfirst": "This page is for two readers: someone assessing the engineering, and someone deciding whether to trust an answer it gave them. It is the only page here that uses technical vocabulary, and it is the only page that describes machinery rather than law.",
   "status": {
     "heading": "What is actually built",
-    "body": "Most of what follows is designed and specified but not yet running. Each stage below carries its state, and nothing on this page is written in the present tense unless the code does it today. The one thing that would make this page useless is describing an ambition as a capability."
+    "body": "Every stage below now runs. What most of them still run over is a small set of demonstration sources, because no document has been ingested — so they are marked as built on illustrative data rather than as finished. Each stage carries its own state, nothing here is written in the present tense unless the code does it today, and translation is marked unbuilt because returning text unchanged is not translating it. The one thing that would make this page useless is describing an ambition as a capability."
   },
   "pipeline": {
     "navLabel": "The pipeline",

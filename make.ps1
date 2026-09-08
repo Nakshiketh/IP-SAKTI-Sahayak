@@ -34,6 +34,7 @@ switch ($Target) {
     Write-Host 'install         install backend and frontend dependencies'
     Write-Host 'dev-backend     run the API on http://127.0.0.1:8000'
     Write-Host 'dev-frontend    run the web app on http://localhost:5173'
+    Write-Host '                (set VITE_SAHAYAK_API=mock to run it with no backend)'
     Write-Host 'test            run every test suite, including the schema-drift contract'
     Write-Host 'lint            ruff, eslint, prettier and tsc'
     Write-Host 'schema          regenerate schemas/domain.schema.json from the Pydantic model'
@@ -45,7 +46,8 @@ switch ($Target) {
   }
   'install' {
     Invoke-Step 'backend deps' {
-      & $Py -m pip install fastapi 'uvicorn[standard]' pydantic pydantic-settings pytest httpx ruff
+      $Backend = Join-Path $Root 'backend'
+      & $Py -m pip install -e "$Backend[dev]"
     }
     Invoke-Step 'frontend deps' { Push-Location "$Root\frontend"; & npm install; Pop-Location }
   }
@@ -75,8 +77,8 @@ switch ($Target) {
   }
   'schema' { & $Py "$Root\scripts\gen_schema.py" }
   'manifest' {
-    & $Py "$Root\scriptsuild_manifest.py"
-    & $Py "$Root\scriptsuild_records_manifest.py"
+    & $Py (Join-Path $Root 'scripts\build_manifest.py')
+    & $Py (Join-Path $Root 'scripts\build_records_manifest.py')
   }
   'i18n' {
     & node "$Root\scripts\i18n-seed.ts"

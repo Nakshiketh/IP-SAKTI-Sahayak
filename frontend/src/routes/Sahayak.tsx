@@ -12,7 +12,12 @@ import { AnswerPanel } from '@/components/sahayak/AnswerPanel';
 import { Composer } from '@/components/sahayak/Composer';
 import { ContextLine } from '@/components/sahayak/ContextLine';
 import { EscalationForm } from '@/components/sahayak/EscalationForm';
-import { RetrievalStatus, type StatusPhase } from '@/components/sahayak/RetrievalStatus';
+import { QueryFailure } from '@/components/sahayak/QueryFailure';
+import {
+  RetrievalStatus,
+  type RetrievalCount,
+  type StatusPhase,
+} from '@/components/sahayak/RetrievalStatus';
 import { StarterQuestions } from '@/components/sahayak/StarterQuestions';
 import {
   Badge,
@@ -30,7 +35,8 @@ import { DESKTOP_QUERY, TABLET_QUERY, useMediaQuery } from '@/hooks/useMediaQuer
 import { findLocale, type LocaleCode } from '@/i18n/languages';
 import { answerToText } from '@/lib/answerText';
 import { cn } from '@/lib/cn';
-import { MOCK_LATENCY_MS, runQuery } from '@/services/query.mock';
+import { QueryError, runQuery, type QueryErrorCode, type QueryResult } from '@/services/query';
+import { sessionId } from '@/services/session';
 import { PRODUCT_CLASSES, type Jurisdiction, type ProductClass } from '@/types/domain';
 
 /**
@@ -39,10 +45,15 @@ import { PRODUCT_CLASSES, type Jurisdiction, type ProductClass } from '@/types/d
  * One centred column until an answer exists; three at desktop width once it
  * does. Zero decisions before the first answer.
  *
- * The answer surface is real: confidence comes from `scoreConfidence` run over
- * the retrieval evidence, and an abstention is a first-class outcome rather than
- * an error toast. What is still mocked is the retrieval — Phase 10 replaces the
- * service behind `runQuery` without the components above it changing.
+ * The answer surface is real: confidence is computed from the evidence, and an
+ * abstention is a first-class outcome rather than an error toast. Asking is now
+ * a real request against the API, which streams its stages as it runs, and the
+ * two status lines report what actually happened rather than a delay.
+ *
+ * Failing and abstaining are kept apart here as firmly as anywhere in the
+ * product. An abstention renders through `Abstention` with a reason and what to
+ * do next; a failure renders through `QueryFailure` with a retry. Nothing
+ * collapses them into one "sorry" state.
  */
 
 const MARKETS = ['uk', 'eu', 'us'] as const;
@@ -71,6 +82,10 @@ export default function Sahayak() {
   const [railOpen, setRailOpen] = useState(false);
   const [escalateOpen, setEscalateOpen] = useState(false);
   const [phase, setPhase] = useState<StatusPhase>('done');
+  const [result, setResult] = useState<QueryResult | null>(null);
+  const [failure, setFailure] = useState<QueryErrorCode | null>(null);
+  const [found, setFound] = useState<RetrievalCount | null>(null);
+  const [attempt, setAttempt] = useState(0);
   const [openFlow, setOpenFlow] = useState<FlowKind | null>(null);
   const [copied, setCopied] = useState<'answer' | 'link' | null>(null);
 
@@ -80,11 +95,6 @@ export default function Sahayak() {
 
   const hasAnswer = question.length > 0;
   const threeColumn = hasAnswer && isDesktop;
-
-  const result = useMemo(
-    () => (hasAnswer ? runQuery(question, jurisdiction) : null),
-    [hasAnswer, question, jurisdiction],
-  );
   const abstained = result !== null && result.answer === null;
 
   /**
@@ -110,26 +120,49 @@ export default function Sahayak() {
       setQuestion(text);
       setParams({ q: text }, { replace: true });
       setStartersOpen(false);
-      setPhase('searching');
+      setAttempt((n) => n + 1);
     },
     [setParams],
   );
 
-  // Two status lines, then the summary. The delays live in the mock service
-  // rather than here, because they stand in for work the pipeline will actually
-  // do — Phase 10 replaces them with a real stream.
+  /**
+   * One request per question, jurisdiction, product type and answer language.
+   *
+   * Changing any of them is a different question of the sources, so it is asked
+   * again rather than filtered client-side. The previous request is aborted, so
+   * a slow answer to an abandoned question can never overwrite a fast one.
+   */
   useEffect(() => {
-    if (phase === 'done') return;
-    const toReading = window.setTimeout(() => setPhase('reading'), MOCK_LATENCY_MS.searching);
-    const toDone = window.setTimeout(
-      () => setPhase('done'),
-      MOCK_LATENCY_MS.searching + MOCK_LATENCY_MS.reading,
-    );
-    return () => {
-      window.clearTimeout(toReading);
-      window.clearTimeout(toDone);
-    };
-  }, [phase]);
+    if (!question) return;
+    const controller = new AbortController();
+    setPhase('searching');
+    setResult(null);
+    setFailure(null);
+    setFound(null);
+
+    runQuery(question, {
+      jurisdiction,
+      productClass,
+      languageOut: language,
+      sessionId: sessionId(),
+      signal: controller.signal,
+      onRetrieved: (count) => {
+        setFound(count);
+        setPhase('reading');
+      },
+    })
+      .then((next) => {
+        setResult(next);
+        setPhase('done');
+      })
+      .catch((error: unknown) => {
+        if (error instanceof DOMException && error.name === 'AbortError') return;
+        setFailure(error instanceof QueryError ? error.code : 'unknown');
+        setPhase('done');
+      });
+
+    return () => controller.abort();
+  }, [question, jurisdiction, productClass, language, attempt]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -196,10 +229,7 @@ export default function Sahayak() {
             <JurisdictionToggle
               aria-label={t('jurisdictionLabel')}
               value={jurisdiction}
-              onChange={(next) => {
-                setJurisdiction(next);
-                if (hasAnswer) setPhase('searching');
-              }}
+              onChange={setJurisdiction}
               labels={{ IN: tc('jurisdiction.IN'), INTL: tc('jurisdiction.INTL') }}
             />
           </div>
@@ -278,23 +308,35 @@ export default function Sahayak() {
             <StarterQuestions onPick={ask} open={startersOpen} onOpenChange={setStartersOpen} />
           ) : null}
 
-          {result ? (
+          {hasAnswer ? (
             <section className="mt-8">
               <p className="text-xs text-muted">{t('answer.questionLabel')}</p>
               <p className="mt-1 max-w-measure text-md">{question}</p>
 
-              <RetrievalStatus phase={phase} result={result} className="mt-4" />
+              <RetrievalStatus
+                phase={phase}
+                result={result}
+                jurisdiction={jurisdiction}
+                found={found}
+                className="mt-4"
+              />
 
-              {phase === 'done' ? (
+              {failure !== null ? (
+                <QueryFailure code={failure} onRetry={() => setAttempt((n) => n + 1)} />
+              ) : null}
+
+              {phase === 'done' && result ? (
                 <>
-                  <Callout
-                    tone="caution"
-                    title={tc('answer.demoChip')}
-                    titleLevel={2}
-                    className="mt-5 max-w-measure"
-                  >
-                    {t('demoNotice')}
-                  </Callout>
+                  {result.isDemo ? (
+                    <Callout
+                      tone="caution"
+                      title={tc('answer.demoChip')}
+                      titleLevel={2}
+                      className="mt-5 max-w-measure"
+                    >
+                      {t('demoNotice')}
+                    </Callout>
+                  ) : null}
 
                   <LiveRegion urgency="polite" visuallyHidden>
                     {abstained

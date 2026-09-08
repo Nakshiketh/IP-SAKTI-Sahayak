@@ -1,0 +1,388 @@
+{
+  "note": "DEMO DATA - not a legal source. Every chunk here is served with verification_status \"demo\" and every answer built on it is marked is_demo, so demo content can never pass for a retrieved source. The passage bodies are placeholders: no document has been ingested, so nothing is quoted. What is real is the metadata - the document titles, the organizations and the headings name published instruments and the parts of them a question would reach, and retrieval genuinely scores a question against them. Phase 11 replaces this file with the ingested corpus.",
+  "corpus_version": "0.0.0-demo",
+  "documents": [
+    {
+      "document_id": "demo-in-drugs-and-cosmetics-act-1940",
+      "document_title": "The Drugs and Cosmetics Act, 1940",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "document_type": "act",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-in-patents-act-1970",
+      "document_title": "The Patents Act, 1970",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "document_type": "act",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-in-drugs-and-cosmetics-rules-1945",
+      "document_title": "The Drugs and Cosmetics Rules, 1945",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "document_type": "rules",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-in-biological-diversity-act-2002",
+      "document_title": "The Biological Diversity Act, 2002",
+      "organization": "Government of India",
+      "jurisdiction": "IN",
+      "document_type": "act",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-uk-traditional-herbal-registration",
+      "document_title": "Traditional herbal registration scheme",
+      "organization": "Medicines and Healthcare products Regulatory Agency",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-uk-food-supplements-labelling",
+      "document_title": "Food supplements: labelling and composition rules",
+      "organization": "Department of Health and Social Care",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-fixture-source-a",
+      "document_title": "Demonstration guidance on shelf-life declaration, first statement",
+      "organization": "Demonstration fixture",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-fixture-source-b",
+      "document_title": "Demonstration guidance on shelf-life declaration, second statement",
+      "organization": "Demonstration fixture",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": null
+    },
+    {
+      "document_id": "demo-fixture-superseded-notification",
+      "document_title": "Demonstration notification, no longer in force",
+      "organization": "Demonstration fixture",
+      "jurisdiction": "IN",
+      "document_type": "notification",
+      "source_url": null
+    }
+  ],
+  "chunks": [
+    {
+      "chunk_id": "demo-in-asu-drugs",
+      "document_id": "demo-in-drugs-and-cosmetics-act-1940",
+      "heading": "Ayurvedic, Siddha and Unani drugs",
+      "section_path": [
+        "Ayurvedic, Siddha and Unani drugs"
+      ],
+      "topics": [
+        "ayurvedic",
+        "siddha",
+        "unani",
+        "drug",
+        "medicine",
+        "classical",
+        "proprietary",
+        "patent or proprietary",
+        "formulation",
+        "preparation",
+        "category",
+        "classified",
+        "classification",
+        "authoritative text",
+        "first schedule",
+        "product",
+        "reformulated",
+        "modified",
+        "ingredient",
+        "proportion",
+        "dosage form",
+        "manufacture",
+        "sale",
+        "sell",
+        "definition",
+        "route",
+        "regulatory",
+        "what it is",
+        "polyherbal"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "regulatory_areas": [
+        "licensing"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary"
+      ]
+    },
+    {
+      "chunk_id": "demo-in-not-inventions",
+      "document_id": "demo-in-patents-act-1970",
+      "heading": "What are not inventions",
+      "section_path": [
+        "What are not inventions"
+      ],
+      "topics": [
+        "patent",
+        "patentable",
+        "patentability",
+        "invention",
+        "novelty",
+        "inventive step",
+        "prior art",
+        "traditional knowledge",
+        "known properties",
+        "aggregation",
+        "protect",
+        "protection",
+        "claim",
+        "formulation",
+        "composition",
+        "substance",
+        "mixture",
+        "discovery",
+        "new use",
+        "plant",
+        "duplication",
+        "classical",
+        "modified",
+        "reformulated",
+        "polyherbal"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "demo-in-manufacture-for-sale",
+      "document_id": "demo-in-drugs-and-cosmetics-rules-1945",
+      "heading": "Manufacture for sale of Ayurvedic drugs",
+      "section_path": [
+        "Manufacture for sale of Ayurvedic drugs"
+      ],
+      "topics": [
+        "licence",
+        "licensing",
+        "license",
+        "manufacture",
+        "manufacturing",
+        "premises",
+        "good manufacturing practice",
+        "state licensing authority",
+        "application",
+        "sale",
+        "sell",
+        "plant",
+        "machinery",
+        "technical staff",
+        "in place",
+        "before",
+        "requirement",
+        "need",
+        "approval",
+        "inspection",
+        "ayurvedic",
+        "drug",
+        "proprietary",
+        "classical",
+        "product",
+        "market"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "regulatory_areas": [
+        "licensing",
+        "manufacturing_gmp"
+      ]
+    },
+    {
+      "chunk_id": "demo-in-access-to-resources",
+      "document_id": "demo-in-biological-diversity-act-2002",
+      "heading": "Access to biological resources",
+      "section_path": [
+        "Access to biological resources"
+      ],
+      "topics": [
+        "biological resource",
+        "access",
+        "benefit sharing",
+        "approval",
+        "authority",
+        "commercial utilisation",
+        "herb",
+        "wild",
+        "wild collection",
+        "collect",
+        "declaration",
+        "biological source",
+        "compliance",
+        "commercialise",
+        "abs",
+        "patent application",
+        "knowledge",
+        "ingredient",
+        "plant",
+        "source",
+        "before"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "regulatory_areas": [
+        "abs_compliance"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "demo-uk-thr-eligibility",
+      "document_id": "demo-uk-traditional-herbal-registration",
+      "heading": "Eligibility for registration",
+      "section_path": [
+        "Eligibility for registration"
+      ],
+      "topics": [
+        "united kingdom",
+        "uk",
+        "herbal",
+        "registration",
+        "register",
+        "traditional use",
+        "evidence",
+        "therapeutic",
+        "indication",
+        "export",
+        "abroad",
+        "market",
+        "sell",
+        "selling",
+        "overseas",
+        "same product",
+        "change",
+        "route",
+        "medicine",
+        "licence",
+        "product",
+        "classified",
+        "first",
+        "modified",
+        "formulation"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "regulatory_areas": [
+        "licensing",
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "demo-uk-permitted-claims",
+      "document_id": "demo-uk-food-supplements-labelling",
+      "heading": "Permitted claims",
+      "section_path": [
+        "Permitted claims"
+      ],
+      "topics": [
+        "label",
+        "labelling",
+        "claim",
+        "health claim",
+        "food",
+        "supplement",
+        "permitted",
+        "composition",
+        "united kingdom",
+        "uk",
+        "pack",
+        "packaging",
+        "limit",
+        "sell",
+        "ingredient",
+        "nutrition",
+        "therapeutic",
+        "product",
+        "market"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "regulatory_areas": [
+        "labelling",
+        "food_nutraceutical",
+        "advertising"
+      ]
+    },
+    {
+      "chunk_id": "demo-fixture-conflict-a",
+      "document_id": "demo-fixture-source-a",
+      "heading": "Shelf life, stated one way",
+      "section_path": [
+        "Shelf life, stated one way"
+      ],
+      "topics": [
+        "shelf life",
+        "shelf",
+        "expiry",
+        "date of expiry",
+        "stability",
+        "storage",
+        "declare",
+        "declaration",
+        "label",
+        "period",
+        "best before",
+        "how long",
+        "month"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "conflicts_with": [
+        "demo-fixture-conflict-b"
+      ]
+    },
+    {
+      "chunk_id": "demo-fixture-conflict-b",
+      "document_id": "demo-fixture-source-b",
+      "heading": "Shelf life, stated another way",
+      "section_path": [
+        "Shelf life, stated another way"
+      ],
+      "topics": [
+        "shelf life",
+        "expiry",
+        "stability",
+        "declare"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "conflicts_with": [
+        "demo-fixture-conflict-a"
+      ]
+    },
+    {
+      "chunk_id": "demo-fixture-superseded",
+      "document_id": "demo-fixture-superseded-notification",
+      "heading": "A position that has since moved",
+      "section_path": [
+        "A position that has since moved"
+      ],
+      "topics": [
+        "superseded",
+        "supersede",
+        "repealed",
+        "repeal",
+        "replaced",
+        "obsolete",
+        "still current",
+        "out of date",
+        "no longer"
+      ],
+      "text": "Demo passage. The retrieved provision would appear here, in its original wording, with its section path and effective date. No document has been ingested yet, so nothing is quoted.",
+      "effective_from": "2015-01-01",
+      "effective_to": "2019-12-31"
+    }
+  ]
+}

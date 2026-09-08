@@ -1,0 +1,198 @@
+{
+  "note": "DEMO DATA - not a legal source. The illustrative answer, kept beside the demo corpus it cites so the two cannot drift. Read by the backend's fixture generator and by the frontend's mock service, which is why it lives here rather than in either. Two rules it follows, and any future fixture must: no invented statutory text - the passage bodies in demo-corpus.json say plainly that they are placeholders; and no invented section numbers or dates - where a source is named it is named by its published title and the heading of the part being pointed at.",
+  "question": "We have modified a classical polyherbal formulation and want to sell it in India and the UK. What should we work out first?",
+  "answers": {
+    "IN": {
+      "product_class": "patent_proprietary",
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge",
+        "trademark"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "manufacturing_gmp",
+        "abs_compliance"
+      ],
+      "blocks": [
+        {
+          "kind": "answer",
+          "claims": [
+            {
+              "text": "Work out what your product is regulatorily before anything else.",
+              "passage_ids": []
+            },
+            {
+              "text": "Changing the ingredients, proportions or dosage form of a classical formulation generally moves it out of the classical category and into the patent-or-proprietary route.",
+              "passage_ids": [
+                "demo-in-asu-drugs"
+              ]
+            },
+            {
+              "text": "That classification is what then decides which licence you need and what intellectual property is realistically open to you.",
+              "passage_ids": []
+            }
+          ]
+        },
+        {
+          "kind": "why",
+          "claims": [
+            {
+              "text": "For an Ayurvedic product these two questions are joined rather than separate.",
+              "passage_ids": []
+            },
+            {
+              "text": "A formulation taken unchanged from an authoritative text is documented traditional knowledge, which stands as prior art against a claim to the composition itself.",
+              "passage_ids": [
+                "demo-in-not-inventions"
+              ]
+            },
+            {
+              "text": "Once you have modified it, the question becomes whether what you changed is genuinely new, rather than an aggregation of properties already known.",
+              "passage_ids": [
+                "demo-in-not-inventions"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "what_to_check",
+          "claims": [
+            {
+              "text": "Record which authoritative text your starting formulation comes from, and exactly what you changed.",
+              "passage_ids": []
+            },
+            {
+              "text": "Confirm whether your manufacturing licence covers a patent or proprietary medicine rather than only classical preparations.",
+              "passage_ids": [
+                "demo-in-manufacture-for-sale"
+              ]
+            },
+            {
+              "text": "Establish whether any ingredient is a biological resource that carries access and benefit-sharing duties, before you file anything.",
+              "passage_ids": [
+                "demo-in-access-to-resources"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "caveat",
+          "claims": [
+            {
+              "text": "This does not tell you whether a patent application would succeed, and it is not a search for prior art.",
+              "passage_ids": []
+            },
+            {
+              "text": "It also does not settle the position in any other market, which is produced separately from different sources.",
+              "passage_ids": []
+            }
+          ]
+        }
+      ]
+    },
+    "INTL": {
+      "product_class": "patent_proprietary",
+      "ip_rights": [
+        "trademark"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "labelling",
+        "import_export"
+      ],
+      "blocks": [
+        {
+          "kind": "answer",
+          "claims": [
+            {
+              "text": "An Indian manufacturing licence does not carry across, so the route in the destination market has to be worked out on its own terms.",
+              "passage_ids": []
+            },
+            {
+              "text": "Where a herbal product is sold with therapeutic indications, the registration route turns on evidence of traditional use rather than on how the product is classified in India.",
+              "passage_ids": [
+                "demo-uk-thr-eligibility"
+              ]
+            },
+            {
+              "text": "If you make no therapeutic claim at all, a food or supplement route may apply instead, with quite different labelling rules.",
+              "passage_ids": [
+                "demo-uk-permitted-claims"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "why",
+          "claims": [
+            {
+              "text": "The two jurisdictions ask different questions, so their answers are produced separately and never merged.",
+              "passage_ids": []
+            },
+            {
+              "text": "What decides the Indian route is which category the formulation falls into; what decides the route here is what you claim the product does.",
+              "passage_ids": [
+                "demo-uk-thr-eligibility"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "what_to_check",
+          "claims": [
+            {
+              "text": "Decide what you intend to claim on the packaging, because that choice picks the route.",
+              "passage_ids": []
+            },
+            {
+              "text": "Assemble whatever evidence of traditional use you hold, and check what form it needs to be in.",
+              "passage_ids": [
+                "demo-uk-thr-eligibility"
+              ]
+            },
+            {
+              "text": "Check the ingredient list against what is permitted in the destination market rather than assuming the Indian formulation transfers.",
+              "passage_ids": [
+                "demo-uk-permitted-claims"
+              ]
+            }
+          ]
+        },
+        {
+          "kind": "caveat",
+          "claims": [
+            {
+              "text": "The sources found here are thinner than for the Indian position, and one of them is general guidance rather than a regulation.",
+              "passage_ids": []
+            },
+            {
+              "text": "Treat this as a starting point for a conversation with someone who handles the destination market.",
+              "passage_ids": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "records": [
+    {
+      "record_id": "demo-rec-1",
+      "source_id": "in-patent-applications-bulk",
+      "jurisdiction": "IN",
+      "record_type": "patent_application",
+      "title": "Herbal composition for joint discomfort and process of preparation thereof",
+      "applicant": "Illustrative applicant",
+      "status": "Published"
+    },
+    {
+      "record_id": "demo-rec-2",
+      "source_id": "in-patent-applications-bulk",
+      "jurisdiction": "IN",
+      "record_type": "patent_application",
+      "title": "Polyherbal formulation and method of standardising the same",
+      "applicant": "Illustrative applicant",
+      "status": "Under examination"
+    }
+  ]
+}

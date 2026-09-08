@@ -40,26 +40,34 @@ afterEach(() => {
 });
 
 describe('honesty about what is built', () => {
-  it('marks every unbuilt pipeline stage as designed rather than running', async () => {
+  it('separates a stage that is finished from one running on illustrative data', async () => {
     await renderSettled();
-    // Twelve of thirteen stages are not built. Only the answer surface exists,
-    // and it runs on illustrative data.
-    const planned = PIPELINE_STAGES.filter((stage) => stage.state === 'planned');
-    expect(planned).toHaveLength(12);
-    expect(PIPELINE_STAGES.filter((stage) => stage.state === 'demo')).toHaveLength(1);
-    expect(PIPELINE_STAGES.filter((stage) => stage.state === 'live')).toHaveLength(0);
+    // Reading the question, choosing a namespace and rendering do not depend on
+    // the corpus, so they are as real as they will get. Everything from
+    // retrieval to the abstention decision runs in full but over the fixture
+    // store. Translation has an interface and nothing behind it.
+    const by = (state: string) => PIPELINE_STAGES.filter((stage) => stage.state === state);
+    expect(by('live').map((stage) => stage.id)).toEqual([
+      'detect',
+      'understand',
+      'clarify',
+      'route',
+      'render',
+    ]);
+    expect(by('planned').map((stage) => stage.id)).toEqual(['translate']);
+    expect(by('demo')).toHaveLength(7);
   });
 
   it('shows the selected stage its build state', async () => {
     await renderSettled();
     const panel = screen.getByRole('tabpanel');
-    expect(within(panel).getByText('designed, not built')).toBeInTheDocument();
+    expect(within(panel).getByText('running')).toBeInTheDocument();
   });
 
-  it('says up front that most of the page describes unbuilt machinery', async () => {
+  it('says up front what runs and what it runs over', async () => {
     await renderSettled();
     expect(screen.getByText('What is actually built')).toBeInTheDocument();
-    expect(screen.getByText(/not yet running/i)).toBeInTheDocument();
+    expect(screen.getByText(/no document has been ingested/i)).toBeInTheDocument();
   });
 
   it('reports no evaluation numbers, because none have been produced', async () => {

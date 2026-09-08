@@ -11,6 +11,12 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+# The hosted-model client. Optional because the fixture generator answers over
+# demo passages with nothing installed, and a machine that only needs to run the
+# demo should not have to pull an SDK to do it.
+llm = [
+  "anthropic>=0.40",
+]
 dev = [
   "pytest>=8.3",
   "httpx>=0.27",

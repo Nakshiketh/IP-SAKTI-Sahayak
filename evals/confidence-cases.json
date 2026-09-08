@@ -1,97 +1,256 @@
 {
   "note": "Shared cases for the confidence rule. The TypeScript implementation in frontend/src/services/confidence.ts is checked against these, and the Python port in Phase 10 must be checked against the same file. A rule that disagrees between the two implementations is a rule nobody can state.",
-  "thresholds": { "rerank_floor": 0.35, "rerank_strong": 0.55 },
+  "thresholds": {
+    "rerank_floor": 0.35,
+    "rerank_strong": 0.55
+  },
   "cases": [
     {
       "name": "three strong passages from two documents, all current",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d1", "retrieval_score": 0.7, "rerank_score": 0.72, "within_effective_window": true },
-        { "citation_id": "c", "document_id": "d2", "retrieval_score": 0.7, "rerank_score": 0.66, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d1",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.72,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d2",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.66,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "high", "reasonKey": "high", "abstainReason": null }
+      "expect": {
+        "level": "high",
+        "reasonKey": "high",
+        "abstainReason": null
+      }
     },
     {
       "name": "three strong passages but all from one document",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d1", "retrieval_score": 0.7, "rerank_score": 0.72, "within_effective_window": true },
-        { "citation_id": "c", "document_id": "d1", "retrieval_score": 0.7, "rerank_score": 0.66, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d1",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.72,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d1",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.66,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "moderate", "reasonKey": "moderateSingleDocument", "abstainReason": null }
+      "expect": {
+        "level": "moderate",
+        "reasonKey": "moderateSingleDocument",
+        "abstainReason": null
+      }
     },
     {
       "name": "strong passages from two documents, one outside its window",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.7, "rerank_score": 0.72, "within_effective_window": false },
-        { "citation_id": "c", "document_id": "d2", "retrieval_score": 0.7, "rerank_score": 0.66, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.72,
+          "within_effective_window": false
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d2",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.66,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "moderate", "reasonKey": "moderateOutOfWindow", "abstainReason": null }
+      "expect": {
+        "level": "moderate",
+        "reasonKey": "moderateOutOfWindow",
+        "abstainReason": null
+      }
     },
     {
       "name": "two strong passages from two documents is thinner than high requires",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.7, "rerank_score": 0.72, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.72,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "moderate", "reasonKey": "moderateThin", "abstainReason": null }
+      "expect": {
+        "level": "moderate",
+        "reasonKey": "moderateThin",
+        "abstainReason": null
+      }
     },
     {
       "name": "candidates but none of them strong",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.5, "rerank_score": 0.42, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.5, "rerank_score": 0.38, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.5,
+          "rerank_score": 0.42,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.5,
+          "rerank_score": 0.38,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "low", "reasonKey": "lowWeak", "abstainReason": null }
+      "expect": {
+        "level": "low",
+        "reasonKey": "lowWeak",
+        "abstainReason": null
+      }
     },
     {
       "name": "a contradiction survives among several strong passages and caps at low",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.8, "rerank_score": 0.79, "within_effective_window": true },
-        { "citation_id": "c", "document_id": "d3", "retrieval_score": 0.7, "rerank_score": 0.68, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.79,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d3",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.68,
+          "within_effective_window": true
+        }
       ],
-      "contradictions": [["a", "b"]],
+      "contradictions": [
+        [
+          "a",
+          "b"
+        ]
+      ],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "low", "reasonKey": "lowContradiction", "abstainReason": null }
+      "expect": {
+        "level": "low",
+        "reasonKey": "lowContradiction",
+        "abstainReason": null
+      }
     },
     {
       "name": "a contradiction between the only two passages is two answers, not a weak one",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.5, "rerank_score": 0.4, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.5,
+          "rerank_score": 0.4,
+          "within_effective_window": true
+        }
       ],
-      "contradictions": [["a", "b"]],
+      "contradictions": [
+        [
+          "a",
+          "b"
+        ]
+      ],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "abstain", "reasonKey": "abstainConflict", "abstainReason": "sources_conflict" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainConflict",
+        "abstainReason": "sources_conflict"
+      }
     },
     {
       "name": "nothing cleared the retrieval floor",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.3, "rerank_score": 0.2, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.3,
+          "rerank_score": 0.2,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "abstain", "reasonKey": "abstainNothing", "abstainReason": "nothing_relevant" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainNothing",
+        "abstainReason": "nothing_relevant"
+      }
     },
     {
       "name": "no passages at all",
@@ -99,42 +258,152 @@
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "abstain", "reasonKey": "abstainNothing", "abstainReason": "nothing_relevant" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainNothing",
+        "abstainReason": "nothing_relevant"
+      }
     },
     {
       "name": "out of scope, whatever was retrieved",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.9, "rerank_score": 0.9, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.9, "rerank_score": 0.88, "within_effective_window": true },
-        { "citation_id": "c", "document_id": "d3", "retrieval_score": 0.9, "rerank_score": 0.86, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.9,
+          "rerank_score": 0.9,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.9,
+          "rerank_score": 0.88,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d3",
+          "retrieval_score": 0.9,
+          "rerank_score": 0.86,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": true,
       "needs_more_facts": false,
-      "expect": { "level": "abstain", "reasonKey": "abstainScope", "abstainReason": "out_of_scope" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainScope",
+        "abstainReason": "out_of_scope"
+      }
     },
     {
       "name": "everything found is outside its effective window",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.8, "within_effective_window": false },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.8, "rerank_score": 0.78, "within_effective_window": false }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.8,
+          "within_effective_window": false
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.78,
+          "within_effective_window": false
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": false,
-      "expect": { "level": "abstain", "reasonKey": "abstainStale", "abstainReason": "sources_out_of_date" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainStale",
+        "abstainReason": "sources_out_of_date"
+      }
     },
     {
       "name": "the answer turns on a fact the reader has not given",
       "passages": [
-        { "citation_id": "a", "document_id": "d1", "retrieval_score": 0.8, "rerank_score": 0.81, "within_effective_window": true },
-        { "citation_id": "b", "document_id": "d2", "retrieval_score": 0.8, "rerank_score": 0.79, "within_effective_window": true },
-        { "citation_id": "c", "document_id": "d3", "retrieval_score": 0.7, "rerank_score": 0.68, "within_effective_window": true }
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.79,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d3",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.68,
+          "within_effective_window": true
+        }
       ],
       "contradictions": [],
       "out_of_scope": false,
       "needs_more_facts": true,
-      "expect": { "level": "abstain", "reasonKey": "abstainFacts", "abstainReason": "needs_more_facts" }
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainFacts",
+        "abstainReason": "needs_more_facts"
+      }
+    },
+    {
+      "name": "a contradiction between passages that did not clear the floor is not a contradiction",
+      "passages": [
+        {
+          "citation_id": "a",
+          "document_id": "d1",
+          "retrieval_score": 0.8,
+          "rerank_score": 0.81,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "b",
+          "document_id": "d2",
+          "retrieval_score": 0.7,
+          "rerank_score": 0.62,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "c",
+          "document_id": "d3",
+          "retrieval_score": 0.2,
+          "rerank_score": 0.14,
+          "within_effective_window": true
+        },
+        {
+          "citation_id": "d",
+          "document_id": "d4",
+          "retrieval_score": 0.2,
+          "rerank_score": 0.14,
+          "within_effective_window": true
+        }
+      ],
+      "contradictions": [
+        [
+          "c",
+          "d"
+        ]
+      ],
+      "out_of_scope": false,
+      "needs_more_facts": false,
+      "expect": {
+        "level": "moderate",
+        "reasonKey": "moderateThin",
+        "abstainReason": null
+      }
     }
   ]
 }

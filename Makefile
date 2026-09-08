@@ -7,12 +7,15 @@ ifeq ($(OS),)
   PY := backend/.venv/bin/python
 endif
 
-.PHONY: help install dev dev-backend dev-frontend test test-backend test-frontend \
-        lint format schema ingest ingest-records refresh evals clean
+.PHONY: help install install-llm dev dev-backend dev-frontend dev-frontend-mock \
+        test test-backend test-frontend lint format schema ingest ingest-records \
+        refresh evals clean
 
 help:
 	@echo "install         install backend and frontend dependencies"
+	@echo "install-llm     the same, plus the hosted-model client"
 	@echo "dev             run the API and the web app together"
+	@echo "dev-frontend-mock  run the web app alone, answering from the demo fixture"
 	@echo "test            run every test suite, including the schema-drift contract"
 	@echo "lint            ruff, eslint, prettier and tsc"
 	@echo "schema          regenerate schemas/domain.schema.json from the Pydantic model"
@@ -26,6 +29,9 @@ install:
 	$(PY) -m pip install -e "backend[dev]"
 	cd frontend && npm install
 
+install-llm:
+	$(PY) -m pip install -e "backend[dev,llm]"
+
 dev:
 	@echo "Run these in two terminals:"
 	@echo "  make dev-backend"
@@ -36,6 +42,10 @@ dev-backend:
 
 dev-frontend:
 	cd frontend && npm run dev
+
+# The web app with no API running, answering from the demo fixture.
+dev-frontend-mock:
+	cd frontend && VITE_SAHAYAK_API=mock npm run dev
 
 test: test-backend test-frontend
 

@@ -96,9 +96,11 @@
       "rerank": "Reranking",
       "context": "Context assembly",
       "generate": "Generation",
-      "map": "Citation mapping"
+      "map": "Citation mapping",
+      "translate": "Translation"
     },
-    "milliseconds": "{{ms}} ms"
+    "milliseconds": "{{ms}} ms",
+    "routedElsewhere": "You asked about “{{marker}}”, so this was answered from {{jurisdiction}} sources rather than the jurisdiction selected above."
   },
   "abstention": {
     "offersHeading": "What you can do",
@@ -129,6 +131,16 @@
       "covered": "See what's covered",
       "escalate": "Send this to a human"
     }
+  },
+  "error": {
+    "title": "The answer could not be produced",
+    "retry": "Try again",
+    "unreachable": "The service could not be reached. Check that it is running, then try again. Nothing has been answered.",
+    "generation_unavailable": "Sources were found, but nothing is configured to write an answer from them. Nothing has been answered.",
+    "rate_limited": "Too many questions in a short time. Wait a moment, then try again.",
+    "request_too_large": "That question was too large to send. Shorten it and try again.",
+    "question_too_long": "That question is longer than this accepts. Shorten it and try again.",
+    "unknown": "Something went wrong on the way to an answer. Nothing has been answered, and nothing was guessed."
   },
   "records": {
     "tab": "Related records",

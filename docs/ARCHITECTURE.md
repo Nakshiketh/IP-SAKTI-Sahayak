@@ -51,7 +51,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 9
+## Built as of Phase 10
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
@@ -105,6 +105,60 @@ is no "both".
   a decision graph that is a data file read by both halves; access and benefit-sharing orientation;
   and prior-art orientation defined by what it refuses to do. Consequence panels carry pending
   markers, because the graph decides the class and the corpus supplies what follows from it.
+
+### The pipeline
+
+Eleven stages, each its own module under `app/services`, orchestrated by `pipeline.py` and streamed
+to the client as they finish. The timings the interface shows are the ones the stages took.
+
+| Stage | What it does | Real today? |
+| --- | --- | --- |
+| `language` | script detection with confidence and shared-script ambiguity | yes |
+| `guardrails` | refuses clinical, predictive, individual-opinion, drafting and concealment questions, before retrieval | yes |
+| `understanding` | rights, regulatory areas, product hints, entities, query expansion, and whether a fact is missing | yes, from a lexicon data file |
+| `routing` | one namespace per route; a cross-border question produces two | yes |
+| `retrieval` | metadata pre-filters, then channels, then reciprocal rank fusion | lexical channel yes; dense channel declares itself absent |
+| `rerank` | calibrated [0, 1] coverage score — the number the confidence rule reads | lexical reranker yes; cross-encoder is the slot it fills |
+| `context` | neutralises instruction-like text, packs under labelled headers, enforces a per-document share of the budget | yes |
+| `generate` | schema-constrained structured output, four blocks, claim-to-passage map | fixture generator offline; Claude client with a key |
+| `citations` | verifies every passage id against what was packed; drops what does not verify; abstains if too much drops | yes |
+| `confidence` | the Phase 8 rule, ported, checked against the same shared case set | yes |
+| `translate` | Translator interface; passthrough reports that it did not translate | passthrough yes; Bhashini shape written, not wired |
+| `audit` | append-only row: session, passages, model, prompt and corpus version, latency, confidence | yes |
+
+Retrieval reads exactly one namespace because it is handed one store, not one store and a filter.
+Confidence is scored from the retrieval evidence and can abstain over a generator that was willing
+to answer; the generator gets no vote on its own confidence.
+
+### What is real and what is fixture
+
+The boundary sits at the index, which is the honest place for it. Everything above it — refusal,
+routing, understanding, fusion, reranking, citation verification, confidence, the audit row — runs
+for real on every question. Below it, no document has been ingested, so the two namespaces are
+served by `data/fixtures/demo-corpus.json`: real document titles, organizations and section
+headings, with placeholder passage bodies, every chunk marked `demo`.
+
+Retrieval genuinely scores a question against that metadata, so which passages come back, how many
+clear the floor, and therefore what confidence is reached, all fall out of the question asked. A
+question the fixture cannot speak to abstains because nothing scored, not because a keyword said so.
+
+The generator matches: `FixtureLLMClient` refuses to run unless every packed passage is marked demo,
+so a checked-in answer can never sit on top of a real retrieved document. With `SAHAYAK_LLM_PROVIDER`
+set to `anthropic` and a key present, a hosted model answers instead, under the system prompt in
+`app/llm/prompt.py` and constrained to the `GenerationResult` schema.
+
+Phase 11 replaces the fixture store with the ingested corpus. Nothing above the index changes.
+
+### Guardrails
+
+- Refusals are matched on the question and short-circuit before retrieval, so whether a dosage
+  question is declined never depends on what happened to be in the corpus.
+- Retrieved text is data. Instruction-like spans are neutralised before packing, the count is
+  recorded on the audit row, and every passage is packed inside a delimiter under a system prompt
+  that says so. Neither measure is presented as sufficient alone.
+- Per-session rate limiting keyed on a client-supplied session id, never an address; a request-size
+  cap enforced before the body is read; and an audit log holding no question text, no answer text
+  and no user identity.
 
 ## Planned
 

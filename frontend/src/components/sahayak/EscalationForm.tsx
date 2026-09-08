@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Drawer } from '@/components/ui';
-import type { QueryResult } from '@/services/query.mock';
-import { DEMO_ANSWERS } from '@/services/answers.mock';
+import type { QueryResult } from '@/services/query';
 
 /**
  * Handing the question to a person.
@@ -25,7 +24,9 @@ export function EscalationForm({ open, onClose, result, productClass }: Escalati
   const { t: tc } = useTranslation('common');
   const [copied, setCopied] = useState(false);
 
-  const citations = DEMO_ANSWERS[result.jurisdiction].citations;
+  // What this answer actually cited. Where it abstained there is nothing to
+  // list, and the summary says so rather than listing what was searched.
+  const citations = result.answer?.citations ?? [];
   const summary = [
     `${t('answer.questionLabel')}: ${result.question}`,
     `${t('jurisdictionLabel')}: ${tc(`jurisdiction.${result.jurisdiction}`)}`,

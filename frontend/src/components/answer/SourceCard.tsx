@@ -21,6 +21,13 @@ import type { Citation } from '@/types/domain';
 interface SourceCardProps {
   citation: Citation | DemoCitation;
   number: number;
+  /**
+   * The passage this citation points at. Supplied by the query result, which
+   * carries the text of every passage its answer rests on. Where it is absent
+   * the card falls back to a fixture citation that carries its own — the static
+   * example pages render citations with no query behind them.
+   */
+  passage?: string;
   active?: boolean;
   id?: string;
   /** Set from where the card sits in the document outline. */
@@ -35,6 +42,7 @@ function hasPassage(citation: Citation | DemoCitation): citation is DemoCitation
 export function SourceCard({
   citation,
   number,
+  passage,
   active = false,
   id,
   titleLevel = 4,
@@ -44,6 +52,7 @@ export function SourceCard({
   const [showPassage, setShowPassage] = useState(false);
   const isDemo = citation.verification_status === 'demo';
   const isVerified = citation.verification_status === 'verified';
+  const passageText = passage ?? (hasPassage(citation) ? citation.passage : null);
 
   return (
     <article
@@ -75,7 +84,7 @@ export function SourceCard({
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-center gap-2">
-        {hasPassage(citation) ? (
+        {passageText ? (
           <Button
             variant="quiet"
             size="sm"
@@ -98,9 +107,9 @@ export function SourceCard({
         )}
       </div>
 
-      {hasPassage(citation) && showPassage ? (
+      {passageText && showPassage ? (
         <p className="mt-3 border-l border-dashed border-rule-strong pl-3 text-xs text-muted">
-          {citation.passage}
+          {passageText}
         </p>
       ) : null}
     </article>

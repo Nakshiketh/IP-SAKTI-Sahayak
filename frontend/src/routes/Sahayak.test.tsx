@@ -6,7 +6,7 @@
  *  - changing jurisdiction swaps the answer set rather than widening it
  */
 
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { MemoryRouter } from 'react-router-dom';
@@ -39,6 +39,18 @@ function renderAt(path = '/sahayak') {
     <MemoryRouter initialEntries={[path]}>
       <Sahayak />
     </MemoryRouter>,
+  );
+}
+
+/**
+ * Asking is a request, so a render that carries a question has to settle before
+ * anything is asserted. The three markers are the workspace's terminal states.
+ */
+async function settled() {
+  await waitFor(() =>
+    expect(
+      document.querySelector('[data-answered], [data-abstained], [data-failed]'),
+    ).not.toBeNull(),
   );
 }
 
@@ -116,8 +128,9 @@ describe('the layout reaches three columns, it does not start there', () => {
     expect(screen.queryByRole('button', { name: /^Sources/ })).toBeNull();
   });
 
-  it('becomes three columns once there is an answer at desktop width', () => {
+  it('becomes three columns once there is an answer at desktop width', async () => {
     const { container } = renderAt('/sahayak?q=Can%20we%20patent%20this%3F');
+    await settled();
     expect(container.querySelector('[data-layout]')).toHaveAttribute('data-layout', 'three-column');
     // Context rail present but collapsed.
     expect(screen.getByRole('button', { name: 'Show context' })).toHaveAttribute(
@@ -129,9 +142,10 @@ describe('the layout reaches three columns, it does not start there', () => {
     expect(screen.getByRole('tab', { name: /^Related records/ })).toBeInTheDocument();
   });
 
-  it('puts sources behind a counted control below desktop width', () => {
+  it('puts sources behind a counted control below desktop width', async () => {
     setViewport(900);
     renderAt('/sahayak?q=Can%20we%20patent%20this%3F');
+    await settled();
 
     // The count covers everything behind the control: sources and records both.
     const button = screen.getByRole('button', { name: /^Sources/ });
@@ -143,6 +157,7 @@ describe('the layout reaches three columns, it does not start there', () => {
     const user = userEvent.setup();
     setViewport(360);
     renderAt('/sahayak?q=Can%20we%20patent%20this%3F');
+    await settled();
 
     await user.click(screen.getByRole('button', { name: /^Sources/ }));
     const dialog = screen.getByRole('dialog', { name: 'Sources' });
@@ -157,7 +172,7 @@ describe('the jurisdiction toggle', () => {
   it('swaps the whole answer set rather than widening it', async () => {
     const user = userEvent.setup();
     renderAt('/sahayak?q=Can%20we%20sell%20this%20abroad%3F');
-    await screen.findByRole('heading', { name: 'Answer' });
+    await settled();
 
     expect(screen.getByRole('heading', { name: 'The Patents Act, 1970' })).toBeInTheDocument();
     expect(
@@ -255,13 +270,16 @@ describe('keyboard', () => {
 });
 
 describe('honesty', () => {
-  it('says every question currently returns the same illustrative answer', () => {
+  it('says the sources behind the answer are demonstration sources', async () => {
     renderAt('/sahayak?q=anything');
+    await settled();
     // The notice heading and the answer's own header badge.
     expect(
       screen.getAllByText('Illustrative example — demo sources, not a legal source'),
     ).toHaveLength(2);
-    expect(screen.getByText(/every question shows this example/)).toBeInTheDocument();
+    expect(screen.getByText(/No documents have been ingested yet/)).toBeInTheDocument();
+    // What the notice claims is real, it does not also claim is verified.
+    expect(screen.getByText(/text behind each source is a placeholder/)).toBeInTheDocument();
   });
 
   it('carries the not-legal-advice pill', () => {

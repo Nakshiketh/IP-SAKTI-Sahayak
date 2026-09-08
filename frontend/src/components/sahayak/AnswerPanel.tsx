@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { SourceCard } from '@/components/answer/SourceCard';
 import { RecordCard, TabPanel, Tabs } from '@/components/ui';
-import { DEMO_ANSWERS } from '@/services/answers.mock';
-import type { QueryResult } from '@/services/query.mock';
+import type { QueryResult } from '@/services/query';
 
 /**
  * Sources and related records, as two tabs.
@@ -25,7 +24,9 @@ export function AnswerPanel({ result }: { result: QueryResult }) {
   const idBase = useId();
 
   const abstained = result.answer === null;
-  const citations = abstained ? [] : DEMO_ANSWERS[result.jurisdiction].citations;
+  // The answer's own citations, not the fixture's. An abstention has none, and
+  // that is the point: there is nothing the answer rested on.
+  const citations = result.answer?.citations ?? [];
   const records = result.relatedRecords;
 
   return (
@@ -50,6 +51,9 @@ export function AnswerPanel({ result }: { result: QueryResult }) {
                 citation={citation}
                 number={index + 1}
                 titleLevel={3}
+                {...(result.passages[citation.citation_id]
+                  ? { passage: result.passages[citation.citation_id] as string }
+                  : {})}
               />
             </li>
           ))}

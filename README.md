@@ -20,9 +20,18 @@ product classifies first, then routes to the intellectual-property and regulator
 
 ## Status
 
-Phase 0 of a phased build: scaffold, contracts and domain model. There are no screens yet and no
-corpus is ingested. `docs/ARCHITECTURE.md` lists what is built and what is planned;
-`docs/MASTER_BUILD.md` carries the full phase sequence.
+Phase 10 of a phased build. The interface is complete and the API behind it is real: a question is
+refused or understood, routed to exactly one jurisdiction, retrieved for, reranked, packed,
+answered under a schema-constrained prompt, citation-checked, scored for confidence and audited —
+with the stages streamed to the browser as they run.
+
+No corpus has been ingested yet, so both jurisdiction namespaces are served by a demo fixture whose
+passage bodies are placeholders. Everything above the index is real, every answer is marked
+"Illustrative example", and `/api/v1/corpus-version` reports 0 of 37 planned documents fetched.
+Ingestion is Phase 11.
+
+`docs/ARCHITECTURE.md` lists what is built and what is planned; `docs/MASTER_BUILD.md` carries the
+full phase sequence; `docs/DEMO.md` is the five-minute walkthrough with the exact questions.
 
 ## Running it
 
@@ -31,12 +40,21 @@ Requires Python 3.11+ and Node 20+.
 ```bash
 # backend
 py -3.11 -m venv backend/.venv
-backend/.venv/Scripts/python -m pip install fastapi "uvicorn[standard]" pydantic pydantic-settings pytest httpx ruff
+backend/.venv/Scripts/python -m pip install -e "backend[dev]"
 cd backend && .venv/Scripts/python -m uvicorn app.main:app --reload   # http://127.0.0.1:8000
 
 # frontend
 cd frontend && npm install && npm run dev                             # http://localhost:5173
 ```
+
+No API key is needed. With none configured the generator writes only over the demo passages and
+refuses to write over anything else, so an unconfigured install can be demonstrated but cannot
+present a fixture answer as retrieval from a real document. To answer from a real corpus, install
+the `llm` extra and set `SAHAYAK_LLM_PROVIDER=anthropic` with a key.
+
+To run the interface with no backend at all, set `VITE_SAHAYAK_API=mock`: it answers from the same
+fixture files. That is the one switch between the two, and nothing above `src/services/query.ts`
+knows which it got.
 
 Tests, lint and the schema contract:
 

@@ -17,6 +17,9 @@ export default defineConfig({
       '@classification': fileURLToPath(
         new URL('../backend/app/services/classification', import.meta.url),
       ),
+      // Demo fixtures are read by the backend's fixture generator and by the
+      // mock service here. One copy, aliased, rather than two that drift.
+      '@fixtures': fileURLToPath(new URL('../data/fixtures', import.meta.url)),
     },
   },
   server: {

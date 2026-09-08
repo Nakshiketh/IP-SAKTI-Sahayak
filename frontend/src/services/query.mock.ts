@@ -1,88 +1,23 @@
 // DEMO DATA — not a legal source
 //
-// The mock query service. It satisfies the shape the real pipeline will satisfy
-// in Phase 10, so the components above it are the real components.
+// The mock query service. It satisfies the same interface as the API client in
+// `query.http.ts`, which is what lets a component test run without a Python
+// process and a machine with no backend still show the product.
 //
 // What is genuinely computed here, rather than hard-coded: the confidence level
 // and its reason come from `scoreConfidence`, run over evidence the fixture
 // supplies. The fixtures set the *retrieval result*; the rule decides what that
-// means. That is the point of the phase — confidence from a function, not a
-// field somebody typed.
+// means — the same rule, over the same shared case set, that the API runs.
+//
+// What is not real here, and is real in the API: retrieval. This file decides
+// which fixture a question lands on by keyword, so a demo can trigger each
+// state deliberately. The API scores the question against the demo corpus and
+// lets the outcome fall out. Where the two disagree, the API is right.
 
-import { DEMO_ANSWERS, type DemoCitation } from '@/services/answers.mock';
-import {
-  scoreConfidence,
-  type ConfidenceResult,
-  type RetrievalEvidence,
-} from '@/services/confidence';
-import type { Answer, Jurisdiction, Record_ } from '@/types/domain';
-
-/** A literal union so `t('followUps.' + key)` typechecks against the locale file. */
-export type FollowUpKey = 'classify' | 'switchToExport' | 'switchToIndia' | 'abs' | 'priorArt';
-
-export interface StageTiming {
-  /** Key under `sahayak.status.stages`. */
-  id: 'detect' | 'understand' | 'route' | 'retrieve' | 'rerank' | 'context' | 'generate' | 'map';
-  ms: number;
-}
-
-export interface QueryResult {
-  question: string;
-  jurisdiction: Jurisdiction;
-  evidence: RetrievalEvidence;
-  confidence: ConfidenceResult;
-  /** Null when the system abstained. There is no partial answer. */
-  answer: Answer | null;
-  /**
-   * Records are returned beside an abstention as readily as beside an answer.
-   * They never change the confidence and never rescue the abstention.
-   */
-  relatedRecords: Record_[];
-  /** Keys under `sahayak.followUps`, derived from what the answer left open. */
-  followUps: FollowUpKey[];
-  stages: StageTiming[];
-  totalMs: number;
-  documentsSearched: number;
-}
-
-const DEMO_RECORDS: Record_[] = [
-  {
-    record_id: 'demo-rec-1',
-    source_id: 'in-patent-applications-bulk',
-    jurisdiction: 'IN',
-    record_type: 'patent_application',
-    title: 'Herbal composition for joint discomfort and process of preparation thereof',
-    applicant: 'Illustrative applicant',
-    inventor_or_proprietor: null,
-    filing_date: null,
-    publication_date: null,
-    grant_or_registration_date: null,
-    status: 'Published',
-    classification_codes: [],
-    goods_or_field: null,
-    abstract_text: null,
-    snapshot_at: null,
-    citable_in_answers: false,
-  },
-  {
-    record_id: 'demo-rec-2',
-    source_id: 'in-patent-applications-bulk',
-    jurisdiction: 'IN',
-    record_type: 'patent_application',
-    title: 'Polyherbal formulation and method of standardising the same',
-    applicant: 'Illustrative applicant',
-    inventor_or_proprietor: null,
-    filing_date: null,
-    publication_date: null,
-    grant_or_registration_date: null,
-    status: 'Under examination',
-    classification_codes: [],
-    goods_or_field: null,
-    abstract_text: null,
-    snapshot_at: null,
-    citable_in_answers: false,
-  },
-];
+import { DEMO_ANSWERS, DEMO_RECORDS, demoPassages } from '@/services/answers.mock';
+import { scoreConfidence, type RetrievalEvidence } from '@/services/confidence';
+import type { FollowUpKey, QueryOptions, QueryResult, StageTiming } from '@/services/query';
+import type { Answer, Citation, Jurisdiction } from '@/types/domain';
 
 function passagesFor(answer: Answer, scores: number[], inWindow = true) {
   return answer.citations.map((citation, index) => ({
@@ -95,11 +30,11 @@ function passagesFor(answer: Answer, scores: number[], inWindow = true) {
 }
 
 /**
- * Simulated latency for the two status lines.
+ * Simulated latency, so the two status lines are visible at all.
  *
- * Not a typing animation and not a progress bar — it stands in for work the
- * pipeline will actually do, and Phase 10 replaces it with a real stream. It
- * lives here rather than in the component so there is one place to delete it.
+ * The API replaces this with the time the stages actually took. It lives here
+ * rather than in the component so there is one place to delete it when the mock
+ * goes.
  */
 export const MOCK_LATENCY_MS = { searching: 140, reading: 180 };
 
@@ -112,14 +47,15 @@ const STAGES: StageTiming[] = [
   { id: 'context', ms: 60 },
   { id: 'generate', ms: 390 },
   { id: 'map', ms: 44 },
+  { id: 'translate', ms: 8 },
 ];
 
 /**
  * Which fixture a question lands on.
  *
  * Keyword routing, so a demo can trigger each state deliberately rather than
- * hoping for one. Every branch is a state the real pipeline has to produce, and
- * the abstention branches are the ones worth showing.
+ * hoping for one. Every branch is a state the real pipeline produces, and the
+ * abstention branches are the ones worth showing.
  */
 type Scenario =
   | 'answer'
@@ -145,7 +81,7 @@ export function classifyQuestion(question: string): Scenario {
   if (/\b(medicine|drug)\b.*\b(food|nutraceutical|supplement|cosmetic)\b/.test(q)) {
     return 'needs_more_facts';
   }
-  if (/\b(conflict|disagree|contradict)\b/.test(q)) return 'sources_conflict';
+  if (/\b(conflict|disagree|contradict|shelf life)\b/.test(q)) return 'sources_conflict';
   if (/\b(superseded|out of date|still current|repealed)\b/.test(q)) return 'sources_out_of_date';
 
   return 'answer';
@@ -184,9 +120,10 @@ function evidenceFor(scenario: Scenario, jurisdiction: Jurisdiction): RetrievalE
       };
     case 'answer':
     default:
-      // India retrieves four strong passages across four documents. The UK
-      // fixture retrieves two, neither of them strong — which is why its own
-      // caveat says the sources are thinner, and why the rule returns `low`.
+      // India retrieves several strong passages across several documents. The
+      // international fixture retrieves two, neither of them strong — which is
+      // why its own caveat says the sources are thinner, and why the rule
+      // returns `low`.
       return {
         ...base,
         passages: passagesFor(
@@ -208,7 +145,7 @@ function followUpsFor(answer: Answer | null, jurisdiction: Jurisdiction): Follow
   const keys: FollowUpKey[] = [];
 
   if (answer.product_class === 'undetermined') keys.push('classify');
-  if (answer.blocks.some((block) => /UK|United Kingdom|abroad|export/i.test(block.text))) {
+  if (answer.blocks.some((block) => /abroad|export|another market|destination/i.test(block.text))) {
     keys.push(jurisdiction === 'IN' ? 'switchToExport' : 'switchToIndia');
   }
   if (answer.regulatory_areas.includes('abs_compliance')) keys.push('abs');
@@ -217,7 +154,15 @@ function followUpsFor(answer: Answer | null, jurisdiction: Jurisdiction): Follow
   return keys.slice(0, 3);
 }
 
-export function runQuery(question: string, jurisdiction: Jurisdiction): QueryResult {
+/** Every demo citation the jurisdiction can produce, keyed by citation id. */
+function sourcesFor(jurisdiction: Jurisdiction): Record<string, Citation> {
+  return Object.fromEntries(
+    DEMO_ANSWERS[jurisdiction].citations.map((citation) => [citation.citation_id, citation]),
+  );
+}
+
+/** The synchronous core, so a test can assert on an outcome without awaiting. */
+export function buildMockResult(question: string, jurisdiction: Jurisdiction): QueryResult {
   const scenario = classifyQuestion(question);
   const evidence = evidenceFor(scenario, jurisdiction);
   const confidence = scoreConfidence(evidence);
@@ -237,9 +182,9 @@ export function runQuery(question: string, jurisdiction: Jurisdiction): QueryRes
       : [];
 
   const stages = scenario === 'out_of_scope' ? STAGES.slice(0, 2) : STAGES;
-  const totalMs = stages.reduce((sum, stage) => sum + stage.ms, 0);
 
   return {
+    queryId: 'demo-query-1',
     question,
     jurisdiction,
     evidence,
@@ -248,12 +193,26 @@ export function runQuery(question: string, jurisdiction: Jurisdiction): QueryRes
     relatedRecords,
     followUps: followUpsFor(answer, jurisdiction),
     stages,
-    totalMs,
+    totalMs: stages.reduce((sum, stage) => sum + stage.ms, 0),
     documentsSearched: new Set(evidence.passages.map((p) => p.document_id)).size,
+    sources: sourcesFor(jurisdiction),
+    passages: demoPassages(DEMO_ANSWERS[jurisdiction]),
+    language: { language: 'en', confidence: 1, ambiguousWith: [], decided: true },
+    route: { jurisdiction, inferred: false, marker: null },
+    corpusVersion: '0.0.0-demo',
+    isDemo: true,
+    translation: { engine: 'passthrough', translated: false },
+    refusal: scenario === 'out_of_scope' ? 'clinical' : null,
   };
 }
 
-/** The passage text behind a citation, for the expanded retrieval detail. */
-export function passageText(citation: DemoCitation): string {
-  return citation.passage;
+export async function runMockQuery(question: string, options: QueryOptions): Promise<QueryResult> {
+  const result = buildMockResult(question, options.jurisdiction);
+  for (const stage of result.stages) options.onStage?.(stage);
+  const candidates = result.evidence.passages.filter((p) => p.rerank_score >= 0.35);
+  options.onRetrieved?.({
+    passages: candidates.length,
+    documents: new Set(candidates.map((p) => p.document_id)).size,
+  });
+  return result;
 }

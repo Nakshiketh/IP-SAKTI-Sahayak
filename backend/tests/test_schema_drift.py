@@ -193,7 +193,10 @@ def test_no_fetcher_exists_for_a_portal_only_source() -> None:
     )
 
     searched = 0
-    for path in (*(REPO_ROOT / "scripts").rglob("*.py"), *(REPO_ROOT / "backend" / "app").rglob("*.py")):
+    for path in (
+        *(REPO_ROOT / "scripts").rglob("*.py"),
+        *(REPO_ROOT / "backend" / "app").rglob("*.py"),
+    ):
         text = path.read_text(encoding="utf-8")
         searched += 1
         for source_id in portal_ids:
