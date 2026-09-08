@@ -150,6 +150,15 @@
     "stillAbstained": "These records do not answer the question. The system still declined, and they are shown only because they exist.",
     "noSnapshot": "never taken"
   },
+  "elsewhere": {
+    "tab": "Search elsewhere",
+    "heading": "This product did not search these",
+    "notSearched": "These registries are interactive, and their terms generally do not allow a product like this one to search them automatically. So it has not. What follows is where to look yourself, not a set of places that have been checked — finding nothing here would mean nothing.",
+    "open": "Open this registry",
+    "linkPending": "Link not yet verified, so none is offered. Search this registry directly.",
+    "loading": "Loading…",
+    "none": "No registries are listed for this."
+  },
   "escalate": {
     "open": "Get someone to look at this",
     "title": "Send this to a human",

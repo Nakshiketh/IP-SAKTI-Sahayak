@@ -53,6 +53,16 @@ class Settings(BaseSettings):
     #: `data/index-samples` is how the sample build is demonstrated.
     index_dir_override: Path | None = None
 
+    #: Where the records database is read from. Overridable for the same reason
+    #: as the index: so a build made elsewhere can be served without being moved
+    #: on top of the one in place.
+    records_db_override: Path | None = None
+
+    #: Which records manifest the service reads. Overridden together with the
+    #: database, so a sample build is served against the manifest it came from
+    #: rather than against the real source list.
+    records_manifest_override: Path | None = None
+
     # -- retrieval ---------------------------------------------------------
 
     #: Candidates each channel contributes before fusion.
@@ -119,6 +129,15 @@ class Settings(BaseSettings):
     @property
     def audit_db_path(self) -> Path:
         return self.data_dir / "audit.sqlite3"
+
+    @property
+    def records_db_path(self) -> Path:
+        """Layer 2, in its own file. Never under `index/`, which is Layer 1."""
+        return self.records_db_override or (self.data_dir / "records.sqlite3")
+
+    @property
+    def records_manifest_path(self) -> Path:
+        return self.records_manifest_override or (self.corpus_dir / "records-manifest.json")
 
 
 @lru_cache

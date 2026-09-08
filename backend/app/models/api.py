@@ -213,6 +213,89 @@ class SourceDetail(Wire):
     chunk_count: int = Field(serialization_alias="chunkCount")
 
 
+# -- records -----------------------------------------------------------------
+
+
+class RecordsSearchResult(Wire):
+    records: list[Record] = Field(default_factory=list)
+    total: int
+    #: How many records exist at all, so an empty result can say which it is:
+    #: nothing matched, or nothing has been ingested.
+    record_count: int = Field(serialization_alias="recordCount")
+    ingested: bool
+    note: str
+
+
+class RecordDetail(Wire):
+    record: Record
+    source_name: str = Field(serialization_alias="sourceName")
+    publisher: str | None = None
+    #: Rendered verbatim wherever the record is shown. Open data licences
+    #: typically require exactly this.
+    attribution_text: str | None = Field(default=None, serialization_alias="attributionText")
+    licence: str | None = None
+    note: str
+
+
+class AggregateRow(Wire):
+    source_id: str = Field(serialization_alias="sourceId")
+    dimension: str
+    period: str
+    measure: str
+    value: float
+    #: Restated per row rather than documented once. A client rendering one of
+    #: these as a citation has to ignore a field to do it.
+    citable_in_answers: bool = Field(default=False, serialization_alias="citableInAnswers")
+
+
+class LandscapeResult(Wire):
+    rows: list[AggregateRow] = Field(default_factory=list)
+    note: str
+
+
+class RecordsSourceRow(Wire):
+    source_id: str = Field(serialization_alias="sourceId")
+    name: str
+    publisher: str
+    jurisdiction: str
+    record_type: str = Field(serialization_alias="recordType")
+    access_mode: str = Field(serialization_alias="accessMode")
+    licence: str | None = None
+    licence_url: str | None = Field(default=None, serialization_alias="licenceUrl")
+    attribution_text: str | None = Field(default=None, serialization_alias="attributionText")
+    terms_note: str = Field(default="", serialization_alias="termsNote")
+    citable_in_answers: bool = Field(default=False, serialization_alias="citableInAnswers")
+    ingested: bool = False
+    record_count: int = Field(default=0, serialization_alias="recordCount")
+    last_snapshot_at: str | None = Field(default=None, serialization_alias="lastSnapshotAt")
+    link_template_verified: bool = Field(default=False, serialization_alias="linkTemplateVerified")
+
+
+class PortalLinkRow(Wire):
+    """A registry this product does not search, and says it does not search."""
+
+    source_id: str = Field(serialization_alias="sourceId")
+    name: str
+    publisher: str
+    jurisdiction: str
+    record_type: str = Field(serialization_alias="recordType")
+    #: Null until somebody has verified this portal's URL structure. A deep link
+    #: written from memory would look like a search that found nothing.
+    url: str | None = None
+    terms_note: str = Field(default="", serialization_alias="termsNote")
+    #: Always true, and sent so the interface never has to infer it.
+    not_searched_here: bool = Field(default=True, serialization_alias="notSearchedHere")
+
+
+class RecordsSourcesResult(Wire):
+    records_version: str = Field(serialization_alias="recordsVersion")
+    sources: list[RecordsSourceRow] = Field(default_factory=list)
+    portals: list[PortalLinkRow] = Field(default_factory=list)
+    record_count: int = Field(serialization_alias="recordCount")
+    portal_count: int = Field(serialization_alias="portalCount")
+    ingestible_count: int = Field(serialization_alias="ingestibleCount")
+
+
 # -- feedback and escalation -------------------------------------------------
 
 

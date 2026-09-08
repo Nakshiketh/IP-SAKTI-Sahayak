@@ -7,7 +7,8 @@ They exist because the real manifest has no verified source URLs yet — nothing
 `make ingest` builds nothing. These do get built, which is what proves the pipeline works: fetch,
 parse, section-aware segmentation, tagging, versioning, validation and an index retrieval can read.
 
-    make ingest-samples        # builds into data/index-samples
+    make ingest-samples             # the corpus, into data/index-samples
+    make ingest-records-samples     # the registry, into data/records-samples.sqlite3
     python scripts/refresh.py --manifest corpus/samples/manifest.json \
         --index-dir data/index-samples
 
@@ -15,6 +16,8 @@ To see the API answer from that build rather than from the committed demo fixtur
 index and restart:
 
     SAHAYAK_INDEX_DIR_OVERRIDE=data/index-samples
+    SAHAYAK_RECORDS_DB_OVERRIDE=data/records-samples.sqlite3
+    SAHAYAK_RECORDS_MANIFEST_OVERRIDE=corpus/samples/records-manifest.json
 
 Every document here carries `verification_status: "demo"`, so anything built from this manifest is
 marked illustrative everywhere a reader can see it, and the corpus-version endpoint reports the
@@ -29,6 +32,21 @@ build as a demo corpus.
 | `sample-convention-2019.txt` | `text` | `treaty_article_aware` | Parts and Articles, and a second jurisdiction so the per-namespace index split is real |
 | `sample-credentialed-source` | — | — | Carries a resolvable `source_url` on purpose. The pipeline must still refuse to fetch it, because the refusal is on `access_mode` and not on whether a fetch would succeed |
 
+## The records fixtures
+
+`records-manifest.json` and two CSVs, for Layer 2. A fictional registry of a
+fictional territory, with fictional applicants and fictional filings.
+
+| Source | What it is for |
+| --- | --- |
+| `sample-registry-applications` | Bulk ingestion: field mapping, snapshots, the diff between runs, and full-text search over title, abstract and applicant |
+| `sample-registry-aggregates` | Counts, loaded into their own table. Charts only, never attached to a claim about a product |
+| `sample-registry-portal` | Carries a licence, a readable `source_url` *and* a verified link template on purpose. The loader must still refuse it, because the refusal is on `access_mode` and not on whether a fetch would work |
+
+The licence strings here are invented for a registry that does not exist. They
+are what a real entry's `licence` field would hold — not a claim about anybody's
+actual terms.
+
 ## Rules for anything added here
 
 1. **Fictional, and unmistakably so.** A fixture that read like a real statute would eventually be
@@ -39,3 +57,10 @@ build as a demo corpus.
 
 `CHANGELOG.md`, `tags-review.jsonl` and `raw/` in this directory are build output and are
 gitignored.
+
+One wrinkle worth knowing: `make ingest-samples` writes the checksum and
+retrieval time back into `manifest.json`, because that is how a later `refresh`
+tells a changed document from an unchanged one — so a run leaves that file
+modified. `git restore corpus/samples/manifest.json` resets it, and
+`--no-write-back` skips it. `make ingest-records-samples` already passes that
+flag, because nothing in the records demo needs the write-back.

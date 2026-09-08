@@ -9,7 +9,7 @@ endif
 
 .PHONY: help install install-llm dev dev-backend dev-frontend dev-frontend-mock \
         test test-backend test-frontend lint format schema ingest ingest-samples \
-        ingest-records refresh evals clean
+        ingest-records ingest-records-samples refresh evals clean
 
 help:
 	@echo "install         install backend and frontend dependencies"
@@ -24,7 +24,8 @@ help:
 	@echo "ingest          build the index from corpus/manifest.json"
 	@echo "ingest-samples  build the index from the fixture documents, into data/index-samples"
 	@echo "refresh         re-fetch and report what has changed since the last ingest"
-	@echo "ingest-records  load the records layer from corpus/records-manifest.json (Phase 12)"
+	@echo "ingest-records  load the records layer from corpus/records-manifest.json"
+	@echo "ingest-records-samples  load the fixture registry, into data/records-samples.sqlite3"
 	@echo "evals           run the evaluation harness and write a report (Phase 13)"
 
 install:
@@ -95,9 +96,14 @@ ingest-samples:
 refresh:
 	$(PY) scripts/refresh.py
 
+# Layer 2, in its own database. Today every one of the 17 sources is either a
+# portal this never fetches or has a licence nobody has read, so nothing loads.
 ingest-records:
-	@echo "The records layer arrives in Phase 12. See docs/MASTER_BUILD.md, Phase 12."
-	@exit 1
+	$(PY) scripts/ingest_records.py
+
+# The same loader over the fixture registry, which is what proves it works.
+ingest-records-samples:
+	$(PY) scripts/ingest_records.py --manifest corpus/samples/records-manifest.json --database data/records-samples.sqlite3 --no-write-back
 
 evals:
 	@echo "The evaluation harness arrives in Phase 13. See docs/MASTER_BUILD.md, Phase 13."

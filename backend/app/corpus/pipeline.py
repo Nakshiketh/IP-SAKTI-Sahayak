@@ -188,6 +188,7 @@ def ingest(
     strict: bool = False,
     embedder: Embedder | None = None,
     write_review: bool = True,
+    write_back: bool = True,
     today: date | None = None,
 ) -> IngestReport:
     report = IngestReport(corpus_version=manifest.corpus_version)
@@ -316,7 +317,7 @@ def ingest(
                 )
             )
 
-    if manifest_updates:
+    if manifest_updates and write_back:
         manifest.write_back(manifest_updates)
 
     return report

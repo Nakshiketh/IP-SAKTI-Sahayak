@@ -19,9 +19,11 @@ from app.core.errors import RateLimited
 from app.core.ratelimit import RateLimiter
 from app.core.settings import Settings, get_settings
 from app.llm.registry import build_llm_client
+from app.records.store import RecordsStore
 from app.retrieval.store import Namespaces
 from app.services.audit import AuditLog
 from app.services.pipeline import Pipeline
+from app.services.records_service import RecordsService
 from app.services.translation import build_translator
 
 
@@ -44,6 +46,13 @@ def get_rate_limiter() -> RateLimiter:
 
 
 @lru_cache
+def get_records_service() -> RecordsService:
+    """Layer 2, built once. Separate from the corpus by construction."""
+    settings = get_settings()
+    return RecordsService(RecordsStore(settings.records_db_path), settings.records_manifest_path)
+
+
+@lru_cache
 def get_pipeline() -> Pipeline:
     settings: Settings = get_settings()
     return Pipeline(
@@ -52,6 +61,7 @@ def get_pipeline() -> Pipeline:
         llm=build_llm_client(settings),
         translator=build_translator(settings),
         audit=get_audit_log(),
+        records=get_records_service(),
     )
 
 

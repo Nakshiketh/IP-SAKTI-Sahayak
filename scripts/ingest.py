@@ -89,6 +89,11 @@ def main(argv: list[str] | None = None) -> int:
         "--only", nargs="*", default=[], metavar="DOCUMENT_ID", help="build only these documents"
     )
     parser.add_argument(
+        "--no-write-back",
+        action="store_true",
+        help="do not write retrieved_at and checksum back into the manifest",
+    )
+    parser.add_argument(
         "--force", action="store_true", help="re-fetch and re-parse, ignoring every cache"
     )
     parser.add_argument(
@@ -125,6 +130,7 @@ def main(argv: list[str] | None = None) -> int:
         force=args.force,
         strict=args.strict,
         write_review=not args.no_review,
+        write_back=not args.no_write_back,
     )
 
     for line in report_lines(report):

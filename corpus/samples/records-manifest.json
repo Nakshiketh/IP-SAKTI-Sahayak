@@ -1,0 +1,78 @@
+{
+  "records_version": "0.0.0-samples",
+  "generated_by": "hand-written fixture; see corpus/samples/README.md",
+  "note": "SAMPLE FIXTURE RECORDS MANIFEST. A fictional registry of a fictional territory, written to exercise the records layer end to end. The licence strings here are invented for a registry that does not exist; they are what a real entry's licence field would hold, not a claim about anybody's real terms. Never merge these entries into corpus/records-manifest.json.",
+  "sources": [
+    {
+      "source_id": "sample-registry-applications",
+      "name": "Sampleland registry, applications extract (illustrative)",
+      "publisher": "Illustrative Authority of Sampleland",
+      "jurisdiction": "IN",
+      "record_type": "patent_application",
+      "access_mode": "bulk_open",
+      "source_url": "sample-registry-records.csv",
+      "licence": "Illustrative Open Data Licence 1.0 (fictional)",
+      "licence_url": null,
+      "attribution_text": "Contains illustrative data from the Illustrative Authority of Sampleland, used under a fictional open licence. The Authority does not exist and endorses nothing.",
+      "update_cadence": "weekly",
+      "last_snapshot_at": "2026-09-08T16:59:11.967545+00:00",
+      "snapshot_checksum": "d9151cceccbd8ebd18e6c6f6853fb22cd062507e70aacf2c3ece90ac7a2fd03e",
+      "record_count": 8,
+      "terms_note": "Bulk extract. Fictional, and ingestible because its fictional licence has been read.",
+      "citable_in_answers": false,
+      "parser": "csv",
+      "field_map": {
+        "record_id": "application_number",
+        "title": "invention_title",
+        "applicant": "applicant_name",
+        "filing_date": "date_of_filing",
+        "status": "application_status",
+        "abstract_text": "abstract"
+      }
+    },
+    {
+      "source_id": "sample-registry-aggregates",
+      "name": "Sampleland registry, filings by category (illustrative)",
+      "publisher": "Illustrative Authority of Sampleland",
+      "jurisdiction": "IN",
+      "record_type": "aggregate_statistic",
+      "access_mode": "bulk_open",
+      "source_url": "sample-registry-aggregates.csv",
+      "licence": "Illustrative Open Data Licence 1.0 (fictional)",
+      "licence_url": null,
+      "attribution_text": "Contains illustrative data from the Illustrative Authority of Sampleland, used under a fictional open licence.",
+      "update_cadence": "annual",
+      "last_snapshot_at": null,
+      "snapshot_checksum": null,
+      "record_count": null,
+      "terms_note": "Counts across many filings. Charts only, and never attached to a claim about a particular product.",
+      "citable_in_answers": false,
+      "parser": "csv",
+      "field_map": {
+        "dimension": "dimension",
+        "period": "period",
+        "measure": "measure",
+        "value": "value"
+      }
+    },
+    {
+      "source_id": "sample-registry-portal",
+      "name": "Sampleland registry public search (illustrative)",
+      "publisher": "Illustrative Authority of Sampleland",
+      "jurisdiction": "IN",
+      "record_type": "patent_application",
+      "access_mode": "portal_link_only",
+      "source_url": "sample-registry-records.csv",
+      "licence": "Illustrative Terms of Use (fictional)",
+      "licence_url": null,
+      "attribution_text": null,
+      "update_cadence": "continuous",
+      "last_snapshot_at": null,
+      "snapshot_checksum": null,
+      "record_count": null,
+      "terms_note": "Interactive search. Carries a readable source_url and a licence on purpose: the pipeline must still refuse it, because the refusal is on access_mode and not on whether a fetch would work.",
+      "citable_in_answers": false,
+      "link_template": "https://registry.sampleland.invalid/search?q={query}"
+    }
+  ]
+}

@@ -42,7 +42,14 @@ two jurisdictions return disjoint document sets for the same question.
 **Authority laundering.** Registry records are evidence, not law. If one appeared as a citation,
 the interface would present a filing as though it were a requirement. `citable_in_answers` is typed
 `Literal[False]` so a record cannot occupy a citation slot. Measured as `authority_purity`, target
-100%. (Phases 0, 12, 13.)
+100%. (Phase 13 measures it.)
+
+*Built.* Layer 2 lives in `app/records`, in its own database, with no embedding column in its schema
+and no path from the query pipeline into its aggregate table. The generation context builder takes
+only corpus passages, so a record cannot be packed as authority even by mistake; a test watches the
+packed prompt during a real run and asserts no retrieved record's title or id appears in it. Portals
+get no fetcher anywhere: the loader refuses on `access_mode`, the manifest reader rejects a portal
+carrying a parser, and `app/records/portal.py` has no HTTP client.
 
 **Stale law presented as current.** Documents carry effective dates and supersession links.
 Superseded text is retained but excluded from retrieval for current answers, and every answer

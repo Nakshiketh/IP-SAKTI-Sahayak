@@ -24,6 +24,8 @@ coverage/
 /data/index-samples/
 /data/chunks/
 /data/audit.sqlite3
+/data/records.sqlite3
+/data/records-samples.sqlite3
 corpus/raw/
 corpus/**/raw/
 # Written by every ingest run. The real corpus changelog is committed once

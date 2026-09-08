@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 11. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 12. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -20,7 +20,7 @@ passages do not support an answer, the system abstains and says which of four re
 | Answers | what is *required* | what has been *filed or granted* |
 | Examples | Acts, Rules, treaties, pharmacopoeias | patent applications, GI registrations |
 | Status | normative; citable as authority | evidential; never citable |
-| Storage | chunk store + vector index | relational, full-text only |
+| Storage | chunk store + vector index | its own SQLite file, full-text only |
 | Embedded? | yes | **no** |
 | Effect on confidence | sets it | none |
 
@@ -44,7 +44,7 @@ is no "both".
       app/retrieval  indexes, channels, fusion, reranking — the stores the stages read
       app/corpus     ingestion: fetch, parse, segment, enrich, embed, version, validate
       app/llm        the generator behind an interface, with its prompt
-      app/records    records store and service (planned, Phase 12)
+      app/records    Layer 2: store, manifest, ingestion, portal links
     /corpus      source manifests and ingestion configs
       samples/   fictional instruments the pipeline is proved against
     /data        generated indexes, chunk stores, demo fixtures (gitignored)
@@ -55,7 +55,7 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 11
+## Built as of Phase 12
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
 - FastAPI app with the full API surface: `/query` (streaming), `/classify`, `/abs-check`,
@@ -201,6 +201,44 @@ job is to prove the pipeline works end to end while the real manifest has nothin
 readable by the real `Namespaces` and `Retriever`; a test asserts exactly that, because it is the
 contract between this phase and the last one.
 
+### The records layer
+
+Layer 2, in `app/records`, and separate from the corpus in every way that can be made structural:
+its own database file, its own manifest, its own CLI, its own API router, and no embedding column
+anywhere in its schema — a test asserts the absence. Records are tabular, far larger than the corpus
+and semantically thin; embedding them would pollute retrieval and produce citations that look
+authoritative and are not law.
+
+Five tables: `record_sources`, `records` (with each row's original JSON and a hash of it),
+`record_snapshots` (append-only), `aggregate_statistics`, and an FTS5 index over title, abstract and
+applicant.
+
+The four orchestration rules are held in code rather than in a prompt:
+
+1. A record is never packed as authority. `build_context` takes `ScoredChunk`; there is no overload
+   that takes a `Record`, so this is a type error rather than a policy. `EVIDENCE_LABEL` is written
+   and unused, waiting for the day record text does reach a model.
+2. Confidence is computed only from corpus passages. `score_confidence` is not given records.
+3. A corpus abstention is not rescued. `related_records` runs for an abstention exactly as for an
+   answer, and a test drives that through the API.
+4. An aggregate never attaches to a claim about a specific product. It lives in a different table,
+   is reachable only from `/records/landscape`, and the pipeline module contains neither the word
+   `landscape` nor the word `aggregate` — also a test.
+
+Portals get no fetcher. `ingest_source` refuses on `access_mode` before it reads anything, the
+manifest reader rejects a portal that carries a parser or field map, `app/records/portal.py`
+contains no HTTP client, and a test greps the repository for a file that names a portal source
+beside fetch code. Every real portal's `link_template` is null, because nobody has verified those
+URL structures — a deep link written from memory would land on the wrong page and read like a search
+that found nothing.
+
+### What is ingested, Layer 2
+
+Nothing. Thirteen of the seventeen sources are portals this pipeline never fetches; the other four
+have licences nobody has read, and an unread licence means no ingestion. `make ingest-records`
+reports that per source. `corpus/samples/records-manifest.json` is a fictional registry that does
+load, which is what proves the loader, the snapshots, the diff and the search work.
+
 ### Guardrails
 
 - Refusals are matched on the question and short-circuit before retrieval, so whether a dosage
@@ -221,6 +259,7 @@ contract between this phase and the last one.
 | Records store, snapshots, portal link-out | 12 |
 | Evaluation harness, privacy and consent surfaces, hardening | 13 |
 | An embedding model and the dense retrieval channel | not scheduled |
+| Reading the licences and terms for the 17 records sources | not scheduled — it is reading, not code |
 | Fetching the real source set: verifying a URL, a licence and an effective date per document | not scheduled — it is reading and checking, not code |
 | Knowledge graph, agentic multi-source orchestration, subscription connectors | not scheduled |
 

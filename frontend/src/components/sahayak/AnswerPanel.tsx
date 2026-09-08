@@ -2,16 +2,19 @@ import { useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { SourceCard } from '@/components/answer/SourceCard';
+import { SearchElsewhere } from '@/components/sahayak/SearchElsewhere';
 import { RecordCard, TabPanel, Tabs } from '@/components/ui';
 import type { QueryResult } from '@/services/query';
 
 /**
- * Sources and related records, as two tabs.
+ * Three tabs: what the answer rests on, what somebody filed, and where this
+ * product did not look.
  *
- * They are tabs rather than one scrolling list because the boundary is the
- * point: a source is something the answer rests on, a record is something
- * somebody filed. Putting them in one column, however carefully labelled, makes
- * the second look like the first.
+ * They are tabs rather than one scrolling list because the boundaries are the
+ * point. A source is authority. A record is evidence that an application exists.
+ * A portal is a place the product deliberately did not search. Putting any two
+ * of those in one column, however carefully labelled, makes the second look like
+ * the first.
  *
  * When the system has abstained the records tab says so again, in as many words.
  * Records existing is not an answer, and this is the surface where that
@@ -39,6 +42,7 @@ export function AnswerPanel({ result }: { result: QueryResult }) {
         items={[
           { id: 'sources', label: t('records.sourcesTab'), count: citations.length },
           { id: 'records', label: t('records.tab'), count: records.length },
+          { id: 'elsewhere', label: t('elsewhere.tab') },
         ]}
       />
 
@@ -85,6 +89,10 @@ export function AnswerPanel({ result }: { result: QueryResult }) {
             ))}
           </ul>
         )}
+      </TabPanel>
+
+      <TabPanel id="elsewhere" idBase={idBase} active={tab === 'elsewhere'}>
+        <SearchElsewhere question={result.question} />
       </TabPanel>
     </div>
   );

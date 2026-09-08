@@ -30,6 +30,12 @@ the timings are what the stages actually did.
 edge that says demo. Then expand "what happened" and show the per-passage scores, including the ones
 that did not clear the floor and are marked as such.
 
+Then move along the tabs. **Related records** are things somebody filed — full neutral borders, no
+indigo anywhere, and a line on every card saying they are not a statement of law. **Search
+elsewhere** is the registries this product did *not* search, each saying so, and each saying its link
+is not yet verified rather than offering a guessed URL. Say the sentence out loud: finding nothing in
+a search nobody ran means nothing.
+
 **3. Flip the jurisdiction.** The answer set swaps whole — different documents, different
 confidence, nothing blended. The Indian sources are not filtered; they are not in the store that was
 read.
@@ -62,6 +68,8 @@ could be. In a terminal:
 
     make ingest              # the real source set: 37 skips, nothing built, nothing guessed
     make ingest-samples      # fictional instruments, built end to end
+    make ingest-records      # Layer 2: 17 sources, nothing loaded, no portal fetched
+    make ingest-records-samples   # a fictional registry, loaded end to end
 
 The first is the honest report — every source is skipped for want of a verified URL, and the run
 says so rather than inventing one. The second builds a real index: open `corpus/samples/CHANGELOG.md`
@@ -75,6 +83,11 @@ Then show that it notices when the law moves. Edit one line of
 It reports the document as changed. With `--write` it rebuilds, retains the previous wording with an
 effective-to date, and names the section in the changelog. That retention is the point: it is what
 lets an answer say "the position on this has moved" rather than "I found nothing".
+
+For the records layer, run `make ingest-records-samples` twice. The second run reports "0 added, 0
+changed" — the snapshot diff working — and the store now answers `/api/v1/records/search`. The
+portal in that fixture carries a licence, a readable file and a working link template, and is still
+refused: the refusal is on how a source is accessed, not on whether a fetch would succeed.
 
 ## What is deliberately not in the script
 

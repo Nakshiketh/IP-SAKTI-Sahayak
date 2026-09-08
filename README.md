@@ -20,7 +20,7 @@ product classifies first, then routes to the intellectual-property and regulator
 
 ## Status
 
-Phase 11 of a phased build. The interface is complete, the API behind it is real, and so is the
+Phase 12 of a phased build. The interface is complete, the API behind it is real, and so is the
 corpus pipeline: a question is refused or understood, routed to exactly one jurisdiction, retrieved
 for, reranked, packed, answered under a schema-constrained prompt, citation-checked, scored for
 confidence and audited — with the stages streamed to the browser as they run. Ingestion fetches,
@@ -59,6 +59,7 @@ Building a corpus:
 make ingest            # the real source set; today, 37 skips and nothing built
 make ingest-samples    # the fixture documents, into data/index-samples
 make refresh           # re-fetch and report what moved; writes nothing without --write
+make ingest-records    # Layer 2; today, 17 sources and nothing loaded
 ```
 
 No API key is needed. With none configured the generator writes only over the demo passages and
@@ -97,8 +98,13 @@ Superseded text is retained but never retrieved for a current answer.
 
 **Layer 2, records** is evidential: what has been filed, granted or registered. Records are shown
 beside an answer, never inside it, never as a citation, and they never change an answer's
-confidence or rescue an abstention. Sources that are interactive and session-based are linked out
-to, never scraped.
+confidence or rescue an abstention. They live in their own database with no embeddings, and the four
+rules that keep them there are enforced in code rather than in a prompt. Sources that are
+interactive and session-based are linked out to, never scraped — and nothing in the codebase can
+fetch one.
+
+Neither layer has been ingested. The pipelines for both are built and proved against fictional
+fixtures; what waits is a person verifying a URL, a licence and an effective date per source.
 
 `docs/CORPUS_POLICY.md` lists the source set and the manifest formats.
 

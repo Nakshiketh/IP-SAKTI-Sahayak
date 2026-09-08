@@ -11,7 +11,8 @@ has retrieved, and is why `samples/` exists.
   the sources page.
 - `records-manifest.json` — Layer 2, records. One entry per source, carrying access mode, licence,
   verbatim attribution text and either a field map (for bulk sources) or a link template (for
-  portal-only sources, which get no fetcher at all).
+  portal-only sources, which get no fetcher at all). Nothing here is ingested either: 13 of the 17
+  are portals this product never fetches, and the other four have licences nobody has read.
 - `samples/` — fictional instruments of a fictional territory, and their own manifest. What proves
   the pipeline works end to end while the real manifest has nothing to fetch. See `samples/README.md`.
 - `CHANGELOG.md` — written by the version stage on re-ingest, so "the law changed and the sources
@@ -27,6 +28,8 @@ has retrieved, and is why `samples/` exists.
     make ingest                 # the real source set; today, 37 skips and no build
     make ingest-samples         # the fixture documents, into data/index-samples
     make refresh                # re-fetch and report what moved; writes nothing without --write
+    make ingest-records         # Layer 2; today, 17 sources and nothing loaded
+    make ingest-records-samples # the fixture registry, into data/records-samples.sqlite3
 
 `scripts/ingest.py --help` and `scripts/refresh.py --help` carry the rest. A relative `source_url`
 is resolved against the manifest's own directory before the repository root, so a manifest and its

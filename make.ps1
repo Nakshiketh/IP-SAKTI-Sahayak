@@ -43,7 +43,8 @@ switch ($Target) {
     Write-Host 'ingest          build the index from corpus/manifest.json'
     Write-Host 'ingest-samples  build the index from the fixture documents'
     Write-Host 'refresh         re-fetch and report what has changed since the last ingest'
-    Write-Host 'ingest-records  load the records layer (Phase 12)'
+    Write-Host 'ingest-records  load the records layer from corpus/records-manifest.json'
+    Write-Host 'ingest-records-samples  load the fixture registry'
     Write-Host 'evals           run the evaluation harness (Phase 13)'
   }
   'install' {
@@ -96,9 +97,11 @@ switch ($Target) {
       --manifest 'corpus/samples/manifest.json' --index-dir 'data/index-samples'
   }
   'refresh' { & $Py (Join-Path $Root 'scripts\refresh.py') }
-  'ingest-records' {
-    Write-Host 'The records layer arrives in Phase 12. See docs/MASTER_BUILD.md, Phase 12.'
-    exit 1
+  'ingest-records' { & $Py (Join-Path $Root 'scripts/ingest_records.py') }
+  'ingest-records-samples' {
+    & $Py (Join-Path $Root 'scripts/ingest_records.py') `
+      --manifest 'corpus/samples/records-manifest.json' `
+      --database 'data/records-samples.sqlite3' --no-write-back
   }
   'evals' {
     Write-Host 'The evaluation harness arrives in Phase 13. See docs/MASTER_BUILD.md, Phase 13.'

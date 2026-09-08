@@ -1198,3 +1198,173 @@ identity on the index so a corpus embedded with one model can never be silently 
 another.
 
 **Revisit when.** A multilingual model with real Indic coverage is chosen and can be pinned.
+
+---
+
+## [12] The four orchestration rules are held by types and by tables, not by a prompt
+
+**Decision.** Each of the phase's four rules is enforced by something a future edit would have to
+work at to break:
+
+1. *A record is never packed as authority.* `build_context` takes `list[ScoredChunk]`. There is no
+   overload taking a `Record`, so packing one is a type error. `EVIDENCE_LABEL` exists, written and
+   unused, for the day something does need to put record text in front of a model.
+2. *Confidence comes only from corpus passages.* `RetrievalEvidence` has no field a record could
+   arrive through, which was already true and is now asserted.
+3. *A corpus abstention is not rescued.* `related_records` runs for an abstention exactly as for an
+   answer, and is called after the decision has been made. A test drives a refusal through the API
+   with records loaded and asserts the answer is still null.
+4. *An aggregate never attaches to a claim about a product.* Aggregates are a different table,
+   reachable only from `/records/landscape`, and a test greps `pipeline.py` for the words
+   `landscape` and `aggregate` and fails if either appears.
+
+**Alternatives.** State the rules in the system prompt, which is where the build document's phrasing
+("never packed into the LLM context as authority") first suggests they live.
+
+**Why.** A prompt is a request. These four are the difference between evidence and law, and the cost
+of getting one wrong is a reader acting on a filing as though it were a requirement. Rule 4 is the
+one most worth the table separation: an aggregate is arithmetic about an industry, and the moment it
+can be joined to a specific product it becomes arithmetic pretending to be evidence.
+
+**Revisit when.** Something genuinely needs record text in a prompt — a "what have others filed in
+this space" summary, say. `EVIDENCE_LABEL` is the wrapper it must go under, and rule 2 still holds.
+
+---
+
+## [12] No fetcher exists for a portal, and the refusal is on access mode
+
+**Decision.** Four defences, because one would be a convention. `ingest_source` returns a skip on
+`access_mode` before it reads a licence, a URL or a file. The manifest reader raises if a
+`portal_link_only` entry carries a parser or field map. `app/records/portal.py` contains no HTTP
+client and says so in its docstring. And a test greps every Python file for one that names a portal
+source beside fetch code.
+
+The sample manifest carries a portal with a licence, a readable `source_url` *and* a working link
+template — on purpose. A test ingests it and asserts the refusal still happens. The refusal is not
+about whether a fetch would succeed.
+
+**Why.** These services are interactive and session-based and their terms generally prohibit
+automated retrieval. The failure mode is not a crash; it is a future contributor seeing a `licence`
+and a `source_url` on a row and reasonably concluding it can be loaded.
+
+**Revisit when.** A portal publishes a bulk export, at which point it stops being a portal and the
+manifest entry changes access mode — which a person does, and which the ingest cannot do for itself.
+
+---
+
+## [12] A deep link is only built from a template somebody has verified
+
+**Decision.** `build_link` returns None where `link_template` is null, and every real portal's
+template is null. The interface lists the registry with "link not yet verified" rather than a URL.
+
+**Alternatives.** Construct a search URL from the portal's domain and a query parameter, which is
+usually right.
+
+**Why.** Usually right is the problem. A deep link that lands on the wrong page — a homepage, a
+login, an empty result — looks exactly like a search that ran and found nothing, which is the single
+most expensive wrong impression this product could give about prior art. Listing the registry with
+no link tells the reader something true; a guessed link tells them something false and looks more
+helpful.
+
+**Revisit when.** Somebody reads a portal's terms and URL structure and fills a template. The
+machinery is already there and the sample fixture exercises it.
+
+---
+
+## [12] Records are offered on any of a question's words; the search box needs all of them
+
+**Decision.** `search_records` ANDs the query terms. `related_records` ORs them, over the question's
+distinctive words only.
+
+**Why.** Found immediately: "is our herbal formulation patentable" ANDed against a registry returned
+nothing, because no filing's title contains every word of somebody's question. They are two
+different questions wearing the same interface. A person in a search box means "find records with
+all of these words". Offering records beside an answer means "find records that touch any of this",
+and the wrong choice there makes a populated registry look empty.
+
+**Revisit when.** The registry is large enough that an OR over a whole question returns noise, at
+which point the answer is ranking rather than a different operator.
+
+---
+
+## [12] Snapshots are append-only and a changed row is counted, not overwritten silently
+
+**Decision.** `record_snapshots` has an insert path and no update path. Each run diffs against the
+source's last state by row hash and records added, changed and removed counts. Re-running over an
+unchanged file reports no change rather than rewriting every row as new.
+
+**Why.** The same reasoning as the corpus version stage, one layer down. A registry that quietly
+replaced yesterday's rows would make "this application was published on that date" unverifiable
+after the fact. The row hash is what makes the incremental append idempotent, and keeping each row's
+original JSON is what makes a field mapping arguable later — if a column turns out to have been
+mapped wrongly, the evidence for what the source actually said is still there.
+
+**Revisit when.** Retention becomes expensive, which is an archive table rather than a delete.
+
+---
+
+## [12] A mapped field that comes out mostly null fails the run
+
+**Decision.** Three gates fail rather than degrade: an empty licence, schema drift (the field map
+names a column the file does not have), and a mapped field null in more than 5% of rows.
+
+**Why.** The third is the one worth having. Schema drift crashes visibly; a wrong mapping does not.
+The rows load, the counts look right, and every record is missing its filing date — and nobody finds
+out until a reader asks when something was filed. Five percent is a judgement rather than a
+measurement, and it is one named constant so it can be argued with.
+
+**Revisit when.** A real source turns out to have a legitimately sparse column, at which point the
+threshold needs to be per-field rather than global.
+
+---
+
+## [12] "Search elsewhere" is a third tab, not a longer records list
+
+**Decision.** Three tabs beside an answer: sources, related records, and the registries this product
+did not search. Each portal row carries its own line saying the product has not run this search, and
+the tab's callout says it once more at the top.
+
+**Alternatives.** Append the portals to the records tab, which is where they are conceptually
+adjacent.
+
+**Why.** Three different kinds of thing: authority, evidence that an application exists, and a place
+deliberately not looked at. A list of registries sitting under an answer reads like a list of places
+that *were* checked, and appending them to actual records would make that reading almost inevitable.
+The repetition is not redundancy — finding nothing in a search nobody ran is the specific wrong
+conclusion this tab exists to prevent.
+
+**Revisit when.** Templates are verified and the rows carry real links, at which point the wording
+matters more rather than less.
+
+---
+
+## [12] The records store has no embedding column, and that is asserted
+
+**Decision.** `app/records/store.py`'s schema is checked by a test for the words "embedding",
+"vector", "faiss" and "chroma". The database is a separate file from the corpus index, and a test
+asserts the paths cannot nest.
+
+**Why.** The reason for the whole separation is that embedding records pollutes retrieval and
+produces citations that look authoritative and are not law. That reason lives in a docstring, and
+docstrings do not fail builds. The absence of a column is the kind of thing that gets added by
+someone solving a real problem — "records search is weak, let us embed them" — and the test is
+addressed to that person.
+
+**Revisit when.** Never, on the corpus index. A separate vector store *for records search only*,
+never read by the answer path, is a different proposal and would need its own decision.
+
+---
+
+## [12] Records reach the answer surface from the store, with the fixture only standing in
+
+**Decision.** The pipeline asks the records service first. Where nothing is ingested, the demo
+fixture stands in — and only while the corpus itself is the committed fixture. A real corpus with no
+records loaded returns nothing.
+
+**Why.** The same rule as everywhere else in this build: a fixture may stand in for a thing that
+does not exist yet, but it may never stand beside a thing that does. Real passages with fixture
+records beside them would be a screen where half the evidence is invented and nothing says which
+half.
+
+**Revisit when.** A real registry is loaded, at which point the fixture branch is dead code and
+should go.

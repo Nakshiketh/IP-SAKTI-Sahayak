@@ -51,6 +51,7 @@ from app.services.audit import AuditLog, AuditRow, hash_question
 from app.services.context import build_context
 from app.services.guardrails import Refusal, classify_refusal
 from app.services.language import Detection, detect_language
+from app.services.records_service import RecordsService
 from app.services.retrieval import Retriever
 from app.services.routing import Route, route
 from app.services.translation import Translator
@@ -171,11 +172,13 @@ class Pipeline:
         translator: Translator,
         retriever: Retriever | None = None,
         audit: AuditLog | None = None,
+        records: RecordsService | None = None,
     ) -> None:
         self._settings = settings
         self._namespaces = namespaces
         self._llm = llm
         self._translator = translator
+        self._records = records
         self._retriever = retriever or Retriever(fusion_k=settings.fusion_k)
         self._audit = audit or AuditLog(settings.audit_db_path, enabled=settings.audit_enabled)
 
@@ -507,7 +510,7 @@ class Pipeline:
             evidence=evidence,
             confidence=scored,
             answer=answer,
-            related_records=self._records(request, chosen.jurisdiction),
+            related_records=self._related_records(request, chosen.jurisdiction),
             follow_ups=self._follow_ups(request, chosen, answer, understanding),
             stages=tuple(clock.stages),
             total_ms=clock.total_ms,
@@ -565,16 +568,28 @@ class Pipeline:
             is_demo=is_demo,
         )
 
-    def _records(self, request: QueryRequest, jurisdiction: Jurisdiction) -> tuple[Record, ...]:
+    def _related_records(
+        self, request: QueryRequest, jurisdiction: Jurisdiction
+    ) -> tuple[Record, ...]:
         """Records the question is adjacent to. Never part of the answer.
 
-        Layer 2 is not ingested until Phase 12, so what is returned here comes
-        from the demo fixture and only when the store is the demo store. It is
-        attached beside abstentions as readily as beside answers, deliberately:
-        the rule that matters is that their presence changes nothing.
+        Attached beside an abstention exactly as beside an answer, because the
+        rule that matters is that their presence changes nothing — it cannot
+        raise confidence, which is not given records at all, and it cannot
+        rescue a decline, which was already decided by the time this runs.
+
+        The real store is asked first. Where nothing has been ingested, the demo
+        fixture stands in, and only while the corpus itself is the demo fixture:
+        a real corpus with no records loaded returns nothing, which is the
+        truth rather than a fixture pretending to be a registry.
         """
+        if self._records is not None:
+            found = self._records.related_records(request.question, jurisdiction.value)
+            if found:
+                return found
+
         store = self._namespaces.store(jurisdiction)
-        if not store.is_demo or jurisdiction is not Jurisdiction.IN:
+        if not store.is_fixture or jurisdiction is not Jurisdiction.IN:
             return ()
         from app.services.demo_records import demo_records
 
