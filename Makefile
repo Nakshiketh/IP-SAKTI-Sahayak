@@ -8,8 +8,8 @@ ifeq ($(OS),)
 endif
 
 .PHONY: help install install-llm dev dev-backend dev-frontend dev-frontend-mock \
-        test test-backend test-frontend lint format schema ingest ingest-records \
-        refresh evals clean
+        test test-backend test-frontend lint format schema ingest ingest-samples \
+        ingest-records refresh evals clean
 
 help:
 	@echo "install         install backend and frontend dependencies"
@@ -21,7 +21,9 @@ help:
 	@echo "schema          regenerate schemas/domain.schema.json from the Pydantic model"
 	@echo "i18n            sync every locale with the English key set, then report coverage"
 	@echo "manifest        regenerate corpus/manifest.json from the planned source set"
-	@echo "ingest          build the source corpus from corpus/manifest.json (Phase 11)"
+	@echo "ingest          build the index from corpus/manifest.json"
+	@echo "ingest-samples  build the index from the fixture documents, into data/index-samples"
+	@echo "refresh         re-fetch and report what has changed since the last ingest"
 	@echo "ingest-records  load the records layer from corpus/records-manifest.json (Phase 12)"
 	@echo "evals           run the evaluation harness and write a report (Phase 13)"
 
@@ -79,10 +81,19 @@ i18n-check:
 	node scripts/i18n-seed.ts --check
 	node scripts/i18n-coverage.ts
 
+# Build the index from the real source set. Today every entry is skipped for
+# want of a verified source_url, and the run says so rather than guessing one.
 ingest:
-	@echo "The corpus pipeline arrives in Phase 11. Nothing is ingested yet, and"
-	@echo "no index is built. See docs/MASTER_BUILD.md, Phase 11."
-	@exit 1
+	$(PY) scripts/ingest.py
+
+# The same pipeline over the committed fixture documents, which is what proves
+# it works end to end while the real manifest has nothing to fetch.
+ingest-samples:
+	$(PY) scripts/ingest.py --manifest corpus/samples/manifest.json --index-dir data/index-samples
+
+# Re-fetch and report what has moved. Writes nothing without --write.
+refresh:
+	$(PY) scripts/refresh.py
 
 ingest-records:
 	@echo "The records layer arrives in Phase 12. See docs/MASTER_BUILD.md, Phase 12."

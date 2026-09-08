@@ -98,7 +98,14 @@ def get_lexicon() -> Lexicon:
     return _LEXICON
 
 
-def _contains_run(tokens: list[str], run: tuple[str, ...]) -> bool:
+def contains_run(tokens: list[str], run: tuple[str, ...]) -> bool:
+    """Does this phrase appear as a phrase?
+
+    Public because ingestion tags a passage with the same lexicon this stage
+    reads a question with. One vocabulary on both sides of a retrieval is the
+    point; two would drift, and the drift would show up as a filter quietly
+    excluding the passage the reader needed.
+    """
     if not run:
         return False
     length = len(run)
@@ -107,12 +114,19 @@ def _contains_run(tokens: list[str], run: tuple[str, ...]) -> bool:
     )
 
 
-def _matches(tokens: list[str], section: dict[str, tuple[tuple[str, ...], ...]]) -> list[str]:
-    return [
+def matching_keys(
+    tokens: list[str], section: dict[str, tuple[tuple[str, ...], ...]]
+) -> tuple[str, ...]:
+    """Every key in a lexicon section whose phrases appear in these tokens."""
+    return tuple(
         key
         for key, phrases in section.items()
-        if any(_contains_run(tokens, phrase) for phrase in phrases)
-    ]
+        if any(contains_run(tokens, phrase) for phrase in phrases)
+    )
+
+
+def _matches(tokens: list[str], section: dict[str, tuple[tuple[str, ...], ...]]) -> list[str]:
+    return list(matching_keys(tokens, section))
 
 
 def understand_query(
@@ -130,7 +144,7 @@ def understand_query(
 
     entities: dict[str, tuple[str, ...]] = {}
     for category, phrases in lex.entities.items():
-        found = [" ".join(phrase) for phrase in phrases if _contains_run(tokens, phrase)]
+        found = [" ".join(phrase) for phrase in phrases if contains_run(tokens, phrase)]
         if found:
             entities[category] = tuple(found)
 
@@ -168,7 +182,7 @@ def _intent(
         return Intent.CLASSIFY
     if RegulatoryArea.ABS_COMPLIANCE in areas:
         return Intent.ABS
-    if _contains_run(tokens, ("prior", "art")) or _contains_run(tokens, ("alreadi", "record")):
+    if contains_run(tokens, ("prior", "art")) or contains_run(tokens, ("alreadi", "record")):
         return Intent.PRIOR_ART
     if RegulatoryArea.IMPORT_EXPORT in areas:
         return Intent.GO_ABROAD

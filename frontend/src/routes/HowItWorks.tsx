@@ -26,10 +26,12 @@ type LayerKey = 'client' | 'api' | 'orchestrator' | 'stores' | 'corpus';
 
 const ARCHITECTURE_LAYERS: ReadonlyArray<{ key: LayerKey; state: BuildState }> = [
   { key: 'client', state: 'live' },
-  { key: 'api', state: 'planned' },
-  { key: 'orchestrator', state: 'planned' },
-  { key: 'stores', state: 'planned' },
-  { key: 'corpus', state: 'planned' },
+  { key: 'api', state: 'live' },
+  // Runs in full on every question, but over illustrative sources until
+  // documents are ingested.
+  { key: 'orchestrator', state: 'demo' },
+  { key: 'stores', state: 'demo' },
+  { key: 'corpus', state: 'demo' },
 ];
 
 const METRICS = [

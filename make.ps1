@@ -40,7 +40,9 @@ switch ($Target) {
     Write-Host 'schema          regenerate schemas/domain.schema.json from the Pydantic model'
     Write-Host 'i18n            sync every locale with the English key set, then report coverage'
     Write-Host 'manifest        regenerate corpus/manifest.json from the planned source set'
-    Write-Host 'ingest          build the source corpus (Phase 11)'
+    Write-Host 'ingest          build the index from corpus/manifest.json'
+    Write-Host 'ingest-samples  build the index from the fixture documents'
+    Write-Host 'refresh         re-fetch and report what has changed since the last ingest'
     Write-Host 'ingest-records  load the records layer (Phase 12)'
     Write-Host 'evals           run the evaluation harness (Phase 13)'
   }
@@ -88,11 +90,12 @@ switch ($Target) {
     & node "$Root\scripts\i18n-seed.ts" --check
     & node "$Root\scripts\i18n-coverage.ts"
   }
-  'ingest' {
-    Write-Host 'The corpus pipeline arrives in Phase 11. Nothing is ingested yet, and no'
-    Write-Host 'index is built. See docs/MASTER_BUILD.md, Phase 11.'
-    exit 1
+  'ingest' { & $Py (Join-Path $Root 'scripts\ingest.py') }
+  'ingest-samples' {
+    & $Py (Join-Path $Root 'scripts\ingest.py') `
+      --manifest 'corpus/samples/manifest.json' --index-dir 'data/index-samples'
   }
+  'refresh' { & $Py (Join-Path $Root 'scripts\refresh.py') }
   'ingest-records' {
     Write-Host 'The records layer arrives in Phase 12. See docs/MASTER_BUILD.md, Phase 12.'
     exit 1

@@ -1,0 +1,111 @@
+SAMPLE FIXTURE DOCUMENT. Not law. Not a real instrument. Written to exercise the ingestion pipeline.
+
+THE SAMPLE INSTRUMENTS ACT, 2020 (ILLUSTRATIVE)
+
+An illustrative Act of the fictional territory of Sampleland, written so that the section-aware
+segmenter has chapters, sections, sub-sections and clauses to find. Nothing in it states or
+paraphrases the law of any real jurisdiction.
+
+CHAPTER I  PRELIMINARY
+
+1. Short title and commencement.
+
+(1) This illustrative Act may be called the Sample Instruments Act, 2020.
+
+(2) It extends to the whole of the fictional territory of Sampleland and comes into force on such
+date as the illustrative authority may appoint.
+
+2. Definitions.
+
+In this illustrative Act, unless the context otherwise requires, the following expressions carry the
+meanings given to them here.
+
+(a) "illustrative authority" means the body named in Chapter II of this fixture;
+
+(b) "sample article" means a thing to which this fixture applies;
+
+(c) "register" means the record of sample articles maintained under this fixture.
+
+CHAPTER II  THE ILLUSTRATIVE AUTHORITY
+
+3. Constitution of the illustrative authority.
+
+(1) There shall be an illustrative authority for the purposes of this fixture, constituted in such
+manner as may be prescribed by the fixture rules.
+
+(2) The illustrative authority shall consist of a chairperson and such other members as may be
+appointed, and shall meet at such intervals as it considers necessary for the discharge of its
+functions under this fixture.
+
+(3) No act or proceeding of the illustrative authority shall be called in question merely on the
+ground of a vacancy in, or a defect in the constitution of, the authority.
+
+4. Functions of the illustrative authority.
+
+(1) The illustrative authority shall maintain the register, determine applications made to it, and
+publish its determinations in such manner as may be prescribed.
+
+(2) In discharging its functions the illustrative authority shall have regard to the following
+matters, and to nothing else that is not mentioned in this fixture.
+
+(a) the completeness of the particulars furnished with an application;
+
+(b) whether the sample article to which the application relates falls within a class to which this
+fixture applies;
+
+(c) whether the applicant has furnished such fee as may be prescribed;
+
+(d) whether any earlier entry in the register relates to the same sample article;
+
+(e) any representation made to the illustrative authority by a person appearing to it to have an
+interest in the application.
+
+(3) Where the illustrative authority refuses an application it shall record its reasons in writing
+and communicate them to the applicant within such period as may be prescribed, and the applicant may
+apply to the illustrative authority for a review of that refusal within thirty days of the
+communication.
+
+CHAPTER III  REGISTRATION
+
+5. Application for registration.
+
+(1) A person who wishes to have a sample article entered in the register shall apply to the
+illustrative authority in such form and on payment of such fee as may be prescribed by the fixture
+rules made under this illustrative Act.
+
+(2) An application under sub-section (1) shall be accompanied by such particulars of the sample
+article as are sufficient to identify it, and by a statement of the class within which the applicant
+considers the sample article to fall.
+
+(3) Where an application does not contain the particulars required by sub-section (2), the
+illustrative authority may require the applicant to furnish them within such period as it may
+specify, and may refuse the application if they are not furnished within that period. In determining
+whether particulars are sufficient the illustrative authority shall have regard to the purpose for
+which the register is maintained, namely to enable a person consulting it to identify a sample
+article without recourse to any other record, and shall not require particulars beyond what that
+purpose demands. Nothing in this sub-section entitles the illustrative authority to require a
+particular that is not prescribed, and a requirement made otherwise than in accordance with this
+sub-section is of no effect for the purposes of this fixture. Where a requirement is made under this
+sub-section the illustrative authority shall record the requirement and the reason for it, and shall
+furnish a copy of that record to the applicant on request and without charge.
+
+6. Effect of registration.
+
+(1) An entry in the register is evidence of the particulars entered in it and of nothing else.
+
+(2) Registration under this fixture does not confer any right in respect of a sample article beyond
+those conferred by this fixture, and does not affect any right arising otherwise than under it.
+
+CHAPTER IV  LABELLING OF SAMPLE ARTICLES
+
+7. Particulars to be borne on a label.
+
+(1) Every sample article offered for supply shall bear a label containing the particulars specified
+in sub-section (2).
+
+(2) The particulars are the name of the sample article, the name and address of the person by whom
+it was made, the entry number in the register where it is registered, and the date on which it was
+made.
+
+(3) A label shall not contain any claim as to the effect of a sample article that is not supported by
+particulars furnished to the illustrative authority under section 5.

@@ -48,6 +48,11 @@ class Settings(BaseSettings):
     data_dir: Path = Field(default=REPO_ROOT / "data")
     corpus_dir: Path = Field(default=REPO_ROOT / "corpus")
 
+    #: Where the built index is read from. Overridable so an ingest can be
+    #: served without being moved on top of the one in place — pointing this at
+    #: `data/index-samples` is how the sample build is demonstrated.
+    index_dir_override: Path | None = None
+
     # -- retrieval ---------------------------------------------------------
 
     #: Candidates each channel contributes before fusion.
@@ -104,8 +109,8 @@ class Settings(BaseSettings):
 
     @property
     def index_dir(self) -> Path:
-        """Where Phase 11 writes the built index. Absent until it runs."""
-        return self.data_dir / "index"
+        """Where the corpus pipeline writes the built index."""
+        return self.index_dir_override or (self.data_dir / "index")
 
     @property
     def fixtures_dir(self) -> Path:

@@ -20,31 +20,23 @@ delimiter. The header is what makes attribution possible at all: a model cannot
 cite a section path it was never shown. The delimiter is what makes the
 "passages are data" instruction in the system prompt mean something.
 
-Token counting is by whitespace-and-punctuation words, not by any model's
-tokeniser. It is an estimate, it is documented as one, and it is deliberately
-conservative: the budget is a guard against overflow, and a guard that needs the
-exact tokeniser of whichever model is configured would be a guard that breaks
-when the model changes.
+The token budget is spent in the estimated tokens of `app.core.tokens`, which is
+the same estimator the segmenter sizes a chunk with. A chunk sized by one and
+budgeted by another is a chunk that overflows the window it was sized to fit.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.tokens import estimate_tokens
 from app.retrieval.types import ScoredChunk
 from app.services.guardrails import neutralise
-
-#: Words per token. English prose runs a little under one token per word and
-#: Indic scripts run well over; 1.4 tokens per word is the conservative end of
-#: that range, which is the side to be wrong on.
-TOKENS_PER_WORD = 1.4
 
 PASSAGE_OPEN = '<passage id="{chunk_id}">'
 PASSAGE_CLOSE = "</passage>"
 
-
-def estimate_tokens(text: str) -> int:
-    return int(len(text.split()) * TOKENS_PER_WORD) + 1
+__all__ = ["Context", "PackedPassage", "build_context", "estimate_tokens"]
 
 
 @dataclass(frozen=True)

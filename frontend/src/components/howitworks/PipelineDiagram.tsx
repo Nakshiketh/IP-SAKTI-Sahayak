@@ -55,12 +55,14 @@ export function PipelineDiagram({ idBase }: { idBase: string }) {
     <div className="grid gap-8 lg:grid-cols-[18rem_1fr]">
       <div>
         {/*
-          The list carries the count, because the page's most important message
-          is how little of this runs — and a reader should not have to click
-          thirteen stages to discover it.
+          The list carries the counts, because the page's most important message
+          is what runs and what it runs over — and a reader should not have to
+          click thirteen stages to find out.
         */}
         <p className="mb-3 max-w-none text-xs text-muted">
           {t('pipeline.buildSummary', {
+            live: PIPELINE_STAGES.filter((stage) => stage.state === 'live').length,
+            demo: PIPELINE_STAGES.filter((stage) => stage.state === 'demo').length,
             planned: plannedCount,
             total: PIPELINE_STAGES.length,
           })}

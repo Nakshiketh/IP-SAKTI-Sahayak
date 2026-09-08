@@ -1,6 +1,6 @@
 # Architecture
 
-Status as of Phase 9. Sections marked **planned** are not built; do not describe them as working
+Status as of Phase 11. Sections marked **planned** are not built; do not describe them as working
 anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
 
 ## The shape of the thing
@@ -40,9 +40,13 @@ is no "both".
       app/models domain model (Pydantic) — one half of the frontend contract
       app/core   settings, read from environment
       app/api    HTTP surface
-      app/services   pipeline stages (planned, Phase 10)
+      app/services   pipeline stages, one module each
+      app/retrieval  indexes, channels, fusion, reranking — the stores the stages read
+      app/corpus     ingestion: fetch, parse, segment, enrich, embed, version, validate
+      app/llm        the generator behind an interface, with its prompt
       app/records    records store and service (planned, Phase 12)
     /corpus      source manifests and ingestion configs
+      samples/   fictional instruments the pipeline is proved against
     /data        generated indexes, chunk stores, demo fixtures (gitignored)
     /evals       gold question set, scoring, reports
     /frontend    React app
@@ -51,11 +55,15 @@ is no "both".
     /scripts     schema generation, ingestion, corpus refresh
     /docs        this, plus decisions, corpus policy, copy, banned patterns, review gate
 
-## Built as of Phase 10
+## Built as of Phase 11
 
 - Domain model on both sides, with a drift test that was verified to fail on drift.
-- FastAPI app with `/api/v1/health` and `/api/v1/corpus-version`. The latter reports zero
-  documents, because there is no corpus yet.
+- FastAPI app with the full API surface: `/query` (streaming), `/classify`, `/abs-check`,
+  `/sources`, `/sources/{id}`, `/feedback`, `/escalate`, `/health`, `/corpus-version`. The last
+  reports the index actually being searched and whether what it serves is illustrative.
+- The corpus pipeline: fetch, parse, section-aware segmentation, tagging, versioning with retention
+  of superseded wording, validation gates, and a per-jurisdiction SQLite index — driven from a
+  manifest, idempotent, resumable, and proved end to end against committed fixture documents.
 - Vite + React + TypeScript strict + Tailwind + React Router.
 - Settings from environment with a committed `.env.example` and no committed secrets.
 - Design system: six palette tokens with their contrast measured by a test over the token file
@@ -147,7 +155,51 @@ so a checked-in answer can never sit on top of a real retrieved document. With `
 set to `anthropic` and a key present, a hosted model answers instead, under the system prompt in
 `app/llm/prompt.py` and constrained to the `GenerationResult` schema.
 
-Phase 11 replaces the fixture store with the ingested corpus. Nothing above the index changes.
+Phase 11 built the pipeline that will replace the fixture store. Nothing above the index changed to
+accommodate it: `Namespaces` already preferred a built index per jurisdiction, so an ingest that
+produces one takes over on the next restart. What has not happened is the ingestion of the real
+source set, which waits on a person verifying a URL, a licence and an effective date per document.
+
+### The corpus pipeline
+
+`scripts/ingest.py` is a thin CLI over `app/corpus`, where the machinery lives so it can be tested.
+The stages, in order:
+
+| Stage | What it does |
+| --- | --- |
+| `fetch` | Refuses a credentialed or portal-only source on `access_mode` before looking at anything else. Skips a row with no verified `source_url`. Stores the bytes with a checksum under a gitignored `raw/`. |
+| `parse` | `text` and `html` on the standard library; `pdf_layout` (PyMuPDF) and `ocr` (Tesseract) optional and reporting their own absence. Keeps page numbers, because a citation carries one. |
+| `segment` | Section-aware chunking against the document's own structure. Five profiles: statute, rules, treaty, guideline headings, pharmacopoeia monographs. |
+| `enrich` | Tags each chunk from the *same lexicon the query-understanding stage reads a question with*, so a pre-filter means the same thing on both sides of a retrieval. Document tags are a floor. |
+| `embed` | No model, no vectors, and it says so. The dense channel stays off. |
+| `version` | Diffs against the built index, keeps unchanged chunk ids, retains superseded wording with an `effective_to`, writes `CHANGELOG.md`. |
+| `validate` | The gates. Anything that fails one does not enter the index. |
+| `index` | One SQLite file per jurisdiction, written atomically into place. |
+
+Chunking is the step everything else rests on. A fixed token window produces passages that begin
+mid-sub-clause and belong to no section anyone can name, and the citation then says "page 14" —
+which is not an answer to "where does it say that". So the boundaries are the document's own, a
+section shorter than the target is *never* merged into its neighbour, and the 15% overlap applies
+only between parts of one over-long section. Every one of those rules exists because breaking it
+would put one section's words inside another section's citation.
+
+A chunk id is a section key plus a content hash. Identical wording produces an identical id without
+anything being compared, so a re-ingest of an unamended act changes nothing; amended wording gets a
+new id and the old chunk stays in the index with its `effective_to` set. That is what lets the
+product say "what I found on this has been superseded" rather than "I found nothing".
+
+### What is ingested
+
+Nothing, yet. All 37 entries in `corpus/manifest.json` carry a null `source_url`, because per
+`docs/CORPUS_POLICY.md` those fields are filled only from the document actually fetched, and
+guessing a URL is the fabrication this product exists to prevent. `make ingest` reports 37 skips
+and builds nothing.
+
+What *is* built is `corpus/samples/` — fictional instruments of a fictional territory, whose only
+job is to prove the pipeline works end to end while the real manifest has nothing to fetch.
+`make ingest-samples` fetches, parses, segments, tags, versions and indexes them, and the result is
+readable by the real `Namespaces` and `Retriever`; a test asserts exactly that, because it is the
+contract between this phase and the last one.
 
 ### Guardrails
 
@@ -168,11 +220,30 @@ Phase 11 replaces the fixture store with the ingested corpus. Nothing above the 
 | Corpus ingestion, section-aware chunking, versioning, refresh diff | 11 |
 | Records store, snapshots, portal link-out | 12 |
 | Evaluation harness, privacy and consent surfaces, hardening | 13 |
+| An embedding model and the dense retrieval channel | not scheduled |
+| Fetching the real source set: verifying a URL, a licence and an effective date per document | not scheduled — it is reading and checking, not code |
 | Knowledge graph, agentic multi-source orchestration, subscription connectors | not scheduled |
 
 ## The mock boundary
 
-Until Phase 10 the frontend talks to a mock service layer that satisfies the same interfaces the
-real API will satisfy. Mock modules are named `*.mock.ts`, carry the header
-`// DEMO DATA — not a legal source`, and every answer they produce sets `is_demo: true`, which the
-UI renders as a visible "Illustrative example" chip. Demo content must never look verified.
+The frontend talks to the API by default. One environment variable, `VITE_SAHAYAK_API`, switches it
+to a mock service that answers from the same fixture files with no backend running — used by the
+test suite, and by anyone who wants the interface without a Python process. Both implementations
+satisfy the interface in `src/services/query.ts`, and no component above that file knows which one
+it got.
+
+Mock modules are named `*.mock.ts`, carry the header `// DEMO DATA — not a legal source`, and every
+answer they produce sets `is_demo: true`, which the UI renders as a visible "Illustrative example"
+chip. The API sets the same flag whenever the passages behind an answer are marked demo — which
+covers both the committed fixture store and a real index built from illustrative documents. Demo
+content must never look verified.
+
+Two questions are kept apart in `app/retrieval/store.py`, because conflating them hid a real defect:
+`is_fixture` asks whether a namespace is still the committed JSON stand-in, and decides which corpus
+version an answer carries; `is_demo` asks whether what it serves is marked demo, and decides whether
+the interface tells the reader so. A built index of illustrative documents is not a fixture — it has
+a real version and a changelog — but everything it serves is still illustrative.
+
+Failing and abstaining are separate states everywhere. An abstention is the system working and
+saying the evidence is too thin; a failure is the system not working. They have different types,
+different components and different copy, and nothing collapses them into one.

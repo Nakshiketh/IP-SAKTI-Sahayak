@@ -97,7 +97,7 @@
         "fails": "If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
       }
     },
-    "buildSummary": "{{planned}} of these {{total}} stages are designed and not built. Any stage that runs today is marked in the list."
+    "buildSummary": "Of these {{total}} stages, {{live}} are finished, {{demo}} run in full but over illustrative sources rather than ingested documents, and {{planned}} has an interface with nothing behind it. Each carries its own state below."
   },
   "retrieval": {
     "navLabel": "Why retrieval",
@@ -110,7 +110,7 @@
   "abstention": {
     "navLabel": "Abstention",
     "heading": "Declining to answer is a feature",
-    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. The logic behind them is designed and not yet built; what you see here is the surface it will use.",
+    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. All five are reachable today — the demo script names a question that reaches each of them.",
     "offers": "What you are offered",
     "states": {
       "nothing": {
@@ -168,15 +168,15 @@
       },
       "orchestrator": {
         "name": "Orchestrator",
-        "items": "Query processor · classifier · retriever · reranker · context builder · generator · citation mapper · confidence scorer · translator"
+        "items": "Query understanding · refusals · jurisdiction routing · retriever · reranker · context builder · generator · citation mapper · confidence scorer · translator · audit"
       },
       "stores": {
         "name": "Stores",
-        "items": "Vector index per namespace · chunk store · metadata database · records database · append-only audit log"
+        "items": "Chunk store per namespace · append-only audit log. No vector index and no records database yet, so nothing here is searched by meaning and no filed record is stored."
       },
       "corpus": {
         "name": "Corpus pipeline",
-        "items": "Fetch · parse · section-aware chunking · enrich · embed · version diff · validate"
+        "items": "Fetch · parse · section-aware chunking · enrich · version diff · validate. The embed stage has no model behind it and writes no vectors."
       }
     }
   },

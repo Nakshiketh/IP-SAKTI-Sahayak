@@ -513,7 +513,11 @@ class Pipeline:
             total_ms=clock.total_ms,
             documents_searched=documents_searched,
             corpus_version=self._namespaces.corpus_version(),
-            is_demo=self._namespaces.store(chosen.jurisdiction).is_demo,
+            # Demo-ness follows the passages the reader can see, not the kind of
+            # store they came out of. A built index of illustrative documents
+            # still puts illustrative sources on the screen.
+            is_demo=self._namespaces.store(chosen.jurisdiction).is_demo
+            or any(p.chunk.verification_status is VerificationStatus.DEMO for p in passages),
             translator=self._translator.name,
             translated=translated,
             passage_text={p.chunk.chunk_id: p.chunk.text for p in passages},

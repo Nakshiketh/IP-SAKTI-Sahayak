@@ -86,6 +86,13 @@ twelve done shallowly, and a cross-border demo needs exactly two sides.
 Fill `source_url`, `version_label`, `effective_from` and `publication_date` **only** from the document
 actually fetched. Leave null and set `verification_status: "unverified"` rather than guessing.
 
+The pipeline enforces this from both directions. A row with a null `source_url` is *skipped* with
+that as the reason — not an error, just the honest state of a source nobody has fetched. A row that
+*was* fetched and still has no `effective_from` is a *failure*, and the document does not enter the
+index, because an answer citing it would carry an as-of date the corpus cannot support. And the
+ingest never writes `verification_status` back: a machine cannot promote a document to verified,
+because verified means a person read it against the source.
+
 ```json
 {
   "document_id": "in-patents-act-1970",
@@ -120,9 +127,15 @@ actually fetched. Leave null and set `verification_status: "unverified"` rather 
 
 ## 3.4 Chunk record
 
+A chunk id is the section key — the document id plus a slug of the section path — followed by eight
+characters of the content hash. Identical wording therefore produces an identical id without
+anything being compared, which is what lets a re-ingest tell an amended section from one that is
+simply gone. The alphabet is `[a-z0-9-]`, because a citation id *is* a chunk id and the interface
+builds element ids from it.
+
 ```json
 {
-  "chunk_id": "in-patents-act-1970::ch2::s3::p",
+  "chunk_id": "in-patents-act-1970-chapter-ii-section-3-a1b2c3d4",
   "document_id": "in-patents-act-1970",
   "text": "<verbatim provision text as parsed>",
   "section_path": ["Chapter II", "Section 3", "(p)"],

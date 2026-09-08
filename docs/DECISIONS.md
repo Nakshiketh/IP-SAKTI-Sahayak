@@ -1018,3 +1018,183 @@ slow and flaky thing to assert a rendering rule through. Keeping it as the defau
 API path is the one nobody exercises. Live by default, mock under test, one switch.
 
 **Revisit when.** Phase 13, when the mock has outlived the demo it was written for.
+
+---
+
+## [11] The pipeline is built; the corpus is not ingested, and that is not the same thing
+
+**Decision.** Phase 11 built fetch, parse, section-aware segmentation, tagging, embedding,
+versioning, validation and the index writer, and proved them end to end. It did *not* ingest the
+real source set. All 37 entries in `corpus/manifest.json` still carry a null `source_url`, so
+`make ingest` reports 37 skips and builds nothing.
+
+**Why not just fetch them.** Because `source_url`, `effective_from` and `version_label` are filled
+only from the document actually fetched, and finding the right URL for the Patents Act is not a
+coding task — it is reading, checking the publisher, checking the licence, and checking that the
+version is the amended one. Guessing a URL is the fabrication this product exists to prevent, and a
+pipeline that fabricated one would have been worse than no pipeline.
+
+**What proves it works instead.** `corpus/samples/` — fictional instruments of a fictional
+territory, with their own manifest, built by the same code into a real index that the real
+`Namespaces` and `Retriever` read. A test asserts exactly that round trip, because it is the
+contract between this phase and the last.
+
+**Revisit when.** Somebody sits down with the source list and verifies a URL, a licence and an
+effective date per document. The pipeline is then a `make ingest` away.
+
+---
+
+## [11] The sample documents are fictional, and unmistakably so
+
+**Decision.** The fixtures are instruments of "Sampleland", every title says "(illustrative)", every
+file opens with a line saying it is not law, and every entry carries `verification_status: "demo"`.
+
+**Alternatives.** Use short extracts of real statutes as fixtures, which would exercise the
+segmenter against real drafting.
+
+**Why.** A fixture that reads like a real statute eventually gets quoted as one — copied into a
+test, then into a docstring, then into a screenshot. The repository already has a standing rule
+against authoring text that could be mistaken for law, and a fixture is exactly where that rule gets
+quietly broken. The cost is that the segmenter is proved against imitation drafting rather than the
+real thing; the mitigation is that the imitation is structurally faithful (chapters, sections,
+sub-sections, clauses, a preamble, an over-long section) even though its content is nonsense.
+
+**Revisit when.** A real document is ingested and can serve as the regression fixture instead.
+
+---
+
+## [11] A short section is never merged into its neighbour
+
+**Decision.** The spec's 300-token minimum is a target for where to *break* a long section, not a
+licence to combine two short ones. Every section is its own chunk however short it is.
+
+**Why.** This was written the other way first, and the sample build showed what it does: Section 2's
+definitions were folded into Section 1's chunk, so a citation to that passage said "Section 1" while
+containing Section 2's text. That is precisely the failure section-aware chunking exists to prevent
+— the same failure a fixed token window causes, arrived at more slowly. A two-line definition cited
+as itself is correct; a source card with a short passage in it is fine.
+
+The same reasoning fixes the overlap rule in place: 15%, and only between parts of one over-long
+section, never across a boundary.
+
+**Revisit when.** Retrieval quality on very short chunks is measured in Phase 13. If they hurt, the
+answer is to retrieve a section's neighbours alongside it, not to merge them at ingest.
+
+---
+
+## [11] Text before the first section is the preamble, and a document with nothing else fails
+
+**Decision.** Blocks before the first recognised level get the section path `("Preamble",)` rather
+than an empty one. Separately, a document where more than 80% of chunks land in the preamble is
+*rejected* — the profile recognised no structure, and every citation into it would say "Preamble".
+
+**Why.** A statute's long title and enacting formula are genuinely citable, so an empty path would
+be wrong and the validator refuses one anyway. But the same fallback would quietly swallow a
+mis-profiled document: point the treaty profile at a statute and you get one enormous "Preamble"
+chunk per split, every citation saying the same useless thing. Better to fail the document and name
+the profile.
+
+**Revisit when.** A document type turns up that genuinely has no internal structure — a short
+notification, say — at which point the threshold needs to become per-profile rather than global.
+
+---
+
+## [11] Contradiction and effective-window metadata is written by ingestion, not inferred
+
+**Decision.** `effective_from` and `effective_to` come from the manifest, which comes from the
+document. `conflicts_with` is populated by ingestion. Nothing at query time infers either.
+
+**Why.** Continues the Phase 10 decision on contradictions, and closes the loop it left open: the
+retrieval stage reads `conflicts_with` and the confidence rule acts on it, and until now nothing
+wrote it. The version stage is the natural writer — a section whose wording changed produces a new
+chunk and closes the old one, which *is* the supersession relationship, recorded rather than guessed.
+
+**Revisit when.** Real ingestion meets an instrument that expressly overrides another, and the
+question becomes what evidence justifies the flag.
+
+---
+
+## [11] Amended wording is retained and closed, never replaced
+
+**Decision.** On re-ingest, a section whose wording changed gets a new chunk; the previous chunk
+stays in the index with `effective_to` set to the ingest date. A section that disappears is retained
+the same way. `corpus/CHANGELOG.md` names both, dated, for a person to read.
+
+**Alternatives.** Replace the chunk and let the old text go.
+
+**Why.** Retrieval already distinguishes "everything I found on this has been superseded" from "I
+found nothing", and abstains differently for each — but only if the superseded text is still there
+to find. Deleting it would collapse a specific, useful abstention into a generic one, and would make
+every past answer uncheckable. It also makes "kept current" demonstrable: `make refresh` reports
+what moved, and the changelog says what it was.
+
+**Revisit when.** The index grows enough that retaining every historical version is expensive, at
+which point the answer is an archive table, not deletion.
+
+---
+
+## [11] Ingestion tags a passage with the same lexicon the pipeline reads a question with
+
+**Decision.** `RuleTagger` runs `app/services/understanding`'s lexicon over a chunk. One vocabulary
+maps a question to rights and regulatory areas, and the same one maps a passage.
+
+**Why.** A metadata pre-filter on "labelling" has to mean the same thing on both sides of a
+retrieval. Two vocabularies would drift, and the drift would surface as a filter that quietly
+excludes the passage the reader needed — the worst kind of bug here, because it looks like the
+corpus not covering something.
+
+**And the model tagger enters nothing.** `LLMTagger` writes `corpus/tags-review.jsonl` and its
+output never reaches the index. A model's view of which regulatory area a provision belongs to is a
+claim about law, and this product does not let a machine make one unreviewed. A person moves a tag
+out of the queue, and then it is a person's tag.
+
+**Revisit when.** The review queue is large enough that reviewing it is the bottleneck.
+
+---
+
+## [11] The parse cache is keyed by content, and the index is written atomically
+
+**Decision.** A document's parse and segmentation are cached under the checksum of the bytes they
+came from, so a re-run reuses them and `--force` throws them away. The index is built into a
+temporary file and moved into place.
+
+**Why.** Both are what "idempotent and resumable" actually means for this shape of job. The checksum
+key means idempotency is a property of the data rather than of a flag someone remembers to pass. The
+atomic move means a run that dies halfway leaves the previous corpus serving, rather than a
+half-written index that retrieval would read without complaint.
+
+**Revisit when.** A document is large enough that re-parsing on a checksum change is the slow part,
+which is a per-section cache and a different design.
+
+---
+
+## [11] A relative source URL resolves against the manifest, then the repository
+
+**Decision.** `fetch` is given an ordered list of base directories and tries the manifest's own
+directory first.
+
+**Why.** Found by a test that copied the sample manifest to a temporary directory, edited a
+document, and watched refresh report "unchanged" — because the manifest's relative URLs were still
+resolving to the originals in the repository. A manifest that only works from one absolute location
+is not a manifest, it is a hard-coded path list. Sample URLs are now bare filenames beside their own
+manifest.
+
+**Revisit when.** Never, probably. This is what relative means.
+
+---
+
+## [11] No embedding model, and the stage says so rather than substituting a weak one
+
+**Decision.** `NullEmbedder` writes no vectors, reports itself unavailable, and leaves
+`embedding_ref` null. The ingest reports the embed stage as skipped with the reason.
+
+**Alternatives.** Ship a small local model so the stage "passes".
+
+**Why.** A weak embedder would put a dense channel into retrieval that returns plausible-looking
+noise, and noise that scores is worse than a channel that says it is not there —
+`NullDenseChannel` already declares the matching absence on the read side, and the interface's stage
+detail shows one channel running rather than two. The `Embedder` interface records the model's
+identity on the index so a corpus embedded with one model can never be silently queried with
+another.
+
+**Revisit when.** A multilingual model with real Indic coverage is chosen and can be pinned.

@@ -55,6 +55,27 @@ markers because the graph decides what the product *is* and the corpus supplies 
 Everything else on the path ran: the refusal, the search, the scoring, the citation check, the
 confidence and its reason. That is the honest line and it is stronger than pretending otherwise.
 
+## If there is time: the corpus pipeline
+
+Worth two minutes, because "no document has been ingested" invites the question of whether anything
+could be. In a terminal:
+
+    make ingest              # the real source set: 37 skips, nothing built, nothing guessed
+    make ingest-samples      # fictional instruments, built end to end
+
+The first is the honest report — every source is skipped for want of a verified URL, and the run
+says so rather than inventing one. The second builds a real index: open `corpus/samples/CHANGELOG.md`
+and show the sections it found, with their chapter and section paths.
+
+Then show that it notices when the law moves. Edit one line of
+`corpus/samples/sample-instruments-act-2020.txt` and run:
+
+    python scripts/refresh.py --manifest corpus/samples/manifest.json --index-dir data/index-samples
+
+It reports the document as changed. With `--write` it rebuilds, retains the previous wording with an
+effective-to date, and names the section in the changelog. That retention is the point: it is what
+lets an answer say "the position on this has moved" rather than "I found nothing".
+
 ## What is deliberately not in the script
 
 - Evaluation numbers. None have been produced; the site shows none. (Phase 13.)

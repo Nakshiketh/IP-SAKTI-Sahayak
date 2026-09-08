@@ -20,15 +20,21 @@ product classifies first, then routes to the intellectual-property and regulator
 
 ## Status
 
-Phase 10 of a phased build. The interface is complete and the API behind it is real: a question is
-refused or understood, routed to exactly one jurisdiction, retrieved for, reranked, packed,
-answered under a schema-constrained prompt, citation-checked, scored for confidence and audited —
-with the stages streamed to the browser as they run.
+Phase 11 of a phased build. The interface is complete, the API behind it is real, and so is the
+corpus pipeline: a question is refused or understood, routed to exactly one jurisdiction, retrieved
+for, reranked, packed, answered under a schema-constrained prompt, citation-checked, scored for
+confidence and audited — with the stages streamed to the browser as they run. Ingestion fetches,
+parses, segments a document at its own sections, tags, versions, validates and indexes it.
 
-No corpus has been ingested yet, so both jurisdiction namespaces are served by a demo fixture whose
-passage bodies are placeholders. Everything above the index is real, every answer is marked
-"Illustrative example", and `/api/v1/corpus-version` reports 0 of 37 planned documents fetched.
-Ingestion is Phase 11.
+No corpus has been ingested yet, and that is a different thing from the pipeline not existing. All
+37 entries in `corpus/manifest.json` carry a null `source_url`, because those fields are filled only
+from the document actually fetched and guessing one is the fabrication this product exists to
+prevent. So `make ingest` reports 37 skips and builds nothing, both namespaces are served by a
+committed demo fixture whose passage bodies are placeholders, and every answer is marked
+"Illustrative example".
+
+What proves the pipeline works is `make ingest-samples`: fictional instruments of a fictional
+territory, built by the same code into a real index that the real retrieval reads.
 
 `docs/ARCHITECTURE.md` lists what is built and what is planned; `docs/MASTER_BUILD.md` carries the
 full phase sequence; `docs/DEMO.md` is the five-minute walkthrough with the exact questions.
@@ -45,6 +51,14 @@ cd backend && .venv/Scripts/python -m uvicorn app.main:app --reload   # http://1
 
 # frontend
 cd frontend && npm install && npm run dev                             # http://localhost:5173
+```
+
+Building a corpus:
+
+```bash
+make ingest            # the real source set; today, 37 skips and nothing built
+make ingest-samples    # the fixture documents, into data/index-samples
+make refresh           # re-fetch and report what moved; writes nothing without --write
 ```
 
 No API key is needed. With none configured the generator writes only over the demo passages and

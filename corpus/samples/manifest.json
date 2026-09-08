@@ -1,0 +1,140 @@
+{
+  "corpus_version": "0.0.0-samples",
+  "generated_by": "hand-written fixture; see corpus/samples/README.md",
+  "note": "SAMPLE FIXTURE MANIFEST. Every document here is a fictional instrument of a fictional territory, written to exercise the ingestion pipeline end to end. verification_status is \"demo\" on all of them, so anything built from this manifest is marked illustrative everywhere it can be read. Never merge these entries into corpus/manifest.json.",
+  "group_order": [
+    "indian_ip",
+    "international_ip"
+  ],
+  "documents": [
+    {
+      "document_id": "sample-instruments-act-2020",
+      "title": "The Sample Instruments Act, 2020 (illustrative)",
+      "short_title": "Sample Instruments Act (illustrative)",
+      "organization": "Illustrative Legislature of Sampleland",
+      "jurisdiction": "IN",
+      "regime_family": "patents",
+      "document_type": "act",
+      "group": "indian_ip",
+      "language": "en",
+      "source_url": "sample-instruments-act-2020.txt",
+      "access_mode": "open",
+      "version_label": "fixture-1",
+      "effective_from": "2020-01-01",
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": "2019-12-01",
+      "retrieved_at": "2026-09-08T16:47:42.682240+00:00",
+      "verification_status": "demo",
+      "checksum": "sha256:0a7434062d069de83aa7f80901da06832651188aedf90973aea95c78b5f18d62",
+      "parser": "text",
+      "chunking_profile": "statute_section_aware",
+      "tags": {
+        "ip_rights": [
+          "patent"
+        ],
+        "regulatory_areas": [
+          "licensing"
+        ],
+        "product_classes": []
+      },
+      "notes": "Exercises chapters, sections, sub-sections, clauses, a preamble, and one section long enough to be split."
+    },
+    {
+      "document_id": "sample-practice-rules-2021",
+      "title": "Sample Fixture Practice Rules, 2021 (illustrative)",
+      "short_title": "Sample Practice Rules (illustrative)",
+      "organization": "Illustrative Authority of Sampleland",
+      "jurisdiction": "IN",
+      "regime_family": "drug_regulation",
+      "document_type": "rules",
+      "group": "indian_drug_food_cosmetic",
+      "language": "en",
+      "source_url": "sample-practice-rules-2021.html",
+      "access_mode": "open",
+      "version_label": "fixture-1",
+      "effective_from": "2021-04-01",
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": "2021-03-01",
+      "retrieved_at": "2026-09-08T16:47:42.722618+00:00",
+      "verification_status": "demo",
+      "checksum": "sha256:9e7d020de56b7c6ec5971cf93f52e84681266bb250c47030acf2a48eecdd372c",
+      "parser": "html",
+      "chunking_profile": "rules_section_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "licensing",
+          "manufacturing_gmp"
+        ],
+        "product_classes": []
+      },
+      "notes": "Exercises the HTML parser, including that script, style, nav and footer content never reaches the output."
+    },
+    {
+      "document_id": "sample-convention-2019",
+      "title": "Sample Convention on Illustrative Matters, 2019 (illustrative)",
+      "short_title": "Sample Convention (illustrative)",
+      "organization": "Fictional parties to the Sample Convention",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "treaty",
+      "group": "international_ip",
+      "language": "en",
+      "source_url": "sample-convention-2019.txt",
+      "access_mode": "open",
+      "version_label": "fixture-1",
+      "effective_from": "2019-06-01",
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": "2019-05-01",
+      "retrieved_at": "2026-09-08T16:47:42.738503+00:00",
+      "verification_status": "demo",
+      "checksum": "sha256:3db69239368d674056acb7c91c4d040a2df0551bd8746cdbd2d86d6d7706d398",
+      "parser": "text",
+      "chunking_profile": "treaty_article_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [
+          "import_export"
+        ],
+        "product_classes": []
+      },
+      "notes": "Exercises the article-aware profile, and puts a second jurisdiction in the build so the per-namespace index split is real."
+    },
+    {
+      "document_id": "sample-credentialed-source",
+      "title": "Sample subscription-gated source (illustrative)",
+      "short_title": "Sample credentialed source",
+      "organization": "Fictional subscription publisher",
+      "jurisdiction": "INTL",
+      "regime_family": "international_ip",
+      "document_type": "guideline",
+      "group": "international_ip",
+      "language": "en",
+      "source_url": "sample-convention-2019.txt",
+      "access_mode": "user_credentialed",
+      "version_label": null,
+      "effective_from": null,
+      "effective_to": null,
+      "supersedes": [],
+      "superseded_by": null,
+      "publication_date": null,
+      "retrieved_at": null,
+      "verification_status": "demo",
+      "checksum": null,
+      "parser": "text",
+      "chunking_profile": "treaty_article_aware",
+      "tags": {
+        "ip_rights": [],
+        "regulatory_areas": [],
+        "product_classes": []
+      },
+      "notes": "Carries a resolvable source_url on purpose. The pipeline must still refuse to fetch it, because the refusal is on access_mode and not on whether a fetch would succeed."
+    }
+  ]
+}

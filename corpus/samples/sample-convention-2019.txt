@@ -1,0 +1,48 @@
+SAMPLE FIXTURE DOCUMENT. Not law. Not a real treaty. Written to exercise the ingestion pipeline.
+
+SAMPLE CONVENTION ON ILLUSTRATIVE MATTERS, 2019 (ILLUSTRATIVE)
+
+An illustrative convention between fictional parties, written so that the article-aware segmenter
+has articles and paragraphs to find. It states no obligation of any real state.
+
+PART I  GENERAL PROVISIONS
+
+Article 1  Scope
+
+1. This illustrative Convention applies as between the fictional parties to it, and to nothing else.
+
+2. Nothing in this illustrative Convention affects any instrument in force between any real parties.
+
+Article 2  Use of terms
+
+1. For the purposes of this illustrative Convention, "party" means a fictional party that has
+expressed its consent to be bound by it.
+
+2. The expressions used in this illustrative Convention carry the meanings given to them in this
+Article and carry no meaning drawn from any other instrument.
+
+PART II  SUBSTANTIVE PROVISIONS
+
+Article 3  Undertaking of the parties
+
+1. Each party undertakes to give effect to this illustrative Convention in accordance with its own
+fictional procedures, and to inform the other parties of the measures it has taken.
+
+2. A party may make a declaration in respect of any provision of this illustrative Convention at the
+time of expressing its consent to be bound, and may withdraw that declaration at any time by
+notification to the depositary. A declaration made under this paragraph has effect only in respect of
+the party making it, and does not affect the obligations of any other party under this illustrative
+Convention. Where a declaration is withdrawn, the withdrawal takes effect on the first day of the
+month following the expiry of three months after the date of receipt of the notification by the
+depositary, and the depositary shall inform the other parties accordingly.
+
+3. Nothing in this Article requires a party to take a measure that is inconsistent with its own
+fictional constitutional arrangements.
+
+Article 4  Settlement of differences
+
+1. A difference between parties concerning the interpretation of this illustrative Convention shall
+be settled by consultation between them.
+
+2. Where consultation does not settle the difference within six months, the parties may by agreement
+refer it to such fictional procedure as they may choose.

@@ -21,9 +21,15 @@ coverage/
 # Generated indexes, chunk stores, raw fetched documents.
 # The manifest and the fetch recipe are committed; the documents are not.
 /data/index/
+/data/index-samples/
 /data/chunks/
 /data/audit.sqlite3
-/corpus/raw/
+corpus/raw/
+corpus/**/raw/
+# Written by every ingest run. The real corpus changelog is committed once
+# something is actually ingested; the sample one is build output.
+corpus/samples/CHANGELOG.md
+corpus/**/tags-review.jsonl
 /evals/reports/*.json
 
 # OS

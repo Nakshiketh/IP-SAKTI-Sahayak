@@ -34,13 +34,25 @@ UNBUILT_CORPUS_VERSION = "0.0.0-unbuilt"
 
 
 class ChunkStore(Protocol):
-    """A namespace's passages, held in memory for the life of the process."""
+    """A namespace's passages, held in memory for the life of the process.
+
+    Two different questions, kept apart because conflating them hid a real
+    defect: ``is_fixture`` asks whether this store is the committed JSON stand-in
+    rather than a built index, and decides which corpus version an answer
+    carries. ``is_demo`` asks whether what it serves is marked demo, and decides
+    whether the interface tells the reader so. A built index of demo-verified
+    documents is not a fixture — it has a real version — but everything it
+    serves is still demo.
+    """
 
     @property
     def available(self) -> bool: ...
 
     @property
     def corpus_version(self) -> str: ...
+
+    @property
+    def is_fixture(self) -> bool: ...
 
     @property
     def is_demo(self) -> bool: ...
@@ -103,6 +115,10 @@ class DemoChunkStore:
         return DEMO_CORPUS_VERSION
 
     @property
+    def is_fixture(self) -> bool:
+        return True
+
+    @property
     def is_demo(self) -> bool:
         return True
 
@@ -157,8 +173,21 @@ class SqliteChunkStore:
         return self._version
 
     @property
-    def is_demo(self) -> bool:
+    def is_fixture(self) -> bool:
         return False
+
+    @property
+    def is_demo(self) -> bool:
+        """True when everything in this built index is marked demo.
+
+        A corpus can be built from illustrative documents. The build is real —
+        it has a version, a changelog and section paths — but every source it
+        serves is still illustrative, and the reader has to be told.
+        """
+        chunks = self.chunks()
+        return bool(chunks) and all(
+            chunk.verification_status is VerificationStatus.DEMO for chunk in chunks
+        )
 
     def chunks(self) -> list[IndexedChunk]:
         if self._loaded is None:
@@ -210,11 +239,11 @@ class Namespaces:
     def corpus_version(self) -> str:
         """The version to stamp on an answer.
 
-        If any namespace is still on the demo fixture the whole set reports the
-        demo version, because a real corpus version on an answer has to mean
-        every source behind it came from that corpus.
+        If any namespace is still on the committed fixture the whole set reports
+        the fixture version, because a real corpus version on an answer has to
+        mean every source behind it came from that corpus.
         """
-        if self.is_demo():
+        if any(store.is_fixture for store in self._stores.values()):
             return DEMO_CORPUS_VERSION
         versions = {store.corpus_version for store in self._stores.values()}
         return versions.pop() if len(versions) == 1 else "mixed"
@@ -223,4 +252,9 @@ class Namespaces:
         return sum(store.document_count() for store in self._stores.values())
 
     def is_demo(self) -> bool:
+        """True when any namespace is serving illustrative content."""
         return any(store.is_demo for store in self._stores.values())
+
+    def is_fixture(self) -> bool:
+        """True when any namespace is still the committed JSON stand-in."""
+        return any(store.is_fixture for store in self._stores.values())
