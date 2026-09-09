@@ -12,7 +12,9 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{ts,tsx,css,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css,json}\"",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "bundle": "node scripts/check-bundle.ts",
+    "bundle:check": "npm run build && node scripts/check-bundle.ts"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.3.0",

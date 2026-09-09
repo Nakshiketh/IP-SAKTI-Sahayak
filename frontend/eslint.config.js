@@ -35,10 +35,12 @@ export default tseslint.config(
      */
     files: ['src/**/*.tsx'],
     ignores: [
-      // The design specimen is a development surface, not a product page, and it
-      // is not registered in a production build. Translating it would put
-      // developer prose into the shipped locale files.
+      // Development surfaces, not product pages, and neither is registered in a
+      // production build. Translating them would put developer prose into the
+      // shipped locale files — six times over, in five languages nobody asked
+      // to read a column list in.
       'src/routes/DesignSystem.tsx',
+      'src/routes/AuditLog.tsx',
       'src/**/*.test.tsx',
     ],
     plugins: { i18next },

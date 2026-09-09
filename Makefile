@@ -9,7 +9,7 @@ endif
 
 .PHONY: help install install-llm dev dev-backend dev-frontend dev-frontend-mock \
         test test-backend test-frontend lint format schema ingest ingest-samples \
-        ingest-records ingest-records-samples refresh evals evals-dry clean
+        ingest-records ingest-records-samples refresh evals evals-dry bundle clean
 
 help:
 	@echo "install         install backend and frontend dependencies"
@@ -27,6 +27,7 @@ help:
 	@echo "ingest-records  load the records layer from corpus/records-manifest.json"
 	@echo "ingest-records-samples  load the fixture registry, into data/records-samples.sqlite3"
 	@echo "evals           run the gold set, write a report, publish the numbers to the site"
+	@echo "bundle          build the web app and check it against the size budget"
 
 install:
 	$(PY) -m pip install -e "backend[dev]"
@@ -61,7 +62,13 @@ test-frontend:
 lint:
 	$(PY) -m ruff check .
 	node scripts/i18n-seed.ts --check
+	bash scripts/check-affiliation.sh
 	cd frontend && npm run lint && npm run format:check && npm run typecheck
+
+# What a first-time reader downloads before the homepage renders, against a
+# ceiling. Needs a build, so it is not part of `lint`.
+bundle:
+	cd frontend && npm run bundle:check
 
 format:
 	$(PY) -m ruff format .

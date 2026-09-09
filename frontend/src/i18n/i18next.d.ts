@@ -12,6 +12,7 @@ import type common from '@/locales/en/common.json';
 import type covered from '@/locales/en/covered.json';
 import type home from '@/locales/en/home.json';
 import type howitworks from '@/locales/en/howitworks.json';
+import type privacy from '@/locales/en/privacy.json';
 import type sahayak from '@/locales/en/sahayak.json';
 import type sources from '@/locales/en/sources.json';
 
@@ -27,6 +28,7 @@ declare module 'i18next' {
       howitworks: typeof howitworks;
       sources: typeof sources;
       about: typeof about;
+      privacy: typeof privacy;
     };
   }
 }

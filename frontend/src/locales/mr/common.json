@@ -30,7 +30,8 @@
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "No sources indexed yet · v{{version}}",
-    "sourceMetaUnavailable": "Source information is unavailable right now."
+    "sourceMetaUnavailable": "Source information is unavailable right now.",
+    "privacy": "What this product stores"
   },
   "notFound": {
     "title": "There is no page here",

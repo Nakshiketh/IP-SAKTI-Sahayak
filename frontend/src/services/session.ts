@@ -28,3 +28,20 @@ export function sessionId(): string {
     return mint();
   }
 }
+
+/**
+ * Throw this session away. The next call to `sessionId` mints a new one.
+ *
+ * This is the whole of the deletion path the privacy page offers, and it is a
+ * complete one rather than a gesture. The audit holds no identity, no address
+ * and no question text, so the only thing tying one row to another is this id —
+ * and it lives in this tab and nowhere else.
+ */
+export function discardSession(): void {
+  try {
+    window.sessionStorage.removeItem(KEY);
+  } catch {
+    // Storage can be unavailable in a private window. Nothing was kept there
+    // either, so there is nothing to discard and nothing to report.
+  }
+}

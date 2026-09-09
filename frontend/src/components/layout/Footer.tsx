@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import { useCorpusStatus } from '@/services/corpus';
 
@@ -23,6 +24,14 @@ export function Footer() {
       <div className="mx-auto max-w-[75rem] px-5 py-6">
         <p className="max-w-measure text-xs text-muted">{t('footer.disclaimer')}</p>
         <p className="mt-3 max-w-none text-xs text-muted">{sourceLine()}</p>
+        {/* Here rather than in the header. A reader looks for it at the bottom
+            of a page, and a seventh navigation item would put it in front of
+            the one path through the middle. */}
+        <p className="mt-3 max-w-none text-xs">
+          <Link to="/privacy" className="rounded-data text-muted underline underline-offset-4">
+            {t('footer.privacy')}
+          </Link>
+        </p>
       </div>
     </footer>
   );

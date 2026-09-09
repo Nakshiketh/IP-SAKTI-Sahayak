@@ -242,8 +242,22 @@ class Pipeline:
             for stage_id in ("retrieve", "rerank", "context", "generate", "map", "translate"):
                 yield StageEvent(clock.stage(stage_id))
             outcome = self._finish(
-                request, chosen, query_id, detection, understanding, None, empty, scored_empty,
-                None, (), clock, 0, [], language_in, language_out, translated=False,
+                request,
+                chosen,
+                query_id,
+                detection,
+                understanding,
+                None,
+                empty,
+                scored_empty,
+                None,
+                (),
+                clock,
+                0,
+                [],
+                language_in,
+                language_out,
+                translated=False,
                 uncovered=routing.uncovered,
             )
             self._record(outcome)

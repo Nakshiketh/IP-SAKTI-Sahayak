@@ -106,9 +106,7 @@ def _ratio(
         numerator=numerator,
         denominator=denominator,
         target=target,
-        not_measured_reason=(
-            None if denominator else "no case in the set exercised this"
-        ),
+        not_measured_reason=(None if denominator else "no case in the set exercised this"),
         note=note,
     )
 
@@ -228,9 +226,7 @@ def score_results(results: list[CaseResult]) -> Scores:
         )
     )
 
-    with_reason = [
-        r for r in should_abstain if r.abstained and r.case.expected_abstain_reason
-    ]
+    with_reason = [r for r in should_abstain if r.abstained and r.case.expected_abstain_reason]
     scores.add(
         _ratio(
             "abstention_reason_accuracy",
@@ -260,9 +256,7 @@ def score_results(results: list[CaseResult]) -> Scores:
 
     # -- classification ------------------------------------------------------
 
-    classified = [
-        r for r in answered if r.case.expected_product_class and r.product_class
-    ]
+    classified = [r for r in answered if r.case.expected_product_class and r.product_class]
     scores.add(
         _ratio(
             "classification_accuracy",
@@ -358,9 +352,7 @@ def score_results(results: list[CaseResult]) -> Scores:
         scores.add(MetricResult(key, None, not_measured_reason=reason))
 
     scores.failures = [
-        key
-        for key, metric in scores.metrics.items()
-        if metric.meets_target is False
+        key for key, metric in scores.metrics.items() if metric.meets_target is False
     ]
     if errored:
         scores.failures.append("errors")

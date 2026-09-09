@@ -9,7 +9,29 @@
 import { describe, expect, it } from 'vitest';
 
 import { DEFAULT_LOCALE, findLocale, LOCALE_CODES, LOCALES, NAMESPACES } from '@/i18n/languages';
-import { findMissingBundles, resources } from '@/i18n/resources';
+import { findMissingBundles } from '@/i18n/resources';
+
+/**
+ * Every locale file, read here rather than through `resources`.
+ *
+ * The app bundles English eagerly and fetches the other five on demand, so
+ * `resources` deliberately holds only English. This test still has to compare
+ * all six key sets, so it does its own eager glob — test-only code, which never
+ * reaches the bundle the reader downloads.
+ */
+const files = import.meta.glob<{ default: Record<string, unknown> }>('../locales/*/*.json', {
+  eager: true,
+});
+
+const all: Record<string, Record<string, Record<string, unknown>>> = {};
+for (const [path, module] of Object.entries(files)) {
+  const match = /\/locales\/([^/]+)\/([^/]+)\.json$/.exec(path);
+  if (!match) continue;
+  const [, locale, namespace] = match;
+  if (!locale || !namespace) continue;
+  all[locale] ??= {};
+  all[locale][namespace] = module.default;
+}
 
 const UNTRANSLATED = '__untranslated';
 
@@ -52,8 +74,8 @@ describe('locales', () => {
     '%s carries exactly the English key set',
     (locale) => {
       for (const namespace of NAMESPACES) {
-        const english = resources[DEFAULT_LOCALE]?.[namespace] as Record<string, unknown>;
-        const target = resources[locale]?.[namespace] as Record<string, unknown>;
+        const english = all[DEFAULT_LOCALE]?.[namespace] as Record<string, unknown>;
+        const target = all[locale]?.[namespace] as Record<string, unknown>;
         expect(flatten(target), `${locale}/${namespace}`).toEqual(flatten(english));
       }
     },
@@ -61,9 +83,9 @@ describe('locales', () => {
 
   it('flags a seeded locale so English placeholders cannot pass for translation', () => {
     // Remove the flag when a namespace is genuinely translated, not before.
-    const seeded = resources.hi?.common as Record<string, unknown>;
+    const seeded = all.hi?.common as Record<string, unknown>;
     expect(seeded[UNTRANSLATED]).toBe(true);
-    expect((resources.en?.common as Record<string, unknown>)[UNTRANSLATED]).toBeUndefined();
+    expect((all.en?.common as Record<string, unknown>)[UNTRANSLATED]).toBeUndefined();
   });
 });
 

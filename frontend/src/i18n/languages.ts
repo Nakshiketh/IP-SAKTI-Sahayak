@@ -44,6 +44,7 @@ export const NAMESPACES = [
   'howitworks',
   'sources',
   'about',
+  'privacy',
 ] as const;
 
 export const DEFAULT_NAMESPACE = 'common';

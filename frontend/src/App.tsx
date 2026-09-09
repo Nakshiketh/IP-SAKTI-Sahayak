@@ -2,21 +2,37 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Shell } from '@/components/layout/Shell';
-import About from '@/routes/About';
 import Home from '@/routes/Home';
-import HowItWorks from '@/routes/HowItWorks';
 import NotFound from '@/routes/NotFound';
-import Sahayak from '@/routes/Sahayak';
-import Sources from '@/routes/Sources';
-import WhatIsCovered from '@/routes/WhatIsCovered';
 
 /**
- * Six routes and nothing else. No team page, no sponsors, no sub-navigation.
+ * Seven routes and nothing else. No team page, no sponsors, no sub-navigation.
  *
- * /design is a development surface for the design system: it is not registered
- * in a production build, so it cannot be reached from a deployed site.
+ * Six of them are in the header navigation. `/privacy` is the seventh and is
+ * reached from the footer, where a reader looks for it — putting it in the
+ * header would make it compete with the one path through the middle, and the
+ * path is what the product is.
+ *
+ * **What loads when.** Home and the 404 are in the first chunk: one is what a
+ * reader lands on, and the other has to render when nothing else could. Every
+ * other route is fetched when it is first visited. The boundary that covers the
+ * wait is inside `Shell`, so the header and footer stay put while a chunk
+ * arrives.
+ *
+ * /design and /audit are development surfaces: neither is registered in a
+ * production build, so neither can be reached from a deployed site. /audit has a
+ * second gate behind it — the endpoint refuses to serve outside a development
+ * environment — because a route whose safety rests on one build flag is a route
+ * with one thing to get wrong.
  */
+const Sahayak = lazy(() => import('@/routes/Sahayak'));
+const WhatIsCovered = lazy(() => import('@/routes/WhatIsCovered'));
+const HowItWorks = lazy(() => import('@/routes/HowItWorks'));
+const Sources = lazy(() => import('@/routes/Sources'));
+const About = lazy(() => import('@/routes/About'));
+const Privacy = lazy(() => import('@/routes/Privacy'));
 const DesignSystem = lazy(() => import('@/routes/DesignSystem'));
+const AuditLog = lazy(() => import('@/routes/AuditLog'));
 
 export default function App() {
   return (
@@ -29,9 +45,11 @@ export default function App() {
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/sources" element={<Sources />} />
           <Route path="/about" element={<About />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<NotFound />} />
         </Route>
         {import.meta.env.DEV ? <Route path="/design" element={<DesignSystem />} /> : null}
+        {import.meta.env.DEV ? <Route path="/audit" element={<AuditLog />} /> : null}
       </Routes>
     </Suspense>
   );

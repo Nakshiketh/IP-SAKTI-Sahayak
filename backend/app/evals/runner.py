@@ -75,9 +75,7 @@ class RunContext:
 
 def build_pipeline(settings: Settings) -> tuple[Pipeline, RunContext]:
     namespaces = Namespaces(settings.index_dir, settings.fixtures_dir)
-    records = RecordsService(
-        RecordsStore(settings.records_db_path), settings.records_manifest_path
-    )
+    records = RecordsService(RecordsStore(settings.records_db_path), settings.records_manifest_path)
     llm = build_llm_client(settings)
     translator = build_translator(settings)
 
@@ -157,16 +155,12 @@ def run_case(pipeline: Pipeline, case: GoldCase) -> CaseResult:
         case=case,
         behaviour="abstain" if answer is None else "answer",
         abstain_reason=(
-            outcome.confidence.abstain_reason.value
-            if outcome.confidence.abstain_reason
-            else None
+            outcome.confidence.abstain_reason.value if outcome.confidence.abstain_reason else None
         ),
         confidence=outcome.confidence.level.value,
         product_class=answer.product_class.value if answer else None,
         ip_rights=tuple(right.value for right in (answer.ip_rights if answer else [])),
-        regulatory_areas=tuple(
-            area.value for area in (answer.regulatory_areas if answer else [])
-        ),
+        regulatory_areas=tuple(area.value for area in (answer.regulatory_areas if answer else [])),
         cited_document_ids=tuple(citation.document_id for citation in citations),
         citation_jurisdictions=tuple(citation.jurisdiction.value for citation in citations),
         ungrounded_citation_ids=tuple(

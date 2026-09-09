@@ -315,6 +315,67 @@ class EscalateBody(Wire):
     product_class: ProductClass = ProductClass.UNDETERMINED
 
 
+# -- consent and the access log ----------------------------------------------
+
+
+class ConsentBody(Wire):
+    session_id: str = "anonymous"
+    #: The manifest id of the source this decision is about. Consent is never
+    #: global: a reader agrees to one named source at a time.
+    source_id: str
+    granted: bool = True
+
+
+class ConsentEventRow(Wire):
+    source_id: str = Field(serialization_alias="sourceId")
+    source_name: str = Field(serialization_alias="sourceName")
+    granted: bool
+    recorded_at: str = Field(serialization_alias="recordedAt")
+
+
+class AccessLogResult(Wire):
+    """What this session has agreed to, and when."""
+
+    events: list[ConsentEventRow] = Field(default_factory=list)
+    #: Source ids currently allowed — the latest decision for each.
+    granted: list[str] = Field(default_factory=list)
+    #: Sources in the manifest that would need consent at all. Empty today, and
+    #: the interface says so rather than implying a gate nobody has met.
+    credentialed_sources: list[SourceSummary] = Field(
+        default_factory=list, serialization_alias="credentialedSources"
+    )
+
+
+class AuditRowResult(Wire):
+    """One audit row, for the development viewer. Never served in production."""
+
+    id: int
+    recorded_at: str = Field(serialization_alias="recordedAt")
+    event: str
+    session_id: str = Field(serialization_alias="sessionId")
+    query_id: str | None = None
+    question_hash: str | None = Field(default=None, serialization_alias="questionHash")
+    jurisdiction: str | None = None
+    passage_ids: list[str] = Field(default_factory=list, serialization_alias="passageIds")
+    model: str | None = None
+    prompt_version: str | None = Field(default=None, serialization_alias="promptVersion")
+    corpus_version: str | None = Field(default=None, serialization_alias="corpusVersion")
+    confidence: str | None = None
+    abstained: bool | None = None
+    abstain_reason: str | None = Field(default=None, serialization_alias="abstainReason")
+    neutralised_spans: int = Field(default=0, serialization_alias="neutralisedSpans")
+    dropped_claims: int = Field(default=0, serialization_alias="droppedClaims")
+    latency_ms: int | None = Field(default=None, serialization_alias="latencyMs")
+    detail: dict | None = None
+
+
+class AuditResult(Wire):
+    rows: list[AuditRowResult] = Field(default_factory=list)
+    #: The columns the table has, so the viewer can state what is *not* held
+    #: from the schema rather than from a hard-coded list that could drift.
+    columns: list[str] = Field(default_factory=list)
+
+
 class Acknowledgement(Wire):
     """What was recorded, stated plainly rather than as a success message."""
 

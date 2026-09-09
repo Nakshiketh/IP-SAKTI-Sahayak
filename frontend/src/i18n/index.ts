@@ -10,7 +10,7 @@ import {
   LOCALE_STORAGE_KEY,
   NAMESPACES,
 } from './languages';
-import { findMissingBundles, resources } from './resources';
+import { findMissingBundles, loadLocale, resources } from './resources';
 
 /**
  * Language is detected, not asked for.
@@ -19,9 +19,14 @@ import { findMissingBundles, resources } from './resources';
  * question, and that includes the language. The order below tries what the
  * reader chose last, then what their browser says, then English — and the
  * choice is always correctable from the header.
+ *
+ * Only English is in the first chunk. i18next starts with it, and the detected
+ * language's files are fetched immediately after; `initI18n` resolves once that
+ * has happened, so a reader in Tamil is not shown English and then corrected.
+ * For an English reader nothing is fetched and the promise is already settled.
  */
-export function initI18n() {
-  if (i18n.isInitialized) return i18n;
+export function initI18n(): Promise<typeof i18n> {
+  if (i18n.isInitialized) return Promise.resolve(i18n);
 
   const missing = findMissingBundles();
   if (missing.length > 0) {
@@ -51,13 +56,39 @@ export function initI18n() {
       returnNull: false,
     });
 
-  return i18n;
+  // Detection has run by now, so this is the language the reader will actually
+  // see rather than a guess made before it.
+  const detected = findLocale(i18n.resolvedLanguage ?? i18n.language);
+  return ensureLocale(detected.code).then(() => i18n);
 }
 
-/** Change language and remember it. Also updates <html lang> and <html dir>. */
+/**
+ * Put a locale's namespaces in place, if they are not already.
+ *
+ * Idempotent and safe to call on every switch: `hasResourceBundle` is what stops
+ * a reader who toggles back and forth re-fetching what they already have.
+ */
+async function ensureLocale(code: (typeof LOCALE_CODES)[number]): Promise<void> {
+  if (code === DEFAULT_LOCALE) return;
+  if (NAMESPACES.every((namespace) => i18n.hasResourceBundle(code, namespace))) return;
+
+  const bundles = await loadLocale(code);
+  for (const [namespace, bundle] of Object.entries(bundles)) {
+    i18n.addResourceBundle(code, namespace, bundle, true, true);
+  }
+}
+
+/**
+ * Change language and remember it. Also updates <html lang> and <html dir>.
+ *
+ * The switch happens after the files are in place, never before. Switching first
+ * would show the reader a screen of raw dotted keys for as long as the fetch
+ * took, which is a worse answer than a moment on the language they were already
+ * reading.
+ */
 export function changeLanguage(code: string) {
   const locale = findLocale(code);
-  void i18n.changeLanguage(locale.code);
+  void ensureLocale(locale.code).then(() => i18n.changeLanguage(locale.code));
   return locale;
 }
 

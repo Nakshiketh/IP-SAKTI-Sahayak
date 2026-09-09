@@ -9,20 +9,22 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+/**
+ * The locales and namespaces come from the app itself, not from a copy here.
+ *
+ * They were two lists for a while, and a namespace added to one was a namespace
+ * these scripts silently did not seed — the new locale files simply never
+ * appeared, and the first sign of it was raw keys on screen in five languages.
+ * `languages.ts` imports nothing, so reading it from a script costs nothing.
+ */
+import { LOCALE_CODES, NAMESPACES as APP_NAMESPACES } from '../frontend/src/i18n/languages.ts';
+
 export const REPO_ROOT = join(import.meta.dirname, '..');
 export const LOCALES_DIR = join(REPO_ROOT, 'frontend', 'src', 'locales');
 
 export const SOURCE_LOCALE = 'en';
-export const LOCALES = ['en', 'hi', 'te', 'ta', 'bn', 'mr'] as const;
-export const NAMESPACES = [
-  'common',
-  'home',
-  'sahayak',
-  'covered',
-  'howitworks',
-  'sources',
-  'about',
-] as const;
+export const LOCALES = LOCALE_CODES;
+export const NAMESPACES = APP_NAMESPACES;
 
 /** Marks a file whose values are English placeholders, not translations. */
 export const UNTRANSLATED_FLAG = '__untranslated';

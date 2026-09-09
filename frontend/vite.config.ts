@@ -2,10 +2,77 @@
 import { fileURLToPath, URL } from 'node:url';
 
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+
+/**
+ * The content policy for the built app.
+ *
+ * `default-src 'none'` and then only what this app actually needs. It loads no
+ * third-party script, no web font, no analytics and no image from anywhere but
+ * itself, so almost every directive is a refusal — and each refusal is a class
+ * of injected content that cannot execute even if it reaches the page.
+ *
+ * `style-src` carries `'unsafe-inline'` and that is a real weakening, stated
+ * rather than hidden: a handful of components set a `style` attribute to carry
+ * an animation delay or a bar height, and a style attribute is inline style. The
+ * alternative is a nonce, which needs a server rendering the document; this app
+ * is static files. Injected CSS can restyle a page and cannot run code, so the
+ * trade is worth naming and taking.
+ *
+ * `frame-ancestors` is absent on purpose: it is ignored in a meta element and
+ * has to be a real response header. `docs/SECURITY.md` carries the header set a
+ * deployment must add, so a policy that cannot work here is not written here as
+ * though it did.
+ */
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'none'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "font-src 'self'",
+  // The API, same origin. A deployment serving the API elsewhere adds that
+  // origin here, and adding one is then a visible decision.
+  "connect-src 'self'",
+  "form-action 'none'",
+  "base-uri 'none'",
+  // Registry portals open in a new tab. They are navigations, not loads.
+  "frame-src 'none'",
+  "object-src 'none'",
+].join('; ');
+
+/**
+ * Inject the policy into the built `index.html`, and only the built one.
+ *
+ * Not in the source file: the dev server needs inline script and a websocket for
+ * hot reloading, so a policy strict enough to be worth having would make the app
+ * undevelopable — and a policy loose enough to develop under is not the one that
+ * should ship. `apply: 'build'` is what keeps those two facts from being traded
+ * against each other.
+ */
+function contentSecurityPolicy(): Plugin {
+  return {
+    name: 'sahayak-csp',
+    apply: 'build',
+    transformIndexHtml(html) {
+      return {
+        html,
+        tags: [
+          {
+            tag: 'meta',
+            attrs: {
+              'http-equiv': 'Content-Security-Policy',
+              content: CONTENT_SECURITY_POLICY,
+            },
+            injectTo: 'head-prepend',
+          },
+        ],
+      };
+    },
+  };
+}
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), contentSecurityPolicy()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),

@@ -3,7 +3,7 @@
  * sticks, and a mobile menu a keyboard user can get out of.
  */
 
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -14,9 +14,15 @@ import { i18n } from '@/i18n';
 import { LOCALE_STORAGE_KEY } from '@/i18n/languages';
 
 /**
- * Render, then wait for the footer to finish asking the API what the corpus is.
- * Without the wait that answer lands after the test body and React reports an
- * unwrapped update — noise that would eventually hide a real warning.
+ * Render, then wait for the page to actually be there.
+ *
+ * Two waits, for two different reasons. The footer asks the API what the corpus
+ * is, and without the wait that answer lands after the test body and React
+ * reports an unwrapped update — noise that would eventually hide a real warning.
+ * And every route but the homepage and the 404 arrives as its own chunk, so
+ * asserting straight after `render` would assert against the Suspense fallback.
+ * Waiting for the heading is what makes these tests describe a page a reader
+ * sees rather than a frame around one.
  */
 async function renderAt(path: string) {
   const result = render(
@@ -25,6 +31,9 @@ async function renderAt(path: string) {
     </MemoryRouter>,
   );
   await screen.findByText(/No sources indexed yet|unavailable right now/i);
+  // `findAll`, because a test that renders twice to compare two pages leaves
+  // both in the document, and `findBy` would throw on the second call.
+  await screen.findAllByRole('heading', { level: 1 });
   return result;
 }
 
@@ -56,6 +65,7 @@ describe('routes', () => {
     ['/how-it-works', 'How a question becomes a cited answer'],
     ['/sources', 'What this is built on'],
     ['/about', 'About'],
+    ['/privacy', 'What this product stores'],
   ])('%s renders its own heading', async (path, heading) => {
     await renderAt(path);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(heading);
@@ -138,7 +148,10 @@ describe('language', () => {
 
     await user.selectOptions(selector, 'te');
 
-    expect(i18n.resolvedLanguage).toBe('te');
+    // The switch waits for that language's files to arrive before it happens.
+    // Switching first would show a screen of raw dotted keys for as long as the
+    // fetch took, which is worse than a moment on the language already showing.
+    await waitFor(() => expect(i18n.resolvedLanguage).toBe('te'));
     expect(window.localStorage.getItem(LOCALE_STORAGE_KEY)).toBe('te');
   });
 
@@ -149,7 +162,7 @@ describe('language', () => {
     expect(document.documentElement.lang).toBe('en');
 
     await user.selectOptions(screen.getAllByRole('combobox', { name: 'Language' })[0]!, 'bn');
-    expect(document.documentElement.lang).toBe('bn');
+    await waitFor(() => expect(document.documentElement.lang).toBe('bn'));
     expect(document.documentElement.dir).toBe('ltr');
   });
 

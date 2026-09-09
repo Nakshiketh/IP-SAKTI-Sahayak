@@ -46,6 +46,7 @@ switch ($Target) {
     Write-Host 'ingest-records  load the records layer from corpus/records-manifest.json'
     Write-Host 'ingest-records-samples  load the fixture registry'
     Write-Host 'evals           run the gold set, write a report, publish the numbers'
+    Write-Host 'bundle          build the web app and check it against the size budget'
   }
   'install' {
     Invoke-Step 'backend deps' {
@@ -102,6 +103,9 @@ switch ($Target) {
     & $Py (Join-Path $Root 'scripts/ingest_records.py') `
       --manifest 'corpus/samples/records-manifest.json' `
       --database 'data/records-samples.sqlite3' --no-write-back
+  }
+  'bundle' {
+    Invoke-Step 'bundle budget' { Push-Location "$Root\frontend"; & npm run bundle:check; Pop-Location }
   }
   'evals' {
     Invoke-Step 'evals' { & $Py (Join-Path $Root 'evals\score.py') --publish }

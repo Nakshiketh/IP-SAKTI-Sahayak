@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
@@ -32,8 +32,15 @@ export function Shell() {
         {t('skipToContent')}
       </a>
       <Header />
+      {/* The boundary sits here, inside the frame, so a route arriving as its
+          own chunk does not take the header and footer off screen with it. The
+          fallback holds the viewport height rather than collapsing: a page that
+          shrinks and then grows again is a layout shift, and this one would land
+          exactly where a reader is about to click. */}
       <main id="main" className="flex-1">
-        <Outlet />
+        <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
     </div>

@@ -111,8 +111,13 @@ def render_markdown(
             "| `" + key + "` | " + metric.display() + flag + " | " + target + " | " + note + " |"
         )
 
-    lines += ["", "## By group", "", "| Group | Cases | Answered | Declined | Errors |",
-              "| --- | --- | --- | --- | --- |"]
+    lines += [
+        "",
+        "## By group",
+        "",
+        "| Group | Cases | Answered | Declined | Errors |",
+        "| --- | --- | --- | --- | --- |",
+    ]
     for group, cases in sorted(gold.by_group().items()):
         ids = {case.id for case in cases}
         rows = [r for r in results if r.case.id in ids]
@@ -193,8 +198,7 @@ def render_summary(scores: Scores, context: RunContext, gold: GoldSet) -> dict:
     return {
         "run_at": datetime.now(UTC).date().isoformat(),
         "metrics": {
-            key: (scores.get(key).display() if scores.get(key) else "not measured")
-            for key in ORDER
+            key: (scores.get(key).display() if scores.get(key) else "not measured") for key in ORDER
         },
         "case_count": len(gold),
         "corpus_version": context.corpus_version,

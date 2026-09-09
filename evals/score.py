@@ -41,9 +41,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--reports", default=str(REPO_ROOT / "evals" / "reports"), help="where to write the report"
     )
-    parser.add_argument(
-        "--only", nargs="*", default=[], metavar="GROUP_OR_ID", help="run a subset"
-    )
+    parser.add_argument("--only", nargs="*", default=[], metavar="GROUP_OR_ID", help="run a subset")
     parser.add_argument(
         "--publish",
         action="store_true",
