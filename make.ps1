@@ -45,7 +45,7 @@ switch ($Target) {
     Write-Host 'refresh         re-fetch and report what has changed since the last ingest'
     Write-Host 'ingest-records  load the records layer from corpus/records-manifest.json'
     Write-Host 'ingest-records-samples  load the fixture registry'
-    Write-Host 'evals           run the evaluation harness (Phase 13)'
+    Write-Host 'evals           run the gold set, write a report, publish the numbers'
   }
   'install' {
     Invoke-Step 'backend deps' {
@@ -104,8 +104,10 @@ switch ($Target) {
       --database 'data/records-samples.sqlite3' --no-write-back
   }
   'evals' {
-    Write-Host 'The evaluation harness arrives in Phase 13. See docs/MASTER_BUILD.md, Phase 13.'
-    exit 1
+    Invoke-Step 'evals' { & $Py (Join-Path $Root 'evals\score.py') --publish }
+  }
+  'evals-dry' {
+    Invoke-Step 'evals' { & $Py (Join-Path $Root 'evals\score.py') --no-fail }
   }
   default {
     Write-Host "Unknown target '$Target'. Run .\make.ps1 help" -ForegroundColor Red

@@ -20,12 +20,15 @@ from pathlib import Path
 
 from app.models.domain import Jurisdiction, Record, RecordType
 from app.retrieval.tokenize import fold, tokenize
+from app.services.records_service import RECORD_TRIGGER_WORDS
 
 #: A record is offered when the question is about the kind of thing that gets
 #: filed. Not a search — a filter over two fixture rows.
-_TRIGGERS = frozenset(
-    fold(word) for word in ("patent", "formulation", "composition", "herb", "prior", "record")
-)
+#: The same vocabulary the real records service uses, folded to match the
+#: tokeniser. One list, because two would drift — and the drift showed up in the
+#: gold set as records appearing beside a question when the store was loaded and
+#: not when the fixture stood in for it.
+_TRIGGERS = frozenset(fold(word) for word in RECORD_TRIGGER_WORDS)
 
 
 @lru_cache(maxsize=4)

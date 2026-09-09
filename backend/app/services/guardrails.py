@@ -30,7 +30,9 @@ class RefusalKind(StrEnum):
 
     CLINICAL = "clinical"
     OUTCOME_PREDICTION = "outcome_prediction"
+    NOVELTY_VERDICT = "novelty_verdict"
     INDIVIDUAL_LEGAL_OPINION = "individual_legal_opinion"
+    RECOMMENDATION = "recommendation"
     DRAFTING = "drafting"
     CONCEALMENT = "concealment"
 
@@ -60,8 +62,45 @@ _PATTERNS: tuple[tuple[RefusalKind, str], ...] = (
     ),
     (
         RefusalKind.OUTCOME_PREDICTION,
-        r"\b(chances?|odds|likelihood|probability) of (it |this |my |our )?"
-        r"(being )?(granted|approved|succeeding|registration|winning)\b",
+        r"\b(chances?|odds|likelihood|probability)\b.{0,40}"
+        r"\b(granted|approved|succeed\w*|registration|winning|win)\b",
+    ),
+    # A verdict on novelty is the one conclusion this product must never reach.
+    # The prior-art flow already refuses to state one; without these patterns a
+    # reader can simply ask for it, and an answer assembled from retrieved
+    # passages would be a novelty opinion with citations under it. Every
+    # phrasing here was found by the gold set rather than imagined.
+    (
+        RefusalKind.NOVELTY_VERDICT,
+        r"\bis (our|this|the|my) .{0,60}\b(novel|new|patentable|inventive|original)\b",
+    ),
+    (
+        RefusalKind.NOVELTY_VERDICT,
+        r"\b(confirm|verify|tell me|assure (me|us))\b.{0,60}"
+        r"\b(no prior art|nothing similar|novel|new|patentable|unique)\b",
+    ),
+    (
+        RefusalKind.NOVELTY_VERDICT,
+        r"\b(nothing similar|no prior art|nothing)\b.{0,40}"
+        r"\b(so|therefore|means|correct|right)\b",
+    ),
+    (
+        RefusalKind.NOVELTY_VERDICT,
+        r"\b(based on|from) (your|the) (search|results?|findings?)\b",
+    ),
+    (
+        RefusalKind.NOVELTY_VERDICT,
+        r"\byou found nothing\b|\bnothing came up\b|\bnothing turned up\b",
+    ),
+    # Asking which option to pick is a commercial or professional judgement, not
+    # a question about what is required. Deliberately narrow: "which licence do
+    # we need" and "which authority handles this" are questions about
+    # requirements and must still be answered.
+    (
+        RefusalKind.RECOMMENDATION,
+        r"\b(which|who|what) (is|are) the best\b|\b(recommend|recommendation)s?\b|"
+        r"\bwhat would you (advise|suggest)\b|"
+        r"\bwhich\b.{0,40}\bshould we (choose|pick|enter|use|hire|go with)\b",
     ),
     # An opinion on a reader's own dispute is legal advice, not information.
     (

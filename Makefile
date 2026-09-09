@@ -9,7 +9,7 @@ endif
 
 .PHONY: help install install-llm dev dev-backend dev-frontend dev-frontend-mock \
         test test-backend test-frontend lint format schema ingest ingest-samples \
-        ingest-records ingest-records-samples refresh evals clean
+        ingest-records ingest-records-samples refresh evals evals-dry clean
 
 help:
 	@echo "install         install backend and frontend dependencies"
@@ -26,7 +26,7 @@ help:
 	@echo "refresh         re-fetch and report what has changed since the last ingest"
 	@echo "ingest-records  load the records layer from corpus/records-manifest.json"
 	@echo "ingest-records-samples  load the fixture registry, into data/records-samples.sqlite3"
-	@echo "evals           run the evaluation harness and write a report (Phase 13)"
+	@echo "evals           run the gold set, write a report, publish the numbers to the site"
 
 install:
 	$(PY) -m pip install -e "backend[dev]"
@@ -105,9 +105,16 @@ ingest-records:
 ingest-records-samples:
 	$(PY) scripts/ingest_records.py --manifest corpus/samples/records-manifest.json --database data/records-samples.sqlite3 --no-write-back
 
+# The gold set against the running pipeline. Writes evals/reports/report.md for
+# a person, evals/reports/summary.json for the machine, and copies the summary
+# into frontend/public so /how-it-works shows this run rather than a number
+# somebody typed. Exits non-zero if a metric with a target missed it.
 evals:
-	@echo "The evaluation harness arrives in Phase 13. See docs/MASTER_BUILD.md, Phase 13."
-	@exit 1
+	$(PY) evals/score.py --publish
+
+# The same run without publishing or failing the build, for working on the set.
+evals-dry:
+	$(PY) evals/score.py --no-fail
 
 clean:
 	cd frontend && rm -rf dist node_modules/.vite

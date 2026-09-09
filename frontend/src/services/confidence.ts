@@ -82,6 +82,19 @@ export function scoreConfidence(evidence: RetrievalEvidence): ConfidenceResult {
     };
   }
 
+  // Like out of scope, this is decided from the question rather than from what
+  // was retrieved: the answer turns on a fact the reader has not given, and it
+  // would still turn on it however much the corpus returned. So it is settled
+  // before the retrieval-dependent branches.
+  if (evidence.needs_more_facts) {
+    return {
+      level: 'abstain',
+      reasonKey: 'abstainFacts',
+      reasonVars: vars,
+      abstainReason: 'needs_more_facts',
+    };
+  }
+
   // Nothing cleared the floor. There is nothing to answer from.
   if (candidates.length === 0) {
     return {
@@ -111,15 +124,6 @@ export function scoreConfidence(evidence: RetrievalEvidence): ConfidenceResult {
       reasonKey: 'abstainStale',
       reasonVars: vars,
       abstainReason: 'sources_out_of_date',
-    };
-  }
-
-  if (evidence.needs_more_facts) {
-    return {
-      level: 'abstain',
-      reasonKey: 'abstainFacts',
-      reasonVars: vars,
-      abstainReason: 'needs_more_facts',
     };
   }
 

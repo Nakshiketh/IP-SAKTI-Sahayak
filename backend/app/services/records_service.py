@@ -37,7 +37,10 @@ EVIDENCE_LABEL = "EVIDENCE — a filed or granted record, not a statement of law
 
 #: A question is about the kind of thing that gets filed. Not a search — a
 #: cheap test for whether offering records beside the answer makes sense.
-_TRIGGER_WORDS = frozenset(
+#: Public because the demo-fixture path reads the same list; two lists would
+#: drift, and the drift shows up as records appearing beside a question when
+#: the store is loaded and not when the fixture stands in for it.
+RECORD_TRIGGER_WORDS = frozenset(
     {
         "patent",
         "patents",
@@ -50,8 +53,13 @@ _TRIGGER_WORDS = frozenset(
         "record",
         "records",
         "filed",
+        "file",
         "filing",
+        "filings",
+        "application",
+        "applications",
         "registration",
+        "registrations",
         "registered",
         "trademark",
         "brand",
@@ -196,7 +204,7 @@ class RecordsService:
         if not self._store.available:
             return ()
         tokens = {word.strip(".,?!:;()\"'").casefold() for word in question.split()}
-        if not tokens & _TRIGGER_WORDS:
+        if not tokens & RECORD_TRIGGER_WORDS:
             return ()
 
         # Any of the question's distinctive words, not all of them. No filing's

@@ -243,7 +243,49 @@
         "name": "Latency",
         "what": "How long an answer takes, at the median and at the tail.",
         "target": "usable"
+      },
+      "citationGroundedness": {
+        "name": "Citation groundedness",
+        "what": "Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
+        "target": "100%"
+      },
+      "citationCoverage": {
+        "name": "Citation coverage",
+        "what": "Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "target": "as high as the corpus allows"
+      },
+      "abstentionReason": {
+        "name": "Abstention reason",
+        "what": "When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
+        "target": "high"
+      },
+      "forbiddenClaims": {
+        "name": "Forbidden claims",
+        "what": "Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
+        "target": "100%"
+      },
+      "languageDetection": {
+        "name": "Language detection",
+        "what": "Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
+        "target": "high"
+      },
+      "recordsOffered": {
+        "name": "Records offered",
+        "what": "Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
+        "target": "high"
+      },
+      "recordsDoNotRescue": {
+        "name": "Records do not rescue",
+        "what": "Where a record exists and the sources do not support an answer, whether the system still declines.",
+        "target": "100%"
+      },
+      "errors": {
+        "name": "Errors",
+        "what": "Cases that raised rather than answering or declining.",
+        "target": "zero"
       }
-    }
+    },
+    "caveatTitle": "What these numbers were measured against",
+    "caseCount": "{{count}} cases"
   }
 }

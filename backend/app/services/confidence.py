@@ -102,6 +102,17 @@ def score_confidence(evidence: RetrievalEvidence) -> ConfidenceResult:
             Confidence.ABSTAIN, ReasonKey.ABSTAIN_SCOPE, variables, AbstainReason.OUT_OF_SCOPE
         )
 
+    # Like out of scope, this is decided from the question rather than from what
+    # was retrieved: the answer turns on a fact the reader has not given, and it
+    # would still turn on it however much the corpus returned. So it is settled
+    # before the retrieval-dependent branches. Ordering it after them told a
+    # reader "I could not find anything" when the useful and true thing to say
+    # was "this turns on something only you can tell me".
+    if evidence.needs_more_facts:
+        return ConfidenceResult(
+            Confidence.ABSTAIN, ReasonKey.ABSTAIN_FACTS, variables, AbstainReason.NEEDS_MORE_FACTS
+        )
+
     # Nothing cleared the floor. There is nothing to answer from.
     if not candidates:
         return ConfidenceResult(
@@ -126,11 +137,6 @@ def score_confidence(evidence: RetrievalEvidence) -> ConfidenceResult:
             ReasonKey.ABSTAIN_STALE,
             variables,
             AbstainReason.SOURCES_OUT_OF_DATE,
-        )
-
-    if evidence.needs_more_facts:
-        return ConfidenceResult(
-            Confidence.ABSTAIN, ReasonKey.ABSTAIN_FACTS, variables, AbstainReason.NEEDS_MORE_FACTS
         )
 
     # A surviving contradiction caps the answer at low, whatever else is true.

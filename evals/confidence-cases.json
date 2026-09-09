@@ -404,6 +404,18 @@
         "reasonKey": "moderateThin",
         "abstainReason": null
       }
+    },
+    {
+      "name": "a question turning on a missing fact says so even when nothing was retrieved",
+      "passages": [],
+      "contradictions": [],
+      "out_of_scope": false,
+      "needs_more_facts": true,
+      "expect": {
+        "level": "abstain",
+        "reasonKey": "abstainFacts",
+        "abstainReason": "needs_more_facts"
+      }
     }
   ]
 }

@@ -136,6 +136,8 @@ class QueryOutcome:
     is_demo: bool
     translator: str
     translated: bool
+    #: Set when the question named a place the corpus does not cover.
+    uncovered_jurisdiction: str | None = None
     passage_text: dict[str, str] = field(default_factory=dict)
     #: A citation for every passage considered, keyed by citation id. The
     #: abstention surface needs these: a conflict is only useful if the reader
@@ -226,7 +228,27 @@ class Pipeline:
             yield ResultEvent(outcome)
             return
 
+        routing = route(request.question, request.jurisdiction)
         yield StageEvent(clock.stage("route"))
+
+        if routing.uncovered:
+            # There is no namespace to send this to. Retrieval could only return
+            # passages about somewhere the reader did not ask about, so it does
+            # not run: the evidence is empty and the confidence rule reaches
+            # "nothing relevant" on its own.
+            empty = self._evidence(chosen.jurisdiction, [], (), today, needs_more_facts=False)
+            scored_empty = confidence_service.score_confidence(empty)
+            yield RetrievedEvent(passages=0, documents=0)
+            for stage_id in ("retrieve", "rerank", "context", "generate", "map", "translate"):
+                yield StageEvent(clock.stage(stage_id))
+            outcome = self._finish(
+                request, chosen, query_id, detection, understanding, None, empty, scored_empty,
+                None, (), clock, 0, [], language_in, language_out, translated=False,
+                uncovered=routing.uncovered,
+            )
+            self._record(outcome)
+            yield ResultEvent(outcome)
+            return
 
         store = self._namespaces.store(chosen.jurisdiction)
         filters = RetrievalFilters(
@@ -496,6 +518,7 @@ class Pipeline:
         language_out,
         *,
         translated: bool,
+        uncovered: str | None = None,
     ) -> QueryOutcome:
         return QueryOutcome(
             query_id=query_id,
@@ -504,6 +527,7 @@ class Pipeline:
             jurisdiction=chosen.jurisdiction,
             route_inferred=chosen.inferred,
             route_marker=chosen.marker,
+            uncovered_jurisdiction=uncovered,
             detection=detection,
             understanding=understanding,
             refusal=refusal,

@@ -10,7 +10,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { PIPELINE_STAGES } from '@/components/howitworks/pipelineStages';
-import HowItWorks from '@/routes/HowItWorks';
+import HowItWorks, { METRICS } from '@/routes/HowItWorks';
 
 function renderPage() {
   return render(
@@ -73,8 +73,35 @@ describe('honesty about what is built', () => {
   it('reports no evaluation numbers, because none have been produced', async () => {
     await renderSettled();
     expect(screen.getByText('No evaluation has been run')).toBeInTheDocument();
-    // Every metric row shows an absent result rather than a figure.
-    expect(screen.getAllByText('not measured')).toHaveLength(10);
+    // Every metric row shows an absent result rather than a figure. Counted off
+    // METRICS rather than hard-coded, so adding a metric does not silently stop
+    // this checking every row.
+    expect(screen.getAllByText('not measured')).toHaveLength(METRICS.length);
+  });
+
+  it('never shows a figure without saying what it was measured against', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () =>
+            Promise.resolve({
+              run_at: '2026-01-15',
+              case_count: 170,
+              caveat: 'Measured against a demonstration corpus of 9 illustrative documents.',
+              metrics: { abstention_precision: '33.6%' },
+            }),
+        } as Response),
+      ),
+    );
+    renderPage();
+
+    expect(
+      await screen.findByText(/demonstration corpus of 9 illustrative documents/),
+    ).toBeVisible();
+    expect(screen.getByText('What these numbers were measured against')).toBeInTheDocument();
+    expect(screen.getByText('170 cases', { exact: false })).toBeInTheDocument();
   });
 
   it('shows real numbers when a summary exists, without changing the page', async () => {
@@ -86,21 +113,25 @@ describe('honesty about what is built', () => {
           json: () =>
             Promise.resolve({
               run_at: '2026-01-15',
-              metrics: { jurisdictionPurity: '100%', latency: '2.4s / 6.1s' },
+              case_count: 170,
+              caveat: 'Measured against a demonstration corpus.',
+              metrics: { jurisdiction_purity: '100%', latency_p50: '2.4s' },
             }),
         } as Response),
       ),
     );
     renderPage();
 
-    expect(await screen.findByText('Last run 2026-01-15')).toBeInTheDocument();
+    // The run date shares its paragraph with the case count, so an exact
+    // match would only pass on a summary that carried no case_count.
+    expect(await screen.findByText('Last run 2026-01-15', { exact: false })).toBeInTheDocument();
     // Scoped to the row: "100%" is also the *target* for two metrics, and an
     // unscoped match would pass whether or not the result was rendered at all.
     const purityRow = screen.getByRole('rowheader', { name: 'Jurisdiction purity' }).closest('tr')!;
     expect(within(purityRow).getAllByText('100%')).toHaveLength(2);
-    expect(screen.getByText('2.4s / 6.1s')).toBeInTheDocument();
-    // The eight metrics the run did not report still say so.
-    expect(screen.getAllByText('not measured')).toHaveLength(8);
+    expect(screen.getByText('2.4s')).toBeInTheDocument();
+    // Every metric the run did not report still says so.
+    expect(screen.getAllByText('not measured')).toHaveLength(METRICS.length - 2);
   });
 
   it('treats a malformed summary as no summary, rather than crashing', async () => {
@@ -118,7 +149,7 @@ describe('honesty about what is built', () => {
     renderPage();
 
     expect(await screen.findByText('No evaluation has been run')).toBeInTheDocument();
-    expect(screen.getAllByText('not measured')).toHaveLength(10);
+    expect(screen.getAllByText('not measured')).toHaveLength(METRICS.length);
   });
 
   it('states plainly that retrieval does not eliminate hallucination', async () => {

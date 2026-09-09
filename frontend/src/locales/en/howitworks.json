@@ -183,9 +183,9 @@
   "evaluation": {
     "navLabel": "Evaluation",
     "heading": "How it is measured",
-    "standfirst": "These are the axes it will be scored on. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else.",
+    "standfirst": "These are the axes it is scored on, and the numbers below are from the last run of the gold set. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else. The numbers that look bad are here too.",
     "notRunTitle": "No evaluation has been run",
-    "notRunBody": "There is no corpus to retrieve from and no pipeline to score, so there are no numbers on this page. When the harness runs it will write a summary that this page reads, and whatever it says will appear here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
+    "notRunBody": "No summary has been published, so there are no numbers on this page. When the harness runs it writes a summary that this page reads, and whatever it says appears here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
     "colMetric": "Measure",
     "colWhat": "What it counts",
     "colTarget": "Target",
@@ -195,12 +195,12 @@
     "metrics": {
       "answerAccuracy": {
         "name": "Answer accuracy",
-        "what": "Whether the answer is right, judged against a reference answer and spot-checked by a person.",
+        "what": "Whether the answer is right, judged against a reference answer. No reference answers have been written: writing them means stating what a source says, and no source has been read.",
         "target": "as high as the sources allow"
       },
       "citationCorrectness": {
         "name": "Citation correctness",
-        "what": "Whether the passage a claim cites actually supports that claim.",
+        "what": "Whether the passage a claim cites actually supports that claim. Needs a judge, human or model, so it is not measured here — citation groundedness is the part a machine can check.",
         "target": "as high as possible"
       },
       "citationValidity": {
@@ -235,14 +235,56 @@
       },
       "multilingualQuality": {
         "name": "Multilingual quality",
-        "what": "Whether an answer in Telugu is as good as the same answer in English, judged by a speaker.",
+        "what": "Round-trip translation plus a native-speaker rubric on a subset. Not measured: no native speaker has reviewed a run.",
         "target": "parity with English"
       },
       "latency": {
         "name": "Latency",
-        "what": "How long an answer takes, at the median and at the tail.",
+        "what": "Median time through the whole pipeline. Excludes any hosted-model call, which is not made with the offline generator.",
         "target": "usable"
+      },
+      "citationGroundedness": {
+        "name": "Citation groundedness",
+        "what": "Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
+        "target": "100%"
+      },
+      "citationCoverage": {
+        "name": "Citation coverage",
+        "what": "Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "target": "as high as the corpus allows"
+      },
+      "abstentionReason": {
+        "name": "Abstention reason",
+        "what": "When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
+        "target": "high"
+      },
+      "forbiddenClaims": {
+        "name": "Forbidden claims",
+        "what": "Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
+        "target": "100%"
+      },
+      "languageDetection": {
+        "name": "Language detection",
+        "what": "Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
+        "target": "high"
+      },
+      "recordsOffered": {
+        "name": "Records offered",
+        "what": "Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
+        "target": "high"
+      },
+      "recordsDoNotRescue": {
+        "name": "Records do not rescue",
+        "what": "Where a record exists and the sources do not support an answer, whether the system still declines.",
+        "target": "100%"
+      },
+      "errors": {
+        "name": "Errors",
+        "what": "Cases that raised rather than answering or declining.",
+        "target": "zero"
       }
-    }
+    },
+    "caveatTitle": "What these numbers were measured against",
+    "caseCount": "{{count}} cases"
   }
 }

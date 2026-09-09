@@ -17,6 +17,18 @@ export interface EvalSummary {
   run_at: string;
   /** Metric name -> its result, already formatted for display. */
   metrics: Record<string, string>;
+  /** How many gold cases the run covered. */
+  case_count?: number;
+  /**
+   * What the numbers were measured against. Rendered above the table, because a
+   * figure without it reads as a measurement of the product rather than of the
+   * machinery — with no corpus ingested most questions abstain, and "abstention
+   * precision 34%" then looks like a fault in the rule.
+   */
+  caveat?: string;
+  corpus_version?: string;
+  corpus_documents?: number;
+  corpus_is_demo?: boolean;
 }
 
 /**

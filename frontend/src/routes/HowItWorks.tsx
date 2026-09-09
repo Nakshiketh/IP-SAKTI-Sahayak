@@ -34,17 +34,33 @@ const ARCHITECTURE_LAYERS: ReadonlyArray<{ key: LayerKey; state: BuildState }> =
   { key: 'corpus', state: 'demo' },
 ];
 
-const METRICS = [
-  'answerAccuracy',
-  'citationCorrectness',
-  'citationValidity',
-  'abstentionPrecision',
-  'abstentionRecall',
-  'jurisdictionPurity',
-  'authorityPurity',
-  'classificationAccuracy',
-  'multilingualQuality',
-  'latency',
+/**
+ * Each row: the copy key on this page, and the key the harness writes.
+ *
+ * They differ because they are two vocabularies — the locale file names things
+ * for a reader, the harness names them for whoever reads `evals/reports`. They
+ * were the same string once, which meant every published figure silently read
+ * "not measured" because the lookup missed.
+ */
+export const METRICS = [
+  { key: 'jurisdictionPurity', summaryKey: 'jurisdiction_purity' },
+  { key: 'authorityPurity', summaryKey: 'authority_purity' },
+  { key: 'citationValidity', summaryKey: 'citation_validity' },
+  { key: 'citationGroundedness', summaryKey: 'citation_groundedness' },
+  { key: 'citationCoverage', summaryKey: 'citation_coverage' },
+  { key: 'citationCorrectness', summaryKey: 'citation_correctness' },
+  { key: 'abstentionPrecision', summaryKey: 'abstention_precision' },
+  { key: 'abstentionRecall', summaryKey: 'abstention_recall' },
+  { key: 'abstentionReason', summaryKey: 'abstention_reason_accuracy' },
+  { key: 'forbiddenClaims', summaryKey: 'forbidden_claim_avoidance' },
+  { key: 'classificationAccuracy', summaryKey: 'classification_accuracy' },
+  { key: 'languageDetection', summaryKey: 'language_detection_accuracy' },
+  { key: 'recordsOffered', summaryKey: 'records_offered' },
+  { key: 'recordsDoNotRescue', summaryKey: 'records_do_not_rescue' },
+  { key: 'answerAccuracy', summaryKey: 'answer_accuracy' },
+  { key: 'multilingualQuality', summaryKey: 'multilingual_quality' },
+  { key: 'latency', summaryKey: 'latency_p50' },
+  { key: 'errors', summaryKey: 'errors' },
 ] as const;
 
 const SECTIONS = [
@@ -212,9 +228,23 @@ function EvaluationTable() {
       ) : null}
 
       {evals.state === 'ready' ? (
-        <p className="mt-6 text-xs text-muted">
-          {t('evaluation.lastRun', { date: evals.summary.run_at })}
-        </p>
+        <>
+          {evals.summary.caveat ? (
+            <Callout
+              tone="caution"
+              title={t('evaluation.caveatTitle')}
+              className="mt-6 max-w-measure"
+            >
+              {evals.summary.caveat}
+            </Callout>
+          ) : null}
+          <p className="mt-6 text-xs text-muted">
+            {t('evaluation.lastRun', { date: evals.summary.run_at })}
+            {evals.summary.case_count
+              ? ' \u00b7 ' + t('evaluation.caseCount', { count: evals.summary.case_count })
+              : ''}
+          </p>
+        </>
       ) : null}
 
       <div className="mt-6 overflow-x-auto">
@@ -236,17 +266,23 @@ function EvaluationTable() {
             </tr>
           </thead>
           <tbody>
-            {METRICS.map((metric) => {
-              const result = evals.state === 'ready' ? evals.summary.metrics[metric] : undefined;
+            {METRICS.map(({ key, summaryKey }) => {
+              const result =
+                evals.state === 'ready' ? evals.summary.metrics[summaryKey] : undefined;
+              const measured = result !== undefined && result !== 'not measured';
               return (
-                <tr key={metric} className="border-b border-rule-faint align-top">
+                <tr key={key} className="border-b border-rule-faint align-top">
                   <th scope="row" className="py-3 pr-4 text-left font-medium">
-                    {t(`evaluation.metrics.${metric}.name`)}
+                    {t(`evaluation.metrics.${key}.name`)}
                   </th>
-                  <td className="py-3 pr-4 text-muted">{t(`evaluation.metrics.${metric}.what`)}</td>
-                  <td className="py-3 pr-4">{t(`evaluation.metrics.${metric}.target`)}</td>
+                  <td className="py-3 pr-4 text-muted">{t(`evaluation.metrics.${key}.what`)}</td>
+                  <td className="py-3 pr-4">{t(`evaluation.metrics.${key}.target`)}</td>
                   <td className="py-3">
-                    {result ?? <span className="text-lac">{t('evaluation.noResult')}</span>}
+                    {measured ? (
+                      result
+                    ) : (
+                      <span className="text-lac">{t('evaluation.noResult')}</span>
+                    )}
                   </td>
                 </tr>
               );
