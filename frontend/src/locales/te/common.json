@@ -38,6 +38,16 @@
     "body": "The address may be mistyped, or the page may have been renamed.",
     "action": "Go to the homepage"
   },
+  "boundary": {
+    "title": "This page stopped working",
+    "body": "Something in the interface failed while drawing this page. What went wrong is in the browser console; nothing has been sent anywhere.",
+    "notAnAbstention": "This is the interface breaking, not the product declining to answer. No question was searched and no answer was withheld.",
+    "retry": "Try this page again"
+  },
+  "offline": {
+    "title": "This device is not connected",
+    "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
+  },
   "actions": {
     "close": "Close",
     "remove": "Remove"

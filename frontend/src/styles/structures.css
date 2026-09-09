@@ -105,6 +105,41 @@
     sup {
       font-size: 0.7em;
     }
+
+    /* A button does nothing on paper. Hidden rather than greyed out: a control
+       that cannot be pressed still reads as one the reader has failed to find. */
+    button,
+    [role='tab'],
+    input,
+    select,
+    textarea {
+      display: none !important;
+    }
+
+    /* The rule that matters most here. This product's whole claim is that every
+       statement names the passage behind it — and a printed citation whose link
+       is only in the markup names nothing a reader can follow. So the address
+       is printed after the link text, once, and only where there is a real one:
+       an in-page anchor or a javascript href would print as noise. */
+    main a[href^='http']::after {
+      content: ' <' attr(href) '>';
+      font-size: 0.75em;
+      word-break: break-all;
+    }
+
+    /* A source split across a page break is a source whose title is on one leaf
+       and whose passage is on another. */
+    article {
+      break-inside: avoid-page;
+    }
+
+    /* The standing disclaimer prints. A printed answer travels further than an
+       on-screen one and arrives without the interface around it, so the line
+       saying this is information and not legal advice has to travel with it. */
+    footer {
+      border-top: 1px solid #000;
+      break-before: avoid-page;
+    }
   }
 
   /* -- Waiting state.

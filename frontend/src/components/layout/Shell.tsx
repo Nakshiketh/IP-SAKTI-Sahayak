@@ -2,8 +2,10 @@ import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
+import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
+import { OfflineNotice } from '@/components/layout/OfflineNotice';
 import { findLocale } from '@/i18n/languages';
 
 /**
@@ -31,16 +33,22 @@ export function Shell() {
       >
         {t('skipToContent')}
       </a>
+      <OfflineNotice />
       <Header />
-      {/* The boundary sits here, inside the frame, so a route arriving as its
-          own chunk does not take the header and footer off screen with it. The
-          fallback holds the viewport height rather than collapsing: a page that
-          shrinks and then grows again is a layout shift, and this one would land
-          exactly where a reader is about to click. */}
+      {/* Both boundaries sit here, inside the frame, so neither a route that
+          throws nor a route still arriving as its own chunk takes the header and
+          footer off screen with it. The reader keeps the navigation that gets
+          them out of a broken page.
+
+          The Suspense fallback holds the viewport height rather than collapsing:
+          a page that shrinks and then grows again is a layout shift, and this
+          one would land exactly where a reader is about to click. */}
       <main id="main" className="flex-1">
-        <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
-          <Outlet />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={<div className="min-h-[60vh]" aria-busy="true" />}>
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </main>
       <Footer />
     </div>

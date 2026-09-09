@@ -118,6 +118,9 @@ export interface QueryOptions {
  */
 export type QueryErrorCode =
   | 'unreachable'
+  // Distinct from `unreachable`: the browser is certain there is no network, so
+  // the reader can be told the cause rather than the symptom.
+  | 'offline'
   | 'generation_unavailable'
   | 'rate_limited'
   | 'request_too_large'

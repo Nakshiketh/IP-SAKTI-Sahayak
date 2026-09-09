@@ -1,8 +1,10 @@
 # Demo script
 
-Written properly in Phase 13, rehearsed twice, with an offline-safe fallback ready. What follows is
-what actually works today, with the exact questions, because retrieval is real now and a question
-that reaches the wrong state on stage is a question that was not rehearsed.
+Five minutes, with the exact questions, because retrieval is real and a question that reaches the
+wrong state on stage is a question that was not rehearsed. Rehearsed twice against the running app;
+the offline-safe fallback is at the bottom and takes one command.
+
+Nothing in it requires a manual step or a key.
 
 ## Running it
 
@@ -36,9 +38,19 @@ elsewhere** is the registries this product did *not* search, each saying so, and
 is not yet verified rather than offering a guessed URL. Say the sentence out loud: finding nothing in
 a search nobody ran means nothing.
 
-**3. Flip the jurisdiction.** The answer set swaps whole — different documents, different
-confidence, nothing blended. The Indian sources are not filtered; they are not in the store that was
-read.
+**3. Flip the jurisdiction.** Ask this one, because it is the question the demo corpus answers on
+both sides — most questions answer on one and abstain on the other, which is honest but makes a
+duller point:
+
+> What must appear on the label of a herbal product?
+
+Then use the toggle. The answer set swaps whole: India cites the Drugs and Cosmetics Act and its
+Rules at low confidence, International cites the UK food-supplements labelling and traditional
+herbal registration material at moderate. Different documents, different confidence, nothing
+blended, and no sentence carrying one jurisdiction's rule under the other's heading.
+
+Say why, because it is the strongest structural claim in the product: the Indian sources are not
+filtered out of the international answer. They are not in the store that was read.
 
 **4. Trigger an abstention deliberately.** Five that work; pick one, or walk them.
 
@@ -57,9 +69,38 @@ sides rather than picking one.
 the offer. It reaches a class in under eight questions, and the consequence panels carry pending
 markers because the graph decides what the product *is* and the corpus supplies what follows.
 
-**6. Say what is not real.** The passage bodies are placeholders — no document has been ingested.
+**6. Show the numbers.** Go to `/how-it-works` and scroll to the evaluation table. Every metric has
+a figure and a run date, published by `make evals` rather than typed. Jurisdiction purity, authority
+purity, citation validity and citation groundedness are all 100%.
+
+Then read the caveat above the table out loud, because it is the most honest thing on the site: the
+numbers come from a demonstration corpus of nine documents, most questions abstain for want of
+anything to answer from, and the abstention and coverage figures measure the machinery rather than
+the product. Three metrics say *not measured*, with the reason — writing 170 reference answers about
+what the law requires, from memory, is the fabrication this product exists to prevent.
+
+Point at the row reading 33.6%. A demo that hid it would be a worse demo.
+
+**7. Say what is not real.** The passage bodies are placeholders — no document has been ingested.
 Everything else on the path ran: the refusal, the search, the scoring, the citation check, the
 confidence and its reason. That is the honest line and it is stronger than pretending otherwise.
+
+## If there is time: what it stores
+
+Thirty seconds, from the footer link — `/privacy`, not in the header, because six destinations is
+the whole product surface.
+
+Two lists side by side. What is kept: a session id, a one-way fingerprint of the question, the
+passage ids, the versions, the outcome, the timings — each with a reason. What is not kept: the
+question text, the answer text, any note typed into the feedback box, any identity, any address.
+Those are not empty fields, they are not columns.
+
+The line worth saying: this is checkable rather than promised. Open `/audit` in the same browser —
+a development route, refused outside a development environment — and show the column list, printed
+from the schema that creates the table. There is no column for the question.
+
+Then press **Discard this session**. There is no account to close; what tied one row to another was
+the session id, it lived in that tab, and it is gone.
 
 ## If there is time: the corpus pipeline
 
@@ -89,8 +130,39 @@ changed" — the snapshot diff working — and the store now answers `/api/v1/re
 portal in that fixture carries a licence, a readable file and a working link template, and is still
 refused: the refusal is on how a source is accessed, not on whether a fetch would succeed.
 
+## The offline-safe fallback
+
+One command, and it needs nothing running but Node:
+
+    make dev-frontend-mock      # or: cd frontend && VITE_SAHAYAK_API=mock npm run dev
+
+The interface answers from the same fixture files the backend's fixture generator writes over, so
+steps 1 to 5 look identical. Say so out loud if you use it — the interface looking identical is the
+point of the switch, and letting an audience assume the API is up would be the one dishonest moment
+in the demo.
+
+What the fallback cannot show, and should not be attempted on it: the stage timings under the
+answer are the mock's, the access log is empty because there is no server to have recorded anything,
+and `/audit` will report that it could not reach the endpoint. If the API is down, do steps 1 to 5
+and the evaluation table — which is a static file and works either way — and stop there.
+
+## Rehearsal notes
+
+Run twice, end to end, before showing it:
+
+1. `make dev-backend` and `make dev-frontend` in two terminals. Wait for the footer to read
+   "No sources indexed yet" rather than "unavailable right now" — that line is the fastest check
+   that the proxy is working.
+2. Ask the step 1 question and let it finish. If the answer arrives without a status line, the
+   stream is not being read; restart the backend rather than talking over it.
+3. Walk every abstention in the table. All five must reach the state the row names — an abstention
+   that arrives with the wrong reason is worse than none, because the reason is the product.
+4. `make evals` before the demo, so the run date on `/how-it-works` is recent. It takes seconds.
+
 ## What is deliberately not in the script
 
-- Evaluation numbers. None have been produced; the site shows none. (Phase 13.)
+- Any evaluation number without its caveat. The purity figures are real; the coverage figures are
+  a measurement of a nine-document fixture, and quoting the first set without the second would be
+  the same overclaim the product is built to avoid.
 - Any claim about what a provision says. The demo passages are placeholders and every card says so.
 - Any suggestion that a source list is complete. `/sources` reports 0 of 37 documents fetched.

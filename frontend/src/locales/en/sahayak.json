@@ -135,6 +135,7 @@
     "title": "The answer could not be produced",
     "retry": "Try again",
     "unreachable": "The service could not be reached. Check that it is running, then try again. Nothing has been answered.",
+    "offline": "This device is not connected, so nothing was searched. Reconnect and try again — your question is still in the box.",
     "generation_unavailable": "Sources were found, but nothing is configured to write an answer from them. Nothing has been answered.",
     "rate_limited": "Too many questions in a short time. Wait a moment, then try again.",
     "request_too_large": "That question was too large to send. Shorten it and try again.",

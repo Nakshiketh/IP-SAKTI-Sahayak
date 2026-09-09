@@ -5,6 +5,7 @@ import {
   type QueryResult,
   type StageTiming,
 } from '@/services/query';
+import { isOffline, withBackoff } from '@/services/retry';
 
 /**
  * The API client. Reads a newline-delimited JSON stream.
@@ -80,25 +81,38 @@ async function* lines(body: ReadableStream<Uint8Array>): AsyncGenerator<string> 
 }
 
 export async function runHttpQuery(question: string, options: QueryOptions): Promise<QueryResult> {
+  // Said before trying, not after failing. A reader with no network gets the
+  // real reason immediately instead of three silent waits and a vaguer message.
+  if (isOffline()) {
+    throw new QueryError('offline', 'This device is not connected.');
+  }
+
   let response: Response;
   try {
-    response = await fetch('/api/v1/query', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        ...(options.sessionId ? { 'x-session-id': options.sessionId } : {}),
-      },
-      body: JSON.stringify({
-        text: question,
-        jurisdiction: options.jurisdiction,
-        product_class: options.productClass ?? 'undetermined',
-        language_out: options.languageOut ?? null,
-        session_id: options.sessionId ?? 'anonymous',
-      }),
-      ...(options.signal ? { signal: options.signal } : {}),
-    });
+    // Retried only while the request has not reached the server. Once it has,
+    // trying again would ask the same question twice — see `services/retry`.
+    response = await withBackoff(
+      () =>
+        fetch('/api/v1/query', {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            ...(options.sessionId ? { 'x-session-id': options.sessionId } : {}),
+          },
+          body: JSON.stringify({
+            text: question,
+            jurisdiction: options.jurisdiction,
+            product_class: options.productClass ?? 'undetermined',
+            language_out: options.languageOut ?? null,
+            session_id: options.sessionId ?? 'anonymous',
+          }),
+          ...(options.signal ? { signal: options.signal } : {}),
+        }),
+      { signal: options.signal },
+    );
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
+    if (isOffline()) throw new QueryError('offline', 'This device is not connected.');
     throw new QueryError('unreachable', 'The service could not be reached.');
   }
 

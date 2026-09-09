@@ -1,7 +1,11 @@
 # Security
 
-Full threat model and controls land in Phase 13. This file exists from Phase 0 so the threats are
-named before code is written against them.
+The threats this product has that an ordinary web application does not, the controls against each,
+and what is actually built rather than intended. Every claim below names the module that makes it
+true, so a reader can check rather than believe.
+
+Where a control is measured, the number is from the last `make evals` run and is on `/how-it-works`
+with its date. Where a control is partial, it says so.
 
 ## Threats specific to this product
 
@@ -32,7 +36,7 @@ rule already discounted.
 
 **Jurisdiction leakage.** An answer that mixes the Indian and an international position is wrong in
 a way that looks right. India and International are separate indexes and a retrieval call reads one
-of them. Measured as `jurisdiction_purity`, target 100%. (Phase 13 measures it.)
+of them. Measured as `jurisdiction_purity`, target 100%. **Currently 100% over 54 answered cases.**
 
 *Built.* `Namespaces` holds one store per jurisdiction and hands retrieval exactly one of them —
 there is no filter to forget. A cross-border question produces two routes, runs the pipeline twice
@@ -42,7 +46,7 @@ two jurisdictions return disjoint document sets for the same question.
 **Authority laundering.** Registry records are evidence, not law. If one appeared as a citation,
 the interface would present a filing as though it were a requirement. `citable_in_answers` is typed
 `Literal[False]` so a record cannot occupy a citation slot. Measured as `authority_purity`, target
-100%. (Phase 13 measures it.)
+100%. **Currently 100% over 54 answered cases.**
 
 *Built.* Layer 2 lives in `app/records`, in its own database, with no embedding column in its schema
 and no path from the query pipeline into its aggregate table. The generation context builder takes
@@ -82,8 +86,105 @@ count. It holds no question text, no answer text, no user identity and no addres
 hash of the question lets the same question be recognised without being recoverable. See
 `backend/app/services/audit.py` and the decision recording why.
 
-*Phase 13.* Output encoding review · CSP · dependency audit in CI · consent surfaces and the
-consent events the audit table already has a column for.
+### Content security policy
+
+Two policies, because there are two things being served and they need different ones.
+
+**The API** sends `default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'`
+on every response, including the ones no route wrote — a 404 from the router, a 429 from the
+limiter, a 500 from something unforeseen. It returns JSON and nothing else, so the most restrictive
+policy there is costs nothing: if a response from it is ever rendered as a document, there is
+nothing in it a policy this tight would allow to run. Alongside it go `X-Content-Type-Options:
+nosniff`, `Referrer-Policy: no-referrer` and a `Permissions-Policy` disabling camera, microphone,
+geolocation and payment — features this product has none of, named so a future dependency cannot
+quietly acquire one. See `SECURITY_HEADERS` in `backend/app/main.py`.
+
+The interactive documentation is the one document that process serves and it loads its viewer from
+a CDN, so it gets a policy of its own rather than an exemption from having one — and it is served
+only when `environment` is `development`, along with the OpenAPI schema. A list of every endpoint
+and its shape is a map of the attack surface.
+
+**The web app** gets `default-src 'none'` and then only what it needs: `script-src 'self'`,
+`img-src 'self' data:`, `font-src 'self'`, `connect-src 'self'`, `object-src` and `frame-src`
+`'none'`. It loads no third-party script, no web font, no analytics and no image from anywhere but
+itself, so almost every directive is a refusal.
+
+`style-src` carries `'unsafe-inline'`, which is a real weakening and is stated rather than hidden: a
+few components set a `style` attribute to carry an animation delay or a bar height, and a style
+attribute is inline style. A nonce would need a server rendering the document; this app is static
+files. Injected CSS can restyle a page and cannot run code, so the trade is taken and named.
+
+The policy is injected at build time only (`contentSecurityPolicy()` in `frontend/vite.config.ts`).
+The dev server needs inline script and a websocket for hot reloading, so a policy strict enough to
+be worth having would make the app undevelopable, and one loose enough to develop under is not the
+one that should ship.
+
+**What a deployment must add.** `frame-ancestors` is ignored in a `<meta>` element and has to be a
+real response header, so the static host serving `frontend/dist` must send:
+
+    Content-Security-Policy: frame-ancestors 'none'
+    X-Content-Type-Options: nosniff
+    Referrer-Policy: no-referrer
+    Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+Written here rather than in the app, because a policy that cannot work from a meta element must not
+be written there as though it did.
+
+### Output encoding
+
+React escapes interpolated text, and nothing in this interface uses `dangerouslySetInnerHTML` —
+including the answer, which is the one place tempting enough to matter. An answer is rendered from
+the structured claim-to-passage map as elements, never as a markup string, so a passage containing
+angle brackets is text on the page rather than an element in it. Retrieved passage text reaches the
+page the same way. This is not merely convention: there is no HTML-string path from the corpus to
+the DOM to review.
+
+### Dependency audit
+
+`.github/workflows/ci.yml` runs `pip-audit --strict` over the backend including its optional model
+client, and `npm audit --audit-level=high` over the frontend. On every push and pull request, and
+also weekly on a schedule — an audit that only runs on a push is an audit of the developer's
+activity rather than of the dependency set, and an advisory published against code nobody has
+touched is exactly the one that goes unnoticed.
+
+The same workflow enforces a bundle budget (`frontend/scripts/check-bundle.ts`) and greps for
+competition and endorsement wording (`scripts/check-affiliation.sh`).
+
+### Consent
+
+A source marked `user_credentialed` is never fetched by this product, under any flag. It is reached
+at query time through the reader's own subscription, which means the reader — not this product — is
+the one paying for and identified by the access. Nothing goes out under those credentials until the
+reader has agreed, about that specific source, in a sentence that names it. There is no blanket
+"allow subscription sources": a reader cannot see the edges of a blanket.
+
+The dialog (`frontend/src/components/privacy/ConsentDialog.tsx`) names the source and its publisher,
+says whose credentials are used and that this product never sees them, says how far the agreement
+reaches, and says it is recorded. Nothing is pre-selected and closing it agrees to nothing. A grant
+the server refused is never reported as one.
+
+Grants and withdrawals are rows in the audit log, so a withdrawal is a second row rather than the
+deletion of the first — the reader's access log has to be able to show that consent was held between
+two dates, and a store that erased the grant could not. `/privacy` shows that log back with the
+times the server recorded. See `backend/app/services/consent.py`.
+
+No source in the current set is credentialed, and the privacy page says so from the manifest rather
+than from a sentence somebody typed, so it stops saying it the moment one is added.
+
+### The audit viewer
+
+`/audit` prints the raw table, with the column list read from the schema that creates it — so the
+claim that there is no column for the question text can be checked rather than believed. It is
+gated twice: the route is not registered in a production build, and the endpoint refuses to serve
+outside a development environment. Either alone would be a route whose safety rests on one flag.
+
+### What is not claimed
+
+No authentication, authorisation or multi-tenancy: this product has no accounts, so it has none of
+those and does not pretend to. No protection against a determined caller: the rate limit is keyed on
+a client-supplied session id and is trivially rotated. No secret management beyond a gitignored
+`.env`. A deployment exposed to the public internet needs a gateway in front of this, and the honest
+statement of that is here rather than in a paragraph implying otherwise.
 
 ## Secrets
 

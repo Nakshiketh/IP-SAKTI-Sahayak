@@ -21,6 +21,15 @@ function streamOf(lines: string[]): ReadableStream<Uint8Array> {
   });
 }
 
+/**
+ * `navigator.onLine` is a getter, so it is redefined rather than assigned. Reset
+ * to true after every test — a stray false would make later tests pass for the
+ * wrong reason, by short-circuiting before any fetch was attempted.
+ */
+function setOnline(value: boolean) {
+  Object.defineProperty(window.navigator, 'onLine', { configurable: true, get: () => value });
+}
+
 function respond(lines: string[], init: ResponseInit = {}) {
   const response = new Response(streamOf(lines), { status: 200, ...init });
   vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response));
@@ -55,7 +64,10 @@ const RESULT = {
   refusal: null,
 };
 
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  setOnline(true);
+});
 
 describe('reading the stream', () => {
   it('reports each stage as it finishes, before the result', async () => {
@@ -150,6 +162,46 @@ describe('failing rather than answering from half a stream', () => {
     await expect(runHttpQuery('anything', { jurisdiction: 'IN' })).rejects.toBeInstanceOf(
       DOMException,
     );
+  });
+
+  it('says the device is offline before trying, rather than after failing', async () => {
+    setOnline(false);
+    const fetchSpy = vi.fn();
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await expect(runHttpQuery('anything', { jurisdiction: 'IN' })).rejects.toMatchObject({
+      code: 'offline',
+    });
+    // Nothing was attempted. Three silent waits and a vaguer message would be a
+    // worse answer than the real reason, given straight away.
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it('tries again when the request never reached the server', async () => {
+    const fetchSpy = vi
+      .fn()
+      .mockRejectedValueOnce(new TypeError('Failed to fetch'))
+      .mockResolvedValue(new Response(streamOf([`${JSON.stringify(RESULT)}\n`]), { status: 200 }));
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await expect(runHttpQuery('anything', { jurisdiction: 'IN' })).resolves.toMatchObject({
+      queryId: 'q1',
+    });
+    expect(fetchSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not try again when the server itself failed', async () => {
+    // A 500 arrived, so the server saw the question. Asking again would ask it
+    // twice: a second audit row, and a second billed call where one is made.
+    const fetchSpy = vi
+      .fn()
+      .mockResolvedValue(new Response(JSON.stringify({ code: 'unknown' }), { status: 500 }));
+    vi.stubGlobal('fetch', fetchSpy);
+
+    await expect(runHttpQuery('anything', { jurisdiction: 'IN' })).rejects.toBeInstanceOf(
+      QueryError,
+    );
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 });
 

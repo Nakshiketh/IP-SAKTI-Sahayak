@@ -1,6 +1,6 @@
 # Evaluation report
 
-Run at 2026-09-09T11:10:42+00:00.
+Run at 2026-09-09T12:21:25+00:00.
 
 **These numbers were measured against a demonstration corpus of 9 illustrative documents, not against the real source set.** No document from `corpus/manifest.json` has been ingested, because none has a verified source URL. So most questions here abstain for want of anything to answer from, and the abstention and coverage figures below measure the machinery rather than the product's coverage. The purity and groundedness figures are meaningful now; the coverage figures will only become meaningful once documents are ingested.
 
@@ -32,8 +32,8 @@ Run at 2026-09-09T11:10:42+00:00.
 | `language_detection_accuracy` | 100.0% (25/25) |  | Script detection on the non-English cases. Devanagari cannot separate Hindi from Marathi, so either counts for either — the detector reports that ambiguity rather than guessing. |
 | `records_offered` | 100.0% (25/25) |  | Cases where records were expected beside the answer and appeared. |
 | `records_do_not_rescue` | 100.0% (15/15) | 100% | Cases where a record was present and the corpus should decline: the system still declined. |
-| `latency_p50` | 4 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
-| `latency_p95` | 7 ms |  |  |
+| `latency_p50` | 3 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
+| `latency_p95` | 6 ms |  |  |
 | `errors` | 0 |  | Cases that raised rather than answering or declining. Should be zero. |
 | `answer_accuracy` | not measured |  | No reference answers exist. Writing them means stating what a source says, and no source has been read — see evals/gold/README.md. |
 | `citation_correctness` | not measured |  | Whether a cited passage supports its claim needs a judge, human or model. citation_groundedness below measures what can be checked mechanically. |
