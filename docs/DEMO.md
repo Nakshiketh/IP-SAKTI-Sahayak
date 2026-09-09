@@ -1,10 +1,18 @@
 # Demo script
 
 Five minutes, with the exact questions, because retrieval is real and a question that reaches the
-wrong state on stage is a question that was not rehearsed. Rehearsed twice against the running app;
-the offline-safe fallback is at the bottom and takes one command.
+wrong state on stage is a question that was not rehearsed. The offline-safe fallback is at the bottom
+and takes one command. Nothing in it requires a manual step or a key.
 
-Nothing in it requires a manual step or a key.
+**How far this has been verified.** Every question below was run against the running API and reached
+the state this script says it reaches: step 1 answers at moderate confidence over two Indian
+documents, step 3 answers on both sides with disjoint document sets, and all five abstentions arrive
+with the reason named in the table. The endpoints behind steps 6 and 7 were checked the same way —
+the audit table holds no column for the question, and the security headers are on every response.
+
+What has *not* been walked is the interface itself, click by click, in a browser. The pages are
+covered by the test suite, including an axe pass on each, but a test rendering a page is not a person
+using one. Do the run in "Rehearsal notes" below before showing this to anybody.
 
 ## Running it
 
