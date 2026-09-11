@@ -95,9 +95,12 @@ on every response, including the ones no route wrote — a 404 from the router, 
 limiter, a 500 from something unforeseen. It returns JSON and nothing else, so the most restrictive
 policy there is costs nothing: if a response from it is ever rendered as a document, there is
 nothing in it a policy this tight would allow to run. Alongside it go `X-Content-Type-Options:
-nosniff`, `Referrer-Policy: no-referrer` and a `Permissions-Policy` disabling camera, microphone,
-geolocation and payment — features this product has none of, named so a future dependency cannot
-quietly acquire one. See `SECURITY_HEADERS` in `backend/app/main.py`.
+nosniff`, `Referrer-Policy: no-referrer` and a `Permissions-Policy` that allows the camera to this
+origin only — badge sign-in scans with it — and disables microphone, geolocation and payment,
+features this product has none of, named so a future dependency cannot quietly acquire one. See
+`SECURITY_HEADERS` in `backend/app/main.py`. Camera frames go to `/api/v1/auth/badge`, are compared
+in memory with the one authorised QR code's module grid (`backend/app/core/badge.py`) and are never
+stored. No route accepts a typed or decoded QR string.
 
 The interactive documentation is the one document that process serves and it loads its viewer from
 a CDN, so it gets a policy of its own rather than an exemption from having one — and it is served
@@ -180,8 +183,15 @@ outside a development environment. Either alone would be a route whose safety re
 
 ### What is not claimed
 
-No authentication, authorisation or multi-tenancy: this product has no accounts, so it has none of
-those and does not pretend to. No protection against a determined caller: the rate limit is keyed on
+Accounts exist, with a sign-in in front of the site, and they are the front door rather than a
+security boundary: tokens are HMAC-signed with a per-process secret, with no refresh, revocation or
+rotation. The one place an account is a boundary is the invention analyst: `/api/v1/analyst/*`
+requires a valid token, and a saved analysis (`data/analyses.sqlite3`, holding the inventor's own
+words and findings) is read, written and deleted only through the account that created it — another
+account gets a 404, not a 403, so it cannot even learn the analysis exists. If a hosted model is
+configured as the analyst's reader, message text goes to that provider; the reader's output is
+checked against the message before it is applied. No multi-tenancy beyond that, and no protection
+against a determined caller: the rate limit is keyed on
 a client-supplied session id and is trivially rotated. No secret management beyond a gitignored
 `.env`. A deployment exposed to the public internet needs a gateway in front of this, and the honest
 statement of that is here rather than in a paragraph implying otherwise.

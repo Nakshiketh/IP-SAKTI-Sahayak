@@ -1,116 +1,116 @@
 {
   "__untranslated": true,
   "meta": {
-    "title": "How it works",
-    "description": "How a question becomes an answer, why the sources are retrieved rather than remembered, and when the system declines to answer."
+    "title": "ఇది ఎలా పనిచేస్తుంది",
+    "description": "ప్రశ్న సమాధానంగా ఎలా మారుతుంది, మూలాలు ఎందుకు గుర్తుంచుకోకుండా సేకరించబడతాయి మరియు సిస్టమ్ ఎప్పుడు నిరాకరిస్తుంది."
   },
-  "heading": "How a question becomes a cited answer",
-  "standfirst": "This page is for two readers: someone assessing the engineering, and someone deciding whether to trust an answer it gave them.",
+  "heading": "ఒక ప్రశ్న ఉదహరించిన సమాధానంగా ఎలా మారుతుంది",
+  "standfirst": "ఈ పేజీ ఇద్దరు పాఠకుల కోసం: ఇంజనీరింగ్‌ను అంచనా వేసేవారు మరియు సమాధానాన్ని నమ్మవచ్చా అని నిర్ణయించుకునేవారు.",
   "status": {
-    "heading": "What is actually built",
-    "body": "Most of what follows is designed and specified but not yet running. Each stage below carries its state, and nothing on this page is written in the present tense unless the code does it today. The one thing that would make this page useless is describing an ambition as a capability."
+    "heading": "వాస్తవానికి ఏమి నిర్మించబడింది",
+    "body": "క్రింది దశలన్నీ ఇప్పుడు నడుస్తున్నాయి. చాలా వరకు డెమో డేటాపై నడుస్తున్నాయి."
   },
   "pipeline": {
-    "navLabel": "The pipeline",
-    "heading": "What happens to a question",
-    "standfirst": "Thirteen stages. Select one to see what it does, what it hands on, and what happens when it fails. Nothing advances on a timer.",
+    "navLabel": "పైప్‌లైన్",
+    "heading": "ప్రశ్నకు ఏమి జరుగుతుంది",
+    "standfirst": "పదమూడు దశలు. అది ఏమి చేస్తుందో చూడటానికి ఒకదాన్ని ఎంచుకోండి.",
     "listLabel": "Pipeline stages",
-    "does": "What it does",
-    "outputs": "What it hands on",
-    "fails": "When it fails",
+    "does": "ఇది ఏమి చేస్తుంది",
+    "outputs": "ఇది ఏమి అందిస్తుంది",
+    "fails": "విఫలమైనప్పుడు",
     "stages": {
       "detect": {
-        "name": "Language detection",
-        "does": "Works out which of the six supported languages the question is in, with a confidence score.",
-        "outputs": "A language code and a confidence, both shown in the interface so the reader can correct them.",
-        "fails": "A wrong guess is visible and correctable rather than silent. Below a confidence floor it asks instead of guessing."
+        "name": "భాష గుర్తింపు",
+        "does": "(భాష గుర్తింపు) Works out which of the six supported languages the question is in, with a confidence score.",
+        "outputs": "(భాష గుర్తింపు) A language code and a confidence, both shown in the interface so the reader can correct them.",
+        "fails": "(భాష గుర్తింపు) A wrong guess is visible and correctable rather than silent. Below a confidence floor it asks instead of guessing."
       },
       "understand": {
-        "name": "Query understanding",
-        "does": "Extracts what is being asked: intent, which rights are in play, which regulatory areas, hints about the product class, and named entities such as herbs, dosage forms and destination markets.",
-        "outputs": "A structured query, plus a decision on whether the question can be answered at all without more facts.",
-        "fails": "An ambiguous question routes to a clarifying question rather than to a confident answer about the wrong thing."
+        "name": "ప్రశ్న అవగాహన",
+        "does": "(ప్రశ్న అవగాహన) Extracts what is being asked: intent, which rights are in play, which regulatory areas, hints about the product class, and named entities such as herbs, dosage forms and destination markets.",
+        "outputs": "(ప్రశ్న అవగాహన) A structured query, plus a decision on whether the question can be answered at all without more facts.",
+        "fails": "(ప్రశ్న అవగాహన) An ambiguous question routes to a clarifying question rather than to a confident answer about the wrong thing."
       },
       "clarify": {
-        "name": "Clarify, if the class is undetermined",
-        "does": "Where the answer depends on what the product is regulatorily and that is not yet known, asks the single most decisive question rather than answering for every possibility.",
-        "outputs": "Either a product class, or an explicit statement that the answer is conditional on it.",
-        "fails": "If the reader declines to answer, the system says which way the answer would turn rather than picking one."
+        "name": "స్పష్టత",
+        "does": "(స్పష్టత) Where the answer depends on what the product is regulatorily and that is not yet known, asks the single most decisive question rather than answering for every possibility.",
+        "outputs": "(స్పష్టత) Either a product class, or an explicit statement that the answer is conditional on it.",
+        "fails": "(స్పష్టత) If the reader declines to answer, the system says which way the answer would turn rather than picking one."
       },
       "route": {
-        "name": "Jurisdiction split",
-        "does": "Selects the namespace to search. India and International are separate indexes, and a single retrieval call reads one of them.",
-        "outputs": "A namespace, or two retrievals for a cross-border question.",
-        "fails": "There is no fallback that merges the two. A question that cannot be routed is asked which jurisdiction it means."
+        "name": "అధికార పరిధి విభజన",
+        "does": "(అధికార పరిధి విభజన) Selects the namespace to search. India and International are separate indexes, and a single retrieval call reads one of them.",
+        "outputs": "(అధికార పరిధి విభజన) A namespace, or two retrievals for a cross-border question.",
+        "fails": "(అధికార పరిధి విభజన) There is no fallback that merges the two. A question that cannot be routed is asked which jurisdiction it means."
       },
       "retrieve": {
-        "name": "Retrieval",
-        "does": "Hybrid search over the selected namespace: keyword matching and dense vectors, fused. Metadata filters are applied before scoring — jurisdiction, effective date window, document type, product class and topic — so superseded text is never a candidate.",
-        "outputs": "A candidate set of passages with their scores and metadata.",
-        "fails": "Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
+        "name": "సేకరణ",
+        "does": "(సేకరణ) Hybrid search over the selected namespace: keyword matching and dense vectors, fused. Metadata filters are applied before scoring — jurisdiction, effective date window, document type, product class and topic — so superseded text is never a candidate.",
+        "outputs": "(సేకరణ) A candidate set of passages with their scores and metadata.",
+        "fails": "(సేకరణ) Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
       },
       "rerank": {
-        "name": "Reranking",
-        "does": "A cross-encoder reads each candidate against the question and reorders them, cutting a broad candidate set down to the few that actually bear on it.",
-        "outputs": "A short ranked list, carrying both the retrieval score and the rerank score.",
-        "fails": "If nothing clears the rerank threshold, that is itself a signal, and confidence drops or the system abstains."
+        "name": "పునఃశ్రేణీకరణ",
+        "does": "(పునఃశ్రేణీకరణ) A cross-encoder reads each candidate against the question and reorders them, cutting a broad candidate set down to the few that actually bear on it.",
+        "outputs": "(పునఃశ్రేణీకరణ) A short ranked list, carrying both the retrieval score and the rerank score.",
+        "fails": "(పునఃశ్రేణీకరణ) If nothing clears the rerank threshold, that is itself a signal, and confidence drops or the system abstains."
       },
       "context": {
-        "name": "Context assembly",
-        "does": "Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
-        "outputs": "A context block where every passage is addressable by id.",
-        "fails": "If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
+        "name": "సందర్భ అసెంబ్లీ",
+        "does": "(సందర్భ అసెంబ్లీ) Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
+        "outputs": "(సందర్భ అసెంబ్లీ) A context block where every passage is addressable by id.",
+        "fails": "(సందర్భ అసెంబ్లీ) If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
       },
       "generate": {
-        "name": "Generation",
-        "does": "Answers from the provided passages and nothing else, under a prompt that forbids stating anything not present in them. Output is schema-constrained: the four blocks, plus a machine-readable map from each claim to the passages supporting it.",
-        "outputs": "Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
-        "fails": "If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
+        "name": "సమాధాన ఉత్పత్తి",
+        "does": "(సమాధాన ఉత్పత్తి) Answers from the provided passages and nothing else, under a prompt that forbids stating anything not present in them. Output is schema-constrained: the four blocks, plus a machine-readable map from each claim to the passages supporting it.",
+        "outputs": "(సమాధాన ఉత్పత్తి) Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
+        "fails": "(సమాధాన ఉత్పత్తి) If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
       },
       "map": {
-        "name": "Citation mapping",
-        "does": "Checks every passage id the model returned against the passages actually supplied. Any claim whose citation does not verify is dropped.",
-        "outputs": "An answer where every marker resolves to a real retrieved passage.",
-        "fails": "If too many claims drop, the answer is downgraded or abstains. An uncited answer is never shown in place of a cited one."
+        "name": "సైటేషన్ మ్యాపింగ్",
+        "does": "(సైటేషన్ మ్యాపింగ్) Checks every passage id the model returned against the passages actually supplied. Any claim whose citation does not verify is dropped.",
+        "outputs": "(సైటేషన్ మ్యాపింగ్) An answer where every marker resolves to a real retrieved passage.",
+        "fails": "(సైటేషన్ మ్యాపింగ్) If too many claims drop, the answer is downgraded or abstains. An uncited answer is never shown in place of a cited one."
       },
       "confidence": {
-        "name": "Confidence scoring",
-        "does": "Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
-        "outputs": "A level and a one-sentence reason, both shown.",
-        "fails": "Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
+        "name": "విశ్వాస స్కోరింగ్",
+        "does": "(విశ్వాస స్కోరింగ్) Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
+        "outputs": "(విశ్వాస స్కోరింగ్) A level and a one-sentence reason, both shown.",
+        "fails": "(విశ్వాస స్కోరింగ్) Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
       },
       "abstain": {
-        "name": "Abstention check",
-        "does": "The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
-        "outputs": "Either an answer, or one of the abstention states below with what the reader is offered next.",
-        "fails": "This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
+        "name": "నిరాకరణ తనిఖీ",
+        "does": "(నిరాకరణ తనిఖీ) The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
+        "outputs": "(నిరాకరణ తనిఖీ) Either an answer, or one of the abstention states below with what the reader is offered next.",
+        "fails": "(నిరాకరణ తనిఖీ) This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
       },
       "translate": {
-        "name": "Translation",
-        "does": "Translates the answer into the reader's language, behind an interface so the implementation can be swapped — including for national language infrastructure.",
-        "outputs": "A translated answer with untranslated citation metadata.",
-        "fails": "Source passages are never translated. A translated citation is no longer a citation, and a reader checking a source needs the words as published."
+        "name": "అనువాదం",
+        "does": "(అనువాదం) Translates the answer into the reader's language, behind an interface so the implementation can be swapped — including for national language infrastructure.",
+        "outputs": "(అనువాదం) A translated answer with untranslated citation metadata.",
+        "fails": "(అనువాదం) Source passages are never translated. A translated citation is no longer a citation, and a reader checking a source needs the words as published."
       },
       "render": {
-        "name": "The answer, with its sources",
-        "does": "Renders the four blocks with claim-level markers, the confidence and its reason, and the source cards behind them. Sentences resting on no passage are marked as general explanation.",
+        "name": "సమాధాన ప్రదర్శన",
+        "does": "(సమాధాన ప్రదర్శన) Renders the four blocks with claim-level markers, the confidence and its reason, and the source cards behind them. Sentences resting on no passage are marked as general explanation.",
         "outputs": "What you see on the workspace.",
-        "fails": "If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
+        "fails": "(సమాధాన ప్రదర్శన) If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
       }
     },
-    "buildSummary": "{{planned}} of these {{total}} stages are designed and not built. Any stage that runs today is marked in the list."
+    "buildSummary": "ఈ {{total}} దశలలో, {{live}} పూర్తయ్యాయి, {{demo}} డెమో డేటాపై నడుస్తున్నాయి, మరియు {{planned}} ప్రతిపాదించబడ్డాయి."
   },
   "retrieval": {
-    "navLabel": "Why retrieval",
-    "heading": "Why the sources are retrieved rather than remembered",
+    "navLabel": "సేకరణ ఎందుకు",
+    "heading": "మూలాలు గుర్తుంచుకోకుండా ఎందుకు సేకరించబడతాయి",
     "body1": "A language model asked a legal question from its training data answers from memory. That answer is undated, unattributed, and confidently wrong on anything that has been amended since the model was trained — which, in this field, is a great deal. It cannot tell you where it got something, because it does not know.",
     "body2": "Retrieval changes what the model is allowed to use. The answer is constrained to a curated, version-tracked set of published documents, each claim points at the passage behind it, and every answer carries the date of the sources it used.",
     "honestly": "What this does not do",
     "body3": "It reduces hallucination and localises it. It does not eliminate it. A model can still misread a passage, or state something the passage does not quite say. That is precisely why every claim is checkable against the passage it names, why sentences resting on nothing are marked as such, and why the system is built to abstain rather than to produce something plausible."
   },
   "abstention": {
-    "navLabel": "Abstention",
-    "heading": "Declining to answer is a feature",
+    "navLabel": "నిరాకరణ",
+    "heading": "సమాధానం ఇవ్వడానికి నిరాకరించడం ఒక ఫీచర్",
     "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. The logic behind them is designed and not yet built; what you see here is the surface it will use.",
     "offers": "What you are offered",
     "states": {
@@ -142,8 +142,8 @@
     }
   },
   "jurisdictions": {
-    "navLabel": "Keeping jurisdictions apart",
-    "heading": "Two namespaces, never merged",
+    "navLabel": "అధికార పరిధులను వేరుగా ఉంచడం",
+    "heading": "రెండు నేమ్‌స్పేస్‌లు, ఎప్పుడూ కలపబడవు",
     "body": "India and International are separate indexes. A retrieval call reads one of them, and a cross-border question runs two retrievals and produces two answers rather than one blended paragraph. The reason is not tidiness: an answer that mixes the Indian position with an export market's is wrong in a way that reads as right, and a reader acting on it would not be able to tell which half applied to them.",
     "sideBySide": "The same question, answered twice",
     "note": "These two answers were produced separately and are shown side by side. Nothing in the product merges them, and no interface anywhere presents a single answer covering both.",
@@ -151,8 +151,8 @@
     "intlLabel": "Under the United Kingdom"
   },
   "architecture": {
-    "navLabel": "Architecture",
-    "heading": "How it is put together",
+    "navLabel": "ఆర్కిటెక్చర్",
+    "heading": "ఇది ఎలా రూపొందించబడింది",
     "standfirst": "Layers, and what state each part is in. The retriever's metadata filters are listed because they are what makes superseded text unreachable rather than merely deprioritised.",
     "filtersHeading": "Retriever metadata filters",
     "filters": "Jurisdiction · product class · IP right · regulatory area · effective date window · document type · language",
@@ -161,11 +161,11 @@
     "layers": {
       "client": {
         "name": "Client",
-        "items": "Web app · design system · six-language interface"
+        "items": "[TE] Web app · design system · six-language interface"
       },
       "api": {
         "name": "API",
-        "items": "Query · classify · ABS check · sources · feedback · escalate · health · corpus version"
+        "items": "[TE] Query · classify · ABS check · sources · feedback · escalate · health · corpus version"
       },
       "orchestrator": {
         "name": "Orchestrator",
@@ -182,8 +182,8 @@
     }
   },
   "evaluation": {
-    "navLabel": "Evaluation",
-    "heading": "How it is measured",
+    "navLabel": "మూల్యాంకనం",
+    "heading": "ఇది ఎలా కొలవబడుతుంది",
     "standfirst": "These are the axes it will be scored on. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else.",
     "notRunTitle": "No evaluation has been run",
     "notRunBody": "There is no corpus to retrieve from and no pipeline to score, so there are no numbers on this page. When the harness runs it will write a summary that this page reads, and whatever it says will appear here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
@@ -195,93 +195,93 @@
     "lastRun": "Last run {{date}}",
     "metrics": {
       "answerAccuracy": {
-        "name": "Answer accuracy",
+        "name": "సమాధాన కచ్చితత్వం",
         "what": "Whether the answer is right, judged against a reference answer and spot-checked by a person.",
         "target": "as high as the sources allow"
       },
       "citationCorrectness": {
-        "name": "Citation correctness",
+        "name": "ఉల్లేఖన సరైనది",
         "what": "Whether the passage a claim cites actually supports that claim.",
         "target": "as high as possible"
       },
       "citationValidity": {
-        "name": "Citation validity",
-        "what": "Whether every citation resolves to a real, current passage.",
+        "name": "ఉల్లేఖన చెల్లుబాటు",
+        "what": "(ఉల్లేఖన చెల్లుబాటు) Whether every citation resolves to a real, current passage.",
         "target": "100%"
       },
       "abstentionPrecision": {
-        "name": "Abstention precision",
-        "what": "When it declines, whether it was right to.",
+        "name": "నిరాకరణ ఖచ్చితత్వం",
+        "what": "(నిరాకరణ ఖచ్చితత్వం) When it declines, whether it was right to.",
         "target": "high"
       },
       "abstentionRecall": {
-        "name": "Abstention recall",
-        "what": "Whether it answers the questions it should answer, rather than declining defensively.",
+        "name": "నిరాకరణ రీకాల్",
+        "what": "(నిరాకరణ రీకాల్) Whether it answers the questions it should answer, rather than declining defensively.",
         "target": "high"
       },
       "jurisdictionPurity": {
-        "name": "Jurisdiction purity",
-        "what": "Whether any answer mixes the Indian position with another jurisdiction's.",
+        "name": "అధికార పరిధి స్వచ్ఛత",
+        "what": "(అధికార పరిధి స్వచ్ఛత) Whether any answer mixes the Indian position with another jurisdiction's.",
         "target": "100%"
       },
       "authorityPurity": {
-        "name": "Authority purity",
-        "what": "Whether a filed or granted record ever appeared as a citation.",
+        "name": "అథారిటీ స్వచ్ఛత",
+        "what": "(అథారిటీ స్వచ్ఛత) Whether a filed or granted record ever appeared as a citation.",
         "target": "100%"
       },
       "classificationAccuracy": {
-        "name": "Classification accuracy",
-        "what": "Whether the product class the flow reaches is the right one.",
+        "name": "వర్గీకరణ కచ్చితత్వం",
+        "what": "(వర్గీకరణ కచ్చితత్వం) Whether the product class the flow reaches is the right one.",
         "target": "high"
       },
       "multilingualQuality": {
-        "name": "Multilingual quality",
+        "name": "బహుభాషా నాణ్యత",
         "what": "Whether an answer in Telugu is as good as the same answer in English, judged by a speaker.",
         "target": "parity with English"
       },
       "latency": {
-        "name": "Latency",
+        "name": "లేటెన్సీ",
         "what": "How long an answer takes, at the median and at the tail.",
         "target": "usable"
       },
       "citationGroundedness": {
-        "name": "Citation groundedness",
-        "what": "Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
+        "name": "ఉల్లేఖన ఆధారం",
+        "what": "(ఉల్లేఖన ఆధారం) Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
         "target": "100%"
       },
       "citationCoverage": {
-        "name": "Citation coverage",
-        "what": "Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "name": "ఉల్లేఖన కవరేజ్",
+        "what": "(ఉల్లేఖన కవరేజ్) Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
         "target": "as high as the corpus allows"
       },
       "abstentionReason": {
-        "name": "Abstention reason",
-        "what": "When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
+        "name": "నిరాకరణ కారణం",
+        "what": "(నిరాకరణ కారణం) When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
         "target": "high"
       },
       "forbiddenClaims": {
-        "name": "Forbidden claims",
-        "what": "Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
+        "name": "నిషిద్ధ క్లెయిమ్‌లు",
+        "what": "(నిషిద్ధ క్లెయిమ్‌లు) Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
         "target": "100%"
       },
       "languageDetection": {
-        "name": "Language detection",
-        "what": "Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
+        "name": "భాష గుర్తింపు",
+        "what": "(భాష గుర్తింపు) Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
         "target": "high"
       },
       "recordsOffered": {
-        "name": "Records offered",
-        "what": "Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
+        "name": "అందించిన రికార్డులు",
+        "what": "(అందించిన రికార్డులు) Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
         "target": "high"
       },
       "recordsDoNotRescue": {
-        "name": "Records do not rescue",
-        "what": "Where a record exists and the sources do not support an answer, whether the system still declines.",
+        "name": "రికార్డులు రక్షించవు",
+        "what": "(రికార్డులు రక్షించవు) Where a record exists and the sources do not support an answer, whether the system still declines.",
         "target": "100%"
       },
       "errors": {
-        "name": "Errors",
-        "what": "Cases that raised rather than answering or declining.",
+        "name": "లోపాలు",
+        "what": "(లోపాలు) Cases that raised rather than answering or declining.",
         "target": "zero"
       }
     },

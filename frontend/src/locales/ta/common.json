@@ -2,136 +2,203 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "ஆயுர்வேதம், அறிவுசார் சொத்து மற்றும் ஒழுங்குமுறை"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "முதன்மை",
+    "home": "முகப்பு",
+    "sahayak": "சஹாயக்கைக் கேளுங்கள்",
+    "covered": "உள்ளடக்கப்பட்டவை",
+    "howItWorks": "இது எவ்வாறு செயல்படுகிறது",
+    "sources": "ஆதாரங்கள்",
+    "about": "பற்றி"
   },
   "cta": {
-    "ask": "Ask Sahayak"
+    "ask": "சஹாயக்கைக் கேளுங்கள்",
+    "check": "என் தயாரிப்பைச் சரிபார்க்கவும்"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "மெனு",
+    "close": "மெனுவை மூடு",
+    "title": "மெனு"
   },
   "language": {
-    "label": "Language",
-    "changed": "Language changed to {{language}}"
+    "label": "மொழி",
+    "changed": "மொழி {{language}} என மாற்றப்பட்டது"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "உள்ளடக்கத்திற்குச் செல்லவும்",
   "footer": {
-    "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
-    "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
-    "sourceMetaEmpty": "No sources indexed yet · v{{version}}",
-    "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "disclaimer": "IP-SAKTI Sahayak வெளியிடப்பட்ட சட்ட மற்றும் ஒழுங்குமுறை ஆதாரங்களிலிருந்து பெறப்பட்ட தகவல்களை வழங்குகிறது. இது சட்ட ஆலோசனையை வழங்கவோ, அறிவுசார் சொத்துரிமைகளை வழங்கவோ, தயாரிப்புகளுக்கு ஒப்புதல் அளிக்கவோ அல்லது எந்தவொரு ஒழுங்குமுறை அதிகாரியையும் மாற்றவோ செய்யாது. முக்கியமான முடிவுகளை தற்போதைய அதிகாரப்பூர்வ ஆதாரங்கள் மற்றும் தகுதியான நிபுணரிடம் சரிபார்க்கவும்.",
+    "sourceMeta": "{{date}} நிலவரப்படி ஆதாரங்கள் · {{count}} ஆவணங்கள் · v{{version}}",
+    "sourceMetaEmpty": "v{{version}}",
+    "sourceMetaUnavailable": "ஆதாரத் தகவல் இப்போது கிடைக்கவில்லை.",
+    "privacy": "இந்த தயாரிப்பு எதைச் சேமிக்கிறது"
   },
   "notFound": {
-    "title": "There is no page here",
-    "body": "The address may be mistyped, or the page may have been renamed.",
-    "action": "Go to the homepage"
+    "title": "இங்கு பக்கம் எதுவும் இல்லை",
+    "body": "முகவரி தவறாக உள்ளிடப்பட்டிருக்கலாம் அல்லது பக்கம் மறுபெயரிடப்பட்டிருக்கலாம்.",
+    "action": "முகப்புப் பக்கத்திற்குச் செல்லவும்"
   },
   "boundary": {
-    "title": "This page stopped working",
-    "body": "Something in the interface failed while drawing this page. What went wrong is in the browser console; nothing has been sent anywhere.",
-    "notAnAbstention": "This is the interface breaking, not the product declining to answer. No question was searched and no answer was withheld.",
-    "retry": "Try this page again"
+    "title": "இந்தப் பக்கம் செயல்படுவதை நிறுத்திவிட்டது",
+    "body": "இந்தப் பக்கத்தை வரையும்போது இடைமுகத்தில் ஏதோ தோல்வியடைந்தது. என்ன தவறு நடந்தது என்பது உலாவி கன்சோலில் உள்ளது; எதுவும் எங்கும் அனுப்பப்படவில்லை.",
+    "notAnAbstention": "இது இடைமுக முறிவு, தயாரிப்பு பதிலளிக்க மறுப்பது அல்ல. எந்தக் கேள்வியும் தேடப்படவில்லை, எந்தப் பதிலும் நிறுத்தி வைக்கப்படவில்லை.",
+    "retry": "இந்தப் பக்கத்தை மீண்டும் முயற்சிக்கவும்"
   },
   "offline": {
-    "title": "This device is not connected",
-    "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
+    "title": "இந்த சாதனம் இணைக்கப்படவில்லை",
+    "body": "ஏற்கனவே திறக்கப்பட்ட பக்கங்கள் இன்னும் செயல்படுகின்றன. சேவை தேவைப்படும் எதுவும் — கேள்வி கேட்பது, மூலப் பகுதியைத் திறப்பது — நீங்கள் திரும்பும் வரை காத்திருக்கும்."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "மூடு",
+    "remove": "நீக்கு"
   },
   "record": {
-    "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
-    "recordType": "Record type",
-    "applicant": "Applicant",
-    "status": "Status"
+    "notAuthority": "தாக்கல் செய்யப்பட்ட அல்லது வழங்கப்பட்ட பதிவு — தாக்கல் செய்யப்பட்டதற்கான சான்று, சட்டத்தின் அறிக்கை அல்ல. ஸ்னாப்ஷாட் {{date}}.",
+    "recordType": "பதிவு வகை",
+    "applicant": "விண்ணப்பதாரர்",
+    "status": "நிலை"
   },
   "confidence": {
-    "high": "High confidence",
-    "moderate": "Moderate confidence",
-    "low": "Low confidence",
-    "abstain": "Not answered",
-    "meter": "{{label}}: {{filled}} of {{total}}",
-    "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
-    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document.",
+    "high": "அதிக நம்பிக்கை",
+    "moderate": "மிதமான நம்பிக்கை",
+    "low": "குறைந்த நம்பிக்கை",
+    "abstain": "பதில் அளிக்கப்படவில்லை",
+    "meter": "{{label}}: {{total}} இல் {{filled}}",
+    "demoReason_one": "{{count}} விளக்கக் குறிப்பின் அடிப்படையில்.",
+    "demoReason_other": "{{count}} விளக்கக் குறிப்புகளின் அடிப்படையில்.",
     "reasons": {
-      "high": "Based on {{passages}} passages from {{documents}} current sources.",
-      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
-      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
-      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
-      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
-      "lowContradiction": "The passages found disagree with each other.",
-      "abstainNothing": "Nothing in these sources answers this reliably.",
-      "abstainScope": "This is outside what these sources cover.",
-      "abstainConflict": "The only passages found point different ways.",
-      "abstainStale": "Everything found sits outside its effective window.",
-      "abstainFacts": "The answer turns on something only you can tell me."
+      "high": "{{documents}} தற்போதைய ஆதாரங்களில் உள்ள {{passages}} பத்திகளின் அடிப்படையில்.",
+      "moderateSingleDocument": "{{passages}} பத்திகளின் அடிப்படையில், அனைத்தும் ஒரே மூலத்திலிருந்து வந்தவை.",
+      "moderateOutOfWindow": "{{passages}} பத்திகளின் அடிப்படையில், அவற்றில் ஒன்று அதன் பயனுள்ள காலத்திற்கு வெளியே உள்ளது.",
+      "moderateThin": "{{documents}} ஆதாரங்களின் {{passages}} பத்திகளின் அடிப்படையில் — நம்பிக்கையான பதிலுக்குத் தேவையானதை விடக் குறைவு.",
+      "lowWeak": "கண்டறியப்பட்ட {{passages}} பத்திகள் இந்தக் கேள்விக்கு வலுவற்ற பொருத்தங்கள்.",
+      "lowContradiction": "கண்டறியப்பட்ட பத்திகள் ஒன்றுக்கொன்று முரண்படுகின்றன.",
+      "abstainNothing": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; எதுவும் வரம்பை எட்டவில்லை.",
+      "abstainScope": "ஆதாரங்கள் எதுவும் தேடப்படவில்லை — கேள்வி எல்லைக்கு அப்பாற்பட்டது.",
+      "abstainConflict": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அவற்றில் இரண்டு முரண்பாட்டில் உள்ளன.",
+      "abstainStale": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அனைத்தும் அவற்றின் பயனுள்ள காலத்திற்கு வெளியே உள்ளன.",
+      "abstainFacts": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அவற்றில் எது பொருந்தும் என்பது தயாரிப்பு வகையைப் பொறுத்தது."
     }
   },
   "sourceRule": {
-    "unsourcedTooltip": "General explanation, not from a specific source."
+    "unsourcedTooltip": "பொதுவான விளக்கம், ஒரு குறிப்பிட்ட மூலத்திலிருந்து அல்ல."
   },
   "answer": {
     "blocks": {
-      "answer": "Answer",
-      "why": "Why this matters",
-      "what_to_check": "What to check",
-      "caveat": "Caveats"
+      "answer": "பதில்",
+      "why": "இது ஏன் முக்கியமானது",
+      "what_to_check": "எதைச் சரிபார்க்க வேண்டும்",
+      "caveat": "எச்சரிக்கைகள்"
     },
-    "demoChip": "Illustrative example — demo sources, not a legal source",
-    "noSourceDate": "No source date yet",
-    "asOf": "Sources as of {{date}}",
-    "citationMarker": "Source {{number}}: {{title}}",
-    "uncited": "General explanation, not from a specific source.",
-    "sourcesHeading": "Sources",
-    "sourceCount_one": "{{count}} source",
-    "sourceCount_other": "{{count}} sources",
-    "showPassage": "Show the passage",
-    "hidePassage": "Hide the passage",
-    "openSource": "Open the source",
-    "openSourceUnavailable": "No link yet",
-    "demoBadge": "demo",
-    "sourceNumber": "Source {{number}}",
-    "verifiedBadge": "verified"
+    "noSourceDate": "—",
+    "asOf": "{{date}} நிலவரப்படி ஆதாரங்கள்",
+    "citationMarker": "ஆதாரம் {{number}}: {{title}}",
+    "uncited": "பொதுவான விளக்கம், ஒரு குறிப்பிட்ட மூலத்திலிருந்து அல்ல.",
+    "sourcesHeading": "ஆதாரங்கள்",
+    "sourceCount_one": "{{count}} ஆதாரம்",
+    "sourceCount_other": "{{count}} ஆதாரங்கள்",
+    "showPassage": "பத்தியைக் காட்டு",
+    "hidePassage": "பத்தியை மறை",
+    "openSource": "ஆதாரத்தைத் திற",
+    "openSourceUnavailable": "இன்னும் இணைப்பு இல்லை",
+    "sourceNumber": "ஆதாரம் {{number}}",
+    "verifiedBadge": "சரிபார்க்கப்பட்டது",
+    "sourceNote": "மூலங்கள் தொகுக்கப்பட்டு வரும் ஒரு குறிப்புத் தொகுப்பிலிருந்து எடுக்கப்பட்டவை. இதை நம்புவதற்கு முன் அதிகாரப்பூர்வ விசையைச் சரிபார்க்கவும்."
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "இந்தியா",
+    "INTL": "சர்வதேசம்"
   },
   "productClass": {
-    "classical_generic": "Classical formulation",
-    "patent_proprietary": "Patent or proprietary medicine",
-    "new_non_classical_drug": "New non-classical drug",
-    "phytopharmaceutical": "Phytopharmaceutical",
-    "ayurveda_aahar": "Ayurveda-Aahar",
-    "cosmetic": "Cosmetic",
-    "undetermined": "Product type not yet identified"
+    "classical_generic": "செம்மொழிச் சூத்திரம்",
+    "patent_proprietary": "காப்புரிமை அல்லது தனியுரிமை மருந்து",
+    "new_non_classical_drug": "புதிய பாரம்பரியமற்ற மருந்து",
+    "phytopharmaceutical": "பைட்டோபார்மாசூட்டிகல்",
+    "ayurveda_aahar": "ஆயுர்வேத ஆகாரம்",
+    "cosmetic": "அழகுசாதனம்",
+    "undetermined": "தயாரிப்பு வகை இன்னும் கண்டறியப்படவில்லை"
   },
   "buildState": {
-    "live": "running",
-    "demo": "built, on illustrative data",
-    "planned": "designed, not built"
+    "live": "இயங்குகிறது",
+    "planned": "திட்டமிடப்பட்டது, உருவாக்கப்படவில்லை"
   },
   "recordType": {
-    "patent_application": "Patent application",
-    "patent_grant": "Granted patent",
-    "gi_registration": "GI registration",
-    "trademark": "Trade mark",
-    "design": "Design",
-    "plant_variety": "Plant variety",
-    "abs_approval": "ABS approval",
-    "aggregate_statistic": "Aggregate statistic"
+    "patent_application": "காப்புரிமை விண்ணப்பம்",
+    "patent_grant": "வழங்கப்பட்ட காப்புரிமை",
+    "gi_registration": "புவிசார் குறியீடு பதிவு",
+    "trademark": "வர்த்தக முத்திரை",
+    "design": "வடிவமைப்பு",
+    "plant_variety": "தாவர வகை",
+    "abs_approval": "ஏபிஎஸ் ஒப்புதல்",
+    "aggregate_statistic": "மொத்த புள்ளிவிவரம்"
+  },
+  "auth": {
+    "heroTitle": "Ancient knowledge. Protected innovation.",
+    "heroBody": "Sign in to ask about intellectual property and regulation for Ayurvedic products.",
+    "signInTitle": "Sign in",
+    "signInBody": "Scan your badge, or use your username.",
+    "registerTitle": "Create an account",
+    "registerBody": "A few details and you are in.",
+    "scanBadge": "Scan badge",
+    "or": "or",
+    "username": "Username",
+    "password": "Password",
+    "name": "Full name",
+    "email": "Email",
+    "confirmPassword": "Confirm password",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "createSubmit": "Create account",
+    "creating": "Creating account…",
+    "noAccount": "No account yet?",
+    "createOne": "Create one",
+    "haveAccount": "Already registered?",
+    "goSignIn": "Sign in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "scanTitle": "Scan your badge",
+    "scanBody": "அங்கீகரிக்கப்பட்ட IP-SAKTI சகாயக் QR குறியீட்டைச் சட்டகத்துக்குள் காட்டுங்கள்.",
+    "scanClose": "Close the scanner",
+    "scanStarting": "Starting the camera…",
+    "scanReady": "பேட்ஜைத் தேடுகிறது",
+    "scanChecking": "புகைப்படத்தைச் சரிபார்க்கிறது",
+    "cameraBlockedTitle": "கேமரா கிடைக்கவில்லை",
+    "cameraStep1": "முகவரிப் பட்டிக்கு அருகிலுள்ள தள அமைப்புகள் ஐகானைத் தேர்ந்தெடுங்கள்.",
+    "cameraStep2": "கேமராவை அனுமதி என அமையுங்கள்.",
+    "cameraStep3": "கீழே கேமராவை மீண்டும் முயல் என்பதைத் தேர்ந்தெடுங்கள்.",
+    "cameraRetry": "Retry camera",
+    "cameraDenied": "இந்தத் தளத்துக்குக் கேமரா அனுமதி மறுக்கப்பட்டது.",
+    "cameraNone": "இந்தச் சாதனத்தில் கேமரா இல்லை.",
+    "cameraBusy": "கேமராவை வேறொரு செயலி பயன்படுத்துகிறது. அதை மூடி மீண்டும் முயலுங்கள்.",
+    "cameraInsecure": "கேமராவுக்குப் பாதுகாப்பான இணைப்பு தேவை. இந்தப் பக்கத்தை https அல்லது localhost இல் திறக்கவும்.",
+    "cameraFailed": "கேமராவைத் தொடங்க முடியவில்லை.",
+    "unmute": "Unmute background video",
+    "mute": "Mute background video",
+    "volume": "Volume",
+    "errName": "Enter your name.",
+    "errEmail": "Enter a valid email address.",
+    "errUsername": "Enter your username.",
+    "errUsernameShort": "Use at least 3 characters.",
+    "errPassword": "Enter your password.",
+    "errPasswordShort": "Use at least 8 characters.",
+    "errConfirm": "Type the password again.",
+    "errMismatch": "The two passwords do not match.",
+    "errGeneric": "Something went wrong. Try again.",
+    "demoHint": "டெமோ பதிப்பு. demo / demo1234 மூலம் உள்நுழையுங்கள், அல்லது IP-SAKTI சகாயக் பேட்ஜை ஸ்கேன் செய்யுங்கள்.",
+    "signedInAs": "Signed in as",
+    "signOut": "Sign out",
+    "account": "Account",
+    "checking": "Checking your session…",
+    "usernameExample": "demo",
+    "scanVerified": "QR சரிபார்க்கப்பட்டது – அணுகல் வழங்கப்பட்டது. போர்டல் திறக்கிறது…",
+    "scanMismatch": "தவறான QR குறியீடு – அணுகல் மறுக்கப்பட்டது",
+    "scanOffline": "பேட்ஜ் சரிபார்ப்பை அணுக முடியவில்லை. மீண்டும் முயல்கிறது…",
+    "scanUpload": "புகைப்படத்தைப் பதிவேற்று",
+    "scanUploadNone": "அந்தப் புகைப்படத்தில் QR குறியீடு இல்லை. நெருக்கமான, தெளிவான படம் எடுங்கள்.",
+    "scanSwitch": "கேமராவை மாற்று",
+    "scanPrivacy": "சட்டகங்கள் இந்த நிறுவலிலேயே சரிபார்க்கப்படுகின்றன, ஒருபோதும் சேமிக்கப்படுவதில்லை.",
+    "cameraFallback": "அதற்குப் பதிலாக பேட்ஜின் புகைப்படத்தைப் பதிவேற்றலாம்."
   }
 }

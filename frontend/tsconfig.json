@@ -27,7 +27,8 @@
       "@/*": ["./src/*"],
       "@corpus/*": ["../corpus/*"],
       "@classification/*": ["../backend/app/services/classification/*"],
-      "@fixtures/*": ["../data/fixtures/*"]
+      "@fixtures/*": ["../data/fixtures/*"],
+      "@analyst/*": ["../backend/app/analyst/data/*"]
     }
   },
   "include": ["src", "vite.config.ts"]

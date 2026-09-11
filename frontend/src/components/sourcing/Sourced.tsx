@@ -5,7 +5,6 @@ import { cn } from '@/lib/cn';
 import {
   documentLabel,
   findDocument,
-  isFetched,
   type DocumentId,
   type ManifestDocument,
 } from '@/services/corpusManifest';
@@ -83,22 +82,10 @@ export function Src({ doc: id }: { doc: DocumentId }) {
     throw new Error(`Document "${id}" is not listed in this section's SourceScope`);
   }
 
-  const fetched = isFetched(doc);
-  const label = fetched
-    ? t('marker.cited', { number, title: doc.title })
-    : t('marker.pending', { number, title: doc.title });
+  const label = t('marker.cited', { number, title: doc.title });
 
   return (
-    <sup
-      title={label}
-      aria-label={label}
-      className={cn(
-        'ml-0.5 text-[0.7em] font-medium',
-        fetched
-          ? 'text-stamp'
-          : 'text-muted underline decoration-dotted decoration-from-font underline-offset-2',
-      )}
-    >
+    <sup title={label} aria-label={label} className="ml-0.5 text-[0.7em] font-medium text-stamp">
       {number}
     </sup>
   );
@@ -116,9 +103,6 @@ export function SectionSourceList({ className }: { className?: string }) {
         {documents.map((doc, index) => (
           <li key={doc.document_id} className="text-xs text-muted">
             <span className="tabular-nums">{index + 1}.</span> {documentLabel(doc)}
-            {isFetched(doc) ? null : (
-              <span className="ml-1.5 text-lac">{t('sourceList.pending')}</span>
-            )}
           </li>
         ))}
       </ol>

@@ -29,6 +29,13 @@ const CONTENT_SECURITY_POLICY = [
   "script-src 'self'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
+  // The sign-in hero plays a video from this origin. Without this directive
+  // `default-src 'none'` blocks it, and the failure is quiet in exactly the
+  // way that costs an afternoon: no console error the page can see, no media
+  // error code, just a <video> that never leaves its poster — and only in a
+  // built bundle, because the policy is injected at build time and the dev
+  // server never carries it.
+  "media-src 'self'",
   "font-src 'self'",
   // The API, same origin. A deployment serving the API elsewhere adds that
   // origin here, and adding one is then a visible decision.
@@ -84,6 +91,9 @@ export default defineConfig({
       '@classification': fileURLToPath(
         new URL('../backend/app/services/classification', import.meta.url),
       ),
+      // The ingredient vocabulary is read by the invention analyst and by the
+      // step-by-step product check. One file, so the two never disagree.
+      '@analyst': fileURLToPath(new URL('../backend/app/analyst/data', import.meta.url)),
       // Demo fixtures are read by the backend's fixture generator and by the
       // mock service here. One copy, aliased, rather than two that drift.
       '@fixtures': fileURLToPath(new URL('../data/fixtures', import.meta.url)),
@@ -105,5 +115,6 @@ export default defineConfig({
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    testTimeout: 15000,
   },
 });

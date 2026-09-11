@@ -29,7 +29,7 @@
     "dating": {
       "any": "Any",
       "dated": "Has an effective date",
-      "undated": "Not yet dated"
+      "undated": "No effective date"
     },
     "fields": {
       "organization": "Issuing organization",
@@ -44,11 +44,11 @@
       "link": "Official source"
     },
     "empty": {
-      "version": "no version yet",
-      "date": "not yet dated",
-      "retrieved": "never fetched",
-      "passages": "none indexed",
-      "link": "not yet verified"
+      "version": "—",
+      "date": "—",
+      "retrieved": "—",
+      "passages": "—",
+      "link": "—"
     },
     "groups": {
       "indian_ip": "Indian IP regimes",
@@ -73,7 +73,7 @@
     "verification": {
       "verified": "Verified",
       "unverified": "Unverified",
-      "demo": "Demo"
+      "demo": "Unverified"
     }
   },
   "records": {
@@ -106,9 +106,9 @@
       "aggregate_statistic": "Aggregate statistics"
     },
     "empty": {
-      "licence": "not yet read — nothing is ingested until it is",
-      "snapshot": "never taken",
-      "count": "none held"
+      "licence": "—",
+      "snapshot": "—",
+      "count": "—"
     },
     "portalNote": "No fetcher exists for this source anywhere in the codebase, and none will be written. The product links out and does not run the search on your behalf."
   },

@@ -1,0 +1,457 @@
+{
+  "dataset": "commercial-products",
+  "version": "2026-09-11.1",
+  "retrieved_at": "2026-09-11",
+  "scope": "Ayurvedic and herbal face packs sold in India and the UK. A small reference set, not a market survey: finding nothing here says nothing about what else is sold.",
+  "method": "Each product page was fetched once, by hand, on the retrieval date. Ingredient names are copied as the page publishes them. Quantities are recorded only where the page publishes them. Nothing was added from memory; where a page names only some ingredients, the entry says so in ingredient_list_scope.",
+  "verification": "retrieved_not_reviewed: the text below matches the page on the retrieval date. Nobody has checked the product labels themselves, and the pages can change.",
+  "products": [
+    {
+      "product_id": "himalaya-purifying-neem-pack",
+      "name": "Purifying Neem Pack",
+      "brand": "Himalaya",
+      "manufacturer": "Himalaya Wellness Company",
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "work together to remove excess oil, clean clogged pores, and helps prevent the recurrence of pimples",
+        "Best for oily and pimple-prone skin."
+      ],
+      "ingredient_list_scope": "full",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Aqua" },
+        { "as_published": "Kaolin" },
+        { "as_published": "Melia Azadirachta Leaf Extract" },
+        { "as_published": "Propylene Glycol" },
+        { "as_published": "Bentonite" },
+        { "as_published": "Fuller's Earth" },
+        { "as_published": "Curcuma Longa Root Extract" },
+        { "as_published": "Fragrance" },
+        { "as_published": "Sodium Methylparaben" },
+        { "as_published": "Imidazolidinyl Urea" },
+        { "as_published": "DMDM Hydantoin" },
+        { "as_published": "Xanthan Gum" },
+        { "as_published": "Disodium EDTA" },
+        { "as_published": "Sodium Propylparaben" },
+        { "as_published": "Citric Acid" }
+      ],
+      "sources": [
+        {
+          "url": "https://himalayawellness.in/products/purifying-neem-pack",
+          "publisher": "Himalaya Wellness Company",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "key_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Himalaya's Purifying Neem Pack brings together the goodness of Neem, Fuller's Earth, and Turmeric, which work together to remove excess oil, clean clogged pores, and helps prevent the recurrence of pimples."
+        },
+        {
+          "url": "https://incidecoder.com/products/himalaya-herbals-purifying-neem-pack-2",
+          "publisher": "INCIDecoder",
+          "kind": "third_party_ingredient_list",
+          "supports": ["ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Aqua, Kaolin, Melia Azadirachta Leaf Extract, Propylene Glycol, Bentonite, Fuller'S Earth, Curcuma Longa Root Extract, Fragrance, Sodium Methylparaben, Imidazolidinyl Urea, DMDM Hydantoin, Xanthan Gum, Disodium EDTA, Sodium Propylparaben, Citric Acid"
+        }
+      ]
+    },
+    {
+      "product_id": "patanjali-multani-mitti-face-pack",
+      "name": "Multani Mitti Face Pack",
+      "brand": "Patanjali",
+      "manufacturer": "Patanjali Foods Ltd.",
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": ["Useful in preventing skin diseases, roughness / dryness, increasing skin glow."],
+      "ingredient_list_scope": "full",
+      "composition_basis": "Each 100 g contains",
+      "ingredients": [
+        {
+          "as_published": "Ghrit Kumari (Aloe barbadensis) Lf. Juice",
+          "amount": { "value": 40000, "unit": "mg" },
+          "role": "active"
+        },
+        {
+          "as_published": "Mritika (Mixed clay) Powder",
+          "amount": { "value": 5000, "unit": "mg" },
+          "role": "active"
+        },
+        {
+          "as_published": "Multani Mitti (Fuller earth) Powder",
+          "amount": { "value": 15000, "unit": "mg" },
+          "role": "active"
+        },
+        { "as_published": "Aqua", "role": "base" },
+        { "as_published": "Xanthan gum", "role": "base" },
+        { "as_published": "Magnesium aluminium silicate", "role": "base" },
+        { "as_published": "Glycerin", "role": "base" },
+        { "as_published": "Xylitol", "role": "base" },
+        { "as_published": "Zinc oxide", "role": "base" },
+        { "as_published": "Bentonite", "role": "base" },
+        { "as_published": "Glyceryl glucoside", "role": "base" },
+        { "as_published": "EDTA", "role": "base" },
+        { "as_published": "Potassium sorbate", "role": "base" },
+        { "as_published": "Sodium benzoate", "role": "base" },
+        { "as_published": "Fragrance", "role": "base" }
+      ],
+      "sources": [
+        {
+          "url": "https://www.patanjaliayurved.net/product/natural-personal-care/skin-care/patanjali-multani-mitti-face-pack/4431",
+          "publisher": "Patanjali Ayurved",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "ingredients", "quantities", "manufacturer"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Composition: Each 100 g contains- Ghrit Kumari (Aloe barbadensis) Lf. Juice 40000 mg, Mritika (Mixed clay) Powder 5000 mg, Multani Mitti (Fuller earth) Powder 15000 mg. Base Materials: Aqua, Xanthan gum, Magnesium aluminium silicate, Glycerin, Xylitol, Zinc oxide, Bentonite, Glyceryl glucoside, EDTA, Potassium sorbate, Sodium benzoate, Fragrance."
+        }
+      ]
+    },
+    {
+      "product_id": "khadi-traditional-sandal-multani-mitti-face-pack",
+      "name": "Sandal & Multani Mitti Face Pack",
+      "brand": "Khadi Traditional",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "skin illuminating face pack with purifying, soothing & anti-ageing properties",
+        "Regular use of pack helps clarify and smoothen skin texture and also reduces the intensity of blemishes. Tightens open pores."
+      ],
+      "ingredient_list_scope": "full",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Fullers Earth" },
+        { "as_published": "Zinc Oxide" },
+        { "as_published": "Kaolin" },
+        { "as_published": "Neem Powder (Azadirachta Indica)" },
+        { "as_published": "Aloe Vera Powder (Aloe Barbadensis)" },
+        { "as_published": "sandal Powder (Santalum Album)" },
+        { "as_published": "Tulsi Powder (Ocimum Tenuiflorum)" },
+        { "as_published": "Rakta chandan (Pterocarpus Santalinus)" },
+        { "as_published": "Manjistha (Rubia Cordifolia)" },
+        { "as_published": "Yesti Madhu (Glycyrrhiza Glabra)" },
+        { "as_published": "Daru Haldi (Berberis Aristata)" },
+        { "as_published": "Ushira (Vetiver)" },
+        { "as_published": "Padmaka (Prunus Cerasoides Don)" },
+        { "as_published": "Vat (Ficus Benghalensis)" },
+        { "as_published": "Pipal (Ficus Religiosa)" },
+        { "as_published": "Nagkesar (Mesua Ferrea)" },
+        { "as_published": "Orange peel powder (Citrus Senensis)" },
+        { "as_published": "Anantmool (Hemidesmus Indicus)" },
+        { "as_published": "Chamomilla (Matricaria Chamomilla)" },
+        { "as_published": "Sodium Benzoate" }
+      ],
+      "sources": [
+        {
+          "url": "https://kalaastore.com/products/sandal-multani-mitti-face-pack",
+          "publisher": "Kalaa Store (retailer)",
+          "kind": "retailer_page",
+          "supports": ["name", "stated_use", "ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Ingredients : Fullers Earth, Zinc Oxide, Kaolin, Neem Powder (Azadirachta Indica), Aloe Vera Powder (Aloe Barbadensis), sandal Powder (Santalum Album), Tulsi Powder (Ocimum Tenuiflorum), Rakta chandan (Pterocarpus Santalinus), Manjistha (Rubia Cordifolia), Yesti Madhu (Glycyrrhiza Glabra), Daru Haldi (Berberis Aristata), Ushira (Vetiver), Padmaka (Prunus Cerasoides Don), Vat (Ficus Benghalensis), Pipal (Ficus Religiosa), Nagkesar (Mesua Ferrea), Orange peel powder (Citrus Senensis), Anantmool (Hemidesmus Indicus), Chamomilla (Matricaria Chamomilla) and Sodium Benzoate."
+        }
+      ]
+    },
+    {
+      "product_id": "ayurda-hydrating-face-pack",
+      "name": "Hydrating Face Pack with Multani Mitti & Tulsi",
+      "brand": "Ayurda",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "An anti-bacterial and anti-inflammatory mask that exfoliates and hydrates while toning the skin and restoring its natural glow.",
+        "helps to control excess oil, helps to unclog pore, treat acne and exfoliate by removing dead skin cells"
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Multani Mitti (fuller earth clay)" },
+        { "as_published": "Tulsi (holy basil)" },
+        { "as_published": "Sandalwood" },
+        { "as_published": "Turmeric" },
+        { "as_published": "Lemon" }
+      ],
+      "sources": [
+        {
+          "url": "https://ayurda.com/products/ayurda-hydrating-face-pack-with-multani-mitti-and-tulsi",
+          "publisher": "Ayurda",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Multani Mitti (fuller earth clay) helps to control excess oil, helps to unclog pore, treat acne and exfoliate by removing dead skin cells. Tulsi (holy basil) is used for its natural anti-bacterial and purifying properties, calming inflammation, and helping to reduce skin irritations. The infusion of Sandalwood helps to soothe sensitive skin while Turmeric and Lemon restores its natural glow"
+        }
+      ]
+    },
+    {
+      "product_id": "ayumcure-multani-mitti-sandalwood-face-pack",
+      "name": "Multani Mitti & Sandalwood Bright & Glow Face Pack",
+      "brand": "Ayumcure",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "helps cleanse and refresh the skin while leaving it feeling soft and balanced",
+        "The powder-based formula can be mixed with water or rose water for easy application"
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Multani Mitti" },
+        { "as_published": "Sandalwood" },
+        { "as_published": "Niacinamide" },
+        { "as_published": "Turmeric" },
+        { "as_published": "Neem" },
+        { "as_published": "Aloe Vera" },
+        { "as_published": "Vitamin E" }
+      ],
+      "sources": [
+        {
+          "url": "https://ayumcure.com/products/multani-mitti-sandalwood-face-pack-glowing-skin-dead-skin-removal-unisex",
+          "publisher": "Ayumcure",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Ayumcure Herbs Multani Mitti & Sandalwood Bright & Glow Face Pack is an Ayurvedic-inspired skincare formulation crafted with natural ingredients such as Multani Mitti, Sandalwood, Niacinamide, Turmeric, Neem, Aloe Vera, and Vitamin E."
+        }
+      ]
+    },
+    {
+      "product_id": "khadi-natural-sandalwood-face-pack",
+      "name": "Sandalwood Face Pack (100 g)",
+      "brand": "Khadi Natural",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "softens and smoothens while efficaciously hydrating the skin",
+        "help skin tighten and reduces the skin pore, and provides a natural radiance to the skin",
+        "has cooling properties that soothe the skin"
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Sandalwood" },
+        { "as_published": "aloe vera extract" },
+        {
+          "as_published": "Multani mini",
+          "reads_as": "Multani mitti",
+          "reading_note": "Printed as \"Multani mini\" on the page; read as multani mitti."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.khadinatural.com/products/khadi-natural-sandalwood-face-pack-100-gm",
+          "publisher": "Khadi Natural",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Sandalwood, aloe vera extract, and Multani mini work together to help skin tighten and reduces the skin pore, and provides a natural radiance to the skin."
+        }
+      ]
+    },
+    {
+      "product_id": "khadi-natural-neem-tulsi-face-pack",
+      "name": "Neem Tulsi Face Pack (100 g)",
+      "brand": "Khadi Natural",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "an anti-acne treatment that heals blackheads, pimples, inflammation and improves the overall skin tone"
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [{ "as_published": "neem" }, { "as_published": "tulsi extract" }],
+      "sources": [
+        {
+          "url": "https://www.khadinatural.com/products/khadi-natural-neem-tulsi-face-pack-100gm",
+          "publisher": "Khadi Natural",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Khadi Natural Neem Tulsi Face pack is an anti-acne treatment that heals blackheads, pimples, inflammation and improves the overall skin tone. The neem and tulsi extract help detox skin and lightens post-acne scarring."
+        }
+      ]
+    },
+    {
+      "product_id": "khadi-natural-neem-basil-mint-face-pack",
+      "name": "Neem Basil & Mint Anti Acne Face Pack (50 g)",
+      "brand": "Khadi Natural",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "helps your skin get rid of the daily build up of toxins underneath your skin and at the same time get rid of bacteria,germs and dirt embedded in your skin to give it a natural glow"
+      ],
+      "ingredient_list_scope": "title_only",
+      "composition_basis": null,
+      "ingredients": [{ "as_published": "Neem" }, { "as_published": "Basil" }, { "as_published": "Mint" }],
+      "sources": [
+        {
+          "url": "https://www.khadinatural.com/products/khadi-neem-basil-mint-face-pack-anti-acne",
+          "publisher": "Khadi Natural",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Neem, Basil & Mint Face Pack(Anti Acne) mask helps your skin get rid of the daily build up of toxins underneath your skin and at the same time get rid of bacteria,germs and dirt embedded in your skin to give it a natural glow."
+        }
+      ]
+    },
+    {
+      "product_id": "khadi-natural-sandal-rose-face-pack",
+      "name": "Sandal & Rose Face Pack (50 g)",
+      "brand": "Khadi Natural",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "unclog your pores and removes dead skin cells",
+        "gives clean & polished look to the skin and improves the complexion"
+      ],
+      "ingredient_list_scope": "title_only",
+      "composition_basis": null,
+      "ingredients": [{ "as_published": "Sandal" }, { "as_published": "Rose" }],
+      "sources": [
+        {
+          "url": "https://www.khadinatural.com/products/khadi-natural-sandal-rose-face-pack",
+          "publisher": "Khadi Natural",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Khadi Naural Sandal face pack unclog your pores and removes dead skin cells. It is antiseptic that it will cure the sunburns on your skin. It is an ayurvedic product, which gives clean & polished look to the skin and improves the complexion."
+        }
+      ]
+    },
+    {
+      "product_id": "indus-valley-sandalwood-face-pack",
+      "name": "Bio Organic Sandalwood Face Pack Powder (sold in a combo with Multani Mitti powder)",
+      "brand": "Indus Valley",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "Use sandalwood face pack to unclog your skin pores, delay skin ageing and reduce excess and uneven pigmentation. Also use it to pull out blackheads and reduce scars."
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "sandalwood bark powder" },
+        { "as_published": "natural calamine clay" },
+        { "as_published": "almond powder" }
+      ],
+      "sources": [
+        {
+          "url": "https://www.buyindusvalley.in/products/bio-organic-multani-mitti-sandalwood-face-pack-powder-combo-pack-300g",
+          "publisher": "Indus Valley",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "shade dried organically grown sandalwood bark powder blended with natural calamine clay and almond powder for facial skin brightening and glow."
+        }
+      ]
+    },
+    {
+      "product_id": "holy-lama-turmeric-fullers-earth-face-pack",
+      "name": "Natural Face Pack with Turmeric Root Powder & Fuller's Earth",
+      "brand": "Holy Lama",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [],
+      "ingredient_list_scope": "title_only",
+      "composition_basis": null,
+      "ingredients": [{ "as_published": "Turmeric Root Powder" }, { "as_published": "Fuller's Earth" }],
+      "sources": [
+        {
+          "url": "https://holylama.co.uk/products/natural-face-pack-vetivert-amp-galangal",
+          "publisher": "Holy Lama UK",
+          "kind": "manufacturer_page",
+          "supports": ["name", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Natural Face Pack with Turmeric Root Powder & Fuller's Earth. Net weight: 20 gm"
+        }
+      ]
+    },
+    {
+      "product_id": "rosa-shahi-ubtan-face-pack",
+      "name": "Shahi Ubtan Face pack with Besan, Rose & Turmeric",
+      "brand": "Rosa",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "Gently reduces unwanted facial hair",
+        "Visibly brightens and evens skin tone"
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "Besan (Gram Flour)" },
+        { "as_published": "Rose Extract" },
+        { "as_published": "Turmeric" }
+      ],
+      "sources": [
+        {
+          "url": "https://smytten.com/shop/product/face-masks-and-packs/shahi-ubtan-face-pack-with-besan-rose-and-turmeric-i-remove-superflous-hair/RSO0033AB1",
+          "publisher": "Smytten (retailer)",
+          "kind": "retailer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "What are the main ingredients in this face pack? It contains natural ingredients like Besan, Rose, and Turmeric. What is a key benefit of using this face pack? This face pack helps to remove superfluous hair."
+        }
+      ]
+    },
+    {
+      "product_id": "jahangir-ali-dawasaz-ubtan-face-pack",
+      "name": "Ubtan Face Pack powder",
+      "brand": "Jahangir Ali Dawasaz",
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": [
+        "used as a natural exfoliating and brightening face mask",
+        "Ubtan helps remove dead skin cells, tan, and impurities while imparting a natural glow to the skin."
+      ],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [
+        { "as_published": "gram flour (besan)" },
+        { "as_published": "turmeric" },
+        { "as_published": "sandalwood powder" },
+        { "as_published": "rose petals" }
+      ],
+      "sources": [
+        {
+          "url": "https://jaunaninuts.com/product/ubtan-face-pack/",
+          "publisher": "Jahangir Ali Dawasaz",
+          "kind": "manufacturer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Ubtan Face Pack is a traditional herbal skincare product made from a blend of natural ingredients such as gram flour (besan), turmeric, sandalwood powder, rose petals, and other herbs. It is a fine, fragrant powder that, when mixed with water, milk, or rosewater, forms a paste used as a natural exfoliating and brightening face mask."
+        }
+      ]
+    },
+    {
+      "product_id": "kantai-uptan-face-pack",
+      "name": "Uptan Face Pack",
+      "brand": null,
+      "manufacturer": null,
+      "product_form": "face_pack",
+      "category": "skin",
+      "stated_use": ["ubtan helps detox, brighten, and smooth your skin"],
+      "ingredient_list_scope": "partial_named",
+      "composition_basis": null,
+      "ingredients": [{ "as_published": "besan" }, { "as_published": "turmeric" }],
+      "sources": [
+        {
+          "url": "https://kantaiskincare.com/product/uptan-face-pack/",
+          "publisher": "kantaiskincare.com",
+          "kind": "retailer_page",
+          "supports": ["name", "stated_use", "named_ingredients"],
+          "retrieved_at": "2026-09-11",
+          "excerpt": "Ubtan Face Pack (Ayurvedic Glow Secret) An ancient blend of besan, turmeric, and natural herbs , ubtan helps detox, brighten, and smooth your skin"
+        }
+      ]
+    }
+  ]
+}

@@ -20,10 +20,16 @@ function renderPage() {
   );
 }
 
-/** Wait for the evaluation summary fetch to settle before asserting. */
+/**
+ * Wait for the evaluation summary fetch to settle before asserting.
+ *
+ * Anchored on the evaluation heading rather than on the summary text: with no
+ * summary published the section renders its heading and nothing else, so the
+ * text that used to mark the settled state is no longer guaranteed to appear.
+ */
 async function renderSettled() {
   const result = renderPage();
-  await screen.findByText(/No evaluation has been run|Last run/);
+  await screen.findByRole('heading', { name: /How it is measured/i });
   return result;
 }
 
@@ -58,24 +64,18 @@ describe('honesty about what is built', () => {
     expect(by('demo')).toHaveLength(7);
   });
 
-  it('shows the selected stage its build state', async () => {
-    await renderSettled();
-    const panel = screen.getByRole('tabpanel');
-    expect(within(panel).getByText('running')).toBeInTheDocument();
-  });
-
-  it('says up front what runs and what it runs over', async () => {
-    await renderSettled();
-    expect(screen.getByText('What is actually built')).toBeInTheDocument();
-    expect(screen.getByText(/no document has been ingested/i)).toBeInTheDocument();
-  });
+  // The per-stage build-state badge and the page-level build-status notice were
+  // removed: both reported the progress of the build rather than anything about
+  // the subject. What each stage *does* is still asserted, stage by stage, by
+  // 'gives every stage all three fields of real copy' below, and the states
+  // themselves are still asserted off PIPELINE_STAGES above.
 
   it('reports no evaluation numbers, because none have been produced', async () => {
     await renderSettled();
-    expect(screen.getByText('No evaluation has been run')).toBeInTheDocument();
     // Every metric row shows an absent result rather than a figure. Counted off
     // METRICS rather than hard-coded, so adding a metric does not silently stop
-    // this checking every row.
+    // this checking every row. With no summary published there is no notice to
+    // find, so the empty table is the whole of the claim being made.
     expect(screen.getAllByText('not measured')).toHaveLength(METRICS.length);
   });
 
@@ -148,7 +148,7 @@ describe('honesty about what is built', () => {
     );
     renderPage();
 
-    expect(await screen.findByText('No evaluation has been run')).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /How it is measured/i })).toBeInTheDocument();
     expect(screen.getAllByText('not measured')).toHaveLength(METRICS.length);
   });
 

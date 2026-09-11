@@ -90,6 +90,10 @@ class Settings(BaseSettings):
     #: Recorded on every audit row, so an answer can be traced to the exact
     #: instruction that produced it.
     prompt_version: str = "2026-09-08.1"
+    #: "auto" | "rules" | "model". Who reads an inventor's messages in the invention
+    #: analyst. "auto" uses the hosted model when one is configured above, and the
+    #: built-in rules otherwise. See `app.analyst.model_reader`.
+    analyst_reader: str = "auto"
 
     # -- translation -------------------------------------------------------
 

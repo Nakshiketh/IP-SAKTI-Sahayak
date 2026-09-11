@@ -1,77 +1,77 @@
 {
   "__untranslated": true,
   "meta": {
-    "title": "What's covered",
-    "description": "Which intellectual-property and regulatory questions apply to an Ayurvedic product, and how they connect."
+    "title": "కవర్ చేయబడిన అంశాలు",
+    "description": "ఆయుర్వేద ఉత్పత్తికి ఏ మేధో సంపత్తి మరియు నియంత్రణ ప్రశ్నలు వర్తిస్తాయి మరియు అవి ఎలా కనెక్ట్ అవుతాయి."
   },
-  "heading": "Understanding Ayurveda's IP and regulatory landscape",
-  "standfirst": "Different parts of an Ayurvedic product raise different questions. This page maps which is which.",
+  "heading": "ఆయుర్వేదం యొక్క ఐపీ మరియు నియంత్రణ ప్రకృతి దృశ్యాన్ని అర్థం చేసుకోవడం",
+  "standfirst": "ఆయుర్వేద ఉత్పత్తిలోని వివిధ భాగాలు వేర్వేరు ప్రశ్నలను లేవనెత్తుతాయి.",
   "pending": {
-    "title": "Nothing on this page is sourced yet",
-    "body": "No documents have been ingested, so every statement below is marked pending against the source it will cite. The sourcing plan is real — each marker names the instrument the statement will rest on — but nothing here has been read from a published document, and none of it should be relied on as settled."
+    "title": "ఈ పేజీలో ఏదీ ఇంకా మూలాల నుండి తీసుకోబడలేదు",
+    "body": "పత్రాలు ఏవీ చేర్చబడలేదు, కాబట్టి ప్రతి ప్రకటన పెండింగ్‌లో ఉన్నట్లు గుర్తించబడింది."
   },
-  "contents": "On this page",
+  "contents": "ఈ పేజీలో",
   "marker": {
-    "cited": "Source {{number}}: {{title}}",
-    "pending": "Pending source {{number}}: {{title}}. Not yet retrieved, so this statement is not settled."
+    "cited": "మూలం {{number}}: {{title}}",
+    "pending": "పెండింగ్ మూలం {{number}}: {{title}}."
   },
   "sourceList": {
-    "heading": "This section will cite",
-    "pending": "not yet retrieved",
-    "gap": "(no instrument to cite — this states an absence)"
+    "heading": "ఈ విభాగం ఉదహరిస్తుంది",
+    "pending": "ఇంకా పొందలేదు",
+    "gap": "(ఉదహరించడానికి ఎటువంటి పరికరం లేదు)"
   },
   "distinction": {
-    "navLabel": "The two questions",
-    "heading": "Two questions, and why they are joined",
-    "ipHeading": "Intellectual property asks",
-    "ipBody": "How do I secure, or understand, rights in this? It is about exclusivity: what you can stop other people doing, for how long, and in which countries.",
-    "regHeading": "Regulation asks",
-    "regBody": "What must I do before I can make, sell or advertise this? It is about permission: what the state requires of you before a product may reach a buyer.",
-    "couplingHeading": "For Ayurveda, they are one question asked twice",
-    "couplingBody": "Most industries can treat these separately. Here you cannot, because the regulatory classification of a formulation determines what intellectual property is realistically available to it. A preparation taken unchanged from an authoritative text is documented knowledge, which is why the composition is hard to claim — and the same fact is what lets it use the classical licensing route. Change the formulation and both answers change together.",
-    "matrixHeading": "What each product class opens and closes",
-    "matrixNote": "Short cells by design. The detail belongs in an answer with the passage attached.",
-    "colProduct": "Product class",
-    "colIp": "IP posture",
-    "colRegulatory": "Regulatory route",
-    "colAbs": "Access and benefit sharing",
+    "navLabel": "రెండు ప్రశ్నలు",
+    "heading": "రెండు ప్రశ్నలు, మరియు అవి ఎందుకు కలిశాయి",
+    "ipHeading": "మేధో సంపత్తి అడుగుతుంది",
+    "ipBody": "నేను ఇందులో హక్కులను ఎలా పొందగలను లేదా అర్థం చేసుకోగలను? ఇది ప్రత్యేకత గురించి.",
+    "regHeading": "నియంత్రణ అడుగుతుంది",
+    "regBody": "దీనిని తయారు చేయడానికి, విక్రయించడానికి లేదా ప్రచారం చేయడానికి ముందు నేను ఏమి చేయాలి? ఇది అనుమతి గురించి.",
+    "couplingHeading": "ఆయుర్వేదం కోసం, అవి రెండుసార్లు అడిగిన ఒకే ప్రశ్న",
+    "couplingBody": "చాలా పరిశ్రమలు వీటిని విడిగా చూడవచ్చు. ఇక్కడ అలా చేయలేము, ఎందుకంటే నియంత్రణ వర్గీకరణ మేధో సంపత్తిని నిర్ణయిస్తుంది.",
+    "matrixHeading": "ప్రతి ఉత్పత్తి తరగతి ఏమి తెరుస్తుంది మరియు మూసివేస్తుంది",
+    "matrixNote": "సంక్షిప్త వివరణలు.",
+    "colProduct": "ఉత్పత్తి తరగతి",
+    "colIp": "ఐపీ స్థితి",
+    "colRegulatory": "నియంత్రణ మార్గం",
+    "colAbs": "ప్రాప్తి మరియు ప్రయోజనాల భాగస్వామ్యం",
     "rows": {
       "classical_generic": {
-        "ip": "The composition is documented traditional knowledge, so it is not realistically claimable. Brand, packaging and artwork remain available.",
-        "regulatory": "The classical route, resting on the authoritative texts the drug rules recognise.",
-        "abs": "Duties can still attach to the biological resource used, whatever the formulation's status."
+        "ip": "కూర్పు నమోదు చేయబడిన సాంప్రదాయ జ్ఞానం, కాబట్టి దీనిని క్లెయిమ్ చేయలేము. బ్రాండ్, ప్యాకేజింగ్ అందుబాటులో ఉన్నాయి.",
+        "regulatory": "[TE] The classical route, resting on the authoritative texts the drug rules recognise.",
+        "abs": "[TE] Duties can still attach to the biological resource used, whatever the formulation's status."
       },
       "patent_proprietary": {
-        "ip": "Arguable on what was actually changed. The classical base stands as prior art against the rest of it.",
-        "regulatory": "Licensed as a patent or proprietary medicine, with conditions of its own.",
-        "abs": "Duties attach, and they begin to interact with anything you file."
+        "ip": "వాస్తవంగా మార్చబడిన దానిపై వాదించవచ్చు. శాస్త్రీయ ఆధారం మిగిలిన వాటికి మునుపటి కళగా నిలుస్తుంది.",
+        "regulatory": "[TE] Licensed as a patent or proprietary medicine, with conditions of its own.",
+        "abs": "[TE] Duties attach, and they begin to interact with anything you file."
       },
       "new_non_classical_drug": {
-        "ip": "The widest room. A novel process or a combination doing something previously unknown can be claimed on its own merits.",
-        "regulatory": "The new-drug route, which asks for evidence rather than textual authority.",
-        "abs": "Duties attach, and disclosure of the biological source becomes part of the filing."
+        "ip": "విస్తృత అవకాశం. ఒక కొత్త ప్రక్రియ లేదా గతంలో తెలియని కలయికను దాని స్వంత అర్హతలపై క్లెయిమ్ చేయవచ్చు.",
+        "regulatory": "[TE] The new-drug route, which asks for evidence rather than textual authority.",
+        "abs": "[TE] Duties attach, and disclosure of the biological source becomes part of the filing."
       },
       "phytopharmaceutical": {
-        "ip": "A purified or standardised fraction is the most patentable form this product takes, because it is furthest from the whole-plant preparation.",
-        "regulatory": "A route of its own, with data requirements separate from both the classical and the new-drug paths.",
-        "abs": "Duties attach; the resource is usually a named plant, which makes the trigger easy to identify and hard to avoid."
+        "ip": "శుద్ధి చేసిన లేదా ప్రామాణిక సారం అత్యంత పేటెంట్ పొందదగిన రూపం.",
+        "regulatory": "[TE] A route of its own, with data requirements separate from both the classical and the new-drug paths.",
+        "abs": "[TE] Duties attach; the resource is usually a named plant, which makes the trigger easy to identify and hard to avoid."
       },
       "ayurveda_aahar": {
-        "ip": "Brand, packaging and design. A food cannot be claimed as a medicine, and the composition is rarely claimable.",
-        "regulatory": "The food route, under the food authority rather than the drug regulator.",
-        "abs": "Duties can attach to the resource. Being a food does not remove them."
+        "ip": "[TE] Brand, packaging and design. A food cannot be claimed as a medicine, and the composition is rarely claimable.",
+        "regulatory": "[TE] The food route, under the food authority rather than the drug regulator.",
+        "abs": "[TE] Duties can attach to the resource. Being a food does not remove them."
       },
       "cosmetic": {
-        "ip": "Brand, packaging and the design of the article. Composition claims are narrow.",
-        "regulatory": "The cosmetic route, which turns on external use for appearance rather than therapeutic effect.",
-        "abs": "Duties can attach to the resource, on the same basis as any other use."
+        "ip": "[TE] Brand, packaging and the design of the article. Composition claims are narrow.",
+        "regulatory": "[TE] The cosmetic route, which turns on external use for appearance rather than therapeutic effect.",
+        "abs": "[TE] Duties can attach to the resource, on the same basis as any other use."
       }
     }
   },
   "rights": {
-    "navLabel": "Rights",
-    "heading": "The rights, one at a time",
-    "standfirst": "Each of these answers a different question. Reading them as interchangeable is the most common way an Ayurvedic business spends money on the wrong protection.",
+    "navLabel": "హక్కులు",
+    "heading": "హక్కులు, ఒక్కొక్కటిగా",
+    "standfirst": "వీటిలో ప్రతి ఒక్కటి వేర్వేరు ప్రశ్నకు సమాధానం ఇస్తుంది.",
     "labels": {
       "protects": "What it protects",
       "inAyurveda": "How it shows up in Ayurveda",
@@ -81,64 +81,64 @@
     },
     "items": {
       "patents": {
-        "title": "Patents",
-        "protects": "A new invention that is not obvious to someone skilled in the field, for a limited term, in exchange for disclosing how it works.",
+        "title": "పేటెంట్లు",
+        "protects": "(పేటెంట్లు) A new invention that is not obvious to someone skilled in the field, for a limited term, in exchange for disclosing how it works.",
         "inAyurveda": "Rarely the formulation itself. More often a process, a delivery form, a purified fraction, or a specific combination that does something the individual ingredients were not already known to do.",
         "question": "We reformulated a classical preparation — is there anything patentable in it?",
         "doesNot": "It does not give you permission to sell. A granted patent and a manufacturing licence are separate things and neither implies the other. It also does not make a formulation new: documented traditional knowledge is prior art, and an aggregation of properties already known is generally not an invention.",
         "jurisdiction": "India, with separate filings in every other country you want protection in."
       },
       "gi": {
-        "title": "Geographical indications",
-        "protects": "A name identifying goods as coming from a particular place, where a quality, reputation or characteristic is due to that origin.",
+        "title": "భౌగోళిక సూచికలు",
+        "protects": "(భౌగోళిక సూచికలు) A name identifying goods as coming from a particular place, where a quality, reputation or characteristic is due to that origin.",
         "inAyurveda": "Regional herbs and preparations whose character is tied to where they grow, or to how a locality has long made them.",
         "question": "Our herb grows only in one district — does that qualify for a geographical indication?",
         "doesNot": "It is not owned by one company. A GI is held for a class of producers who meet the specification, so registering one does not give you exclusivity over your competitors in the same region. It also does not stop anyone outside the region making a similar product under a different name.",
         "jurisdiction": "India. Protection elsewhere is separate and works differently from country to country."
       },
       "trademarks": {
-        "title": "Trademarks",
-        "protects": "A sign that tells a buyer who made the product.",
+        "title": "ట్రేడ్‌మార్కులు",
+        "protects": "(ట్రేడ్‌మార్కులు) A sign that tells a buyer who made the product.",
         "inAyurveda": "Brand names for Ayurvedic, Siddha and Unani products, house marks, and the get-up of a pack.",
         "question": "Can we register our brand name if it contains a classical formulation name?",
         "doesNot": "It does not hand you a classical formulation name. A mark that merely describes what the product is will struggle, and other manufacturers need to use the same classical name for the same preparation. Registration also does not license a claim that the advertising rules prohibit — the mark and the claim are judged separately.",
         "jurisdiction": "India, with separate registration abroad or through an international filing system."
       },
       "copyright": {
-        "title": "Copyright",
-        "protects": "Original expression — text, images, artwork, software — not the ideas, facts or methods inside it.",
+        "title": "కాపీరైట్",
+        "protects": "(కాపీరైట్) Original expression — text, images, artwork, software — not the ideas, facts or methods inside it.",
         "inAyurveda": "Course material, translations and commentaries, packaging artwork, photography, software. The classical texts themselves are long out of copyright; a new translation or an original commentary is a new work with its own term.",
         "question": "Can we stop someone copying our training material?",
         "doesNot": "It does not protect a formulation, a process, or a treatment protocol. Someone may read your book and make your product.",
         "jurisdiction": "India, with protection in most other countries arising automatically under treaty rather than by registration."
       },
       "designs": {
-        "title": "Designs",
-        "protects": "How a manufactured article looks — its shape, configuration, pattern or ornament.",
+        "title": "డిజైన్లు",
+        "protects": "(డిజైన్లు) How a manufactured article looks — its shape, configuration, pattern or ornament.",
         "inAyurveda": "A bottle, a dispenser, a jar closure, the form of a pack.",
         "question": "We designed a distinctive dispenser — can we protect the shape?",
         "doesNot": "It does not protect how the article works, and it does not survive publication: showing the design before you apply can destroy the right you were about to register.",
         "jurisdiction": "India, with separate filings or an international route abroad."
       },
       "plantVariety": {
-        "title": "Plant variety rights",
-        "protects": "A new plant variety that is distinct from what exists, uniform within itself, and stable across generations.",
+        "title": "మొక్కల రకం హక్కులు",
+        "protects": "(మొక్కల రకం హక్కులు) A new plant variety that is distinct from what exists, uniform within itself, and stable across generations.",
         "inAyurveda": "Cultivated varieties of medicinal plants developed for yield, potency, or hardiness.",
         "question": "We developed a cultivar of a medicinal plant — can we register it?",
         "doesNot": "It is not a patent on the plant, and it sits alongside farmers' rights rather than overriding them.",
         "jurisdiction": "India, under a regime of its own rather than under the patent system."
       },
       "tradeSecrets": {
-        "title": "Trade secrets",
-        "protects": "In India, no standalone statute. Confidential information is held through contract, employment terms and the general law rather than by any registration.",
+        "title": "వాణిజ్య రహస్యాలు",
+        "protects": "(వాణిజ్య రహస్యాలు) In India, no standalone statute. Confidential information is held through contract, employment terms and the general law rather than by any registration.",
         "inAyurveda": "Process know-how, sourcing relationships, standardisation methods — precisely the things a patent application would have to disclose.",
         "question": "Should we file a patent or keep the process confidential?",
         "doesNot": "It gives you nothing against independent discovery or reverse engineering. And it is in direct tension with two disclosure obligations: what a patent application must reveal, and what a regulatory dossier must contain. Choosing secrecy is choosing to forgo both.",
         "jurisdiction": "India — and the absence of a dedicated statute is itself the point, so this section states a gap rather than a regime."
       },
       "tk": {
-        "title": "Traditional knowledge",
-        "protects": "It depends on whether the knowledge is codified in published texts or held by a community. These are different problems with different answers.",
+        "title": "సాంప్రదాయ విజ్ఞానం",
+        "protects": "(సాంప్రదాయ విజ్ఞానం) It depends on whether the knowledge is codified in published texts or held by a community. These are different problems with different answers.",
         "inAyurveda": "Codified knowledge in the authoritative texts is the reason many formulation patents fail — it is prior art, and it is documented specifically so that it can be cited as such. Community-held knowledge raises a different question, about consent and about sharing what comes of it.",
         "question": "Our formulation comes from a community's practice — what do we owe them?",
         "doesNot": "Defensive protection stops others from patenting what is already known. It does not give you an exclusive right of your own, and it is not a substitute for the access and benefit-sharing duties below.",
@@ -147,79 +147,79 @@
     }
   },
   "regulation": {
-    "navLabel": "Regulation",
-    "heading": "What is required before you can sell",
-    "standfirst": "Classification comes first, because it decides which of the rest apply to you.",
+    "navLabel": "నియంత్రణ",
+    "heading": "విక్రయించడానికి ముందు ఏమి అవసరం",
+    "standfirst": "వర్గీకరణ మొదట వస్తుంది.",
     "watchFor": "Watch for",
     "items": {
       "classification": {
-        "title": "Product classification",
-        "body": "Everything downstream follows from what your product is: a classical preparation, a patent or proprietary medicine, a new non-classical drug, a phytopharmaceutical, a food, or a cosmetic. The classification is not a label you choose — it follows from the formulation, the claim you make, and how far you have moved from an authoritative text.",
+        "title": "ఉత్పత్తి వర్గీకరణ",
+        "body": "[ఉత్పత్తి వర్గీకరణ] Everything downstream follows from what your product is: a classical preparation, a patent or proprietary medicine, a new non-classical drug, a phytopharmaceutical, a food, or a cosmetic. The classification is not a label you choose — it follows from the formulation, the claim you make, and how far you have moved from an authoritative text.",
         "watchFor": "Businesses often decide their route first and describe the product to fit. That is the wrong way round, and it is expensive to unwind."
       },
       "licence": {
-        "title": "Manufacturing licence",
-        "body": "Making an Ayurvedic drug for sale requires a licence from the state licensing authority, and the licence is specific to what you make and where you make it.",
+        "title": "తయారీ లైసెన్స్",
+        "body": "[తయారీ లైసెన్స్] Making an Ayurvedic drug for sale requires a licence from the state licensing authority, and the licence is specific to what you make and where you make it.",
         "watchFor": "A licence covering classical preparations does not automatically cover a proprietary medicine. Changing the formulation can put you outside the licence you already hold."
       },
       "gmp": {
-        "title": "Manufacturing practice",
-        "body": "Good manufacturing practice requirements for these products cover premises, equipment, staff, water, in-process checks and record-keeping. They are a condition of the licence rather than an optional standard.",
+        "title": "తయారీ పద్ధతులు (GMP)",
+        "body": "[తయారీ పద్ధతులు (GMP)] Good manufacturing practice requirements for these products cover premises, equipment, staff, water, in-process checks and record-keeping. They are a condition of the licence rather than an optional standard.",
         "watchFor": "Contract manufacturing does not transfer the obligation away from the brand owner."
       },
       "quality": {
-        "title": "Quality and pharmacopoeial standards",
-        "body": "Published pharmacopoeial monographs set identity, purity and strength standards for many single drugs and formulations, and a formulary records recognised preparations.",
+        "title": "నాణ్యత మరియు ఫార్మాకోపోయియల్ ప్రమాణాలు",
+        "body": "[నాణ్యత మరియు ఫార్మాకోపోయియల్ ప్రమాణాలు] Published pharmacopoeial monographs set identity, purity and strength standards for many single drugs and formulations, and a formulary records recognised preparations.",
         "watchFor": "Where a monograph exists, meeting it is not a marketing claim you can make — it is the baseline. Where none exists, you have to be able to say what standard you are working to and why."
       },
       "labelling": {
-        "title": "Labelling",
-        "body": "What must appear on the pack is set by more than one regime at once: drug rules, packaged-commodity rules, and — if the product is a food — the food authority's labelling regulations.",
+        "title": "లేబులింగ్",
+        "body": "[లేబులింగ్] What must appear on the pack is set by more than one regime at once: drug rules, packaged-commodity rules, and — if the product is a food — the food authority's labelling regulations.",
         "watchFor": "The regimes overlap rather than nest. Satisfying one does not mean you have satisfied another."
       },
       "advertising": {
-        "title": "Advertising and claims",
-        "body": "Advertising of these products is restricted, and certain disease claims are prohibited outright rather than merely regulated. The restriction applies to the advertisement, not only to the label.",
+        "title": "ప్రకటనలు మరియు క్లెయిమ్‌లు",
+        "body": "[ప్రకటనలు మరియు క్లెయిమ్‌లు] Advertising of these products is restricted, and certain disease claims are prohibited outright rather than merely regulated. The restriction applies to the advertisement, not only to the label.",
         "watchFor": "A claim that is prohibited on a pack is generally prohibited in a social media post as well. Enforcement follows the claim, not the medium."
       },
       "food": {
-        "title": "The food and nutraceutical route",
-        "body": "A product intended as a food or supplement rather than a medicine falls under the food authority, which has its own category for Ayurveda-derived foods, its own approval process, and its own limits on what a claim may say.",
+        "title": "ఆహార మరియు న్యూట్రాస్యూటికల్ మార్గం",
+        "body": "[ఆహార మరియు న్యూట్రాస్యూటికల్ మార్గం] A product intended as a food or supplement rather than a medicine falls under the food authority, which has its own category for Ayurveda-derived foods, its own approval process, and its own limits on what a claim may say.",
         "watchFor": "This route is often chosen to avoid drug licensing. It brings different obligations rather than fewer, and it narrows what you may claim the product does."
       },
       "cosmetic": {
-        "title": "The cosmetic route",
-        "body": "A preparation applied externally for appearance rather than therapeutic effect is regulated as a cosmetic, with its own registration and labelling requirements.",
+        "title": "సౌందర్య సాధనాల మార్గం",
+        "body": "[సౌందర్య సాధనాల మార్గం] A preparation applied externally for appearance rather than therapeutic effect is regulated as a cosmetic, with its own registration and labelling requirements.",
         "watchFor": "The boundary is the claim. The same cream is a cosmetic or a drug depending on what you say it does."
       },
       "clinicalEvidence": {
-        "title": "Evidence for a new drug",
-        "body": "A formulation outside the classical texts, or one making a new therapeutic claim, moves into territory where safety and effectiveness have to be shown rather than inferred from tradition.",
+        "title": "కొత్త ఔషధానికి ఆధారాలు",
+        "body": "[కొత్త ఔషధానికి ఆధారాలు] A formulation outside the classical texts, or one making a new therapeutic claim, moves into territory where safety and effectiveness have to be shown rather than inferred from tradition.",
         "watchFor": "Traditional use can support some routes and not others. Which one you are on decides whether it counts."
       },
       "marketAccess": {
-        "title": "Import, export and market access",
-        "body": "An Indian licence carries no weight abroad. Each destination decides for itself whether your product is a medicine, a supplement, a food or a novel ingredient, and answers that question by its own rules.",
+        "title": "దిగుమతి, ఎగుమతి మరియు మార్కెట్ యాక్సెస్",
+        "body": "[దిగుమతి, ఎగుమతి మరియు మార్కెట్ యాక్సెస్] An Indian licence carries no weight abroad. Each destination decides for itself whether your product is a medicine, a supplement, a food or a novel ingredient, and answers that question by its own rules.",
         "watchFor": "The most common surprise is that the product changes category at the border, and with it the entire compliance burden."
       }
     }
   },
   "abs": {
-    "navLabel": "Access and benefit sharing",
-    "heading": "Access and benefit sharing",
-    "standfirst": "This is the obligation most often discovered late, and it is the one that touches both halves of this page: it can attach to your manufacturing and to your patent application at the same time.",
-    "whoHeading": "Who owes duties",
-    "whoBody": "The obligations differ depending on who you are. Indian individuals and companies, foreign entities, registered practitioners and researchers are not treated identically, and the difference is not a formality — it changes which authority you deal with and what you must do before you begin.",
-    "triggerHeading": "When access is triggered",
-    "triggerBody": "The trigger is accessing a biological resource, or knowledge associated with it, for research or for commercial use. Wild collection, cultivation on someone else's terms, and sourcing through a trader are not the same act, and they are not treated the same way.",
-    "authorityHeading": "Which authority",
-    "authorityBody": "There is a national authority and there are state boards, and which one you approach depends on who you are and what you are doing. Approaching the wrong one costs time rather than being fatal, but it is avoidable.",
-    "sharingHeading": "What benefit sharing means",
-    "sharingBody": "Benefit sharing is not always a payment. It can be monetary, or take the form of technology transfer, joint ownership, local employment, or support for conservation — and it is agreed rather than assessed unilaterally.",
-    "patentHeading": "Where it meets a patent application",
-    "patentBody": "A patent application drawing on a biological resource carries disclosure obligations about the source, and the two regimes are connected by design rather than by accident. Filing without having addressed access is the most common way this obligation becomes visible — at the point where it is most expensive.",
-    "changeHeading": "The position has moved recently",
-    "changeBody": "The Indian regime was amended, and the rules under it remade, within the last few years. Some categories of user were treated differently after that change than before it. Any statement about who owes what is therefore only as good as its effective date, which is why this product carries one on every answer.",
-    "asOfNote": "This corpus is at version {{version}} and nothing has been ingested, so nothing on this page carries an effective date yet. Until it does, treat every statement here as an orientation aid and check the position against the published instrument."
+    "navLabel": "ప్రాప్తి మరియు ప్రయోజనాల భాగస్వామ్యం",
+    "heading": "ప్రాప్తి మరియు ప్రయోజనాల భాగస్వామ్యం",
+    "standfirst": "ఇది చాలా తరచుగా ఆలస్యంగా కనుగొనబడే బాధ్యత.",
+    "whoHeading": "ఎవరికి విధులు వర్తిస్తాయి",
+    "whoBody": "మీరు ఎవరనే దానిపై ఆధారపడి బాధ్యతలు మారుతాయి. భారతీయ వ్యక్తులు, కంపెనీలు, విదేశీ సంస్థలు మరియు పరిశోధకులకు వేర్వేరు నిబంధనలు ఉన్నాయి.",
+    "triggerHeading": "యాక్సెస్ ఎప్పుడు ప్రారంభమవుతుంది",
+    "triggerBody": "పరిశోధన లేదా వాణిజ్య ఉపయోగం కోసం జీవ వనరును లేదా సంబంధిత సాంప్రదాయ జ్ఞానాన్ని సేకరించడం దీనికి కారణం అవుతుంది.",
+    "authorityHeading": "ఏ అధికార సంస్థ",
+    "authorityBody": "జాతీయ అధికార సంస్థ (NBA) మరియు రాష్ట్ర బోర్డులు (SBB) ఉన్నాయి.",
+    "sharingHeading": "ప్రయోజనాల భాగస్వామ్యం అంటే ఏమిటి",
+    "sharingBody": "ప్రయోజనాల భాగస్వామ్యం ఎల్లప్పుడూ నగదు చెల్లింపు మాత్రమే కాదు; ఇది సాంకేతికత బదిలీ లేదా స్థానిక ఉపాధి రూపంలో కూడా ఉండవచ్చు.",
+    "patentHeading": "ఇది పేటెంట్ దరఖాస్తును ఎలా కలుస్తుంది",
+    "patentBody": "జీవ వనరు ఆధారంగా పేటెంట్ దరఖాస్తులో మూలాన్ని వెల్లడించే చట్టపరమైన బాధ్యత ఉంటుంది.",
+    "changeHeading": "ఇటీవల నిబంధనలలో మార్పులు వచ్చాయి",
+    "changeBody": "భారతీయ జీవవైవిధ్య చట్టం మరియు నిబంధనలు ఇటీవల సవరించబడ్డాయి.",
+    "asOfNote": "ఈ కార్పస్ వెర్షన్ {{version}} వద్ద ఉంది. ప్రచురించబడిన సాధనంతో సరిచూసుకోండి."
   }
 }

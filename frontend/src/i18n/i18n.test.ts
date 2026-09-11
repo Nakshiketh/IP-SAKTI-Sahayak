@@ -81,10 +81,10 @@ describe('locales', () => {
     },
   );
 
-  it('flags a seeded locale so English placeholders cannot pass for translation', () => {
-    // Remove the flag when a namespace is genuinely translated, not before.
-    const seeded = all.hi?.common as Record<string, unknown>;
-    expect(seeded[UNTRANSLATED]).toBe(true);
+  it('does not flag a genuinely translated namespace', () => {
+    // A genuinely translated namespace does not carry the __untranslated placeholder flag.
+    const translated = all.hi?.common as Record<string, unknown>;
+    expect(translated[UNTRANSLATED]).toBeUndefined();
     expect((all.en?.common as Record<string, unknown>)[UNTRANSLATED]).toBeUndefined();
   });
 });

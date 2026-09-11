@@ -69,9 +69,16 @@ async function get<T>(path: string, signal?: AbortSignal): Promise<T> {
 
 export function searchRecords(
   query: string,
-  options: { jurisdiction?: string; limit?: number; signal?: AbortSignal } = {},
+  options: {
+    jurisdiction?: string;
+    limit?: number;
+    /** Any of the words rather than all of them — see the endpoint for why. */
+    matchAny?: boolean;
+    signal?: AbortSignal;
+  } = {},
 ): Promise<RecordsSearchResult> {
   const params = new URLSearchParams({ q: query });
+  if (options.matchAny) params.set('match_any', 'true');
   if (options.jurisdiction) params.set('jurisdiction', options.jurisdiction);
   if (options.limit) params.set('limit', String(options.limit));
   return get<RecordsSearchResult>(`/api/v1/records/search?${params}`, options.signal);

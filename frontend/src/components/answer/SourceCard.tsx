@@ -70,7 +70,6 @@ export function SourceCard({
     >
       <div className="flex items-baseline gap-2">
         <span className="text-xs text-muted">{t('answer.sourceNumber', { number })}</span>
-        {isDemo ? <Badge>{t('answer.demoBadge')}</Badge> : null}
         {isVerified ? <Badge tone="sourced">{t('answer.verifiedBadge')}</Badge> : null}
       </div>
 

@@ -2,7 +2,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { PIPELINE_STAGES, STAGE_FIELDS } from '@/components/howitworks/pipelineStages';
-import { BuildStateBadge } from '@/components/ui';
 import { cn } from '@/lib/cn';
 
 /**
@@ -100,11 +99,6 @@ export function PipelineDiagram({ idBase }: { idBase: string }) {
                   places in the product where numbering carries meaning. */}
                 <span className="shrink-0 tabular-nums text-xs text-muted">{index + 1}</span>
                 <span className="text-base">{t(`pipeline.stages.${stage.id}.name`)}</span>
-                {stage.state === 'planned' ? null : (
-                  <span className="ml-auto shrink-0">
-                    <BuildStateBadge state={stage.state} />
-                  </span>
-                )}
               </button>
             );
           })}
@@ -120,7 +114,6 @@ export function PipelineDiagram({ idBase }: { idBase: string }) {
       >
         <div className="flex flex-wrap items-center gap-3">
           <h3 className="text-md">{t(`pipeline.stages.${active.id}.name`)}</h3>
-          <BuildStateBadge state={active.state} />
         </div>
 
         <dl className="m-0 mt-4">

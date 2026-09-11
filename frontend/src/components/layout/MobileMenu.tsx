@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import { LanguageSelector } from '@/components/layout/LanguageSelector';
+import { SignOutButton } from '@/components/layout/SignOutButton';
 import { NAV_ITEMS } from '@/components/layout/navigation';
 import { buttonStyles } from '@/components/ui';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
@@ -94,6 +95,17 @@ export function MobileMenu({ open, onClose }: MobileMenuProps) {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="flex items-center justify-between gap-4 border-t border-rule px-5 py-3">
+        <SignOutButton />
+        <NavLink
+          to="/assess"
+          onClick={onClose}
+          className={buttonStyles({ variant: 'secondary', className: 'shrink-0' })}
+        >
+          {t('cta.check')}
+        </NavLink>
       </div>
 
       <div className="flex items-center justify-between gap-4 border-t border-rule px-5 py-4">

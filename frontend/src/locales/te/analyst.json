@@ -1,0 +1,357 @@
+{
+  "__untranslated": true,
+  "meta": {
+    "title": "Analyse my invention",
+    "description": "Describe an Ayurvedic formulation in your own words and see what already exists, how yours compares, and a preliminary view on protection."
+  },
+  "heading": "Analyse my invention",
+  "standfirst": "Describe your invention the way you would to a colleague. The analyst asks only for what it still needs, compares your formulation with what it can search, and shows the evidence behind every finding.",
+  "label": "Preliminary AI-assisted assessment — not legal advice",
+  "engineRules": "Messages are read by built-in rules on this instance. No language model is configured.",
+  "stepsLink": "Prefer a step-by-step form?",
+  "history": {
+    "label": "Your analyses",
+    "new": "New analysis",
+    "delete": "Delete this analysis",
+    "confirmDelete": "Delete it permanently",
+    "cancel": "Keep it",
+    "stored": "Analyses are saved to your account on this instance so you can return to them. Delete removes the conversation and its findings."
+  },
+  "chat": {
+    "heading": "Conversation",
+    "you": "You",
+    "analyst": "Analyst",
+    "composerLabel": "Message to the analyst",
+    "composerHint": "Enter to send, Shift and Enter for a new line.",
+    "send": "Send",
+    "sample": "Paste the sample formulation",
+    "askLink": "Ask Sahayak about the law",
+    "busy": "Analysing your invention…",
+    "suggestionsLabel": "Suggested replies"
+  },
+  "sample": "Ayurvedic Turmeric–Neem Face Pack\nFor 100 g:\n- Multani Mitti — 40 g — 40%\n- Gram Flour (Besan) — 25 g — 25%\n- Turmeric (Haldi) — 10 g — 10%\n- Neem Powder — 10 g — 10%\n- Sandalwood Powder — 10 g — 10%\n- Rose Powder — 5 g — 5%\nPurpose:\nTraditional skin cleansing, oil absorption, soothing and skin-care use.",
+  "journey": {
+    "label": "Analysis progress",
+    "stages": {
+      "understand": "Understanding your invention",
+      "extract": "Extracting the formulation",
+      "products": "Finding similar products",
+      "knowledge": "Checking traditional knowledge",
+      "prior_art": "Searching prior art",
+      "compare": "Comparing evidence",
+      "assess": "Preparing the assessment"
+    },
+    "done": "done",
+    "reused": "unchanged, reused",
+    "active": "in progress",
+    "status": "Stage {{current}} of {{total}}: {{label}}",
+    "complete": "All {{total}} stages complete"
+  },
+  "errors": {
+    "unreachable": "The analyst could not be reached. Check your connection and try again.",
+    "session": "Your session has expired. Sign out and sign in again to continue.",
+    "rate_limited": "Too many messages in a short time. Wait a minute and try again.",
+    "not_found": "That analysis no longer exists.",
+    "unknown": "Something went wrong while analysing. Your message was not lost — try again.",
+    "retry": "Try again"
+  },
+  "findings": {
+    "heading": "Findings",
+    "tabsLabel": "Findings",
+    "tabs": {
+      "assessment": "Assessment",
+      "products": "Similar products",
+      "knowledge": "Traditional knowledge",
+      "priorArt": "Patents and prior art",
+      "invention": "Your invention"
+    },
+    "empty": "Findings appear here once the analyst has the ingredients, their quantities and what the product is for.",
+    "stillNeeded": "Still needed",
+    "found": "Found",
+    "reading": "Our reading",
+    "rerun": "Run the analysis again",
+    "updated": "Last run: {{when}} ({{trigger}})",
+    "trigger": {
+      "first run": "first run",
+      "requested": "requested",
+      "composition changed": "the composition changed",
+      "details changed": "details changed"
+    },
+    "historyHeading": "Earlier runs",
+    "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
+  },
+  "indicator": {
+    "potentially_novel": {
+      "label": "Potentially novel",
+      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    },
+    "further_assessment": {
+      "label": "Further assessment required",
+      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    },
+    "high_similarity": {
+      "label": "High similarity",
+      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    },
+    "whyHeading": "Why this indicator",
+    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+  },
+  "requirements": {
+    "heading": "The requirements, one at a time",
+    "novelty": "Novelty",
+    "inventive_step": "Inventive step",
+    "industrial_applicability": "Industrial applicability",
+    "status": {
+      "anticipation_risk": "Close match found — novelty at risk",
+      "close_match_found": "Similar items found",
+      "no_single_match_found": "No single matching item found in what was searched",
+      "concern": "Likely to be questioned",
+      "needs_evidence": "Needs evidence",
+      "arguable": "Arguable, with evidence",
+      "likely": "Likely met",
+      "unclear": "Unclear"
+    },
+    "exclusionsHeading": "Indian patent-law exclusions to check",
+    "exclusionsNone": "None of the usual exclusions is triggered by what you described."
+  },
+  "ip": {
+    "heading": "Potentially relevant protection",
+    "types": {
+      "patent": "Patent",
+      "trademark": "Trade mark",
+      "design": "Design",
+      "copyright": "Copyright",
+      "gi": "Geographical Indication",
+      "trade_secret": "Trade secret"
+    },
+    "relevance": {
+      "relevant": "Relevant",
+      "possible": "Possibly relevant",
+      "not_indicated": "Not indicated"
+    }
+  },
+  "next": {
+    "heading": "Next steps for IP protection"
+  },
+  "products": {
+    "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
+    "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
+    "level": {
+      "high": "High similarity",
+      "moderate": "Moderate similarity",
+      "low": "Weaker match"
+    },
+    "shared": "{{shared}} of your {{total}} ingredients",
+    "sameForm": "same kind of product",
+    "sharedUse": "overlapping use: {{uses}}",
+    "statedUse": "What the page says it is for",
+    "comparisonCaption": "Your formulation compared with {{name}}",
+    "columns": {
+      "ingredient": "Ingredient",
+      "yours": "Your formulation",
+      "theirs": "This product",
+      "difference": "Difference"
+    },
+    "status": {
+      "common": "In both",
+      "added": "Only in yours",
+      "removed": "Only in this product"
+    },
+    "difference": {
+      "higher": "Yours is higher",
+      "lower": "Yours is lower",
+      "same": "About the same",
+      "unknown": "Quantity not published"
+    },
+    "notListed": "not listed",
+    "base": "Also lists {{count}} base, preservative or fragrance ingredients: {{names}}",
+    "sources": "Sources",
+    "retrieved": "retrieved {{date}}",
+    "excerpt": "Show the text relied on",
+    "weaker": "Weaker matches ({{count}})",
+    "scope": {
+      "full": "full ingredient list",
+      "partial_named": "named ingredients only",
+      "title_only": "ingredients named in the product name only"
+    },
+    "dotsLabel": "{{shared}} of your {{total}} ingredients appear in this product"
+  },
+  "knowledge": {
+    "intro": "Your ingredients checked against {{size}} ingredients recognised in traditional Ayurvedic use and {{formulations}} classical formulations.",
+    "recognised": {
+      "traditional": "Recognised in traditional use",
+      "material": "Recognised by name — no traditional-use claim",
+      "unrecognised": "Not in the reference list"
+    },
+    "classicalHeading": "Classical formulations matched",
+    "classicalNone": "No classical formulation in the reference list matches by name or by its defining ingredients.",
+    "via": {
+      "name": "matched by name",
+      "ingredients": "matched by its defining ingredients"
+    },
+    "category": "Traditional knowledge is a separate category from commercial products and from patents. Being traditionally known is not the same as being patented, and it is not a finding either way on its own."
+  },
+  "priorArt": {
+    "not_loaded": "No patent or prior-art records are loaded on this instance, so no patent was searched. This is not a finding that none exists.",
+    "failed": "The records search failed, so no filing was compared. Run the analysis again shortly.",
+    "searched": "{{count}} filed and granted records were searched.",
+    "noneFound": "None of the records searched shares enough features to flag.",
+    "record": "Filed or granted record — evidence of what was filed, not a statement of law.",
+    "termsHeading": "Terms to search with",
+    "registriesHeading": "Registers not searched from here",
+    "registriesNote": "Search these directly, or through a registered patent agent. The Traditional Knowledge Digital Library is open only to patent offices.",
+    "level": {
+      "high": "Close",
+      "moderate": "Related",
+      "low": "Weakly related"
+    },
+    "filed": "Filed {{date}}",
+    "published": "Published {{date}}"
+  },
+  "invention": {
+    "summary": "Invention summary",
+    "title": "Title",
+    "type": "Type of invention",
+    "form": "Product form",
+    "use": "Intended use",
+    "problem": "Technical problem",
+    "notGiven": "Not given yet",
+    "composition": "Composition",
+    "batch": "Batch size: {{amount}}",
+    "total": "Total: {{total}}%",
+    "derived": "calculated from the amounts",
+    "columns": {
+      "name": "Ingredient",
+      "quantity": "Quantity",
+      "percent": "Percentage",
+      "purpose": "Purpose"
+    },
+    "edit": "Edit composition",
+    "save": "Save and re-analyse",
+    "cancel": "Cancel",
+    "addRow": "Add an ingredient",
+    "removeRow": "Remove {{name}}",
+    "newRow": "New ingredient",
+    "process": "Process",
+    "parameters": "Process parameters",
+    "features": "Distinctive features",
+    "evidence": "Test results",
+    "disclosure": "Disclosure",
+    "disclosureValue": {
+      "public": "Already public",
+      "confidential": "Not yet public"
+    },
+    "brand": "Brand name"
+  },
+  "use": {
+    "cleansing": "cleansing",
+    "oil_control": "oil control",
+    "acne": "acne and pimples",
+    "pores": "pores and blackheads",
+    "soothing": "soothing",
+    "brightening": "brightening and glow",
+    "exfoliation": "exfoliation",
+    "tan_pigmentation": "tan and pigmentation",
+    "hydration": "hydration",
+    "anti_ageing": "anti-ageing",
+    "antimicrobial": "antibacterial",
+    "skin_care": "general skin care",
+    "hair_removal": "unwanted hair",
+    "hair_fall": "hair fall",
+    "dandruff": "dandruff",
+    "hair_growth": "hair growth",
+    "digestion": "digestion",
+    "immunity": "immunity",
+    "joint_pain": "joint pain",
+    "stress_sleep": "stress and sleep",
+    "respiratory": "cough and throat",
+    "oral_care": "oral care"
+  },
+  "reason": {
+    "all_ingredients_in_product": "{{name}} lists every one of your {{total}} ingredients.",
+    "classical_match": "It matches the classical formulation {{name}}.",
+    "patent_close": "A filed record, {{title}}, shares most of its features.",
+    "close_products": "{{count}} products on sale are close. The closest, {{name}}, shares {{shared}} of your {{total}} ingredients.",
+    "patent_related": "{{count}} filed records share some features.",
+    "little_beyond_ingredients": "Little is described beyond the ingredients themselves.",
+    "no_close_product": "None of the {{size}} products searched is close.",
+    "no_single_product_has_all": "No single product found contains all {{total}} of your ingredients.",
+    "patents_not_searched": "Patent records were not available to search, so a clean result on patents is not possible here.",
+    "all_ingredients_known": "Every ingredient you listed already appears in at least one of the {{count}} products found, so the combination is built from known elements.",
+    "distinct_ingredients": "No product found lists {{names}}.",
+    "tk_consideration": "{{count}} of your {{total}} ingredients are recognised in traditional use.",
+    "effect_evidence_given": "You describe test results, which is the kind of evidence an examiner asks for.",
+    "effect_not_shown": "No test results are described yet. A combination usually needs a technical effect beyond what its ingredients do on their own.",
+    "closest_product": "Closest item: {{name}}, sharing {{shared}} of your {{total}} ingredients.",
+    "searched_scope": "Searched: {{products}} commercial products and {{records}} patent records.",
+    "proportions_only": "Against the closest products, the difference is mainly in proportions, which rarely carries an inventive step alone.",
+    "process_described": "You describe {{count}} preparation steps; a new process can be protected in its own right if it is new and not obvious.",
+    "can_be_made": "It is a product that can be made and sold, which is what this requirement asks. It is rarely the obstacle for a formulation.",
+    "form_unknown": "What kind of product it is has not been given yet.",
+    "exclusion_tk": "Traditional knowledge, and aggregations of known properties of traditionally known components, are excluded from patentability. {{count}} of your {{total}} ingredients are traditionally known.",
+    "exclusion_admixture": "A mere admixture, whose result is only the sum of its ingredients' known properties, is excluded. A synergistic effect has to be shown.",
+    "exclusion_known_form": "A new form of a known substance, such as an extract, is excluded unless it shows enhanced efficacy.",
+    "exclusion_treatment": "Methods of treating people are excluded. A product can still be claimed, but how the use is worded matters — and it may affect the regulatory class too.",
+    "no_new_ingredient": "Every ingredient you listed is in this product's published list.",
+    "user_adds": "You add {{names}}.",
+    "product_has_more": "This product also names {{count}} ingredients you do not use, such as {{names}}.",
+    "partial_list": "The page names only some ingredients, so the full list may contain more.",
+    "title_only": "Only the ingredients in the product's name are known.",
+    "ratios_differ": "Published quantities differ from yours for {{names}}.",
+    "ratios_match": "Published quantities are close to yours.",
+    "ratios_unpublished": "The product does not publish quantities, so ratios cannot be compared.",
+    "base_ingredients": "It lists {{count}} base, preservative or fragrance ingredients.",
+    "process_unpublished": "The page does not describe how it is made, so processes cannot be compared.",
+    "significance_no_new": "A product on sale that contains all of your ingredients is public: it can count against the novelty of that combination, though your proportions may differ.",
+    "significance_known_combination": "What you add ({{names}}) is what distinguishes yours. Adding a known ingredient to a known combination is usually weighed as an admixture unless it produces an effect beyond the sum.",
+    "reference_not_database": "This is a reference list compiled for this product, not a search of a traditional-knowledge database.",
+    "tkdl_not_searched": "The Traditional Knowledge Digital Library was not searched: it is open only to patent offices.",
+    "all_traditional": "All {{count}} of your ingredients are recognised in traditional use.",
+    "some_traditional": "{{count}} of your {{total}} ingredients are recognised in traditional use.",
+    "record_shares_ingredients": "Its title or abstract names {{names}}.",
+    "record_shares_use": "It describes a similar use: {{uses}}.",
+    "record_same_form": "It is the same kind of product.",
+    "patent_worth_pursuing": "Worth a professional search: nothing close was found in what was searched.",
+    "patent_depends_on_search": "Depends on a detailed search and on evidence of a technical effect.",
+    "patent_limited": "Likely limited to whatever is genuinely new — a process, a form or a shown effect — rather than the ingredients.",
+    "brand_given": "You plan to sell it as {{name}}. A distinctive name can be registered as a trade mark.",
+    "brand_descriptive": "The name contains words that describe the product ({{words}}); names built from them are hard to register.",
+    "if_sold_under_name": "Relevant if you sell it under a distinctive brand or product name.",
+    "packaging_mentioned": "You mention packaging; a design registration protects a distinctive visual appearance of the product or its packaging.",
+    "design_appearance_only": "Only relevant if the product or its packaging has a distinctive visual appearance. It never covers the formulation.",
+    "label_and_content": "Covers original label artwork, written content, photographs and software — never the formulation or the technical idea.",
+    "gi_requirements": "You mention a place of origin. A Geographical Indication applies only where the product's qualities are essentially due to that place and the legal requirements are met.",
+    "gi_origin_link": "Not indicated: a GI needs qualities essentially due to a specific place, and nothing described ties this product to one.",
+    "already_public": "You said the formulation is public, so it can no longer be kept secret.",
+    "keep_confidential": "The formulation and process can be protected as trade secrets for as long as they stay confidential.",
+    "patent_or_secret": "A patent publishes the invention; a trade secret depends on it never being published. Decide which before disclosing anything.",
+    "detailed_search": "Conduct a detailed prior-art search of patent registers and published literature.",
+    "detailed_search_not_loaded": "Conduct a detailed prior-art search. No patent records were searched here, so this step matters most.",
+    "review_claims": "Review the claims of any relevant patents found — the claims, not the title, decide what is covered.",
+    "assess_novelty": "Assess novelty against each item found, one document at a time.",
+    "assess_inventive_step": "Assess inventive step: gather evidence of any technical effect beyond the known ingredients.",
+    "check_exclusions": "Check the applicable Indian patent-law requirements and exclusions for traditional knowledge and admixtures.",
+    "keep_records": "Keep dated formulation, laboratory and development records.",
+    "filing_before_disclosure": "Consider a filing strategy before any public disclosure — a provisional application can secure a date.",
+    "filing_already_public": "Tell a patent agent when and where the formulation was made public: disclosure before filing can count against novelty.",
+    "consult_professional": "Consult a registered patent agent for the final legal assessment.",
+    "confirm_product_class": "Confirm the product's regulatory class — cosmetic, Ayurvedic medicine or other — because it shapes what can realistically be claimed.",
+    "trademark_search": "Search the trade marks register for {{name}} before printing packaging."
+  },
+  "engineModel": "Messages are read by a hosted language model, and every value it extracts is checked against your own words before it is used.",
+  "scale": {
+    "label": "Where this sits on the scale",
+    "current": "current position"
+  },
+  "glance": {
+    "label": "At a glance",
+    "indicator": "Indicator",
+    "products": "Close products",
+    "productsValue": "{{count}} of {{size}}",
+    "knowledge": "Traditionally known",
+    "knowledgeValue": "{{count}} of {{total}} ingredients",
+    "patents": "Patent records",
+    "patentsValue": "{{count}} of {{records}} related",
+    "patentsNone": "Not searched"
+  }
+}

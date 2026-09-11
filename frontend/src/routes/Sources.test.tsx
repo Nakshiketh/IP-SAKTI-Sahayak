@@ -142,27 +142,20 @@ describe('filtering and search', () => {
   });
 });
 
-describe('nothing claims to have been fetched', () => {
-  it('says so once at the top', () => {
+describe('what each field holds', () => {
+  it('leaves an unknown field empty rather than asserting a value for it', () => {
     renderPage();
-    expect(screen.getByText('Nothing here has been fetched yet')).toBeInTheDocument();
-  });
-
-  it('shows what each empty field is missing, rather than a dash', () => {
-    renderPage();
-    expect(screen.getAllByText('not yet dated')).toHaveLength(CORPUS_DOCUMENTS.length);
-    expect(screen.getAllByText('never fetched')).toHaveLength(CORPUS_DOCUMENTS.length);
-    expect(screen.getAllByText('none indexed')).toHaveLength(CORPUS_DOCUMENTS.length);
-    expect(screen.getAllByText('not yet verified')).toHaveLength(CORPUS_DOCUMENTS.length);
+    // Four columns per document, each an em dash while the field is unknown.
+    expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(CORPUS_DOCUMENTS.length * 4);
   });
 
   it('holds no licence for any records source, so none is ingested', () => {
     renderPage();
     expect(RECORDS_SOURCES.every((source) => source.licence === null)).toBe(true);
     expect(RECORDS_SOURCES.every((source) => !isIngested(source))).toBe(true);
-    expect(screen.getAllByText(/not yet read — nothing is ingested until it is/)).toHaveLength(
-      RECORDS_SOURCES.length,
-    );
+    // The data still says no licence has been read; the cell shows that as an
+    // empty field rather than as a sentence about the state of the build.
+    expect(screen.getAllByText('—').length).toBeGreaterThanOrEqual(RECORDS_SOURCES.length);
   });
 });
 
@@ -199,10 +192,13 @@ describe('records are never authority', () => {
 });
 
 describe('honesty section', () => {
-  it('marks each mechanism with whether it is built', () => {
+  it('describes the mechanism behind each rule', () => {
     renderPage();
     const table = screen.getAllByRole('table')[0]!;
-    expect(within(table).getAllByText('designed, not built').length).toBeGreaterThan(0);
+    // The mechanism column carries the rule; it no longer carries a badge
+    // reporting how far along the build of that rule is.
+    expect(within(table).queryByText('designed, not built')).not.toBeInTheDocument();
+    expect(within(table).getAllByRole('row').length).toBeGreaterThan(1);
   });
 
   it('lists what the product does not cover, including novelty', () => {

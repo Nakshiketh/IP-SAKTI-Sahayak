@@ -165,4 +165,406 @@
       opacity: 0.45;
     }
   }
+
+  /* -- The route to a patent.
+        Motion here answers the reader's own advance down the list, and nothing
+        else: a step is incised when it is first reached and pressed when it is
+        read, never decorated while it waits. Every rule is transform, opacity
+        or a stroke offset, so nothing relayouts. Hidden starting states apply
+        only under `[data-armed='true']` — see PatentTimeline for why that is
+        the whole progressive-enhancement contract.
+
+        The arrival of one step, in order:
+          0ms     the seal is set down and its ring is drawn
+          180ms   a hairline reaches from the seal to the card
+          240ms   the card swings open from the rail, like a leaf turned
+          460ms+  its lines settle in, one after another
+          700ms+  the hand-off rule is drawn and its links are set in place
+        ------------------------------------------------------------------------ */
+
+  .route {
+    /* Expo-out: quick to move, long to settle. Reads as placed, not bounced. */
+    --ease-route: cubic-bezier(0.16, 1, 0.3, 1);
+    /* Clip, not hide: a card swinging in must not widen the page for a frame,
+       and `clip` does not make a scroll container, so the tracker still sticks. */
+    overflow-x: clip;
+  }
+
+  /* The rail's fill and stylus follow the reading line. Their position is
+     written once a frame, so a short linear transition only smooths the steps
+     between frames. */
+  .route-fill {
+    transform: scaleY(var(--route-fill, 0));
+    transition: transform 90ms linear;
+  }
+
+  .route-tip {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    margin: -5.5px 0 0 -5.5px;
+    background-color: rgb(var(--leaf-rgb));
+    border: 2px solid rgb(var(--bone-rgb));
+    outline: 1px solid rgb(var(--leaf-rgb));
+    transform: translateY(var(--route-tip, 0px)) rotate(45deg);
+    transition: transform 90ms linear;
+    opacity: 0;
+  }
+
+  [data-armed='true'] .route-tip {
+    opacity: 1;
+  }
+
+  /* -- The seal. */
+  .route-seal {
+    position: relative;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--radius-seal);
+    background-color: rgb(var(--bone-rgb));
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    transition:
+      transform 560ms cubic-bezier(0.34, 1.56, 0.64, 1),
+      background-color var(--dur-panel) var(--ease-incise),
+      color var(--dur-panel) var(--ease-incise);
+  }
+
+  [data-revealed='true'] .route-seal {
+    color: rgb(var(--ink-rgb));
+  }
+
+  [data-state='active'] .route-seal {
+    background-color: rgb(var(--leaf-rgb));
+    color: rgb(var(--bone-rgb));
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-seal {
+    transform: scale(0.35);
+  }
+
+  /* The numeral rises into the seal from below its own edge. */
+  .route-seal-number {
+    position: relative;
+    display: block;
+    transition:
+      transform 480ms var(--ease-route) 160ms,
+      opacity 480ms var(--ease-route) 160ms;
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-seal-number {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+
+  /* The ring round the seal, drawn along its own length — the same gesture as
+     the hero's incised strokes. */
+  .route-ring {
+    stroke-dasharray: var(--len);
+    stroke-dashoffset: var(--len);
+    transition: stroke-dashoffset 820ms var(--ease-route) 60ms;
+  }
+
+  [data-revealed='true'] .route-ring {
+    stroke-dashoffset: 0;
+  }
+
+  /* The impression: one hairline ring spreading from the seal as its step
+     becomes the one being read. Once per arrival, never looping. */
+  .route-ripple {
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgb(var(--leaf-rgb));
+    border-radius: var(--radius-seal);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  [data-state='active'] .route-ripple {
+    animation: route-ripple 1100ms var(--ease-route);
+  }
+
+  @keyframes route-ripple {
+    from {
+      opacity: 0.8;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(2.4);
+    }
+  }
+
+  /* -- The hairline from the seal to its card. On a phone it bridges the gap
+        between the seal and the card beside it; from `lg` it crosses the gutter
+        from the centre rail to whichever side the card is on. */
+  .route-link {
+    position: absolute;
+    top: 2rem;
+    left: 35px;
+    width: 13px;
+    height: 1px;
+    background-color: var(--rule-strong);
+    transform-origin: left center;
+    transition:
+      transform 460ms var(--ease-route) 180ms,
+      background-color var(--dur-panel) var(--ease-incise);
+  }
+
+  [data-state='active'] .route-link,
+  [data-state='passed'] .route-link {
+    background-color: rgb(var(--leaf-rgb));
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-link {
+    transform: scaleX(0);
+  }
+
+  @media (min-width: 1024px) {
+    .route-link {
+      left: calc(50% + 16px);
+      width: calc(2.5rem - 16px);
+    }
+
+    [data-side='start'] .route-link {
+      left: auto;
+      right: calc(50% + 16px);
+      transform-origin: right center;
+    }
+  }
+
+  /* -- The card, swung open from the rail like a leaf being turned. It starts
+        edge-on and receding, hinged on the side nearest the rail, and turns
+        flat towards the reader as it fades in. */
+  .route-card {
+    transform-origin: left center;
+    transition:
+      opacity 640ms var(--ease-route) 240ms,
+      transform 940ms var(--ease-route) 240ms,
+      border-color var(--dur-panel) var(--ease-incise);
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-card {
+    opacity: 0;
+    transform: perspective(1400px) rotateY(62deg);
+  }
+
+  @media (min-width: 1024px) {
+    [data-side='start'] .route-card {
+      transform-origin: right center;
+    }
+
+    [data-armed='true'] [data-revealed='false'][data-side='start'] .route-card {
+      transform: perspective(1400px) rotateY(-62deg);
+    }
+  }
+
+  /* The edge nearest the rail is drawn in leaf while the step is being read. */
+  .route-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    width: 3px;
+    border-radius: var(--radius-data) 0 0 var(--radius-data);
+    background-color: rgb(var(--leaf-rgb));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 520ms var(--ease-route);
+  }
+
+  [data-state='active'] .route-card::before {
+    transform: scaleY(1);
+  }
+
+  @media (min-width: 1024px) {
+    [data-side='start'] .route-card::before {
+      left: auto;
+      right: -1px;
+      border-radius: 0 var(--radius-data) var(--radius-data) 0;
+    }
+  }
+
+  @media (hover: hover) {
+    [data-state='upcoming'] .route-card:hover,
+    [data-state='reached'] .route-card:hover,
+    [data-state='passed'] .route-card:hover {
+      border-color: var(--rule-strong);
+    }
+  }
+
+  /* -- The card's lines, settling one after another. `--i` is each line's
+        place in the cascade, set by the component. */
+  .route-rise {
+    transition:
+      opacity 520ms var(--ease-route) calc(460ms + var(--i, 0) * 70ms),
+      transform 640ms var(--ease-route) calc(460ms + var(--i, 0) * 70ms);
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-rise {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  /* A title rises out of its own line box, which clips it. */
+  [data-armed='true'] [data-revealed='false'] .route-rise--line {
+    opacity: 1;
+    transform: translateY(105%);
+  }
+
+  /* The links are set in place, not slid. */
+  .route-pop {
+    transition:
+      opacity 420ms var(--ease-route) calc(640ms + var(--i, 0) * 80ms),
+      transform 520ms cubic-bezier(0.34, 1.56, 0.64, 1) calc(640ms + var(--i, 0) * 80ms),
+      background-color var(--dur-quick) var(--ease-incise),
+      border-color var(--dur-quick) var(--ease-incise),
+      color var(--dur-quick) var(--ease-incise);
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-pop {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  /* The rule beside "What Sahayak does here", drawn down from the top. */
+  .route-handoff::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 2px;
+    background-color: rgb(var(--leaf-rgb));
+    transform-origin: top;
+    transform: scaleY(1);
+    transition: transform 620ms var(--ease-route) 700ms;
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-handoff::before {
+    transform: scaleY(0);
+  }
+
+  /* A phase marker settles onto the rail just ahead of its first card. */
+  .route-phase {
+    transition:
+      opacity 520ms var(--ease-route),
+      transform 620ms var(--ease-route);
+  }
+
+  [data-armed='true'] [data-revealed='false'] .route-phase {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  /* The tracker: segments fill as phases pass, and the phase name and step
+     count are swapped by rising into place rather than blinking over. */
+  .route-segment {
+    transition: transform 620ms var(--ease-route);
+  }
+
+  .route-swap {
+    animation: route-swap 360ms var(--ease-route);
+  }
+
+  @keyframes route-swap {
+    from {
+      opacity: 0;
+      transform: translateY(70%);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .route-tip {
+      display: none;
+    }
+  }
+
+  /* An opened source panel arrives; a closed one simply goes. Exit is faster
+     than entry, and here it is instant, because the reader asked for it gone. */
+  .route-panel:not([hidden]) {
+    animation: route-panel-in 220ms var(--ease-incise);
+  }
+
+  @keyframes route-panel-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* -- The assessment. A step arrives from the side the reader came from:
+        Continue brings the next one in from the right, Back from the left. The
+        motion is on arrival only, and nothing waits on it finishing. */
+  .step-in {
+    animation: step-in 320ms var(--ease-route, cubic-bezier(0.16, 1, 0.3, 1));
+  }
+
+  .step-in[data-direction='back'] {
+    animation-name: step-in-back;
+  }
+
+  @keyframes step-in {
+    from {
+      opacity: 0;
+      transform: translateX(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes step-in-back {
+    from {
+      opacity: 0;
+      transform: translateX(-16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The result, section by section, once — because the reader ran the check.
+     `--i` is the section's place in the order. */
+  .result-rise {
+    animation: result-rise 520ms var(--ease-route, cubic-bezier(0.16, 1, 0.3, 1)) both;
+    animation-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  @keyframes result-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* The global rule shortens durations but not delays, and a delayed section
+     would sit invisible. Here the final state is simply shown. */
+  @media (prefers-reduced-motion: reduce) {
+    .step-in,
+    .result-rise {
+      animation: none;
+    }
+  }
 }

@@ -78,7 +78,6 @@ export function AnswerView({
               ? t('answer.asOf', { date: answer.as_of_date })
               : t('answer.noSourceDate')}
           </Badge>
-          {answer.is_demo ? <Badge tone="caution">{t('answer.demoChip')}</Badge> : null}
         </div>
 
         <ConfidenceMeter level={answer.confidence} reason={confidenceReason} className="mt-3" />
@@ -106,6 +105,20 @@ export function AnswerView({
             </section>
           ))}
         </div>
+
+        {/*
+          The provenance line. It sits after the answer rather than before it,
+          in the register of a footnote, because it qualifies what was just read
+          rather than warning someone off reading it. It is not decorative and
+          it is not conditional on anything but the fact itself: the citations
+          above name real instruments, and until those instruments are fetched
+          the passages behind them are not the instruments themselves.
+        */}
+        {answer.is_demo ? (
+          <p className="mt-8 max-w-measure border-t border-rule pt-3 text-xs text-muted">
+            {t('answer.sourceNote')}
+          </p>
+        ) : null}
       </div>
 
       {/*

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AnswerView } from '@/components/answer';
 import { PipelineDiagram } from '@/components/howitworks/PipelineDiagram';
-import { BuildStateBadge, type BuildState } from '@/components/ui';
+import { type BuildState } from '@/components/ui';
 import { Callout } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { DEMO_ANSWERS } from '@/services/answers.mock';
@@ -84,15 +84,6 @@ export default function HowItWorks() {
         <h1 className="text-2xl">{t('heading')}</h1>
         <p className="mt-3 max-w-measure text-md text-muted">{t('standfirst')}</p>
       </header>
-
-      <Callout
-        tone="caution"
-        title={t('status.heading')}
-        titleLevel={2}
-        className="mt-6 max-w-measure"
-      >
-        {t('status.body')}
-      </Callout>
 
       <nav aria-label={t('pipeline.navLabel')} className="mt-8 border-b border-rule pb-4">
         <ul className="m-0 flex list-none flex-wrap gap-x-5 gap-y-1 p-0 text-base">
@@ -185,7 +176,6 @@ export default function HowItWorks() {
             >
               <div className="flex flex-wrap items-center gap-3">
                 <h3 className="text-md">{t(`architecture.layers.${layer.key}.name`)}</h3>
-                <BuildStateBadge state={layer.state} />
               </div>
               <p className="mt-1 max-w-measure text-muted">
                 {t(`architecture.layers.${layer.key}.items`)}
@@ -221,12 +211,6 @@ function EvaluationTable() {
 
   return (
     <>
-      {evals.state === 'not-run' ? (
-        <Callout tone="caution" title={t('evaluation.notRunTitle')} className="mt-6 max-w-measure">
-          {t('evaluation.notRunBody')}
-        </Callout>
-      ) : null}
-
       {evals.state === 'ready' ? (
         <>
           {evals.summary.caveat ? (

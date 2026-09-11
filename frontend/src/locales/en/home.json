@@ -13,6 +13,51 @@
     "submit": "Ask",
     "visualAlt": "A palm-leaf manuscript page whose incised writing lines resolve into a graph of linked sources."
   },
+  "intro": {
+    "cta": "Check my product",
+    "ctaNote": "Six short steps. Your answers stay in this browser tab; only a few search words are sent when you run the check.",
+    "heading": "What IP-SAKTI Sahayak does",
+    "what": "IP-SAKTI Sahayak is a guidance portal for people developing Ayurvedic products. It helps you work out which intellectual property could protect your product, whether something similar is already on record or documented, and what to do next — with every statement about law pointing at the instrument it comes from.",
+    "whyHeading": "Why protection matters",
+    "why": "A formulation, a name or a label can be copied the day it goes on sale. Intellectual property decides whether you can stop that, and what you must do before launch to keep the option open. Some of it is lost for good by publishing too early.",
+    "typesHeading": "Four kinds of protection, often used together",
+    "types": {
+      "patent": {
+        "name": "Patent",
+        "covers": "A new invention — a formulation with an effect you can show, a process, an extract. Granted for a limited term, in return for publishing it."
+      },
+      "trademark": {
+        "name": "Trade mark",
+        "covers": "The name, logo or other sign you sell under. Registered by class of goods, and renewable."
+      },
+      "copyright": {
+        "name": "Copyright",
+        "covers": "Original creative work — label artwork, packaging design, written content, software. Arises when the work is created."
+      },
+      "tradeSecret": {
+        "name": "Trade secret",
+        "covers": "Confidential formulations, processes and know-how. Lasts as long as the secret is kept, with no registration."
+      }
+    },
+    "helpsHeading": "How the check works",
+    "helps": {
+      "category": "Choose the product category",
+      "details": "Describe the product",
+      "ingredients": "List its ingredients and what is new",
+      "protection": "Answer a few questions on brand, creative work and confidentiality",
+      "result": "See what may already exist, for each kind of protection",
+      "guidance": "Get the recommended protection and the steps to take"
+    },
+    "needHeading": "What to have ready",
+    "need": {
+      "name": "The product or brand name",
+      "purpose": "What it does, and who it is for",
+      "ingredients": "The ingredients, and anything new in how it is made",
+      "materials": "Whether you have packaging, artwork or software"
+    },
+    "getHeading": "What you get at the end",
+    "get": "For each kind of protection: whether anything similar was identified, what may overlap, whether it looks worth pursuing, and the steps to take through the Indian system — marked as guidance, not legal advice."
+  },
   "coupling": {
     "heading": "What a formulation is decides what you can protect",
     "standfirst": "The same polyherbal preparation for joint pain can be three different products, and each one opens and closes different doors. This is why the assistant works out the regulatory classification before it answers anything else.",
@@ -99,5 +144,107 @@
     "heading": "What this will not do",
     "body": "It will not tell you whether an application will succeed, draft one for you, or give clinical advice. It answers from a fixed set of published sources, so a question outside them gets no answer rather than a plausible one. Where the sources are thin, it says so and offers to hand the question to someone qualified.",
     "cta": "Ask a question"
+  },
+  "patentSteps": {
+    "heading": "Steps to get a patent",
+    "standfirst": "The route an application takes in India, in order, and what Sahayak does for you at each step. Every step names the instrument that governs it — open one to see the citation and the forms it involves.",
+    "aria": "Steps to get a patent, in order",
+    "stepOf": "Step {{number}} of {{total}}",
+    "expand": "Show the source for this step",
+    "collapse": "Hide the source for this step",
+    "sourceLabel": "Where this is set out",
+    "formsLabel": "Forms",
+    "notRetrieved": "Named for reference. Ask Sahayak for a cited answer on any of these.",
+    "cta": "Ask about your own case",
+    "sahayakLabel": "What Sahayak does here",
+    "phases": {
+      "before": "Before filing",
+      "filing": "Filing and publication",
+      "examination": "Examination",
+      "after": "Grant and after"
+    },
+    "handoff": {
+      "priorArt": "Turns a description of your formulation into search terms, lists the patent registries to search, and explains who can search the TKDL. It never tells you something is new.",
+      "classify": "Works out what your product is, regulatorily, in a few yes-or-no questions. That decides how much of the formulation can realistically be claimed.",
+      "ask": "Sends this step's question to Sahayak. You get an answer with every claim cited, or the reason it cannot answer from its sources."
+    },
+    "actions": {
+      "priorArt": "Build prior-art search terms",
+      "classify": "Work out your product type",
+      "ask": "Ask Sahayak about this step"
+    },
+    "questions": {
+      "disclosure": "What prior art should we search before filing a patent for our Ayurvedic formulation, including traditional knowledge?",
+      "patentability": "Which exclusions in section 3 of the Patents Act apply to a herbal formulation?",
+      "drafting": "What is the difference between a provisional and a complete patent specification?",
+      "filing": "Which forms are needed to file a patent application in India?",
+      "complete": "When must a complete specification be filed after a provisional patent application?",
+      "publication": "When is a patent application published, and can it be published early?",
+      "examination": "How do I request examination of a patent application?",
+      "fer": "How do I respond to a first examination report on a patent application?",
+      "hearing": "What happens at a patent hearing before the Controller?",
+      "grant": "When is a patent granted, and where is the grant published?",
+      "opposition": "What is the difference between pre-grant and post-grant patent opposition?",
+      "renewal": "How long does a patent last in India, and when are renewal fees due?"
+    },
+    "forms": {
+      "form1": "Form 1 — application for grant",
+      "form2": "Form 2 — provisional or complete specification",
+      "form3": "Form 3 — statement of foreign applications",
+      "form5": "Form 5 — declaration of inventorship",
+      "form9": "Form 9 — request for early publication",
+      "form18": "Form 18 — request for examination",
+      "form26": "Form 26 — authorisation of a patent agent"
+    },
+    "steps": {
+      "disclosure": {
+        "title": "Disclosure and prior-art search",
+        "body": "Record the invention and search what is already known. For an Ayurvedic formulation this includes traditional-knowledge sources such as the TKDL, because documented traditional knowledge stands as prior art."
+      },
+      "patentability": {
+        "title": "Patentability check",
+        "body": "Work out whether the subject matter falls within the exclusions from patentability — in particular those covering new forms of known substances, mere admixtures, and traditional knowledge or aggregations of known properties."
+      },
+      "drafting": {
+        "title": "Draft the specification",
+        "body": "Prepare either a provisional specification, which secures a filing date while the work continues, or a complete specification with claims."
+      },
+      "filing": {
+        "title": "File at the Patent Office",
+        "body": "File the application with its accompanying forms at the appropriate patent office. An application filed through a patent agent carries an authorisation form as well."
+      },
+      "complete": {
+        "title": "Complete specification after a provisional",
+        "body": "Where a provisional was filed first, the complete specification follows within the period the Act allows, or the application is treated as abandoned."
+      },
+      "publication": {
+        "title": "Publication",
+        "body": "Applications are published after the period set out in the Act. Publication can be brought forward on request rather than waiting for the ordinary date."
+      },
+      "examination": {
+        "title": "Request for examination",
+        "body": "Examination is not automatic — it happens on request, made within the prescribed window. An application not requested for examination in time is treated as withdrawn."
+      },
+      "fer": {
+        "title": "First Examination Report",
+        "body": "The examiner reports objections. The applicant answers them, and puts the application in order for grant, within the period the Rules prescribe."
+      },
+      "hearing": {
+        "title": "Hearing",
+        "body": "Where objections remain outstanding after the reply, the Controller may offer a hearing before deciding."
+      },
+      "grant": {
+        "title": "Grant and publication",
+        "body": "An application found in order proceeds to grant, and the grant is published in the official journal."
+      },
+      "opposition": {
+        "title": "Opposition",
+        "body": "The Act provides two routes: an opposition before grant, and an opposition after grant within the period it allows. They run on different grounds and different timetables."
+      },
+      "renewal": {
+        "title": "Renewal and term",
+        "body": "A granted patent is kept in force by renewal fees from the third year. The term runs twenty years from the date of filing."
+      }
+    }
   }
 }

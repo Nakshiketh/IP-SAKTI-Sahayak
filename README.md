@@ -196,12 +196,20 @@ explains what a case does and does not assert.
 
 ## What it stores
 
-No accounts, no sign-in, no user profiles. One append-only row per query holding the session id, a
+Accounts exist and sign-in is required: a name, an email and a username, so the site knows who is
+signed in. Passwords are stored as salted PBKDF2, never in a recoverable form, and an account is
+never attached to a question — the audit row below still carries no identity. One append-only row
+per query holding the session id, a
 one-way fingerprint of the question, the passage ids retrieved, the model and prompt and corpus
 versions, the confidence and abstention outcome, and timings. It holds no question text, no answer
 text, no note you type, no identity and no IP address — those are not empty fields, they are not
 columns, and the development audit viewer prints the column list from the schema so that can be
 checked rather than believed.
+
+One deliberate exception: an analysis run in *Analyse my invention* (`/assess`) is saved to the
+signed-in account in `data/analyses.sqlite3` — the conversation, the formulation described and the
+findings — so it can be reopened. It is readable only through that account, and the page deletes it
+with everything derived from it. The audit log is unaffected and still holds no text.
 
 Nothing is shared with anyone. There is no analytics script, no advertising network and no
 error-reporting service anywhere in the interface; the content policy forbids loading one. The one

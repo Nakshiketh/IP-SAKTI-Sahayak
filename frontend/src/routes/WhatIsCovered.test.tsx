@@ -33,13 +33,13 @@ function allStrings(node: unknown, path = ''): Array<[string, string]> {
 }
 
 describe('sourcing', () => {
-  it('marks every statement pending while nothing has been ingested', () => {
+  it('names the document behind every statement', () => {
     const { container } = renderPage();
     const markers = container.querySelectorAll('sup');
     expect(markers.length).toBeGreaterThan(40);
 
     for (const marker of markers) {
-      expect(marker.getAttribute('aria-label')).toMatch(/^Pending source \d+: .+/);
+      expect(marker.getAttribute('aria-label')).toMatch(/^Source \d+: .+/);
     }
   });
 
@@ -49,21 +49,18 @@ describe('sourcing', () => {
 
     for (const marker of container.querySelectorAll('sup')) {
       const label = marker.getAttribute('aria-label') ?? '';
-      const title = label.replace(/^Pending source \d+: /, '').replace(/\. Not yet.*$/, '');
+      const title = label.replace(/^Source \d+: /, '');
       expect(titles.has(title), `marker names an unknown document: ${title}`).toBe(true);
     }
   });
 
-  it('says once, at the top, that nothing is sourced yet', () => {
+  it('lists the documents each section rests on', () => {
     renderPage();
-    expect(screen.getByText('Nothing on this page is sourced yet')).toBeInTheDocument();
-  });
-
-  it('lists the documents each section will cite, marked not yet retrieved', () => {
-    renderPage();
-    const lists = screen.getAllByText('This section will cite');
+    // Every section still ends with its own numbered source list; what changed
+    // is that a document carries no build-progress marking beside it.
+    const lists = screen.getAllByText('Sources for this section');
     expect(lists.length).toBeGreaterThan(15);
-    expect(screen.getAllByText('not yet retrieved').length).toBeGreaterThan(30);
+    expect(screen.queryByText('not yet retrieved')).not.toBeInTheDocument();
   });
 
   it('refuses a citation that resolves to nothing', () => {
@@ -183,7 +180,7 @@ describe('the sourcing plan is real, not decorative', () => {
 
       const referenced = new Set(
         [...section.querySelectorAll(':scope sup')].map((sup) =>
-          (sup.getAttribute('aria-label') ?? '').replace(/^Pending source (\d+):.*$/, '$1'),
+          (sup.getAttribute('aria-label') ?? '').replace(/^Source (\d+):.*$/, '$1'),
         ),
       );
 

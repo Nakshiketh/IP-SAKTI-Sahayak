@@ -12,3 +12,20 @@ import { i18n, initI18n } from '@/i18n';
 // from the same state without a suite-wide await.
 void initI18n();
 void i18n.changeLanguage('en');
+
+// jsdom implements no media playback: `play()` reports "not implemented" and
+// returns nothing. The shell plays a background video on every route, so
+// without this every route test would print that error. Resolving is what a
+// browser does when playback is allowed.
+// Writable, so a test can make one play refused, as a browser does before any
+// gesture.
+Object.defineProperty(HTMLMediaElement.prototype, 'play', {
+  configurable: true,
+  writable: true,
+  value: () => Promise.resolve(),
+});
+Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
+  configurable: true,
+  writable: true,
+  value: () => undefined,
+});

@@ -35,8 +35,7 @@ export function EscalationForm({ open, onClose, result, productClass }: Escalati
     ...citations.map(
       (citation, index) =>
         `  [${index + 1}] ${citation.document_title}, ${citation.organization}` +
-        (citation.section_label ? ` — ${citation.section_label}` : '') +
-        ` (${tc(`answer.${citation.verification_status === 'demo' ? 'demoBadge' : 'verifiedBadge'}`)})`,
+        (citation.section_label ? ` — ${citation.section_label}` : ''),
     ),
     '',
     tc('footer.disclaimer'),

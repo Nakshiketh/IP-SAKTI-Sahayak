@@ -2,6 +2,8 @@ import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Shell } from '@/components/layout/Shell';
+import { AuthProvider } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks/authContext';
 import Home from '@/routes/Home';
 import NotFound from '@/routes/NotFound';
 
@@ -24,8 +26,16 @@ import NotFound from '@/routes/NotFound';
  * second gate behind it — the endpoint refuses to serve outside a development
  * environment — because a route whose safety rests on one build flag is a route
  * with one thing to get wrong.
+ *
+ * **The sign-in gate.** All seven routes sit behind it. It is a front door, not
+ * a security boundary: it decides what this browser renders, and the boundary
+ * that matters is the API refusing an unauthenticated request. Treat it as the
+ * former and the design is honest; treat it as the latter and it is a hole.
  */
+const Login = lazy(() => import('@/routes/Login'));
 const Sahayak = lazy(() => import('@/routes/Sahayak'));
+const Assessment = lazy(() => import('@/routes/Assessment'));
+const Analyst = lazy(() => import('@/routes/Analyst'));
 const WhatIsCovered = lazy(() => import('@/routes/WhatIsCovered'));
 const HowItWorks = lazy(() => import('@/routes/HowItWorks'));
 const Sources = lazy(() => import('@/routes/Sources'));
@@ -36,11 +46,40 @@ const AuditLog = lazy(() => import('@/routes/AuditLog'));
 
 export default function App() {
   return (
+    <AuthProvider>
+      <Gate />
+    </AuthProvider>
+  );
+}
+
+/**
+ * The front door, or the site.
+ *
+ * A stored session renders the site straight away; the server check runs behind
+ * it and can send a reader back here if the token is genuinely dead. See
+ * `useAuth` for why that is the right way round.
+ */
+function Gate() {
+  const { status, signedIn } = useAuth();
+
+  if (status === 'anonymous') {
+    return (
+      <Suspense fallback={null}>
+        <Login onSignedIn={signedIn} />
+      </Suspense>
+    );
+  }
+
+  return (
     <Suspense fallback={null}>
       <Routes>
         <Route element={<Shell />}>
           <Route path="/" element={<Home />} />
           <Route path="/sahayak" element={<Sahayak />} />
+          {/* The product check. Reached from the header's primary button and the
+              homepage introduction rather than the six-item navigation. */}
+          <Route path="/assess" element={<Analyst />} />
+          <Route path="/assess/steps" element={<Assessment />} />
           <Route path="/what-is-covered" element={<WhatIsCovered />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/sources" element={<Sources />} />

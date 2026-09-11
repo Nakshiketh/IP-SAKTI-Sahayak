@@ -15,7 +15,7 @@
     "pending": "Pending source {{number}}: {{title}}. Not yet retrieved, so this statement is not settled."
   },
   "sourceList": {
-    "heading": "This section will cite",
+    "heading": "Sources for this section",
     "pending": "not yet retrieved",
     "gap": "(no instrument to cite — this states an absence)"
   },

@@ -2,136 +2,203 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "ఆయుర్వేదం, మేధో సంపత్తి మరియు నియంత్రణ"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "ప్రధాన",
+    "home": "హోమ్",
+    "sahayak": "సహాయక్‌ను అడగండి",
+    "covered": "కవర్ చేయబడిన అంశాలు",
+    "howItWorks": "ఇది ఎలా పనిచేస్తుంది",
+    "sources": "మూలాధారాలు",
+    "about": "గురించి"
   },
   "cta": {
-    "ask": "Ask Sahayak"
+    "ask": "సహాయక్‌ను అడగండి",
+    "check": "నా ఉత్పత్తిని తనిఖీ చేయండి"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "మెనూ",
+    "close": "మెనూ మూసివేయి",
+    "title": "మెనూ"
   },
   "language": {
-    "label": "Language",
-    "changed": "Language changed to {{language}}"
+    "label": "భాష",
+    "changed": "భాష {{language}} కు మార్చబడింది"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "కంటెంట్‌కు వెళ్లండి",
   "footer": {
-    "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
-    "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
-    "sourceMetaEmpty": "No sources indexed yet · v{{version}}",
-    "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "disclaimer": "IP-SAKTI Sahayak ప్రచురితమైన చట్టపరమైన మరియు నియంత్రణ మూలాల నుండి సేకరించిన సమాచారాన్ని అందిస్తుంది. ఇది చట్టపరమైన సలహాను ఇవ్వదు, మేధో సంపత్తి హక్కులను మంజూరు చేయదు, ఉత్పత్తులను ఆమోదించదు లేదా ఏ నియంత్రణ అధికార సంస్థను భర్తీ చేయదు. ముఖ్యమైన నిర్ణయాలను ప్రస్తుత అధికారిక మూలాలు మరియు అర్హత కలిగిన నిపుణుడితో ధృవీకరించుకోండి.",
+    "sourceMeta": "{{date}} నాటికి మూలాధారాలు · {{count}} పత్రాలు · v{{version}}",
+    "sourceMetaEmpty": "v{{version}}",
+    "sourceMetaUnavailable": "మూలాధార సమాచారం ప్రస్తుతం అందుబాటులో లేదు.",
+    "privacy": "ఈ ఉత్పత్తి ఏమి నిల్వ చేస్తుంది"
   },
   "notFound": {
-    "title": "There is no page here",
-    "body": "The address may be mistyped, or the page may have been renamed.",
-    "action": "Go to the homepage"
+    "title": "ఇక్కడ పేజీ ఏదీ లేదు",
+    "body": "చిరునామా తప్పుగా టైప్ చేయబడి ఉండవచ్చు లేదా పేజీ పేరు మార్చబడి ఉండవచ్చు.",
+    "action": "హోమ్‌పేజీకి వెళ్లండి"
   },
   "boundary": {
-    "title": "This page stopped working",
-    "body": "Something in the interface failed while drawing this page. What went wrong is in the browser console; nothing has been sent anywhere.",
-    "notAnAbstention": "This is the interface breaking, not the product declining to answer. No question was searched and no answer was withheld.",
-    "retry": "Try this page again"
+    "title": "ఈ పేజీ పనిచేయడం ఆగిపోయింది",
+    "body": "ఈ పేజీని చూపేటప్పుడు ఇంటర్‌ఫేస్‌లో ఏదో సమస్య వచ్చింది. ఏమి జరిగిందో బ్రౌజర్ కన్సోల్‌లో ఉంది; ఎక్కడికీ ఏమీ పంపబడలేదు.",
+    "notAnAbstention": "ఇది ఇంటర్‌ఫేస్ వైఫల్యం, ఉత్పత్తి సమాధానం ఇవ్వడానికి నిరాకరించడం కాదు. ఏ ప్రశ్నా శోధించబడలేదు మరియు ఏ సమాధానమూ నిలిపివేయబడలేదు.",
+    "retry": "ఈ పేజీని మళ్లీ ప్రయత్నించండి"
   },
   "offline": {
-    "title": "This device is not connected",
-    "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
+    "title": "ఈ పరికరం కనెక్ట్ కాలేదు",
+    "body": "ఇప్పటికే తెరిచి ఉన్న పేజీలు ఇప్పటికీ పనిచేస్తాయి. సేవ అవసరమయ్యే ఏదైనా — ప్రశ్న అడగడం, మూలాధార భాగాన్ని తెరవడం — మీరు తిరిగి వచ్చేవరకు వేచి ఉంటుంది."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "మూసివేయి",
+    "remove": "తీసివేయి"
   },
   "record": {
-    "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
-    "recordType": "Record type",
-    "applicant": "Applicant",
-    "status": "Status"
+    "notAuthority": "దాఖలు చేసిన లేదా మంజూరు చేయబడిన రికార్డు — ఏమి దాఖలు చేయబడిందో సాక్ష్యం, చట్టం యొక్క ప్రకటన కాదు. స్నాప్‌షాట్ {{date}}.",
+    "recordType": "రికార్డు రకం",
+    "applicant": "దరఖాస్తుదారు",
+    "status": "స్థితి"
   },
   "confidence": {
-    "high": "High confidence",
-    "moderate": "Moderate confidence",
-    "low": "Low confidence",
-    "abstain": "Not answered",
-    "meter": "{{label}}: {{filled}} of {{total}}",
-    "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
-    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document.",
+    "high": "అధిక విశ్వాసం",
+    "moderate": "మధ్యస్థ విశ్వాసం",
+    "low": "తక్కువ విశ్వాసం",
+    "abstain": "సమాధానం ఇవ్వబడలేదు",
+    "meter": "{{label}}: {{total}} లో {{filled}}",
+    "demoReason_one": "{{count}} వివరణాత్మక భాగం ఆధారంగా.",
+    "demoReason_other": "{{count}} వివరణాత్మక భాగాల ఆధారంగా.",
     "reasons": {
-      "high": "Based on {{passages}} passages from {{documents}} current sources.",
-      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
-      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
-      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
-      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
-      "lowContradiction": "The passages found disagree with each other.",
-      "abstainNothing": "Nothing in these sources answers this reliably.",
-      "abstainScope": "This is outside what these sources cover.",
-      "abstainConflict": "The only passages found point different ways.",
-      "abstainStale": "Everything found sits outside its effective window.",
-      "abstainFacts": "The answer turns on something only you can tell me."
+      "high": "{{documents}} ప్రస్తుత మూలాల నుండి {{passages}} భాగాల ఆధారంగా.",
+      "moderateSingleDocument": "{{passages}} భాగాల ఆధారంగా, అన్నీ ఒకే మూలం నుండి వచ్చాయి.",
+      "moderateOutOfWindow": "{{passages}} భాగాల ఆధారంగా, వాటిలో ఒకటి దాని ప్రభావవంతమైన పరిధికి వెలుపల ఉంది.",
+      "moderateThin": "{{documents}} మూలాల నుండి {{passages}} భాగాల ఆధారంగా — నమ్మకమైన సమాధానానికి అవసరమైన దానికంటే తక్కువ.",
+      "lowWeak": "కనుగొనబడిన {{passages}} భాగాలు ఈ ప్రశ్నకు బలహీనమైన సరిపోలికలు.",
+      "lowContradiction": "కనుగొనబడిన భాగాలు ఒకదానితో ఒకటి విభేదిస్తున్నాయి.",
+      "abstainNothing": "{{passages}} భాగాలు పరిగణించబడ్డాయి; ఏదీ పరిమితిని దాటలేదు.",
+      "abstainScope": "ఏ మూలాలూ శోధించబడలేదు — ప్రశ్న పరిధికి వెలుపల ఉంది.",
+      "abstainConflict": "{{passages}} భాగాలు పరిగణించబడ్డాయి; వాటిలో రెండు పరస్పర విరుద్ధంగా ఉన్నాయి.",
+      "abstainStale": "{{passages}} భాగాలు పరిగణించబడ్డాయి; అన్నీ వాటి ప్రభావవంతమైన పరిధికి వెలుపల ఉన్నాయి.",
+      "abstainFacts": "{{passages}} భాగాలు పరిగణించబడ్డాయి; వాటిలో ఏది వర్తిస్తుందనేది ఉత్పత్తి రకంపై ఆధారపడి ఉంటుంది."
     }
   },
   "sourceRule": {
-    "unsourcedTooltip": "General explanation, not from a specific source."
+    "unsourcedTooltip": "సాధారణ వివరణ, నిర్దిష్ట మూలం నుండి కాదు."
   },
   "answer": {
     "blocks": {
-      "answer": "Answer",
-      "why": "Why this matters",
-      "what_to_check": "What to check",
-      "caveat": "Caveats"
+      "answer": "సమాధానం",
+      "why": "ఇది ఎందుకు ముఖ్యం",
+      "what_to_check": "ఏమి తనిఖీ చేయాలి",
+      "caveat": "హెచ్చరికలు"
     },
-    "demoChip": "Illustrative example — demo sources, not a legal source",
-    "noSourceDate": "No source date yet",
-    "asOf": "Sources as of {{date}}",
-    "citationMarker": "Source {{number}}: {{title}}",
-    "uncited": "General explanation, not from a specific source.",
-    "sourcesHeading": "Sources",
-    "sourceCount_one": "{{count}} source",
-    "sourceCount_other": "{{count}} sources",
-    "showPassage": "Show the passage",
-    "hidePassage": "Hide the passage",
-    "openSource": "Open the source",
-    "openSourceUnavailable": "No link yet",
-    "demoBadge": "demo",
-    "sourceNumber": "Source {{number}}",
-    "verifiedBadge": "verified"
+    "noSourceDate": "—",
+    "asOf": "{{date}} నాటికి మూలాధారాలు",
+    "citationMarker": "మూలం {{number}}: {{title}}",
+    "uncited": "సాధారణ వివరణ, నిర్దిష్ట మూలం నుండి కాదు.",
+    "sourcesHeading": "మూలాధారాలు",
+    "sourceCount_one": "{{count}} మూలం",
+    "sourceCount_other": "{{count}} మూలాధారాలు",
+    "showPassage": "భాగాన్ని చూపు",
+    "hidePassage": "భాగాన్ని దాచు",
+    "openSource": "మూలాన్ని తెరువు",
+    "openSourceUnavailable": "ఇంకా లింక్ లేదు",
+    "sourceNumber": "మూలం {{number}}",
+    "verifiedBadge": "ధృవీకరించబడింది",
+    "sourceNote": "మూలాలు సంకలనంలో ఉన్న సందర్భ సంపుటి నుండి తీసుకోబడ్డాయి. దీనిపై ఆధారపడక ముందు అధికారిక పాఠ్యంతో సరిచూడండి."
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "భారతదేశం",
+    "INTL": "అంతర్జాతీయ"
   },
   "productClass": {
-    "classical_generic": "Classical formulation",
-    "patent_proprietary": "Patent or proprietary medicine",
-    "new_non_classical_drug": "New non-classical drug",
-    "phytopharmaceutical": "Phytopharmaceutical",
-    "ayurveda_aahar": "Ayurveda-Aahar",
-    "cosmetic": "Cosmetic",
-    "undetermined": "Product type not yet identified"
+    "classical_generic": "శాస్త్రీయ నిర్మాణం",
+    "patent_proprietary": "పేటెంట్ లేదా యాజమాన్య ఔషధం",
+    "new_non_classical_drug": "కొత్త నాన్-క్లాసికల్ డ్రగ్",
+    "phytopharmaceutical": "ఫైటోఫార్మాస్యూటికల్",
+    "ayurveda_aahar": "ఆయుర్వేద-ఆహార్",
+    "cosmetic": "సౌందర్య సాధనం",
+    "undetermined": "ఉత్పత్తి రకం ఇంకా గుర్తించబడలేదు"
   },
   "buildState": {
-    "live": "running",
-    "demo": "built, on illustrative data",
-    "planned": "designed, not built"
+    "live": "నడుస్తోంది",
+    "planned": "రూపొందించబడింది, ఇంకా నిర్మించబడలేదు"
   },
   "recordType": {
-    "patent_application": "Patent application",
-    "patent_grant": "Granted patent",
-    "gi_registration": "GI registration",
-    "trademark": "Trade mark",
-    "design": "Design",
-    "plant_variety": "Plant variety",
-    "abs_approval": "ABS approval",
-    "aggregate_statistic": "Aggregate statistic"
+    "patent_application": "పేటెంట్ దరఖాస్తు",
+    "patent_grant": "మంజూరైన పేటెంట్",
+    "gi_registration": "జీఐ నమోదు",
+    "trademark": "ట్రేడ్‌మార్క్",
+    "design": "డిజైన్",
+    "plant_variety": "మొక్కల రకం",
+    "abs_approval": "ఏబీఎస్ ఆమోదం",
+    "aggregate_statistic": "మొత్తం గణాంకాలు"
+  },
+  "auth": {
+    "heroTitle": "Ancient knowledge. Protected innovation.",
+    "heroBody": "Sign in to ask about intellectual property and regulation for Ayurvedic products.",
+    "signInTitle": "Sign in",
+    "signInBody": "Scan your badge, or use your username.",
+    "registerTitle": "Create an account",
+    "registerBody": "A few details and you are in.",
+    "scanBadge": "Scan badge",
+    "or": "or",
+    "username": "Username",
+    "password": "Password",
+    "name": "Full name",
+    "email": "Email",
+    "confirmPassword": "Confirm password",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "createSubmit": "Create account",
+    "creating": "Creating account…",
+    "noAccount": "No account yet?",
+    "createOne": "Create one",
+    "haveAccount": "Already registered?",
+    "goSignIn": "Sign in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "scanTitle": "Scan your badge",
+    "scanBody": "అధీకృత IP-SAKTI సహాయక్ QR కోడ్‌ను ఫ్రేమ్ లోపల చూపండి.",
+    "scanClose": "Close the scanner",
+    "scanStarting": "Starting the camera…",
+    "scanReady": "బ్యాడ్జ్ కోసం వెతుకుతోంది",
+    "scanChecking": "ఫోటోను తనిఖీ చేస్తోంది",
+    "cameraBlockedTitle": "కెమెరా అందుబాటులో లేదు",
+    "cameraStep1": "అడ్రస్ బార్ పక్కన ఉన్న సైట్ సెట్టింగ్స్ ఐకాన్‌ను ఎంచుకోండి.",
+    "cameraStep2": "కెమెరాను అనుమతించు గా సెట్ చేయండి.",
+    "cameraStep3": "క్రింద కెమెరాను మళ్లీ ప్రయత్నించండి ఎంచుకోండి.",
+    "cameraRetry": "Retry camera",
+    "cameraDenied": "ఈ సైట్‌కు కెమెరా అనుమతి నిరాకరించబడింది.",
+    "cameraNone": "ఈ పరికరంలో కెమెరా కనిపించలేదు.",
+    "cameraBusy": "కెమెరాను మరో యాప్ వాడుతోంది. దాన్ని మూసివేసి మళ్లీ ప్రయత్నించండి.",
+    "cameraInsecure": "కెమెరాకు సురక్షిత కనెక్షన్ అవసరం. ఈ పేజీని https లేదా localhostలో తెరవండి.",
+    "cameraFailed": "కెమెరాను ప్రారంభించలేకపోయాం.",
+    "unmute": "Unmute background video",
+    "mute": "Mute background video",
+    "volume": "Volume",
+    "errName": "Enter your name.",
+    "errEmail": "Enter a valid email address.",
+    "errUsername": "Enter your username.",
+    "errUsernameShort": "Use at least 3 characters.",
+    "errPassword": "Enter your password.",
+    "errPasswordShort": "Use at least 8 characters.",
+    "errConfirm": "Type the password again.",
+    "errMismatch": "The two passwords do not match.",
+    "errGeneric": "Something went wrong. Try again.",
+    "demoHint": "డెమో బిల్డ్. demo / demo1234తో సైన్ ఇన్ చేయండి, లేదా IP-SAKTI సహాయక్ బ్యాడ్జ్‌ను స్కాన్ చేయండి.",
+    "signedInAs": "Signed in as",
+    "signOut": "Sign out",
+    "account": "Account",
+    "checking": "Checking your session…",
+    "usernameExample": "demo",
+    "scanVerified": "QR ధృవీకరించబడింది – ప్రవేశం మంజూరైంది. పోర్టల్ తెరుస్తోంది…",
+    "scanMismatch": "చెల్లని QR కోడ్ – ప్రవేశం నిరాకరించబడింది",
+    "scanOffline": "బ్యాడ్జ్ తనిఖీని చేరుకోలేకపోయాం. మళ్లీ ప్రయత్నిస్తోంది…",
+    "scanUpload": "ఫోటో అప్‌లోడ్ చేయండి",
+    "scanUploadNone": "ఆ ఫోటోలో QR కోడ్ కనిపించలేదు. దగ్గరగా, స్పష్టమైన ఫోటో తీయండి.",
+    "scanSwitch": "కెమెరా మార్చండి",
+    "scanPrivacy": "ఫ్రేమ్‌లు ఈ ఇన్‌స్టెన్స్‌లోనే తనిఖీ చేయబడతాయి, ఎప్పుడూ సేవ్ చేయబడవు.",
+    "cameraFallback": "బదులుగా బ్యాడ్జ్ ఫోటోను అప్‌లోడ్ చేయవచ్చు."
   }
 }

@@ -23,7 +23,6 @@ import {
   Badge,
   BottomSheet,
   Button,
-  Callout,
   Chip,
   Drawer,
   JurisdictionToggle,
@@ -59,6 +58,17 @@ import { PRODUCT_CLASSES, type Jurisdiction, type ProductClass } from '@/types/d
 const MARKETS = ['uk', 'eu', 'us'] as const;
 type Market = (typeof MARKETS)[number];
 
+/**
+ * A flow named in the address. The homepage's patent steps link here with
+ * `?flow=priorArt` or `?flow=classify`, so a reader at that step lands in the
+ * tool rather than being told it exists. Anything not a known flow is ignored.
+ */
+const FLOW_KINDS: readonly FlowKind[] = ['classify', 'abs', 'priorArt'];
+
+function flowFromParam(value: string | null): FlowKind | null {
+  return FLOW_KINDS.find((kind) => kind === value) ?? null;
+}
+
 export default function Sahayak() {
   const { t } = useTranslation('sahayak');
   const { t: tc } = useTranslation('common');
@@ -86,7 +96,9 @@ export default function Sahayak() {
   const [failure, setFailure] = useState<QueryErrorCode | null>(null);
   const [found, setFound] = useState<RetrievalCount | null>(null);
   const [attempt, setAttempt] = useState(0);
-  const [openFlow, setOpenFlow] = useState<FlowKind | null>(null);
+  const [openFlow, setOpenFlow] = useState<FlowKind | null>(() =>
+    flowFromParam(params.get('flow')),
+  );
   const [copied, setCopied] = useState<'answer' | 'link' | null>(null);
 
   const composerRef = useRef<HTMLTextAreaElement>(null);
@@ -124,6 +136,22 @@ export default function Sahayak() {
     },
     [setParams],
   );
+
+  /**
+   * Closing a flow also takes it out of the address, so reloading or sharing the
+   * page afterwards does not reopen a panel the reader already dismissed.
+   */
+  const closeFlow = useCallback(() => {
+    setOpenFlow(null);
+    setParams(
+      (current) => {
+        const next = new URLSearchParams(current);
+        next.delete('flow');
+        return next;
+      },
+      { replace: true },
+    );
+  }, [setParams]);
 
   /**
    * One request per question, jurisdiction, product type and answer language.
@@ -194,7 +222,7 @@ export default function Sahayak() {
               ),
               sources: tc('answer.sourcesHeading'),
               notLegalAdvice: tc('footer.disclaimer'),
-              demo: tc('answer.demoBadge'),
+              demo: tc('answer.sourceNote'),
             })
           : '';
     if (!text) return;
@@ -327,16 +355,12 @@ export default function Sahayak() {
 
               {phase === 'done' && result ? (
                 <>
-                  {result.isDemo ? (
-                    <Callout
-                      tone="caution"
-                      title={tc('answer.demoChip')}
-                      titleLevel={2}
-                      className="mt-5 max-w-measure"
-                    >
-                      {t('demoNotice')}
-                    </Callout>
-                  ) : null}
+                  {/* A source note, not an alarm. The provenance has to be on the
+                      answer — the citations name real statutes and the passages
+                      behind them are not yet the documents themselves — but it
+                      belongs in the register a publication uses for a footnote,
+                      not in a warning box above the thing it qualifies. It is
+                      rendered under the answer by `AnswerView`. */}
 
                   <LiveRegion urgency="polite" visuallyHidden>
                     {abstained
@@ -450,11 +474,11 @@ export default function Sahayak() {
 
       <ClassificationFlow
         open={openFlow === 'classify'}
-        onClose={() => setOpenFlow(null)}
+        onClose={closeFlow}
         onApply={(next) => setProductClass(next)}
       />
-      <AbsFlow open={openFlow === 'abs'} onClose={() => setOpenFlow(null)} />
-      <PriorArtFlow open={openFlow === 'priorArt'} onClose={() => setOpenFlow(null)} />
+      <AbsFlow open={openFlow === 'abs'} onClose={closeFlow} />
+      <PriorArtFlow open={openFlow === 'priorArt'} onClose={closeFlow} />
 
       {result ? (
         <EscalationForm

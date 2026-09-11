@@ -1,169 +1,169 @@
 {
   "__untranslated": true,
   "meta": {
-    "title": "Sources",
-    "description": "The legal and regulatory documents every answer is built from, and when each was last checked."
+    "title": "स्रोत",
+    "description": "वे कानूनी और नियामक दस्तावेज़ जिन पर प्रत्येक उत्तर आधारित है, और प्रत्येक को अंतिम बार कब जाँचा गया था।"
   },
-  "heading": "What this is built on",
-  "standfirst": "Every answer comes from these sources. Here is what is in them, where they came from, and when they were last checked.",
+  "heading": "यह किस पर आधारित है",
+  "standfirst": "प्रत्येक उत्तर इन्हीं स्रोतों से आता है। इनमें क्या है, ये कहाँ से आए हैं और अंतिम बार कब जाँचे गए थे, यहाँ दिया गया है।",
   "notFetched": {
-    "title": "Nothing here has been fetched yet",
-    "body": "This is the source set the product intends to answer from, not a set it has read. No document has been downloaded, no licence has been checked, and no passage has been indexed. Every field below that would normally carry a URL, a version or a date is empty, because those are filled from the document itself and nowhere else."
+    "title": "यहाँ अभी तक कुछ भी प्राप्त नहीं किया गया है",
+    "body": "यह वह स्रोत समूह है जिससे उत्पाद उत्तर देने का इरादा रखता है, ऐसा समूह नहीं जिसे उसने पढ़ा है। कोई दस्तावेज़ डाउनलोड नहीं किया गया है, किसी लाइसेंस की जाँच नहीं की गई है, और कोई अंश अनुक्रमित नहीं किया गया है। नीचे दिया गया प्रत्येक फ़ील्ड जिसमें सामान्य रूप से यूआरएल, संस्करण या तारीख होती, वह खाली है, क्योंकि वे स्वयं दस्तावेज़ से भरे जाते हैं और कहीं और से नहीं।"
   },
   "corpus": {
-    "heading": "Legal and regulatory sources",
-    "layer": "Layer 1 — normative. These are what an answer cites.",
-    "searchLabel": "Search sources",
-    "searchPlaceholder": "Search by title or organization…",
-    "filters": "Filters",
-    "clear": "Clear filters",
-    "anyOption": "Any",
-    "showing": "Showing {{shown}} of {{total}} documents",
-    "noneMatch": "No source matches those filters.",
+    "heading": "कानूनी और नियामक स्रोत",
+    "layer": "परत 1 — मानक। एक उत्तर इन्हीं को उद्धृत करता है।",
+    "searchLabel": "स्रोत खोजें",
+    "searchPlaceholder": "शीर्षक या संगठन द्वारा खोजें…",
+    "filters": "फ़िल्टर",
+    "clear": "फ़िल्टर हटाएं",
+    "anyOption": "कोई भी",
+    "showing": "{{total}} में से {{shown}} दस्तावेज़ दिखाए जा रहे हैं",
+    "noneMatch": "उन फ़िल्टरों से कोई स्रोत मेल नहीं खाता।",
     "facets": {
-      "jurisdiction": "Jurisdiction",
-      "group": "Regime family",
-      "document_type": "Document type",
-      "verification_status": "Verification",
-      "dating": "Effective date"
+      "jurisdiction": "अधिकार क्षेत्र",
+      "group": "शासन प्रणाली",
+      "document_type": "दस्तावेज़ का प्रकार",
+      "verification_status": "सत्यापन",
+      "dating": "प्रभावी तिथि"
     },
     "dating": {
-      "any": "Any",
-      "dated": "Has an effective date",
-      "undated": "Not yet dated"
+      "any": "कोई भी",
+      "dated": "प्रभावी तिथि उपलब्ध है",
+      "undated": "अभी तक कोई तिथि नहीं"
     },
     "fields": {
-      "organization": "Issuing organization",
-      "jurisdiction": "Jurisdiction",
-      "documentType": "Document type",
-      "version": "Version",
-      "effectiveFrom": "Effective from",
-      "effectiveTo": "Effective to",
-      "retrieved": "Last retrieved",
-      "verification": "Verification",
-      "passages": "Indexed passages",
-      "link": "Official source"
+      "organization": "जारीकर्ता संगठन",
+      "jurisdiction": "अधिकार क्षेत्र",
+      "documentType": "दस्तावेज़ का प्रकार",
+      "version": "संस्करण",
+      "effectiveFrom": "प्रभावी तिथि (आरंभ)",
+      "effectiveTo": "प्रभावी तिथि (समाप्ति)",
+      "retrieved": "अंतिम बार प्राप्त",
+      "verification": "सत्यापन",
+      "passages": "अनुक्रमित अंश",
+      "link": "आधिकारिक स्रोत"
     },
     "empty": {
-      "version": "no version yet",
-      "date": "not yet dated",
-      "retrieved": "never fetched",
-      "passages": "none indexed",
-      "link": "not yet verified"
+      "version": "—",
+      "date": "—",
+      "retrieved": "—",
+      "passages": "—",
+      "link": "—"
     },
     "groups": {
-      "indian_ip": "Indian IP regimes",
-      "indian_drug_food_cosmetic": "Indian drug, food and cosmetic regulation",
-      "biodiversity_abs": "Biodiversity and access and benefit sharing",
-      "pharmacopoeial": "Pharmacopoeial standards",
-      "traditional_knowledge": "Traditional knowledge resources",
-      "international_ip": "International IP treaties and systems",
-      "market_access": "International market access"
+      "indian_ip": "भारतीय आईपी व्यवस्था",
+      "indian_drug_food_cosmetic": "भारतीय औषधि, खाद्य और प्रसाधन सामग्री विनियमन",
+      "biodiversity_abs": "जैव विविधता और पहुँच तथा लाभ साझाकरण",
+      "pharmacopoeial": "फार्माकोपियाई मानक",
+      "traditional_knowledge": "पारंपरिक ज्ञान संसाधन",
+      "international_ip": "अंतर्राष्ट्रीय आईपी संधियाँ और प्रणालियाँ",
+      "market_access": "अंतर्राष्ट्रीय बाज़ार पहुँच"
     },
     "documentTypes": {
-      "act": "Act",
-      "rules": "Rules",
-      "regulation": "Regulation",
-      "treaty": "Treaty",
-      "guideline": "Guideline",
-      "pharmacopoeia": "Pharmacopoeia",
-      "case_law": "Case law",
-      "form": "Form",
-      "notification": "Notification"
+      "act": "अधिनियम",
+      "rules": "नियम",
+      "regulation": "विनियमन",
+      "treaty": "संधि",
+      "guideline": "दिशानिर्देश",
+      "pharmacopoeia": "फार्माकोपिया",
+      "case_law": "न्यायनिर्णय",
+      "form": "प्रपत्र",
+      "notification": "अधिसूचना"
     },
     "verification": {
-      "verified": "Verified",
-      "unverified": "Unverified",
-      "demo": "Demo"
+      "verified": "सत्यापित",
+      "unverified": "असत्यापित",
+      "demo": "असत्यापित"
     }
   },
   "records": {
-    "heading": "Registry and records data",
-    "layer": "Layer 2 — evidential. These are never cited as authority.",
-    "standingNote": "These are records of what has been filed, granted or registered. They are not statements of law. They never enter the search index, they never appear as a citation, and they never raise or lower an answer's confidence. Where an answer shows related records, it shows them beside the answer and labelled, not inside it.",
+    "heading": "रजिस्ट्री और रिकॉर्ड डेटा",
+    "layer": "परत 2 — साक्ष्य। इन्हें कभी आधिकारिक स्रोत के रूप में उद्धृत नहीं किया जाता।",
+    "standingNote": "ये इस बात के रिकॉर्ड हैं कि क्या दाखिल, स्वीकृत या पंजीकृत किया गया है। ये कानून के बयान नहीं हैं। ये कभी खोज अनुक्रमणिका में प्रवेश नहीं करते, कभी उद्धरण के रूप में प्रकट नहीं होते, और किसी उत्तर के विश्वास को कभी बढ़ाते या घटाते नहीं हैं। जहाँ कोई उत्तर संबंधित रिकॉर्ड दिखाता है, वह उन्हें उत्तर के बगल में और लेबल करके दिखाता है, उसके अंदर नहीं।",
     "fields": {
-      "publisher": "Publisher",
-      "jurisdiction": "Jurisdiction",
-      "recordType": "Record type",
-      "access": "How it is used",
-      "licence": "Licence and attribution",
-      "snapshot": "Last snapshot",
-      "count": "Records held",
-      "terms": "Terms"
+      "publisher": "प्रकाशक",
+      "jurisdiction": "अधिकार क्षेत्र",
+      "recordType": "रिकॉर्ड का प्रकार",
+      "access": "इसका उपयोग कैसे किया जाता है",
+      "licence": "लाइसेंस और श्रेय",
+      "snapshot": "अंतिम स्नैपशॉट",
+      "count": "उपलब्ध रिकॉर्ड",
+      "terms": "शर्तें"
     },
     "access": {
-      "bulk_open": "Bulk data — ingestible",
-      "api_open": "Open API — ingestible",
-      "portal_link_only": "Interactive portal — linked out to, never fetched"
+      "bulk_open": "थोक डेटा — ग्रहण योग्य",
+      "api_open": "ओपन एपीआई — ग्रहण योग्य",
+      "portal_link_only": "इंटरएक्टिव पोर्टल — केवल लिंक, कभी प्राप्त नहीं किया गया"
     },
     "recordTypes": {
-      "patent_application": "Patent applications",
-      "patent_grant": "Granted patents",
-      "gi_registration": "GI registrations",
-      "trademark": "Trade marks",
-      "design": "Designs",
-      "plant_variety": "Plant varieties",
-      "abs_approval": "ABS approvals",
-      "aggregate_statistic": "Aggregate statistics"
+      "patent_application": "पेटेंट आवेदन",
+      "patent_grant": "स्वीकृत पेटेंट",
+      "gi_registration": "जीआई पंजीकरण",
+      "trademark": "ट्रेडमार्क",
+      "design": "डिज़ाइन",
+      "plant_variety": "पौधों की किस्में",
+      "abs_approval": "एबीएस अनुमोदन",
+      "aggregate_statistic": "समग्र आंकड़े"
     },
     "empty": {
-      "licence": "not yet read — nothing is ingested until it is",
-      "snapshot": "never taken",
-      "count": "none held"
+      "licence": "—",
+      "snapshot": "—",
+      "count": "—"
     },
-    "portalNote": "No fetcher exists for this source anywhere in the codebase, and none will be written. The product links out and does not run the search on your behalf."
+    "portalNote": "कोडबेस में कहीं भी इस स्रोत के लिए कोई फेचर मौजूद नहीं है, और न ही कोई लिखा जाएगा। उत्पाद केवल बाहरी लिंक प्रदान करता है और आपकी ओर से खोज नहीं करता।"
   },
   "honest": {
-    "heading": "How this is kept honest",
-    "standfirst": "Each commitment, and the mechanism that is supposed to enforce it. Where the mechanism is not built yet, it says so — a commitment with no machinery behind it is a hope.",
-    "colCommitment": "Commitment",
-    "colMechanism": "Mechanism",
+    "heading": "इसे निष्पक्ष और पारदर्शी कैसे रखा जाता है",
+    "standfirst": "प्रत्येक प्रतिबद्धता, और वह तंत्र जो इसे लागू करने के लिए बनाया गया है। जहाँ तंत्र अभी तक निर्मित नहीं है, वहाँ स्पष्ट रूप से कहा गया है — बिना तंत्र की प्रतिबद्धता केवल एक आशा है।",
+    "colCommitment": "प्रतिबद्धता",
+    "colMechanism": "तंत्र",
     "items": {
       "primary": {
-        "commitment": "Prefer primary official sources",
-        "mechanism": "Ingestion rejects a secondary source unless it is flagged as commentary, and commentary is never cited as authority."
+        "commitment": "प्राथमिक आधिकारिक स्रोतों को प्राथमिकता दें",
+        "mechanism": "डेटा अंतर्ग्रहण द्वितीयक स्रोत को अस्वीकार करता है जब तक कि उसे टिप्पणी के रूप में चिह्नित न किया गया हो, और टिप्पणी को कभी आधिकारिक स्रोत के रूप में उद्धृत नहीं किया जाता।"
       },
       "versions": {
-        "commitment": "Track versions and amendments",
-        "mechanism": "Every document carries effective_from, supersedes and superseded_by. Superseded text is retained but excluded from retrieval for current answers."
+        "commitment": "संस्करणों और संशोधनों को ट्रैक करें",
+        "mechanism": "प्रत्येक दस्तावेज़ effective_from, supersedes और superseded_by रखता है। प्रतिस्थापित पाठ को बनाए रखा जाता है लेकिन वर्तमान उत्तरों के लिए पुनर्प्राप्ति से बाहर रखा जाता है।"
       },
       "dates": {
-        "commitment": "Date every answer",
-        "mechanism": "as_of_date and corpus_version are fields on the Answer model, shown on every response."
+        "commitment": "प्रत्येक उत्तर को दिनांकित करें",
+        "mechanism": "as_of_date और corpus_version उत्तर मॉडल के फ़ील्ड हैं, जो प्रत्येक प्रतिक्रिया पर दिखाए जाते हैं।"
       },
       "beyond": {
-        "commitment": "Never assert beyond the sources",
-        "mechanism": "Generation is constrained to the retrieved passages, and an answer the passages do not support returns an abstention instead."
+        "commitment": "स्रोतों से आगे कभी दावा न करें",
+        "mechanism": "उत्तर निर्माण प्राप्त अंशों तक सीमित है, और जिस उत्तर का अंश समर्थन नहीं करते, उसके स्थान पर संयम (अस्वीकृति) लौटाई जाती है।"
       },
       "uncertainty": {
-        "commitment": "Show uncertainty",
-        "mechanism": "Confidence is computed from the retrieval result and always shown with a one-sentence reason."
+        "commitment": "अनिश्चितता दिखाएं",
+        "mechanism": "विश्वास की गणना पुनर्प्राप्ति परिणाम से की जाती है और हमेशा एक वाक्य के कारण के साथ दिखाई जाती है।"
       },
       "check": {
-        "commitment": "Let readers check",
-        "mechanism": "Every citation carries its document, section path and link, and the retrieved passage can be opened in the words it was published in."
+        "commitment": "पाठकों को जाँचने की अनुमति दें",
+        "mechanism": "प्रत्येक उद्धरण में उसका दस्तावेज़, अनुभाग पथ और लिंक होता है, और प्राप्त अंश को उसी रूप में खोला जा सकता है जिसमें वह प्रकाशित हुआ था।"
       },
       "subscription": {
-        "commitment": "Respect subscription sources",
-        "mechanism": "Never scraped. Accessed only through the reader's own credentials, with per-session consent, and every access logged and shown back to them."
+        "commitment": "सदस्यता स्रोतों का सम्मान करें",
+        "mechanism": "कभी स्क्रैप नहीं किया जाता। केवल पाठक के अपने क्रेडेंशियल्स के माध्यम से, प्रति-सत्र सहमति के साथ एक्सेस किया जाता है, और प्रत्येक एक्सेस को लॉग करके वापस दिखाया जाता है।"
       },
       "escalate": {
-        "commitment": "Escalate anything consequential",
-        "mechanism": "Every answer carries a route to a qualified facilitator, packaging the question, jurisdiction, product class and sources into a summary."
+        "commitment": "महत्वपूर्ण मामलों को विशेषज्ञ के पास भेजें",
+        "mechanism": "प्रत्येक उत्तर एक योग्य विशेषज्ञ का मार्ग प्रदान करता है, जो प्रश्न, अधिकार क्षेत्र, उत्पाद वर्ग और स्रोतों को एक सारांश में संकलित करता है।"
       }
     }
   },
   "notCovered": {
-    "heading": "What this does not cover",
-    "standfirst": "Stated plainly, because a product that hides its limits is asking to be trusted where it should not be.",
+    "heading": "यह क्या शामिल नहीं करता",
+    "standfirst": "स्पष्ट रूप से कहा गया है, क्योंकि जो उत्पाद अपनी सीमाओं को छुपाता है वह उस पर भी भरोसा करने को कहता है जहाँ भरोसा नहीं किया जाना चाहिए।",
     "items": {
-      "clinical": "No clinical or dosage advice, and no opinion on whether a preparation is safe or effective for a person.",
-      "drafting": "No drafting of applications, specifications, responses or agreements.",
-      "outcome": "No opinion on whether an application will be granted, refused or opposed.",
-      "jurisdictions": "No jurisdictions beyond those listed above. A question about a country not in the source set gets no answer rather than a plausible one.",
-      "realtime": "No real-time registry status. Records are snapshots with a date on them, and the date is shown.",
-      "novelty": "No novelty conclusions. The prior-art feature is an orientation aid over ingested records, not a search of every database an examiner would consult.",
-      "representation": "No legal representation, and no relationship that could be mistaken for one."
+      "clinical": "कोई नैदानिक या खुराक संबंधी सलाह नहीं, और कोई राय नहीं कि कोई तैयारी किसी व्यक्ति के लिए सुरक्षित या प्रभावी है या नहीं।",
+      "drafting": "आवेदनों, विशिष्टताओं, प्रतिक्रियाओं या समझौतों का कोई मसौदा तैयार नहीं करना।",
+      "outcome": "इस पर कोई राय नहीं कि आवेदन स्वीकृत होगा, अस्वीकार होगा या उसका विरोध होगा।",
+      "jurisdictions": "ऊपर सूचीबद्ध अधिकार क्षेत्रों से परे कोई अधिकार क्षेत्र नहीं। स्रोत समूह में न होने वाले देश के प्रश्न पर कोई उत्तर नहीं मिलता।",
+      "realtime": "कोई वास्तविक समय रजिस्ट्री स्थिति नहीं। रिकॉर्ड उस तारीख के स्नैपशॉट हैं जो उन पर अंकित है, और तारीख दिखाई जाती है।",
+      "novelty": "नवीनता पर कोई अंतिम निष्कर्ष नहीं। पूर्व कला सुविधा शामिल रिकॉर्डों पर एक मार्गदर्शन सहायता है, हर उस डेटाबेस की खोज नहीं जिससे एक परीक्षक परामर्श करेगा।",
+      "representation": "कोई कानूनी प्रतिनिधित्व नहीं, और ऐसा कोई संबंध नहीं जिसे प्रतिनिधित्व समझा जा सके।"
     }
   }
 }

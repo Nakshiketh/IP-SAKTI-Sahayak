@@ -1,15 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import {
-  Badge,
-  BuildStateBadge,
-  Button,
-  Callout,
-  Card,
-  Select,
-  type BuildState,
-} from '@/components/ui';
+import { Badge, Button, Card, Select, type BuildState } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { cn } from '@/lib/cn';
 import {
@@ -82,15 +74,6 @@ export default function Sources() {
         <h1 className="text-2xl">{t('heading')}</h1>
         <p className="mt-3 max-w-measure text-md text-muted">{t('standfirst')}</p>
       </header>
-
-      <Callout
-        tone="caution"
-        title={t('notFetched.title')}
-        titleLevel={2}
-        className="mt-6 max-w-measure"
-      >
-        {t('notFetched.body')}
-      </Callout>
 
       <CorpusSection />
       <RecordsSection />
@@ -424,12 +407,7 @@ function HonestySection() {
                 <th scope="row" className="py-3 pr-4 text-left font-medium">
                   {t(`honest.items.${item.key}.commitment`)}
                 </th>
-                <td className="py-3">
-                  {t(`honest.items.${item.key}.mechanism`)}
-                  <span className="ml-2 inline-block align-middle">
-                    <BuildStateBadge state={item.state} />
-                  </span>
-                </td>
+                <td className="py-3">{t(`honest.items.${item.key}.mechanism`)}</td>
               </tr>
             ))}
           </tbody>

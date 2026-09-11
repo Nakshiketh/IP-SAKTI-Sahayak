@@ -1,137 +1,203 @@
 {
-  "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "आयुर्वेद, बौद्धिक संपदा और विनियमन"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "मुख्य",
+    "home": "होम",
+    "sahayak": "सहायक से पूछें",
+    "covered": "क्या शामिल है",
+    "howItWorks": "यह कैसे काम करता है",
+    "sources": "स्रोत",
+    "about": "परिचय"
   },
   "cta": {
-    "ask": "Ask Sahayak"
+    "ask": "सहायक से पूछें",
+    "check": "मेरे उत्पाद की जाँच करें"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "मेनू",
+    "close": "मेनू बंद करें",
+    "title": "मेनू"
   },
   "language": {
-    "label": "Language",
-    "changed": "Language changed to {{language}}"
+    "label": "भाषा",
+    "changed": "भाषा बदलकर {{language}} कर दी गई"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "सीधे सामग्री पर जाएं",
   "footer": {
-    "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
-    "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
-    "sourceMetaEmpty": "No sources indexed yet · v{{version}}",
-    "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "disclaimer": "IP-SAKTI Sahayak प्रकाशित कानूनी और नियामक स्रोतों से प्राप्त जानकारी प्रदान करता है। यह कानूनी सलाह नहीं देता, बौद्धिक संपदा अधिकार प्रदान नहीं करता, उत्पादों को मंजूरी नहीं देता या किसी नियामक प्राधिकरण का स्थान नहीं लेता है। महत्वपूर्ण निर्णयों को वर्तमान आधिकारिक स्रोतों और किसी योग्य विशेषज्ञ से सत्यापित करें।",
+    "sourceMeta": "{{date}} तक के स्रोत · {{count}} दस्तावेज़ · v{{version}}",
+    "sourceMetaEmpty": "v{{version}}",
+    "sourceMetaUnavailable": "स्रोत जानकारी अभी उपलब्ध नहीं है।",
+    "privacy": "यह उत्पाद क्या संग्रहीत करता है"
   },
   "notFound": {
-    "title": "There is no page here",
-    "body": "The address may be mistyped, or the page may have been renamed.",
-    "action": "Go to the homepage"
+    "title": "यहाँ कोई पृष्ठ नहीं है",
+    "body": "पता गलत टाइप हो सकता है, या पृष्ठ का नाम बदला जा सकता है।",
+    "action": "होमपेज पर जाएं"
   },
   "boundary": {
-    "title": "This page stopped working",
-    "body": "Something in the interface failed while drawing this page. What went wrong is in the browser console; nothing has been sent anywhere.",
-    "notAnAbstention": "This is the interface breaking, not the product declining to answer. No question was searched and no answer was withheld.",
-    "retry": "Try this page again"
+    "title": "इस पृष्ठ ने काम करना बंद कर दिया",
+    "body": "इस पृष्ठ को प्रदर्शित करते समय इंटरफ़ेस में कुछ विफल हो गया। क्या गलत हुआ वह ब्राउज़र कंसोल में है; कहीं कुछ नहीं भेजा गया है।",
+    "notAnAbstention": "यह इंटरफ़ेस की खराबी है, उत्पाद द्वारा उत्तर देने से इनकार नहीं। कोई प्रश्न नहीं खोजा गया और कोई उत्तर नहीं रोका गया।",
+    "retry": "यह पृष्ठ पुनः प्रयास करें"
   },
   "offline": {
-    "title": "This device is not connected",
-    "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
+    "title": "यह उपकरण कनेक्ट नहीं है",
+    "body": "पहले से खुले पृष्ठ अभी भी काम करते हैं। जिस किसी भी चीज़ के लिए सेवा की आवश्यकता है — प्रश्न पूछना, स्रोत देखना — आपके वापस आने तक प्रतीक्षा करेगा।"
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "बंद करें",
+    "remove": "हटाएं"
   },
   "record": {
-    "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
-    "recordType": "Record type",
-    "applicant": "Applicant",
-    "status": "Status"
+    "notAuthority": "दाखिल या स्वीकृत रिकॉर्ड — क्या दाखिल किया गया था इसका प्रमाण, कानून का बयान नहीं। स्नैपशॉट {{date}}।",
+    "recordType": "रिकॉर्ड का प्रकार",
+    "applicant": "आवेदक",
+    "status": "स्थिति"
   },
   "confidence": {
-    "high": "High confidence",
-    "moderate": "Moderate confidence",
-    "low": "Low confidence",
-    "abstain": "Not answered",
-    "meter": "{{label}}: {{filled}} of {{total}}",
-    "demoReason_one": "Based on {{count}} illustrative passage. Nothing here was retrieved from a real document.",
-    "demoReason_other": "Based on {{count}} illustrative passages. Nothing here was retrieved from a real document.",
+    "high": "उच्च विश्वास",
+    "moderate": "मध्यम विश्वास",
+    "low": "कम विश्वास",
+    "abstain": "उत्तर नहीं दिया गया",
+    "meter": "{{label}}: {{total}} में से {{filled}}",
+    "demoReason_one": "{{count}} सांकेतिक उद्धरण पर आधारित। यहाँ कुछ भी वास्तविक दस्तावेज़ से नहीं निकाला गया।.",
+    "demoReason_other": "{{count}} सांकेतिक उद्धरणों पर आधारित। यहाँ कुछ भी वास्तविक दस्तावेज़ से नहीं निकाला गया।.",
     "reasons": {
-      "high": "Based on {{passages}} passages from {{documents}} current sources.",
-      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
-      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
-      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
-      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
-      "lowContradiction": "The passages found disagree with each other.",
-      "abstainNothing": "Nothing in these sources answers this reliably.",
-      "abstainScope": "This is outside what these sources cover.",
-      "abstainConflict": "The only passages found point different ways.",
-      "abstainStale": "Everything found sits outside its effective window.",
-      "abstainFacts": "The answer turns on something only you can tell me."
+      "high": "{{documents}} वर्तमान स्रोतों के {{passages}} अंशों पर आधारित।",
+      "moderateSingleDocument": "{{passages}} अंशों पर आधारित, सभी एक ही स्रोत से।",
+      "moderateOutOfWindow": "{{passages}} अंशों पर आधारित, जिनमें से एक अपनी प्रभावी अवधि से बाहर है।",
+      "moderateThin": "{{documents}} स्रोतों के {{passages}} अंशों पर आधारित — एक आश्वस्त उत्तर के लिए आवश्यक से कम।",
+      "lowWeak": "पाए गए {{passages}} अंश इस प्रश्न के लिए कमजोर मेल हैं।",
+      "lowContradiction": "पाए गए अंश एक दूसरे से असहमत हैं।",
+      "abstainNothing": "{{passages}} अंशों पर विचार किया गया; कोई भी सीमा पार नहीं कर सका।",
+      "abstainScope": "किसी भी स्रोत में खोज नहीं की गई — प्रश्न कार्यक्षेत्र से बाहर है।",
+      "abstainConflict": "{{passages}} अंशों पर विचार किया गया; उनमें से दो परस्पर विरोधी हैं।",
+      "abstainStale": "{{passages}} अंशों पर विचार किया गया; वे सभी अपनी प्रभावी अवधि से बाहर हैं।",
+      "abstainFacts": "{{passages}} अंशों पर विचार किया गया; इनमें से कौन लागू होता है यह उत्पाद के प्रकार पर निर्भर करता है।"
     }
   },
   "sourceRule": {
-    "unsourcedTooltip": "General explanation, not from a specific source."
+    "unsourcedTooltip": "सामान्य विवरण, किसी विशिष्ट स्रोत से नहीं।"
   },
   "answer": {
     "blocks": {
-      "answer": "Answer",
-      "why": "Why this matters",
-      "what_to_check": "What to check",
-      "caveat": "Caveats"
+      "answer": "उत्तर",
+      "why": "यह क्यों महत्वपूर्ण है",
+      "what_to_check": "क्या जाँचें",
+      "caveat": "चेतावनियाँ"
     },
-    "demoChip": "Illustrative example — demo sources, not a legal source",
-    "noSourceDate": "No source date yet",
-    "asOf": "Sources as of {{date}}",
-    "citationMarker": "Source {{number}}: {{title}}",
-    "uncited": "General explanation, not from a specific source.",
-    "sourcesHeading": "Sources",
-    "sourceCount_one": "{{count}} source",
-    "sourceCount_other": "{{count}} sources",
-    "showPassage": "Show the passage",
-    "hidePassage": "Hide the passage",
-    "openSource": "Open the source",
-    "openSourceUnavailable": "No link yet",
-    "demoBadge": "demo",
-    "sourceNumber": "Source {{number}}",
-    "verifiedBadge": "verified"
+    "noSourceDate": "—",
+    "asOf": "{{date}} तक के स्रोत",
+    "citationMarker": "स्रोत {{number}}: {{title}}",
+    "uncited": "सामान्य विवरण, किसी विशिष्ट स्रोत से नहीं।",
+    "sourcesHeading": "स्रोत",
+    "sourceCount_one": "{{count}} स्रोत",
+    "sourceCount_other": "{{count}} स्रोत",
+    "showPassage": "अंश दिखाएं",
+    "hidePassage": "अंश छिपाएं",
+    "openSource": "स्रोत खोलें",
+    "openSourceUnavailable": "अभी तक कोई लिंक नहीं",
+    "sourceNumber": "स्रोत {{number}}",
+    "verifiedBadge": "सत्यापित",
+    "sourceNote": "स्रोत एक संकलनाधीन संदर्भ सेट से लिए गए हैं। इस पर भरोसा करने से पहले आधिकारिक पाठ से सत्यापित करें।"
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "भारत",
+    "INTL": "अंतर्राष्ट्रीय"
   },
   "productClass": {
-    "classical_generic": "Classical formulation",
-    "patent_proprietary": "Patent or proprietary medicine",
-    "new_non_classical_drug": "New non-classical drug",
-    "phytopharmaceutical": "Phytopharmaceutical",
-    "ayurveda_aahar": "Ayurveda-Aahar",
-    "cosmetic": "Cosmetic",
-    "undetermined": "Product type not yet identified"
+    "classical_generic": "पारंपरिक निर्माण",
+    "patent_proprietary": "पेटेंट या मालिकाना दवा",
+    "new_non_classical_drug": "नई गैर-पारंपरिक दवा",
+    "phytopharmaceutical": "फाइटोग्रास्यूटिकल",
+    "ayurveda_aahar": "आयुर्वेद-आहार",
+    "cosmetic": "प्रसाधन सामग्री",
+    "undetermined": "उत्पाद का प्रकार अभी तक निर्धारित नहीं"
   },
   "buildState": {
-    "live": "running",
-    "demo": "built, on illustrative data",
-    "planned": "designed, not built"
+    "live": "सक्रिय",
+    "planned": "प्रस्तावित, अभी निर्मित नहीं"
   },
   "recordType": {
-    "patent_application": "Patent application",
-    "patent_grant": "Granted patent",
-    "gi_registration": "GI registration",
-    "trademark": "Trade mark",
-    "design": "Design",
-    "plant_variety": "Plant variety",
-    "abs_approval": "ABS approval",
-    "aggregate_statistic": "Aggregate statistic"
+    "patent_application": "पेटेंट आवेदन",
+    "patent_grant": "स्वीकृत पेटेंट",
+    "gi_registration": "जीआई पंजीकरण",
+    "trademark": "ट्रेडमार्क",
+    "design": "डिज़ाइन",
+    "plant_variety": "पौधों की किस्म",
+    "abs_approval": "एबीएस अनुमोदन",
+    "aggregate_statistic": "समग्र आंकड़े"
+  },
+  "auth": {
+    "heroTitle": "प्राचीन ज्ञान। संरक्षित नवाचार।",
+    "heroBody": "आयुर्वेदिक उत्पादों की बौद्धिक संपदा और विनियमन के बारे में पूछने के लिए साइन इन करें।",
+    "signInTitle": "साइन इन",
+    "signInBody": "अपना बैज स्कैन करें, या उपयोगकर्ता नाम का उपयोग करें।",
+    "registerTitle": "खाता बनाएँ",
+    "registerBody": "कुछ विवरण और आप तैयार हैं।",
+    "scanBadge": "बैज स्कैन करें",
+    "or": "या",
+    "username": "उपयोगकर्ता नाम",
+    "password": "पासवर्ड",
+    "name": "पूरा नाम",
+    "email": "ईमेल",
+    "confirmPassword": "पासवर्ड की पुष्टि करें",
+    "forgot": "पासवर्ड भूल गए?",
+    "submit": "साइन इन",
+    "submitting": "साइन इन हो रहा है…",
+    "createSubmit": "खाता बनाएँ",
+    "creating": "खाता बन रहा है…",
+    "noAccount": "अभी तक खाता नहीं?",
+    "createOne": "एक बनाएँ",
+    "haveAccount": "पहले से पंजीकृत?",
+    "goSignIn": "साइन इन",
+    "showPassword": "पासवर्ड दिखाएँ",
+    "hidePassword": "पासवर्ड छिपाएँ",
+    "scanTitle": "अपना बैज स्कैन करें",
+    "scanBody": "अधिकृत IP-SAKTI सहायक QR कोड फ़्रेम के अंदर दिखाएँ।",
+    "scanClose": "स्कैनर बंद करें",
+    "scanStarting": "कैमरा शुरू हो रहा है…",
+    "scanReady": "बैज खोजा जा रहा है",
+    "scanChecking": "फ़ोटो जाँची जा रही है",
+    "cameraBlockedTitle": "कैमरा उपलब्ध नहीं",
+    "cameraStep1": "एड्रेस बार के पास साइट सेटिंग्स आइकन चुनें।",
+    "cameraStep2": "कैमरा को अनुमति दें पर सेट करें।",
+    "cameraStep3": "नीचे कैमरा फिर से आज़माएँ चुनें।",
+    "cameraRetry": "कैमरा पुनः प्रयास करें",
+    "cameraDenied": "इस साइट के लिए कैमरा अनुमति अस्वीकार की गई।",
+    "cameraNone": "इस डिवाइस पर कोई कैमरा नहीं मिला।",
+    "cameraBusy": "कैमरा किसी दूसरे ऐप में उपयोग हो रहा है। उसे बंद करके फिर कोशिश करें।",
+    "cameraInsecure": "कैमरे को सुरक्षित कनेक्शन चाहिए। यह पेज https या localhost पर खोलें।",
+    "cameraFailed": "कैमरा शुरू नहीं हो सका।",
+    "unmute": "पृष्ठभूमि वीडियो अनम्यूट करें",
+    "mute": "पृष्ठभूमि वीडियो म्यूट करें",
+    "volume": "ध्वनि",
+    "errName": "अपना नाम दर्ज करें।",
+    "errEmail": "मान्य ईमेल पता दर्ज करें।",
+    "errUsername": "अपना उपयोगकर्ता नाम दर्ज करें।",
+    "errUsernameShort": "कम से कम 3 अक्षर लिखें।",
+    "errPassword": "अपना पासवर्ड दर्ज करें।",
+    "errPasswordShort": "कम से कम 8 अक्षर लिखें।",
+    "errConfirm": "पासवर्ड दोबारा लिखें।",
+    "errMismatch": "दोनों पासवर्ड मेल नहीं खाते।",
+    "errGeneric": "कुछ गड़बड़ हुई। फिर से प्रयास करें।",
+    "demoHint": "डेमो बिल्ड। demo / demo1234 से साइन इन करें, या IP-SAKTI सहायक बैज स्कैन करें।",
+    "signedInAs": "साइन इन",
+    "signOut": "साइन आउट",
+    "account": "खाता",
+    "checking": "आपका सत्र जाँचा जा रहा है…",
+    "usernameExample": "demo",
+    "scanVerified": "QR सत्यापित – प्रवेश स्वीकृत। पोर्टल खोला जा रहा है…",
+    "scanMismatch": "अमान्य QR कोड – प्रवेश अस्वीकृत",
+    "scanOffline": "बैज जाँच से संपर्क नहीं हो सका। फिर से कोशिश की जा रही है…",
+    "scanUpload": "फ़ोटो अपलोड करें",
+    "scanUploadNone": "उस फ़ोटो में कोई QR कोड नहीं मिला। पास से, साफ़ फ़ोटो लें।",
+    "scanSwitch": "कैमरा बदलें",
+    "scanPrivacy": "फ़्रेम इसी इंस्टेंस पर जाँचे जाते हैं और कभी सहेजे नहीं जाते।",
+    "cameraFallback": "आप इसके बजाय बैज की फ़ोटो अपलोड कर सकते हैं।"
   }
 }

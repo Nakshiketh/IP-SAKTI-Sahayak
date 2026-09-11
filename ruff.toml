@@ -13,6 +13,13 @@ select = ["E", "F", "I", "UP", "B", "SIM"]
 # makes the source set harder to read and easier to typo.
 "scripts/build_manifest.py" = ["E501"]
 "scripts/build_records_manifest.py" = ["E501"]
+# Interface copy, regular expressions and SQL. Each is one unit of meaning, and a
+# sentence or a pattern split across lines to satisfy a width is harder to check.
+"backend/app/analyst/dialogue.py" = ["E501"]
+"backend/app/analyst/reader.py" = ["E501"]
+"backend/app/analyst/lexicon.py" = ["E501"]
+"backend/app/analyst/store.py" = ["E501"]
+"backend/app/analyst/service.py" = ["E501"]
 
 [lint.isort]
 known-first-party = ["app"]

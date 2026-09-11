@@ -82,7 +82,7 @@ describe('the answer header', () => {
     expect(screen.getByText('India')).toBeInTheDocument();
     expect(screen.getByText('Patent or proprietary medicine')).toBeInTheDocument();
     // No corpus has been ingested, so there is no "as of" date to show.
-    expect(screen.getByText('No source date yet')).toBeInTheDocument();
+    expect(screen.getByText('—')).toBeInTheDocument();
   });
 
   it('never shows confidence without its reason', () => {
@@ -93,18 +93,20 @@ describe('the answer header', () => {
 });
 
 describe('source cards', () => {
-  it('shows a demo source as demo, with no verified marking anywhere', () => {
+  it('carries one source note for the answer, not a marking on every card', () => {
     renderAnswer();
     const sources = screen.getAllByRole('article');
     expect(sources.length).toBeGreaterThan(0);
     for (const card of sources) {
-      expect(within(card).getByText('demo')).toBeInTheDocument();
+      expect(within(card).queryByText('demo')).not.toBeInTheDocument();
       expect(within(card).queryByText('verified')).not.toBeInTheDocument();
     }
+    // The provenance is stated once, under the answer.
+    expect(screen.getByText(/Verify against the official text/i)).toBeInTheDocument();
   });
 
   it('says plainly when there is no link to the source yet', () => {
     renderAnswer();
-    expect(screen.getAllByText('No link yet').length).toBeGreaterThan(0);
+    expect(screen.getAllByText('Link not available').length).toBeGreaterThan(0);
   });
 });

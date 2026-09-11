@@ -1,0 +1,391 @@
+{
+  "meta": {
+    "title": "Check my product",
+    "description": "Work out which intellectual property could protect an Ayurvedic product, what may already exist, and what to do next."
+  },
+  "heading": "Check my product",
+  "standfirst": "Tell us what the product is and what goes into it. You will see which kinds of intellectual property could apply, what already exists that may overlap, and the steps to take next.",
+  "notLegalAdvice": "Guidance, not legal advice",
+  "stepper": {
+    "label": "Assessment progress",
+    "stepOf": "Step {{number}} of {{total}}",
+    "done": "completed",
+    "current": "current step",
+    "upcoming": "not started"
+  },
+  "steps": {
+    "category": "Product category",
+    "details": "Product details",
+    "ingredients": "Ingredients and formulation",
+    "protection": "Protection check",
+    "result": "Result",
+    "guidance": "Next steps"
+  },
+  "actions": {
+    "continue": "Continue",
+    "back": "Back",
+    "run": "Run the assessment",
+    "running": "Checking…",
+    "seeGuidance": "See recommended protection",
+    "restart": "Start again",
+    "print": "Print this summary",
+    "retry": "Try the records search again"
+  },
+  "errors": {
+    "summary": "Check these before you continue",
+    "required": "This is needed to continue.",
+    "tooShort": "Use at least 2 characters.",
+    "tooLong": "This is longer than the form accepts. Shorten it.",
+    "noIngredients": "Add at least one ingredient.",
+    "noNovelty": "Choose at least one option.",
+    "noneWithOthers": "\"Nothing new\" cannot be chosen together with another option.",
+    "choose": "Choose one option."
+  },
+  "category": {
+    "question": "What type of product are you developing?",
+    "hint": "Choose the closest match. It decides which trade mark classes and regulatory route to look at.",
+    "options": {
+      "hair": {
+        "label": "Hair-related product",
+        "examples": "Hair oils, shampoos, hair packs, scalp treatments"
+      },
+      "skin": {
+        "label": "Skin-related product",
+        "examples": "Creams, face packs, ubtan, balms"
+      },
+      "food": {
+        "label": "Food or nutraceutical",
+        "examples": "Health foods, supplements, herbal teas, Ayurveda Aahara"
+      },
+      "medicine": {
+        "label": "Ayurvedic medicine or therapeutic product",
+        "examples": "Churnas, vatis, asavas, medicated oils"
+      },
+      "cosmetic": {
+        "label": "Cosmetic or personal care",
+        "examples": "Soaps, tooth powders, fragrances, lip care"
+      },
+      "herbal": {
+        "label": "Herbal product",
+        "examples": "Raw or processed herbs, extracts, blends"
+      },
+      "other": {
+        "label": "Other Ayurveda-related product",
+        "examples": "Devices, kits or services built on Ayurvedic practice"
+      }
+    }
+  },
+  "details": {
+    "question": "Describe your product",
+    "hint": "Plain words are enough. Only the name and a few words of the purpose are used to search filed records.",
+    "name": "Product or brand name",
+    "nameHint": "The name you sell it under, or plan to.",
+    "purpose": "What it is for",
+    "purposeHint": "For example: reduces hair fall.",
+    "problem": "What problem it solves",
+    "difference": "How it is different or new",
+    "differenceHint": "Compared with what is already sold or described.",
+    "users": "Who it is for",
+    "usersHint": "For example: adults with a dry scalp, clinics, export buyers.",
+    "optional": "optional"
+  },
+  "ingredients": {
+    "question": "What ingredients, herbs, materials or compounds have you used?",
+    "hint": "Add each one separately. Include the plant part or form if you know it, such as bhringraj leaf extract.",
+    "inputLabel": "Ingredient",
+    "add": "Add",
+    "remove": "Remove {{name}}",
+    "listLabel": "Ingredients added",
+    "known": "Recognised in traditional use",
+    "unknown": "Not in the reference list",
+    "knownNote": "An ingredient recognised in traditional use is not new on its own. What can be new is a combination with an effect you can show, a process, an extract or a form — which is what the next question asks.",
+    "formulation": "Formulation or process details",
+    "formulationHint": "Proportions, method of preparation, extraction. Kept in this browser tab only and never sent anywhere.",
+    "noveltyQuestion": "What do you believe is new about it?",
+    "noveltyHint": "Choose all that apply.",
+    "novelty": {
+      "combination": {
+        "label": "A new combination of ingredients",
+        "detail": "Ingredients not used together before"
+      },
+      "proportions": {
+        "label": "New proportions of known ingredients",
+        "detail": "The same ingredients in a different ratio"
+      },
+      "process": {
+        "label": "A new process or method of preparation",
+        "detail": "How it is made, extracted or processed"
+      },
+      "extract": {
+        "label": "A new extract, fraction or isolated compound",
+        "detail": "A purified or standardised part of a plant"
+      },
+      "dosageForm": {
+        "label": "A new dosage form or way of delivering it",
+        "detail": "Such as a gel, a patch or sustained release"
+      },
+      "effect": {
+        "label": "An improved effect you can show",
+        "detail": "Backed by tests, studies or trial data"
+      },
+      "none": {
+        "label": "Nothing new — it follows a traditional recipe",
+        "detail": "A known preparation, made and sold as it is"
+      }
+    }
+  },
+  "protection": {
+    "question": "A few questions for the protection check",
+    "hint": "Each answer decides which of the four kinds of protection the result looks at.",
+    "brand": "Will you sell it under a brand name or logo?",
+    "yes": "Yes",
+    "no": "No",
+    "unsure": "Not sure",
+    "works": "Which of these have you created?",
+    "worksHint": "Choose all that apply, or none.",
+    "work": {
+      "packaging": "Packaging or label design",
+      "logo": "Logo artwork",
+      "writing": "Written content — label text, leaflets, website",
+      "media": "Photographs or video",
+      "software": "Software or an app"
+    },
+    "confidential": "Which of these do you keep confidential today?",
+    "confidentialHint": "Choose all that apply, or none.",
+    "secret": {
+      "formula": "The exact formulation or proportions",
+      "process": "The manufacturing process",
+      "sourcing": "Supplier and sourcing information",
+      "data": "Test or trial data"
+    },
+    "disclosed": "Have you already made the formulation public?",
+    "disclosedHint": "On a website, in a paper, at an exhibition, or on a label that lists everything in it."
+  },
+  "running": {
+    "heading": "Running the assessment",
+    "records": "Searching filed records in this portal",
+    "knowledge": "Comparing ingredients with traditional use and classical formulations",
+    "name": "Reviewing the brand name",
+    "protection": "Working out which protection applies",
+    "done": "Done"
+  },
+  "result": {
+    "similarHeading": "Potentially similar existing IP or prior art found",
+    "similarBody": "Something already on record or documented overlaps with what you described. This does not mean your product infringes anything or cannot be protected. It means the items below need a closer look.",
+    "noneHeading": "No similar result identified in the current assessment",
+    "noneBody": "This does not mean the invention is legally new, or that the name can be registered. This check covers only what is listed under \"What was checked\". An official search, and examination by the office concerned, may still find something.",
+    "scopeHeading": "What was checked",
+    "scopeRecords": "Filed records: {{count}} held in this portal, searched for {{terms}}.",
+    "scopeRecordsEmpty": "Filed records: none are loaded in this portal yet, so no filing was compared.",
+    "scopeRecordsFailed": "Filed records: the records service could not be reached, so no filing was compared.",
+    "scopeKnowledge": "Your ingredients, against {{ingredients}} traditional ingredients and {{formulations}} classical formulations.",
+    "scopeName": "Your brand name, for words that describe the product.",
+    "scopeNot": "Not searched: the official patent, trade mark and copyright registers, and the Traditional Knowledge Digital Library.",
+    "multiple": "One product can be protected in more than one way at once — a patent for the formulation, a trade mark for the name, copyright in the label artwork, and a trade secret for the process. Each is looked at separately below.",
+    "status": {
+      "similar": "Similar found",
+      "possible": "May be protectable",
+      "limited": "Limited on what you described",
+      "check": "Worth checking",
+      "clear": "Nothing flagged",
+      "none": "Not identified",
+      "relevant": "Relevant"
+    },
+    "ip": {
+      "patent": {
+        "title": "Patent",
+        "question": "Is there an existing patent, or documented knowledge, close to this invention, process or formulation?"
+      },
+      "trademark": {
+        "title": "Trade mark",
+        "question": "Could the proposed name conflict with an existing mark, or be hard to register?"
+      },
+      "copyright": {
+        "title": "Copyright",
+        "question": "Are there original works — artwork, packaging, writing, software — that copyright covers?"
+      },
+      "tradeSecret": {
+        "title": "Trade secret",
+        "question": "Is there confidential information — formulation, process, know-how — that can be kept as a trade secret?"
+      }
+    },
+    "finding": {
+      "type": "Type of IP",
+      "reference": "Existing record or reference",
+      "why": "Why it appears similar",
+      "overlap": "What may overlap",
+      "investigate": "What to investigate"
+    },
+    "priorArtType": "Patent — prior art in documented traditional knowledge",
+    "recordType": "{{type}} — filed record",
+    "classicalReference": "{{name}}, a classical formulation",
+    "whyName": "Your product's name or description contains \"{{match}}\".",
+    "whyIngredients": "Your ingredients include all of its defining ingredients: {{list}}.",
+    "whyRecord": "It shares these words with your product: {{terms}}.",
+    "overlap": {
+      "name": "The name",
+      "ingredients": "The ingredients or formulation",
+      "use": "The purpose or use"
+    },
+    "investigateClassical": "Whether what you changed — proportions, process, form or an effect you can show — goes beyond the classical preparation. An unchanged classical preparation is documented knowledge and is not patentable as it stands.",
+    "investigateRecord": "Read the record's claims and status on the official register, and compare them with what you actually make.",
+    "investigateMark": "Search the official trade marks register for this name and close variants, in the classes listed below.",
+    "patentKnown": "Recognised in traditional use: {{list}}.",
+    "patentUnrecognised": "Not in the reference list: {{list}}. That says nothing about whether they are new.",
+    "considerHeading": "What an examiner will look at",
+    "consider": {
+      "tk": "Traditional knowledge, and aggregations of known properties of traditionally known components, are excluded from patentability.",
+      "admixture": "A mere admixture — one whose result is only the sum of its ingredients' known properties — is excluded. A combination needs a synergistic effect you can show.",
+      "knownForm": "A new form of a known substance, such as an extract, is excluded unless it shows enhanced efficacy.",
+      "process": "A new process can be claimed in its own right, if it is new and not obvious.",
+      "effect": "Keep the test data. An improved effect is what an examiner will ask you to show.",
+      "disclosed": "You said the formulation is already public. Disclosure before filing can count against novelty, so tell a patent agent when and where it happened.",
+      "disclosedUnsure": "Find out whether the formulation has been made public, and when. Disclosure before filing can count against novelty."
+    },
+    "patentPossible": "On what you described, part of this may be protectable — most likely what is new in the process, extract, form or shown effect, rather than the ingredients themselves.",
+    "patentLimited": "On what you described, there is little a patent could cover. The name, the packaging and a confidential process can still be protected in other ways.",
+    "markDescriptive": "These words describe the product rather than name it: {{list}}. Names made of them are generally hard to register, and hard to stop others using.",
+    "markClassical": "The name contains {{list}}, the name of a classical preparation. One maker cannot usually claim that name as their own.",
+    "markClear": "Nothing in the name was flagged by this check. That is not a clearance — only a search of the official register can tell you whether the name is taken.",
+    "markNone": "You said you will not use a brand name or logo, so no trade mark was assessed.",
+    "classesHeading": "Classes to look at",
+    "class": {
+      "3": "Class 3 — cosmetics and non-medicated toiletries",
+      "5": "Class 5 — medicated and pharmaceutical preparations, dietary supplements",
+      "29": "Class 29 — foods such as preserved produce and edible oils",
+      "30": "Class 30 — foods such as teas, spices and cereal preparations"
+    },
+    "copyrightRelevant": "Copyright arises in original work as it is created. Registration is optional, and gives you evidence of ownership and date. Relevant here:",
+    "copyrightNone": "You did not list any original creative work, so copyright was not identified from your answers. Label artwork or text made later would bring it in.",
+    "secretRelevant": "These can be protected as trade secrets for as long as they stay confidential:",
+    "secretNone": "You did not list anything kept confidential. If the formulation or process is not public, it can be protected as a trade secret for as long as it stays that way.",
+    "tradeOff": "A patent publishes the invention, and a trade secret depends on it never being published. Decide, element by element, which route you take before anything is filed or disclosed.",
+    "likelyClass": "Products in this category usually fall under: {{class}}. Confirm it before you decide what to file.",
+    "confirmClassLink": "Work out your product type",
+    "askLink": "Ask Sahayak about this product",
+    "askQuestion": "Can a {{category}} made from {{ingredients}} be protected by a patent or trademark in India?",
+    "nextHeading": "What should I do next?",
+    "next": {
+      "reviewPriorArt": "Read the similar references above against your product, and note exactly what yours does differently.",
+      "officialPatentSearch": "Search the official Indian patent register and international patent databases for your ingredients and purpose.",
+      "professionalSearch": "Have a registered patent agent run a professional prior-art search. The Traditional Knowledge Digital Library is open only to patent offices, so an agent will know how it is reflected in examination.",
+      "confirmClass": "Confirm your product's regulatory class. It decides how much of the formulation can realistically be claimed.",
+      "trademarkSearch": "Search the official trade marks register for your name in the classes listed, before you print packaging.",
+      "keepConfidential": "Keep the formulation and process confidential until you have decided what to file, and use written confidentiality agreements with anyone you share them with.",
+      "recordWorks": "Keep dated originals of your artwork, label text and software, with the names of the people who created them.",
+      "consultProfessional": "Before relying on any of this, confirm it with a registered patent agent or trade mark attorney."
+    },
+    "registriesHeading": "Official registers to search",
+    "registriesNote": "These are not searched from here. Search them directly, or through a registered agent."
+  },
+  "guidance": {
+    "heading": "Recommended protection",
+    "standfirst": "Routes marked recommended follow from your answers. The others are here for reference.",
+    "recommended": "Recommended for your product",
+    "notRecommended": "For reference",
+    "office": "Where this is done",
+    "tabsLabel": "Kind of protection",
+    "patent": {
+      "office": "The Indian Patent Office — the Office of the Controller General of Patents, Designs and Trade Marks.",
+      "more": "See all twelve steps of the patent route",
+      "steps": {
+        "requirements": {
+          "title": "Check the requirements",
+          "body": "An invention must be new, involve an inventive step and be capable of industrial application, and must not fall within the exclusions. For Ayurvedic products the exclusions for traditional knowledge, mere admixtures and new forms of known substances matter most."
+        },
+        "search": {
+          "title": "Search the prior art properly",
+          "body": "Search patent registers and published literature, including traditional-knowledge sources. A registered patent agent can run a professional search."
+        },
+        "documents": {
+          "title": "Prepare the documents",
+          "body": "A specification describing the invention and, when complete, its claims; the application and inventorship forms; and an authorisation if an agent files for you. A provisional specification can secure a filing date first."
+        },
+        "file": {
+          "title": "File through the Indian patent system",
+          "body": "File the application with the Indian Patent Office, online or at the appropriate office, with the prescribed fee."
+        },
+        "examination": {
+          "title": "Examination and after",
+          "body": "Request examination, answer the examination report, attend a hearing if one is offered, and after grant keep the patent in force with renewal fees."
+        }
+      }
+    },
+    "trademark": {
+      "office": "The Trade Marks Registry, under the same office.",
+      "steps": {
+        "availability": {
+          "title": "Check availability",
+          "body": "Search the trade marks register for identical and similar marks, in your classes and related ones."
+        },
+        "class": {
+          "title": "Choose the class",
+          "body": "Pick the classes that cover your goods. The result above suggests where to start."
+        },
+        "prepare": {
+          "title": "Prepare the application",
+          "body": "The mark as you will use it, the goods it covers, the applicant's details, and the date you first used it, if you already have."
+        },
+        "file": {
+          "title": "File through the Indian trade marks system",
+          "body": "File with the Trade Marks Registry, online or at the appropriate office."
+        },
+        "stages": {
+          "title": "Examination, opposition and registration",
+          "body": "The mark is examined, advertised in the Trade Marks Journal so others can oppose it, and registered if it clears. Registration lasts ten years and can be renewed."
+        }
+      }
+    },
+    "copyright": {
+      "office": "The Copyright Office.",
+      "steps": {
+        "identify": {
+          "title": "Identify the original work",
+          "body": "Label and packaging artwork, logo artwork, written content, photographs and software are each separate works."
+        },
+        "prepare": {
+          "title": "Prepare the material",
+          "body": "Copies of the work, who created it and when — and, if someone else created it for you, a written assignment to you."
+        },
+        "apply": {
+          "title": "Apply, if you want registration",
+          "body": "Registration is optional. Where you want it, apply to the Copyright Office. It records you as owner and dates the work."
+        }
+      }
+    },
+    "tradeSecret": {
+      "office": "No office. A trade secret is protected by how you keep it, and by contract.",
+      "steps": {
+        "identify": {
+          "title": "Identify what is confidential",
+          "body": "List the formulation details, process steps, supplier information and data that give you an advantage because others do not have them."
+        },
+        "restrict": {
+          "title": "Restrict access",
+          "body": "Only people who need it see it. Split the process so no one person holds all of it, and control files and batch records."
+        },
+        "agreements": {
+          "title": "Use confidentiality agreements",
+          "body": "Employees, contract manufacturers, suppliers and testing labs sign written confidentiality terms before they see anything."
+        },
+        "document": {
+          "title": "Keep records",
+          "body": "Record what is secret, who has access and which controls are in place. If it is ever taken, this is how you show it was confidential and yours."
+        }
+      },
+      "noStatute": "No Indian statute governs trade secrets. They rest on contract and the law of confidence, so the agreements are the protection."
+    },
+    "sourcesNote": "Each route names the instrument that governs it, as a pointer to where to read. Nothing here quotes it.",
+    "disclaimerTitle": "Guidance, not legal advice",
+    "disclaimer": "This is general guidance built from your answers. It does not decide whether anything can be protected, clear a name, or replace a registered patent agent, a trade mark attorney or the office concerned."
+  },
+  "summary": {
+    "heading": "Your product",
+    "category": "Category",
+    "name": "Name",
+    "ingredients": "Ingredients",
+    "novelty": "What is new",
+    "empty": "Not given yet",
+    "privacy": "Your answers are kept in this browser tab only."
+  }
+}

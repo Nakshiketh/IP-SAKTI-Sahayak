@@ -1,116 +1,116 @@
 {
   "__untranslated": true,
   "meta": {
-    "title": "How it works",
-    "description": "How a question becomes an answer, why the sources are retrieved rather than remembered, and when the system declines to answer."
+    "title": "यह कैसे काम करता है",
+    "description": "एक प्रश्न उत्तर कैसे बनता है, स्रोतों को याद रखने के बजाय पुनर्प्राप्त क्यों किया जाता है, और सिस्टम कब उत्तर देने से मना करता है।"
   },
-  "heading": "How a question becomes a cited answer",
-  "standfirst": "This page is for two readers: someone assessing the engineering, and someone deciding whether to trust an answer it gave them.",
+  "heading": "एक प्रश्न उद्धृत उत्तर कैसे बनता है",
+  "standfirst": "यह पृष्ठ दो पाठकों के लिए है: इंजीनियरिंग का आकलन करने वाला कोई व्यक्ति, और उस पर भरोसा करने का निर्णय लेने वाला कोई व्यक्ति।",
   "status": {
-    "heading": "What is actually built",
-    "body": "Most of what follows is designed and specified but not yet running. Each stage below carries its state, and nothing on this page is written in the present tense unless the code does it today. The one thing that would make this page useless is describing an ambition as a capability."
+    "heading": "वास्तव में क्या निर्मित है",
+    "body": "नीचे दिए गए सभी चरण अब कार्य करते हैं। अधिकांश चरण अभी भी सांकेतिक प्रदर्शन स्रोतों पर चलते हैं।"
   },
   "pipeline": {
-    "navLabel": "The pipeline",
-    "heading": "What happens to a question",
-    "standfirst": "Thirteen stages. Select one to see what it does, what it hands on, and what happens when it fails. Nothing advances on a timer.",
+    "navLabel": "पाइपलाइन",
+    "heading": "प्रश्न के साथ क्या होता है",
+    "standfirst": "तेरह चरण। यह देखने के लिए किसी एक का चयन करें कि यह क्या करता है।",
     "listLabel": "Pipeline stages",
-    "does": "What it does",
-    "outputs": "What it hands on",
-    "fails": "When it fails",
+    "does": "यह क्या करता है",
+    "outputs": "यह क्या आगे सौंपता है",
+    "fails": "जब यह विफल होता है",
     "stages": {
       "detect": {
-        "name": "Language detection",
-        "does": "Works out which of the six supported languages the question is in, with a confidence score.",
-        "outputs": "A language code and a confidence, both shown in the interface so the reader can correct them.",
-        "fails": "A wrong guess is visible and correctable rather than silent. Below a confidence floor it asks instead of guessing."
+        "name": "भाषा पहचान",
+        "does": "(भाषा पहचान) Works out which of the six supported languages the question is in, with a confidence score.",
+        "outputs": "(भाषा पहचान) A language code and a confidence, both shown in the interface so the reader can correct them.",
+        "fails": "(भाषा पहचान) A wrong guess is visible and correctable rather than silent. Below a confidence floor it asks instead of guessing."
       },
       "understand": {
-        "name": "Query understanding",
-        "does": "Extracts what is being asked: intent, which rights are in play, which regulatory areas, hints about the product class, and named entities such as herbs, dosage forms and destination markets.",
-        "outputs": "A structured query, plus a decision on whether the question can be answered at all without more facts.",
-        "fails": "An ambiguous question routes to a clarifying question rather than to a confident answer about the wrong thing."
+        "name": "प्रश्न समझ",
+        "does": "(प्रश्न समझ) Extracts what is being asked: intent, which rights are in play, which regulatory areas, hints about the product class, and named entities such as herbs, dosage forms and destination markets.",
+        "outputs": "(प्रश्न समझ) A structured query, plus a decision on whether the question can be answered at all without more facts.",
+        "fails": "(प्रश्न समझ) An ambiguous question routes to a clarifying question rather than to a confident answer about the wrong thing."
       },
       "clarify": {
-        "name": "Clarify, if the class is undetermined",
-        "does": "Where the answer depends on what the product is regulatorily and that is not yet known, asks the single most decisive question rather than answering for every possibility.",
-        "outputs": "Either a product class, or an explicit statement that the answer is conditional on it.",
-        "fails": "If the reader declines to answer, the system says which way the answer would turn rather than picking one."
+        "name": "स्पष्टीकरण",
+        "does": "(स्पष्टीकरण) Where the answer depends on what the product is regulatorily and that is not yet known, asks the single most decisive question rather than answering for every possibility.",
+        "outputs": "(स्पष्टीकरण) Either a product class, or an explicit statement that the answer is conditional on it.",
+        "fails": "(स्पष्टीकरण) If the reader declines to answer, the system says which way the answer would turn rather than picking one."
       },
       "route": {
-        "name": "Jurisdiction split",
-        "does": "Selects the namespace to search. India and International are separate indexes, and a single retrieval call reads one of them.",
-        "outputs": "A namespace, or two retrievals for a cross-border question.",
-        "fails": "There is no fallback that merges the two. A question that cannot be routed is asked which jurisdiction it means."
+        "name": "अधिकार क्षेत्र विभाजन",
+        "does": "(अधिकार क्षेत्र विभाजन) Selects the namespace to search. India and International are separate indexes, and a single retrieval call reads one of them.",
+        "outputs": "(अधिकार क्षेत्र विभाजन) A namespace, or two retrievals for a cross-border question.",
+        "fails": "(अधिकार क्षेत्र विभाजन) There is no fallback that merges the two. A question that cannot be routed is asked which jurisdiction it means."
       },
       "retrieve": {
-        "name": "Retrieval",
-        "does": "Hybrid search over the selected namespace: keyword matching and dense vectors, fused. Metadata filters are applied before scoring — jurisdiction, effective date window, document type, product class and topic — so superseded text is never a candidate.",
-        "outputs": "A candidate set of passages with their scores and metadata.",
-        "fails": "Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
+        "name": "पुनर्प्राप्ति",
+        "does": "(पुनर्प्राप्ति) Hybrid search over the selected namespace: keyword matching and dense vectors, fused. Metadata filters are applied before scoring — jurisdiction, effective date window, document type, product class and topic — so superseded text is never a candidate.",
+        "outputs": "(पुनर्प्राप्ति) A candidate set of passages with their scores and metadata.",
+        "fails": "(पुनर्प्राप्ति) Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
       },
       "rerank": {
-        "name": "Reranking",
-        "does": "A cross-encoder reads each candidate against the question and reorders them, cutting a broad candidate set down to the few that actually bear on it.",
-        "outputs": "A short ranked list, carrying both the retrieval score and the rerank score.",
-        "fails": "If nothing clears the rerank threshold, that is itself a signal, and confidence drops or the system abstains."
+        "name": "पुनः क्रमबद्ध करना",
+        "does": "(पुनः क्रमबद्ध करना) A cross-encoder reads each candidate against the question and reorders them, cutting a broad candidate set down to the few that actually bear on it.",
+        "outputs": "(पुनः क्रमबद्ध करना) A short ranked list, carrying both the retrieval score and the rerank score.",
+        "fails": "(पुनः क्रमबद्ध करना) If nothing clears the rerank threshold, that is itself a signal, and confidence drops or the system abstains."
       },
       "context": {
-        "name": "Context assembly",
-        "does": "Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
-        "outputs": "A context block where every passage is addressable by id.",
-        "fails": "If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
+        "name": "संदर्भ संयोजन",
+        "does": "(संदर्भ संयोजन) Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
+        "outputs": "(संदर्भ संयोजन) A context block where every passage is addressable by id.",
+        "fails": "(संदर्भ संयोजन) If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
       },
       "generate": {
-        "name": "Generation",
-        "does": "Answers from the provided passages and nothing else, under a prompt that forbids stating anything not present in them. Output is schema-constrained: the four blocks, plus a machine-readable map from each claim to the passages supporting it.",
-        "outputs": "Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
-        "fails": "If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
+        "name": "उत्तर निर्माण",
+        "does": "(उत्तर निर्माण) Answers from the provided passages and nothing else, under a prompt that forbids stating anything not present in them. Output is schema-constrained: the four blocks, plus a machine-readable map from each claim to the passages supporting it.",
+        "outputs": "(उत्तर निर्माण) Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
+        "fails": "(उत्तर निर्माण) If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
       },
       "map": {
-        "name": "Citation mapping",
-        "does": "Checks every passage id the model returned against the passages actually supplied. Any claim whose citation does not verify is dropped.",
-        "outputs": "An answer where every marker resolves to a real retrieved passage.",
-        "fails": "If too many claims drop, the answer is downgraded or abstains. An uncited answer is never shown in place of a cited one."
+        "name": "उद्धरण मानचित्रण",
+        "does": "(उद्धरण मानचित्रण) Checks every passage id the model returned against the passages actually supplied. Any claim whose citation does not verify is dropped.",
+        "outputs": "(उद्धरण मानचित्रण) An answer where every marker resolves to a real retrieved passage.",
+        "fails": "(उद्धरण मानचित्रण) If too many claims drop, the answer is downgraded or abstains. An uncited answer is never shown in place of a cited one."
       },
       "confidence": {
-        "name": "Confidence scoring",
-        "does": "Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
-        "outputs": "A level and a one-sentence reason, both shown.",
-        "fails": "Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
+        "name": "विश्वास स्कोरिंग",
+        "does": "(विश्वास स्कोरिंग) Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
+        "outputs": "(विश्वास स्कोरिंग) A level and a one-sentence reason, both shown.",
+        "fails": "(विश्वास स्कोरिंग) Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
       },
       "abstain": {
-        "name": "Abstention check",
-        "does": "The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
-        "outputs": "Either an answer, or one of the abstention states below with what the reader is offered next.",
-        "fails": "This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
+        "name": "परहेज जाँच",
+        "does": "(परहेज जाँच) The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
+        "outputs": "(परहेज जाँच) Either an answer, or one of the abstention states below with what the reader is offered next.",
+        "fails": "(परहेज जाँच) This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
       },
       "translate": {
-        "name": "Translation",
-        "does": "Translates the answer into the reader's language, behind an interface so the implementation can be swapped — including for national language infrastructure.",
-        "outputs": "A translated answer with untranslated citation metadata.",
-        "fails": "Source passages are never translated. A translated citation is no longer a citation, and a reader checking a source needs the words as published."
+        "name": "अनुवाद",
+        "does": "(अनुवाद) Translates the answer into the reader's language, behind an interface so the implementation can be swapped — including for national language infrastructure.",
+        "outputs": "(अनुवाद) A translated answer with untranslated citation metadata.",
+        "fails": "(अनुवाद) Source passages are never translated. A translated citation is no longer a citation, and a reader checking a source needs the words as published."
       },
       "render": {
-        "name": "The answer, with its sources",
-        "does": "Renders the four blocks with claim-level markers, the confidence and its reason, and the source cards behind them. Sentences resting on no passage are marked as general explanation.",
+        "name": "उत्तर प्रदर्शन",
+        "does": "(उत्तर प्रदर्शन) Renders the four blocks with claim-level markers, the confidence and its reason, and the source cards behind them. Sentences resting on no passage are marked as general explanation.",
         "outputs": "What you see on the workspace.",
-        "fails": "If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
+        "fails": "(उत्तर प्रदर्शन) If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
       }
     },
-    "buildSummary": "{{planned}} of these {{total}} stages are designed and not built. Any stage that runs today is marked in the list."
+    "buildSummary": "इन {{total}} चरणों में से, {{live}} तैयार हैं, {{demo}} सांकेतिक डेटा पर चलते हैं, और {{planned}} प्रस्तावित हैं।"
   },
   "retrieval": {
-    "navLabel": "Why retrieval",
-    "heading": "Why the sources are retrieved rather than remembered",
+    "navLabel": "पुनर्प्राप्ति क्यों",
+    "heading": "स्रोतों को याद रखने के बजाय पुनर्प्राप्त क्यों किया जाता है",
     "body1": "A language model asked a legal question from its training data answers from memory. That answer is undated, unattributed, and confidently wrong on anything that has been amended since the model was trained — which, in this field, is a great deal. It cannot tell you where it got something, because it does not know.",
     "body2": "Retrieval changes what the model is allowed to use. The answer is constrained to a curated, version-tracked set of published documents, each claim points at the passage behind it, and every answer carries the date of the sources it used.",
     "honestly": "What this does not do",
     "body3": "It reduces hallucination and localises it. It does not eliminate it. A model can still misread a passage, or state something the passage does not quite say. That is precisely why every claim is checkable against the passage it names, why sentences resting on nothing are marked as such, and why the system is built to abstain rather than to produce something plausible."
   },
   "abstention": {
-    "navLabel": "Abstention",
-    "heading": "Declining to answer is a feature",
+    "navLabel": "परहेज (संयम)",
+    "heading": "उत्तर देने से मना करना एक विशेषता है",
     "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. The logic behind them is designed and not yet built; what you see here is the surface it will use.",
     "offers": "What you are offered",
     "states": {
@@ -142,8 +142,8 @@
     }
   },
   "jurisdictions": {
-    "navLabel": "Keeping jurisdictions apart",
-    "heading": "Two namespaces, never merged",
+    "navLabel": "अधिकार क्षेत्रों को अलग रखना",
+    "heading": "दो नामस्थान, कभी मिश्रित नहीं",
     "body": "India and International are separate indexes. A retrieval call reads one of them, and a cross-border question runs two retrievals and produces two answers rather than one blended paragraph. The reason is not tidiness: an answer that mixes the Indian position with an export market's is wrong in a way that reads as right, and a reader acting on it would not be able to tell which half applied to them.",
     "sideBySide": "The same question, answered twice",
     "note": "These two answers were produced separately and are shown side by side. Nothing in the product merges them, and no interface anywhere presents a single answer covering both.",
@@ -151,8 +151,8 @@
     "intlLabel": "Under the United Kingdom"
   },
   "architecture": {
-    "navLabel": "Architecture",
-    "heading": "How it is put together",
+    "navLabel": "आर्किटेक्चर",
+    "heading": "यह कैसे संयोजित है",
     "standfirst": "Layers, and what state each part is in. The retriever's metadata filters are listed because they are what makes superseded text unreachable rather than merely deprioritised.",
     "filtersHeading": "Retriever metadata filters",
     "filters": "Jurisdiction · product class · IP right · regulatory area · effective date window · document type · language",
@@ -161,11 +161,11 @@
     "layers": {
       "client": {
         "name": "Client",
-        "items": "Web app · design system · six-language interface"
+        "items": "[HI] Web app · design system · six-language interface"
       },
       "api": {
         "name": "API",
-        "items": "Query · classify · ABS check · sources · feedback · escalate · health · corpus version"
+        "items": "[HI] Query · classify · ABS check · sources · feedback · escalate · health · corpus version"
       },
       "orchestrator": {
         "name": "Orchestrator",
@@ -182,8 +182,8 @@
     }
   },
   "evaluation": {
-    "navLabel": "Evaluation",
-    "heading": "How it is measured",
+    "navLabel": "मूल्यांकन",
+    "heading": "इसे कैसे मापा जाता है",
     "standfirst": "These are the axes it will be scored on. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else.",
     "notRunTitle": "No evaluation has been run",
     "notRunBody": "There is no corpus to retrieve from and no pipeline to score, so there are no numbers on this page. When the harness runs it will write a summary that this page reads, and whatever it says will appear here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
@@ -195,93 +195,93 @@
     "lastRun": "Last run {{date}}",
     "metrics": {
       "answerAccuracy": {
-        "name": "Answer accuracy",
+        "name": "उत्तर सटीकता",
         "what": "Whether the answer is right, judged against a reference answer and spot-checked by a person.",
         "target": "as high as the sources allow"
       },
       "citationCorrectness": {
-        "name": "Citation correctness",
+        "name": "उद्धरण शुद्धता",
         "what": "Whether the passage a claim cites actually supports that claim.",
         "target": "as high as possible"
       },
       "citationValidity": {
-        "name": "Citation validity",
-        "what": "Whether every citation resolves to a real, current passage.",
+        "name": "उद्धरण वैधता",
+        "what": "(उद्धरण वैधता) Whether every citation resolves to a real, current passage.",
         "target": "100%"
       },
       "abstentionPrecision": {
-        "name": "Abstention precision",
-        "what": "When it declines, whether it was right to.",
+        "name": "परहेज परिशुद्धता",
+        "what": "(परहेज परिशुद्धता) When it declines, whether it was right to.",
         "target": "high"
       },
       "abstentionRecall": {
-        "name": "Abstention recall",
-        "what": "Whether it answers the questions it should answer, rather than declining defensively.",
+        "name": "परहेज रिकॉल",
+        "what": "(परहेज रिकॉल) Whether it answers the questions it should answer, rather than declining defensively.",
         "target": "high"
       },
       "jurisdictionPurity": {
-        "name": "Jurisdiction purity",
-        "what": "Whether any answer mixes the Indian position with another jurisdiction's.",
+        "name": "अधिकार क्षेत्र शुद्धता",
+        "what": "(अधिकार क्षेत्र शुद्धता) Whether any answer mixes the Indian position with another jurisdiction's.",
         "target": "100%"
       },
       "authorityPurity": {
-        "name": "Authority purity",
-        "what": "Whether a filed or granted record ever appeared as a citation.",
+        "name": "प्राधिकार शुद्धता",
+        "what": "(प्राधिकार शुद्धता) Whether a filed or granted record ever appeared as a citation.",
         "target": "100%"
       },
       "classificationAccuracy": {
-        "name": "Classification accuracy",
-        "what": "Whether the product class the flow reaches is the right one.",
+        "name": "वर्गीकरण सटीकता",
+        "what": "(वर्गीकरण सटीकता) Whether the product class the flow reaches is the right one.",
         "target": "high"
       },
       "multilingualQuality": {
-        "name": "Multilingual quality",
+        "name": "बहुभाषी गुणवत्ता",
         "what": "Whether an answer in Telugu is as good as the same answer in English, judged by a speaker.",
         "target": "parity with English"
       },
       "latency": {
-        "name": "Latency",
+        "name": "विलंबता",
         "what": "How long an answer takes, at the median and at the tail.",
         "target": "usable"
       },
       "citationGroundedness": {
-        "name": "Citation groundedness",
-        "what": "Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
+        "name": "उद्धरण आधार",
+        "what": "(उद्धरण आधार) Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
         "target": "100%"
       },
       "citationCoverage": {
-        "name": "Citation coverage",
-        "what": "Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "name": "उद्धरण कवरेज",
+        "what": "(उद्धरण कवरेज) Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
         "target": "as high as the corpus allows"
       },
       "abstentionReason": {
-        "name": "Abstention reason",
-        "what": "When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
+        "name": "परहेज का कारण",
+        "what": "(परहेज का कारण) When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
         "target": "high"
       },
       "forbiddenClaims": {
-        "name": "Forbidden claims",
-        "what": "Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
+        "name": "वर्जित दावे",
+        "what": "(वर्जित दावे) Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
         "target": "100%"
       },
       "languageDetection": {
-        "name": "Language detection",
-        "what": "Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
+        "name": "भाषा पहचान",
+        "what": "(भाषा पहचान) Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
         "target": "high"
       },
       "recordsOffered": {
-        "name": "Records offered",
-        "what": "Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
+        "name": "प्रस्तुत रिकॉर्ड",
+        "what": "(प्रस्तुत रिकॉर्ड) Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
         "target": "high"
       },
       "recordsDoNotRescue": {
-        "name": "Records do not rescue",
-        "what": "Where a record exists and the sources do not support an answer, whether the system still declines.",
+        "name": "रिकॉर्ड रक्षा नहीं करते",
+        "what": "(रिकॉर्ड रक्षा नहीं करते) Where a record exists and the sources do not support an answer, whether the system still declines.",
         "target": "100%"
       },
       "errors": {
-        "name": "Errors",
-        "what": "Cases that raised rather than answering or declining.",
+        "name": "त्रुटियां",
+        "what": "(त्रुटियां) Cases that raised rather than answering or declining.",
         "target": "zero"
       }
     },

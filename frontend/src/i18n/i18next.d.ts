@@ -8,6 +8,8 @@
 import 'i18next';
 
 import type about from '@/locales/en/about.json';
+import type analyst from '@/locales/en/analyst.json';
+import type assessment from '@/locales/en/assessment.json';
 import type common from '@/locales/en/common.json';
 import type covered from '@/locales/en/covered.json';
 import type home from '@/locales/en/home.json';
@@ -29,6 +31,8 @@ declare module 'i18next' {
       sources: typeof sources;
       about: typeof about;
       privacy: typeof privacy;
+      assessment: typeof assessment;
+      analyst: typeof analyst;
     };
   }
 }

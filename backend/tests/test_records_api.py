@@ -79,6 +79,16 @@ def test_nothing_matched_is_not_nothing_ingested(client: TestClient) -> None:
     assert body["ingested"] is True
 
 
+def test_match_any_finds_what_matching_every_word_misses(client: TestClient) -> None:
+    """A product described by several words: no filing names all of them."""
+    words = "polyherbal nothing-matches-this"
+    every = client.get("/api/v1/records/search", params={"q": words}).json()
+    any_ = client.get("/api/v1/records/search", params={"q": words, "match_any": True}).json()
+    assert every["total"] == 0
+    assert any_["total"] == 1
+    assert all(record["citable_in_answers"] is False for record in any_["records"])
+
+
 def test_an_empty_store_says_nothing_has_been_ingested(empty_client: TestClient) -> None:
     body = empty_client.get("/api/v1/records/search", params={"q": "anything"}).json()
     assert body["total"] == 0

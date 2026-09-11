@@ -2,10 +2,13 @@ import { Suspense, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Outlet } from 'react-router-dom';
 
+import { AudioControl } from '@/components/auth/AudioControl';
+import { HeroVideo } from '@/components/auth/HeroVideo';
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary';
 import { Footer } from '@/components/layout/Footer';
 import { Header } from '@/components/layout/Header';
 import { OfflineNotice } from '@/components/layout/OfflineNotice';
+import { useHeroAudio } from '@/hooks/useHeroAudio';
 import { findLocale } from '@/i18n/languages';
 
 /**
@@ -15,10 +18,20 @@ import { findLocale } from '@/i18n/languages';
  * hardcoded in index.html: the per-script font stacks in tokens.css key off
  * `:lang()`, so a wrong `lang` attribute means a Telugu page rendered in the
  * Latin face, and a screen reader reading Telugu with English pronunciation.
+ *
+ * The background video lives here rather than on each page, because this frame
+ * stays mounted while the pages inside it change: moving between tabs never
+ * restarts the footage or the sound. Its sound loops with it, starts on, and
+ * answers to the control in the corner, which remembers its choice per tab.
  */
 export function Shell() {
   const { t, i18n } = useTranslation('common');
   const locale = findLocale(i18n.resolvedLanguage ?? i18n.language);
+  const backdrop = useHeroAudio({
+    storageKey: 'sahayak.backdrop',
+    soundByDefault: true,
+    playsWithSound: Infinity,
+  });
 
   useEffect(() => {
     document.documentElement.lang = locale.code;
@@ -27,6 +40,7 @@ export function Shell() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <HeroVideo variant="app" videoRef={backdrop.videoRef} muted={backdrop.muted} />
       <a
         href="#main"
         className="absolute left-4 top-4 z-[60] -translate-y-24 rounded-control border border-rule-strong bg-bone px-3 py-2 text-base focus:translate-y-0"
@@ -51,6 +65,12 @@ export function Shell() {
         </ErrorBoundary>
       </main>
       <Footer />
+      {/* Under the drawers, sheets and dialogs (z-40 and up), so none of them
+          is ever covered by it. */}
+      <AudioControl
+        {...backdrop}
+        className="fixed bottom-4 right-4 z-30 rounded-full bg-ink/60 backdrop-blur-sm print:hidden"
+      />
     </div>
   );
 }

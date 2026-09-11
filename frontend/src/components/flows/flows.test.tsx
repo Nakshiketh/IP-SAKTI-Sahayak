@@ -108,7 +108,7 @@ describe('the classification flow', () => {
     const markers = container.querySelectorAll('sup');
     expect(markers).toHaveLength(3);
     for (const marker of markers) {
-      expect(marker.getAttribute('aria-label')).toMatch(/^Pending source \d+: /);
+      expect(marker.getAttribute('aria-label')).toMatch(/^Source \d+: /);
     }
     expect(screen.getByText(/does not get to state law from a lookup table/i)).toBeInTheDocument();
   });

@@ -1,5 +1,5 @@
 export { Badge, type BadgeTone } from './Badge';
-export { BuildStateBadge, type BuildState } from './BuildStateBadge';
+export { type BuildState } from './BuildStateBadge';
 export { BottomSheet } from './BottomSheet';
 export { Button } from './Button';
 export { buttonStyles, type ButtonVariant } from './buttonStyles';

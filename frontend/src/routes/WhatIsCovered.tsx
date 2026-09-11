@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { SectionSourceList, SourceScope, Src } from '@/components/sourcing/Sourced';
-import { Callout, IncisedMark } from '@/components/ui';
+import { IncisedMark } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { CORPUS_VERSION } from '@/services/corpusManifest';
 import type { DocumentId } from '@/services/corpusManifest';
@@ -295,17 +295,6 @@ export default function WhatIsCovered() {
         <h1 className="text-2xl">{t('heading')}</h1>
         <p className="mt-3 max-w-measure text-md text-muted">{t('standfirst')}</p>
       </header>
-
-      <Callout
-        tone="caution"
-        title={t('pending.title')}
-        // A page-level notice sitting directly under the h1, so h2 — the default
-        // h3 would skip a level and break the outline.
-        titleLevel={2}
-        className="mt-6 max-w-measure print:hidden"
-      >
-        {t('pending.body')}
-      </Callout>
 
       <div className="mt-10 gap-12 lg:grid lg:grid-cols-[15rem_1fr]">
         <Contents />

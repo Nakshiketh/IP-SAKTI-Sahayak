@@ -34,6 +34,14 @@ router = APIRouter(prefix="/api/v1/records", tags=["records"])
 @router.get("/search", response_model=RecordsSearchResult, response_model_by_alias=True)
 def search(
     q: str = Query(default="", description="Words to match on title, abstract or applicant"),
+    match_any: bool = Query(
+        default=False,
+        description=(
+            "Match records containing any of the words rather than all of them. "
+            "For a product described by a list of ingredients, no filing names "
+            "every one, and matching all of them would find nothing."
+        ),
+    ),
     record_type: str | None = None,
     jurisdiction: str | None = None,
     status: str | None = None,
@@ -44,6 +52,7 @@ def search(
     service = get_records_service()
     found = service.search_records(
         q,
+        match_any=match_any,
         record_type=record_type,
         jurisdiction=jurisdiction,
         status=status,

@@ -9,10 +9,11 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import axe from 'axe-core';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, useLocation } from 'react-router-dom';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { i18n } from '@/i18n';
+import sahayakCopy from '@/locales/en/sahayak.json';
 import Sahayak from '@/routes/Sahayak';
 import { DEMO_ANSWERS } from '@/services/answers.mock';
 
@@ -61,6 +62,43 @@ beforeEach(async () => {
 
 afterEach(() => {
   vi.unstubAllGlobals();
+});
+
+describe('a flow named in the address', () => {
+  function LocationProbe() {
+    const location = useLocation();
+    return <div data-testid="location">{location.pathname + location.search}</div>;
+  }
+
+  it('opens the prior-art tool straight away, before any question is asked', () => {
+    renderAt('/sahayak?flow=priorArt');
+    expect(screen.getByRole('dialog', { name: sahayakCopy.flows.priorArt.title })).toBeVisible();
+  });
+
+  it('opens the classification tool the same way', () => {
+    renderAt('/sahayak?flow=classify');
+    expect(screen.getByRole('dialog', { name: sahayakCopy.flows.classify.title })).toBeVisible();
+  });
+
+  it('ignores a flow it does not have rather than opening an empty panel', () => {
+    renderAt('/sahayak?flow=noveltyVerdict');
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('takes the flow out of the address when it is closed, so a reload does not reopen it', async () => {
+    const user = userEvent.setup();
+    render(
+      <MemoryRouter initialEntries={['/sahayak?flow=priorArt']}>
+        <Sahayak />
+        <LocationProbe />
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByTestId('drawer-scrim'));
+
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent(/^\/sahayak$/);
+  });
 });
 
 describe('zero decisions before the first answer', () => {
@@ -270,16 +308,12 @@ describe('keyboard', () => {
 });
 
 describe('honesty', () => {
-  it('says the sources behind the answer are demonstration sources', async () => {
+  it('carries a source note under the answer, once', async () => {
     renderAt('/sahayak?q=anything');
     await settled();
-    // The notice heading and the answer's own header badge.
-    expect(
-      screen.getAllByText('Illustrative example — demo sources, not a legal source'),
-    ).toHaveLength(2);
-    expect(screen.getByText(/No documents have been ingested yet/)).toBeInTheDocument();
-    // What the notice claims is real, it does not also claim is verified.
-    expect(screen.getByText(/text behind each source is a placeholder/)).toBeInTheDocument();
+    // Stated once, under the answer it qualifies — not as a banner above it and
+    // not repeated on every source card.
+    expect(screen.getAllByText(/Verify against the official text/i)).toHaveLength(1);
   });
 
   it('carries the not-legal-advice pill', () => {

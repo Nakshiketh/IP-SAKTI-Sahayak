@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, NavLink } from 'react-router-dom';
 
 import { LanguageSelector } from '@/components/layout/LanguageSelector';
+import { SignOutButton } from '@/components/layout/SignOutButton';
 import { MobileMenu } from '@/components/layout/MobileMenu';
 import { NAV_ITEMS } from '@/components/layout/navigation';
 import { buttonStyles } from '@/components/ui';
@@ -52,12 +53,19 @@ export function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-3 lg:ml-0">
+          <SignOutButton className="hidden lg:flex" />
           <LanguageSelector className="hidden sm:inline-flex" />
           <NavLink
             to="/sahayak"
-            className={buttonStyles({ size: 'sm', className: 'hidden lg:inline-flex' })}
+            className={buttonStyles({ variant: 'secondary', size: 'sm', className: 'hidden lg:inline-flex' })}
           >
             {t('cta.ask')}
+          </NavLink>
+          <NavLink
+            to="/assess"
+            className={buttonStyles({ size: 'sm', className: 'hidden lg:inline-flex' })}
+          >
+            {t('cta.check')}
           </NavLink>
           <button
             type="button"

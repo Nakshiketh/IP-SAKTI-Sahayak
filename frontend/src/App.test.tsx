@@ -10,6 +10,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 
 import App from '@/App';
+import { signInForTest } from '@/test/signedIn';
 import { i18n } from '@/i18n';
 import { LOCALE_STORAGE_KEY } from '@/i18n/languages';
 
@@ -30,7 +31,9 @@ async function renderAt(path: string) {
       <App />
     </MemoryRouter>,
   );
-  await screen.findByText(/No sources indexed yet|unavailable right now/i);
+  // The footer's source line settles last. With no corpus indexed it carries
+  // just the version, so that is what marks the page as ready.
+  await screen.findByText(/^v[\d.]|unavailable right now/i);
   // `findAll`, because a test that renders twice to compare two pages leaves
   // both in the document, and `findBy` would throw on the second call.
   await screen.findAllByRole('heading', { level: 1 });
@@ -40,16 +43,75 @@ async function renderAt(path: string) {
 beforeEach(async () => {
   window.localStorage.clear();
   await i18n.changeLanguage('en');
+  // Every route sits behind the front door now. These suites are about what
+  // the pages render, not about getting through it.
+  signInForTest();
   // The footer asks the API what the corpus is. Nothing here tests the network.
   vi.stubGlobal(
     'fetch',
-    vi.fn(() =>
-      Promise.resolve({
+    vi.fn((input: RequestInfo | URL, init?: RequestInit) => {
+      const url = String(input);
+      if (url.includes('/api/v1/analyst/status')) {
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json: () =>
+            Promise.resolve({
+              engine: 'rules',
+              products: { count: 0, retrieved_at: '' },
+              records: { available: false, count: 0 },
+              traditional_reference: 0,
+            }),
+        } as Response);
+      }
+      if (url.includes('/api/v1/analyst/conversations')) {
+        const isPost = init?.method === 'POST';
+        const emptyConv = {
+          id: 'c1',
+          title: 'New invention',
+          created_at: 1,
+          updated_at: 1,
+          invention: {
+            title: null,
+            invention_type: null,
+            form: null,
+            category: null,
+            intended_use: null,
+            use_terms: [],
+            problem: null,
+            ingredients: [],
+            batch_size: null,
+            process_steps: [],
+            process_parameters: [],
+            distinctive_features: [],
+            technical_effects: [],
+            evidence: null,
+            disclosure: null,
+            brand_name: null,
+            packaging_note: null,
+            region_note: null,
+            version: 0,
+          },
+          messages: [],
+          analysis: null,
+          missing: [],
+          ready: false,
+          history: [],
+          engine: 'rules',
+        };
+        return Promise.resolve({
+          ok: true,
+          status: 200,
+          json: () => Promise.resolve(isPost ? emptyConv : []),
+        } as Response);
+      }
+      return Promise.resolve({
         ok: true,
+        status: 200,
         json: () =>
           Promise.resolve({ corpus_version: '0.0.0-unbuilt', document_count: 0, as_of_date: null }),
-      } as Response),
-    ),
+      } as Response);
+    }),
   );
 });
 
@@ -61,6 +123,8 @@ describe('routes', () => {
   it.each([
     ['/', 'Ancient knowledge.'],
     ['/sahayak', 'Sahayak'],
+    ['/assess', 'Analyse my invention'],
+    ['/assess/steps', 'Check my product'],
     ['/what-is-covered', "Understanding Ayurveda's IP and regulatory landscape"],
     ['/how-it-works', 'How a question becomes a cited answer'],
     ['/sources', 'What this is built on'],
@@ -122,9 +186,9 @@ describe('the standing disclaimer', () => {
     expect(within(footer).queryAllByRole('button')).toHaveLength(0);
   });
 
-  it('says there are no sources rather than reporting a count of zero', async () => {
+  it('reports no count at all rather than a count of zero', async () => {
     await renderAt('/');
-    expect(await screen.findByText(/No sources indexed yet/)).toBeInTheDocument();
+    expect(await screen.findByText(/^v[\d.]/)).toBeInTheDocument();
     expect(screen.queryByText(/0 documents/)).not.toBeInTheDocument();
   });
 

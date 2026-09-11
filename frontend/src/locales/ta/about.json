@@ -1,9 +1,8 @@
 {
-  "__untranslated": true,
   "meta": {
-    "title": "About",
-    "description": "What this project is, and what it is not."
+    "title": "பற்றி",
+    "description": "இந்தத் திட்டம் என்ன, என்ன இல்லை என்பது பற்றி."
   },
-  "heading": "About",
-  "opening": "IP-SAKTI Sahayak is an independent applied-research project building open, source-cited guidance infrastructure for Ayurvedic intellectual property and regulatory compliance. It is not affiliated with, endorsed by, or operated on behalf of any government body or regulatory authority."
+  "heading": "பற்றி",
+  "opening": "IP-SAKTI Sahayak என்பது ஆயுர்வேத அறிவுசார் சொத்து மற்றும் ஒழுங்குமுறை இணக்கத்திற்கான திறந்த, மூல-மேற்கோள் வழிகாட்டல் கட்டமைப்பை உருவாக்கும் ஒரு சுயாதீன பயன்பாட்டு ஆராய்ச்சி திட்டமாகும். இது எந்தவொரு அரசு அமைப்பு அல்லது ஒழுங்குமுறை அதிகாரியுடனும் இணைக்கப்படவில்லை, அங்கீகரிக்கப்படவில்லை அல்லது அதன் சார்பில் இயக்கப்படவில்லை."
 }

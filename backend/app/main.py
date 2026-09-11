@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from app.api import classify, feedback, health, privacy, query, records, sources
+from app.api import analyst, auth, classify, feedback, health, privacy, query, records, sources
 from app.core.errors import ApiError, RequestTooLarge, api_error_handler
 from app.core.settings import get_settings
 
@@ -51,9 +51,10 @@ SECURITY_HEADERS = {
     ),
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "no-referrer",
-    #: This product has no camera, microphone, location or payment feature. The
-    #: header says so, so a future dependency cannot quietly acquire one.
-    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=()",
+    #: The camera is used by one feature, badge sign-in, and only by this origin.
+    #: Microphone, location and payment stay off, so a future dependency cannot
+    #: quietly acquire one.
+    "Permissions-Policy": "camera=(self), microphone=(), geolocation=(), payment=()",
 }
 
 
@@ -110,11 +111,13 @@ def create_app() -> FastAPI:
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,
         allow_credentials=False,
-        allow_methods=["GET", "POST"],
+        allow_methods=["GET", "POST", "DELETE"],
         allow_headers=["*"],
     )
     app.add_exception_handler(ApiError, api_error_handler)
 
+    app.include_router(auth.router)
+    app.include_router(analyst.router)
     app.include_router(health.router)
     app.include_router(query.router)
     app.include_router(classify.router)

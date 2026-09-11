@@ -9,7 +9,11 @@ import axe from 'axe-core';
 import { MemoryRouter, Route, Routes, useLocation } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { askHref, PATENT_STEPS, toolHref } from '@/components/home/patentSteps';
+import home from '@/locales/en/home.json';
+import sahayak from '@/locales/en/sahayak.json';
 import Home from '@/routes/Home';
+import { CORPUS_DOCUMENTS } from '@/services/corpusManifest';
 import Sahayak from '@/routes/Sahayak';
 import { DEMO_ANSWERS, demoCitationsFor } from '@/services/answers.mock';
 
@@ -56,9 +60,140 @@ describe('the hero', () => {
     expect(screen.getByTestId('location')).toHaveTextContent('/');
   });
 
-  it('describes the drawn composition for a reader who cannot see it', () => {
+  // The drawn composition that used to sit beside the headline was removed; the
+  // route-to-a-patent timeline occupies that space now and is covered below.
+});
+
+describe('the route to a patent', () => {
+  it('is an ordered list of all twelve steps, in procedural order', () => {
     renderHome();
-    expect(screen.getByRole('img', { name: /palm-leaf manuscript page/i })).toBeInTheDocument();
+    const list = screen.getByRole('list', { name: /steps to get a patent/i });
+    const items = within(list).getAllByRole('listitem');
+    expect(items).toHaveLength(PATENT_STEPS.length);
+    expect(items).toHaveLength(12);
+
+    // The order is the content. Asserted against the data rather than a
+    // hard-coded list, so reordering the array has to be a deliberate act.
+    const titles = items.map((item) => within(item).getByRole('heading').textContent);
+    expect(titles).toEqual(PATENT_STEPS.map((step) => home.patentSteps.steps[step.id].title));
+  });
+
+  it('renders every step body without JavaScript having revealed anything', () => {
+    renderHome();
+    // No IntersectionObserver fires in jsdom, so this is the no-JS case: the
+    // copy has to be in the DOM regardless.
+    for (const step of PATENT_STEPS) {
+      expect(
+        screen.getByText(home.patentSteps.steps[step.id].body, { exact: false }),
+      ).toBeVisible();
+    }
+  });
+
+  it('cites a real manifest document for every step', () => {
+    const known = new Set(CORPUS_DOCUMENTS.map((doc) => doc.document_id));
+    for (const step of PATENT_STEPS) {
+      expect(step.documents.length).toBeGreaterThan(0);
+      for (const id of step.documents) {
+        expect(known, `${step.id} cites an unknown document: ${id}`).toContain(id);
+      }
+    }
+  });
+
+  it('names the traditional-knowledge sources on the first search step', () => {
+    // The one substantive claim this section makes about Ayurveda: a
+    // formulation's prior art includes documented traditional knowledge, so
+    // the TKDL belongs in step one rather than as an afterthought.
+    const first = PATENT_STEPS[0]!;
+    expect(first.documents).toContain('in-tkdl-access-model');
+    expect(first.documents).toContain('in-tk-biological-material-guidelines');
+  });
+
+  it('opens a step to reveal its citation and forms, and closes it again', async () => {
+    const user = userEvent.setup();
+    renderHome();
+
+    const list = screen.getByRole('list', { name: /steps to get a patent/i });
+    const filing = within(list).getAllByRole('listitem')[3]!;
+    const toggle = within(filing).getByRole('button');
+
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+
+    // Form 1 and the agent authorisation both belong to the filing step.
+    expect(within(filing).getByText(/Form 1/)).toBeVisible();
+    expect(within(filing).getByText(/Form 26/)).toBeVisible();
+    expect(within(filing).getByText(/Patents Act 1970/)).toBeVisible();
+
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('hands every step to the workspace with its own prepared question', () => {
+    renderHome();
+    const list = screen.getByRole('list', { name: /steps to get a patent/i });
+    const items = within(list).getAllByRole('listitem');
+
+    PATENT_STEPS.forEach((step, index) => {
+      const ask = within(items[index]!).getByRole('link', { name: home.patentSteps.actions.ask });
+      expect(ask).toHaveAttribute('href', askHref(home.patentSteps.questions[step.id]));
+    });
+
+    // Twelve different questions, not one question linked twelve times.
+    const questions = PATENT_STEPS.map((step) => home.patentSteps.questions[step.id]);
+    expect(new Set(questions).size).toBe(PATENT_STEPS.length);
+  });
+
+  it('words every prepared question so the pipeline reads it as a patent question', () => {
+    // The understanding stage recognises a patent question by its vocabulary.
+    // A step question without it is routed as something else entirely.
+    for (const step of PATENT_STEPS) {
+      expect(home.patentSteps.questions[step.id], step.id).toMatch(/patent/i);
+    }
+  });
+
+  it('opens a workspace tool only at the steps the workspace has one for', () => {
+    renderHome();
+    const list = screen.getByRole('list', { name: /steps to get a patent/i });
+    const items = within(list).getAllByRole('listitem');
+    const toolNames = [home.patentSteps.actions.priorArt, home.patentSteps.actions.classify];
+
+    PATENT_STEPS.forEach((step, index) => {
+      const tools = within(items[index]!)
+        .getAllByRole('link')
+        .filter((link) => toolNames.includes(link.textContent ?? ''));
+      if (step.tool === null) {
+        expect(tools, step.id).toHaveLength(0);
+      } else {
+        expect(tools, step.id).toHaveLength(1);
+        expect(tools[0]).toHaveAttribute('href', toolHref(step.tool));
+      }
+    });
+
+    expect(PATENT_STEPS[0]!.tool).toBe('priorArt');
+    expect(PATENT_STEPS[1]!.tool).toBe('classify');
+  });
+
+  it('lands a reader at the first step in the prior-art tool itself', async () => {
+    const user = userEvent.setup();
+    renderHome();
+
+    await user.click(screen.getByRole('link', { name: home.patentSteps.actions.priorArt }));
+
+    expect(screen.getByTestId('location')).toHaveTextContent('/sahayak?flow=priorArt');
+    const dialog = screen.getByRole('dialog');
+    expect(within(dialog).getAllByText(sahayak.flows.priorArt.title).length).toBeGreaterThan(0);
+  });
+
+  it('marks no step current until one has been reached', () => {
+    renderHome();
+    // jsdom fires no intersections, so nothing has been scrolled past. A step
+    // marked current here would be a lie told by the initial render.
+    const list = screen.getByRole('list', { name: /steps to get a patent/i });
+    const current = within(list)
+      .getAllByRole('listitem')
+      .filter((item) => item.getAttribute('aria-current') !== null);
+    expect(current).toHaveLength(0);
   });
 });
 
@@ -73,10 +208,8 @@ describe('the coupling section', () => {
     ).toBeInTheDocument();
   });
 
-  it('is labelled as illustrative before a reader reads it', () => {
-    renderHome();
-    expect(screen.getAllByText('Illustrative example').length).toBeGreaterThan(0);
-  });
+  // The "Illustrative example" eyebrow above the worked example was removed;
+  // what the section demonstrates is asserted by the tests around it.
 });
 
 describe('the demonstrated answer', () => {
@@ -100,11 +233,9 @@ describe('the demonstrated answer', () => {
     expect(DEMO_ANSWERS.IN.jurisdiction).not.toBe(DEMO_ANSWERS.INTL.jurisdiction);
   });
 
-  it('marks every demonstrated answer as illustrative', () => {
+  it('carries the source note on the demonstrated answer', () => {
     renderHome();
-    expect(
-      screen.getAllByText('Illustrative example — demo sources, not a legal source').length,
-    ).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Verify against the official text/i).length).toBeGreaterThan(0);
   });
 
   it('renders the four blocks in a fixed order', () => {

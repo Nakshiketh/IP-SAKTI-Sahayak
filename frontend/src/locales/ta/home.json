@@ -2,91 +2,136 @@
   "__untranslated": true,
   "meta": {
     "title": "IP-SAKTI Sahayak",
-    "description": "Source-cited guidance on intellectual property and regulation for Ayurvedic products."
+    "description": "ஆயுர்வேத தயாரிப்புகளுக்கான அறிவுசார் சொத்து மற்றும் ஒழுங்குமுறை குறித்த மூல-மேற்கோள் வழிகாட்டுதல்."
   },
   "hero": {
-    "line1": "Ancient knowledge.",
-    "line2": "Protected innovation.",
-    "line3": "Grounded guidance.",
-    "standfirst": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product, and get an answer built from published sources — with every claim cited, and the Indian and international positions kept separate.",
-    "questionLabel": "Your question",
-    "questionPlaceholder": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product…",
-    "submit": "Ask",
-    "visualAlt": "A palm-leaf manuscript page whose incised writing lines resolve into a graph of linked sources."
+    "line1": "பண்டைய அறிவு.",
+    "line2": "பாதுகாக்கப்பட்ட கண்டுபிடிப்பு.",
+    "line3": "அடிப்படையான வழிகாட்டுதல்.",
+    "standfirst": "ஆயுர்வேதப் பொருளைப் பாதுகாத்தல், பதிவு செய்தல், தயாரித்தல் அல்லது விற்பனை செய்வது பற்றிக் கேளுங்கள், வெளியிடப்பட்ட ஆதாரங்களிலிருந்து கட்டமைக்கப்பட்ட பதிலைப் பெறுங்கள் — ஒவ்வொரு கூற்றும் மேற்கோள் காட்டப்பட்டு, இந்திய மற்றும் சர்வதேச நிலைகள் தனித்தனியாக வைக்கப்பட்டுள்ளன.",
+    "questionLabel": "உங்கள் கேள்வி",
+    "questionPlaceholder": "ஆயுர்வேதப் பொருளைப் பாதுகாத்தல், பதிவு செய்தல், தயாரித்தல் அல்லது விற்பனை செய்வது பற்றிக் கேளுங்கள்…",
+    "submit": "கேளுங்கள்",
+    "visualAlt": "பனை ஓலை கையெழுத்துப் பிரதிப் பக்கம், அதன் எழுத்துக் கோடுகள் இணைக்கப்பட்ட ஆதாரங்களின் வரைபடமாக மாறுகின்றன."
   },
-  "coupling": {
-    "heading": "What a formulation is decides what you can protect",
-    "standfirst": "The same polyherbal preparation for joint pain can be three different products, and each one opens and closes different doors. This is why the assistant works out the regulatory classification before it answers anything else.",
-    "illustrative": "Illustrative example",
-    "columnProduct": "If the product is",
-    "columnIp": "Intellectual property realistically available",
-    "columnRegulatory": "Regulatory route",
-    "columnAbs": "Access and benefit sharing",
-    "rows": {
-      "classical": {
-        "product": "A classical formulation, taken unchanged from an authoritative text",
-        "ip": "Not the composition — it is documented traditional knowledge. The brand name, the packaging and the artwork can still be yours.",
-        "regulatory": "The classical route, resting on the authoritative texts.",
-        "abs": "Using a biological resource can still carry duties, whatever the formulation's status."
+  "intro": {
+    "cta": "Check my product",
+    "ctaNote": "Six short steps. Your answers stay in this browser tab; only a few search words are sent when you run the check.",
+    "heading": "What IP-SAKTI Sahayak does",
+    "what": "IP-SAKTI Sahayak is a guidance portal for people developing Ayurvedic products. It helps you work out which intellectual property could protect your product, whether something similar is already on record or documented, and what to do next — with every statement about law pointing at the instrument it comes from.",
+    "whyHeading": "Why protection matters",
+    "why": "A formulation, a name or a label can be copied the day it goes on sale. Intellectual property decides whether you can stop that, and what you must do before launch to keep the option open. Some of it is lost for good by publishing too early.",
+    "typesHeading": "Four kinds of protection, often used together",
+    "types": {
+      "patent": {
+        "name": "Patent",
+        "covers": "A new invention — a formulation with an effect you can show, a process, an extract. Granted for a limited term, in return for publishing it."
       },
-      "proprietary": {
-        "product": "A proprietary medicine, with ingredients or dosage form changed",
-        "ip": "Arguable on what you actually changed, but the classical formulation stands as prior art against the rest.",
-        "regulatory": "The patent-or-proprietary route, with its own licensing conditions.",
-        "abs": "Same duties, and they now interact with anything you file."
+      "trademark": {
+        "name": "Trade mark",
+        "covers": "The name, logo or other sign you sell under. Registered by class of goods, and renewable."
       },
-      "newDrug": {
-        "product": "A new non-classical drug, or a standardised extract",
-        "ip": "The most room — a purified fraction or a novel process can be claimed on its own merits.",
-        "regulatory": "The new-drug route, which asks for evidence rather than textual authority.",
-        "abs": "Duties apply, and disclosure of the biological source becomes part of the filing."
+      "copyright": {
+        "name": "Copyright",
+        "covers": "Original creative work — label artwork, packaging design, written content, software. Arises when the work is created."
+      },
+      "tradeSecret": {
+        "name": "Trade secret",
+        "covers": "Confidential formulations, processes and know-how. Lasts as long as the secret is kept, with no registration."
       }
     },
-    "note": "Deliberately general. The detail belongs in an answer with sources attached, not on a homepage."
+    "helpsHeading": "How the check works",
+    "helps": {
+      "category": "Choose the product category",
+      "details": "Describe the product",
+      "ingredients": "List its ingredients and what is new",
+      "protection": "Answer a few questions on brand, creative work and confidentiality",
+      "result": "See what may already exist, for each kind of protection",
+      "guidance": "Get the recommended protection and the steps to take"
+    },
+    "needHeading": "What to have ready",
+    "need": {
+      "name": "The product or brand name",
+      "purpose": "What it does, and who it is for",
+      "ingredients": "The ingredients, and anything new in how it is made",
+      "materials": "Whether you have packaging, artwork or software"
+    },
+    "getHeading": "What you get at the end",
+    "get": "For each kind of protection: whether anything similar was identified, what may overlap, whether it looks worth pursuing, and the steps to take through the Indian system — marked as guidance, not legal advice."
+  },
+  "coupling": {
+    "heading": "ஒரு உருவாக்கம் என்ன என்பதைப் பொறுத்தே நீங்கள் எதைப் பாதுகாக்க முடியும் என்பது தீர்மானிக்கப்படுகிறது",
+    "standfirst": "மூட்டு வலிக்கான அதே பாலிஹெர்பல் தயாரிப்பு மூன்று வெவ்வேறு தயாரிப்புகளாக இருக்கலாம், மேலும் ஒவ்வொன்றும் வெவ்வேறு கதவுகளைத் திறந்து மூடுகின்றன. அதனால்தான் சஹாயக் வேறு எதற்கும் பதிலளிக்கும் முன் ஒழுங்குமுறை வகைப்பாட்டைத் தீர்மானிக்கிறார்.",
+    "illustrative": "விளக்க எடுத்துக்காட்டு",
+    "columnProduct": "தயாரிப்பு இவ்வாறு இருந்தால்",
+    "columnIp": "யதார்த்தமாகக் கிடைக்கும் அறிவுசார் சொத்து",
+    "columnRegulatory": "ஒழுங்குமுறை பாதை",
+    "columnAbs": "அணுகல் மற்றும் பயன் பகிர்வு",
+    "rows": {
+      "classical": {
+        "product": "ஒரு பாரம்பரிய சூத்திரம், ஒரு அதிகாரப்பூர்வ நூலில் இருந்து மாறாமல் எடுக்கப்பட்டது",
+        "ip": "கலவை அல்ல — இது ஆவணப்படுத்தப்பட்ட பாரம்பரிய அறிவு. பிராண்ட் பெயர், பேக்கேஜிங் மற்றும் கலைப்படைப்பு இன்னும் உங்களுடையதாக இருக்கலாம்.",
+        "regulatory": "அதிகாரப்பூர்வ நூல்களை அடிப்படையாகக் கொண்ட பாரம்பரிய பாதை.",
+        "abs": "உருவாக்கத்தின் நிலை எதுவாக இருந்தாலும், உயிரியல் வளத்தைப் பயன்படுத்துவது இன்னும் கடமைகளைக் கொண்டிருக்கலாம்."
+      },
+      "proprietary": {
+        "product": "பொருட்கள் அல்லது மருந்தளவு வடிவம் மாற்றப்பட்ட ஒரு தனியுரிமை மருந்து",
+        "ip": "நீங்கள் உண்மையில் மாற்றியமைத்தவற்றில் வாதிடலாம், ஆனால் பாரம்பரிய சூத்திரம் மற்றவற்றுக்கு எதிரான முந்தைய கலையாக நிற்கிறது.",
+        "regulatory": "அதன் சொந்த உரிம நிபந்தனைகளுடன் காப்புரிமை அல்லது தனியுரிமைப் பாதை.",
+        "abs": "அதே கடமைகள், இப்போது நீங்கள் தாக்கல் செய்யும் எதனுடனும் தொடர்பு கொள்கின்றன."
+      },
+      "newDrug": {
+        "product": "ஒரு புதிய பாரம்பரியமற்ற மருந்து, அல்லது ஒரு தரப்படுத்தப்பட்ட சாறு",
+        "ip": "மிகவும் சாத்தியமானது — ஒரு தூய்மையான பகுதி அல்லது ஒரு புதிய செயல்முறையை அதன் சொந்தத் தகுதியின் அடிப்படையில் கோரலாம்.",
+        "regulatory": "புதிய மருந்துப் பாதை, இது உரை அதிகாரத்தை விட சான்றுகளைக் கேட்கிறது.",
+        "abs": "கடமைகள் பொருந்தும், மேலும் உயிரியல் மூலத்தை வெளிப்படுத்துவது தாக்கலின் ஒரு பகுதியாக மாறும்."
+      }
+    },
+    "note": "வேண்டுமென்றே பொதுவானது. விவரங்கள் ஆதாரங்களுடன் இணைக்கப்பட்ட பதிலில் இருக்க வேண்டும், முகப்புப் பக்கத்தில் அல்ல."
   },
   "covers": {
-    "heading": "Two questions, asked of the same product",
-    "ipHeading": "Intellectual property",
-    "ipQuestion": "How do I secure or understand rights in this?",
+    "heading": "ஒரே தயாரிப்பைப் பற்றி கேட்கப்படும் இரண்டு கேள்விகள்",
+    "ipHeading": "அறிவுசார் சொத்து",
+    "ipQuestion": "இதில் உள்ள உரிமைகளை நான் எவ்வாறு பாதுகாப்பது அல்லது புரிந்துகொள்வது?",
     "ipItems": {
-      "patents": "Patents",
-      "trademarks": "Trademarks",
-      "gi": "Geographical indications",
-      "copyright": "Copyright",
-      "designs": "Designs",
-      "plantVariety": "Plant variety rights",
-      "tradeSecrets": "Trade secrets",
-      "tk": "Traditional knowledge"
+      "patents": "காப்புரிமைகள்",
+      "trademarks": "வர்த்தக முத்திரைகள்",
+      "gi": "புவிசார் குறியீடுகள்",
+      "copyright": "பதிப்புரிமை",
+      "designs": "வடிவமைப்புகள்",
+      "plantVariety": "தாவர வகை உரிமைகள்",
+      "tradeSecrets": "வர்த்தக இரகசியங்கள்",
+      "tk": "பாரம்பரிய அறிவு"
     },
-    "regHeading": "Regulation",
-    "regQuestion": "What am I required to do before I can sell this?",
+    "regHeading": "ஒழுங்குமுறை",
+    "regQuestion": "இதை விற்பனை செய்வதற்கு முன் நான் என்ன செய்ய வேண்டும்?",
     "regItems": {
-      "classification": "Product classification",
-      "licensing": "Licensing",
-      "gmp": "Manufacturing and GMP",
-      "quality": "Quality standards",
-      "labelling": "Labelling",
-      "advertising": "Advertising",
-      "foodCosmetic": "Food and cosmetic routes",
-      "abs": "Access and benefit sharing"
+      "classification": "தயாரிப்பு வகைப்பாடு",
+      "licensing": "உரிமம்",
+      "gmp": "உற்பத்தி மற்றும் GMP",
+      "quality": "தரக் கட்டுப்பாடுகள்",
+      "labelling": "லேபிளிங்",
+      "advertising": "விளம்பரம்",
+      "foodCosmetic": "உணவு மற்றும் அழகுசாதன வழிகள்",
+      "abs": "அணுகல் மற்றும் பயன் பகிர்வு"
     },
-    "band": "Across borders, the Indian answer and the export answer are produced separately, from different sources, and are never merged into one paragraph."
+    "band": "எல்லைகளுக்கு அப்பால், இந்திய பதிலும் ஏற்றுமதி பதிலும் வெவ்வேறு ஆதாரங்களில் இருந்து தனித்தனியாகத் தயாரிக்கப்படுகின்றன, மேலும் அவை ஒருபோதும் ஒரே பத்தியில் இணைக்கப்படுவதில்லை."
   },
   "answer": {
-    "heading": "What an answer looks like",
-    "standfirst": "Every claim points at the passage behind it. Sentences that rest on no source are marked as such. Switching jurisdiction swaps the answer rather than widening it.",
-    "question": "We have modified a classical polyherbal formulation and want to sell it in India and the UK. What should we work out first?",
-    "questionLabel": "The question",
-    "tabsLabel": "Jurisdiction",
-    "tabIndia": "India",
-    "tabUk": "United Kingdom",
-    "tryIt": "Ask your own question"
+    "heading": "ஒரு பதில் எப்படி இருக்கும்",
+    "standfirst": "ஒவ்வொரு கூற்றும் அதன் பின்னால் உள்ள பத்தியை சுட்டிக்காட்டுகிறது. எந்த ஆதாரமும் இல்லாத வாக்கியங்கள் அவ்வாறே குறிக்கப்பட்டுள்ளன. அதிகார வரம்பை மாற்றுவது பதிலை மாற்றுகிறது, அதை விரிவாக்காது.",
+    "question": "நாங்கள் ஒரு பாரம்பரிய பாலிஹெர்பல் சூத்திரத்தை மாற்றியுள்ளோம், அதை இந்தியா மற்றும் இங்கிலாந்தில் விற்க விரும்புகிறோம். நாம் முதலில் எதைத் தீர்மானிக்க வேண்டும்?",
+    "questionLabel": "கேள்வி",
+    "tabsLabel": "நீதி வரம்பு",
+    "tabIndia": "இந்தியா",
+    "tabUk": "யுனைடெட் கிங்டம்",
+    "tryIt": "உங்கள் சொந்தக் கேள்வியைக் கேளுங்கள்"
   },
   "languages": {
-    "heading": "Ask in the language you work in",
-    "standfirst": "The language is detected from what you type; you can correct it. Answers come back in the same language, and the source documents stay in the language they were published in, so you can check them.",
-    "autoDetect": "Detected automatically",
-    "note": "The translation layer sits behind an interface, so it can be served by national language infrastructure such as Bhashini. Source passages are never translated — a translated citation is no longer a citation.",
+    "heading": "நீங்கள் பணிபுரியும் மொழியிலேயே கேளுங்கள்",
+    "standfirst": "நீங்கள் தட்டச்சு செய்வதிலிருந்து மொழி கண்டறியப்படுகிறது; நீங்கள் அதைத் திருத்தலாம். பதில்கள் அதே மொழியில் வரும், மேலும் மூல ஆவணங்கள் அவை வெளியிடப்பட்ட மொழியிலேயே இருக்கும், எனவே நீங்கள் அவற்றைச் சரிபார்க்கலாம்.",
+    "autoDetect": "தானாகக் கண்டறியப்பட்டது",
+    "note": "மொழிபெயர்ப்பு அடுக்கு ஒரு இடைமுகத்தின் பின்னால் அமர்ந்திருக்கிறது, எனவே இது பாஷினி போன்ற தேசிய மொழி உள்கட்டமைப்பால் வழங்கப்படலாம். மூலப் பத்திகள் ஒருபோதும் மொழிபெயர்க்கப்படுவதில்லை — மொழிபெயர்க்கப்பட்ட மேற்கோள் இனி ஒரு மேற்கோள் அல்ல.",
     "samples": {
       "en": "Can we register our brand name if it contains a classical formulation name?",
       "hi": "हमारे ब्रांड नाम को कैसे सुरक्षित कर सकते हैं?",
@@ -97,8 +142,110 @@
     }
   },
   "closing": {
-    "heading": "What this will not do",
-    "body": "It will not tell you whether an application will succeed, draft one for you, or give clinical advice. It answers from a fixed set of published sources, so a question outside them gets no answer rather than a plausible one. Where the sources are thin, it says so and offers to hand the question to someone qualified.",
-    "cta": "Ask a question"
+    "heading": "இது எதைச் செய்யாது",
+    "body": "ஒரு விண்ணப்பம் வெற்றிபெறுமா என்பதை இது உங்களுக்குச் சொல்லாது, உங்களுக்காக ஒன்றை வரைவு செய்யாது, அல்லது மருத்துவ ஆலோசனையை வழங்காது. இது வெளியிடப்பட்ட ஆதாரங்களின் நிலையான தொகுப்பிலிருந்து பதிலளிக்கிறது, எனவே அவற்றுக்கு அப்பாற்பட்ட கேள்விக்கு ஏற்புடைய பதில் கிடைக்காது.",
+    "cta": "ஒரு கேள்வி கேளுங்கள்"
+  },
+  "patentSteps": {
+    "heading": "Steps to get a patent",
+    "standfirst": "The route an application takes in India, in order, and what Sahayak does for you at each step. Every step names the instrument that governs it — open one to see the citation and the forms it involves.",
+    "aria": "Steps to get a patent, in order",
+    "stepOf": "Step {{number}} of {{total}}",
+    "expand": "Show the source for this step",
+    "collapse": "Hide the source for this step",
+    "sourceLabel": "Where this is set out",
+    "formsLabel": "Forms",
+    "notRetrieved": "Named for reference. Ask Sahayak for a cited answer on any of these.",
+    "cta": "Ask about your own case",
+    "sahayakLabel": "What Sahayak does here",
+    "phases": {
+      "before": "Before filing",
+      "filing": "Filing and publication",
+      "examination": "Examination",
+      "after": "Grant and after"
+    },
+    "handoff": {
+      "priorArt": "Turns a description of your formulation into search terms, lists the patent registries to search, and explains who can search the TKDL. It never tells you something is new.",
+      "classify": "Works out what your product is, regulatorily, in a few yes-or-no questions. That decides how much of the formulation can realistically be claimed.",
+      "ask": "Sends this step's question to Sahayak. You get an answer with every claim cited, or the reason it cannot answer from its sources."
+    },
+    "actions": {
+      "priorArt": "Build prior-art search terms",
+      "classify": "Work out your product type",
+      "ask": "Ask Sahayak about this step"
+    },
+    "questions": {
+      "disclosure": "What prior art should we search before filing a patent for our Ayurvedic formulation, including traditional knowledge?",
+      "patentability": "Which exclusions in section 3 of the Patents Act apply to a herbal formulation?",
+      "drafting": "What is the difference between a provisional and a complete patent specification?",
+      "filing": "Which forms are needed to file a patent application in India?",
+      "complete": "When must a complete specification be filed after a provisional patent application?",
+      "publication": "When is a patent application published, and can it be published early?",
+      "examination": "How do I request examination of a patent application?",
+      "fer": "How do I respond to a first examination report on a patent application?",
+      "hearing": "What happens at a patent hearing before the Controller?",
+      "grant": "When is a patent granted, and where is the grant published?",
+      "opposition": "What is the difference between pre-grant and post-grant patent opposition?",
+      "renewal": "How long does a patent last in India, and when are renewal fees due?"
+    },
+    "forms": {
+      "form1": "Form 1 — application for grant",
+      "form2": "Form 2 — provisional or complete specification",
+      "form3": "Form 3 — statement of foreign applications",
+      "form5": "Form 5 — declaration of inventorship",
+      "form9": "Form 9 — request for early publication",
+      "form18": "Form 18 — request for examination",
+      "form26": "Form 26 — authorisation of a patent agent"
+    },
+    "steps": {
+      "disclosure": {
+        "title": "Disclosure and prior-art search",
+        "body": "Record the invention and search what is already known. For an Ayurvedic formulation this includes traditional-knowledge sources such as the TKDL, because documented traditional knowledge stands as prior art."
+      },
+      "patentability": {
+        "title": "Patentability check",
+        "body": "Work out whether the subject matter falls within the exclusions from patentability — in particular those covering new forms of known substances, mere admixtures, and traditional knowledge or aggregations of known properties."
+      },
+      "drafting": {
+        "title": "Draft the specification",
+        "body": "Prepare either a provisional specification, which secures a filing date while the work continues, or a complete specification with claims."
+      },
+      "filing": {
+        "title": "File at the Patent Office",
+        "body": "File the application with its accompanying forms at the appropriate patent office. An application filed through a patent agent carries an authorisation form as well."
+      },
+      "complete": {
+        "title": "Complete specification after a provisional",
+        "body": "Where a provisional was filed first, the complete specification follows within the period the Act allows, or the application is treated as abandoned."
+      },
+      "publication": {
+        "title": "Publication",
+        "body": "Applications are published after the period set out in the Act. Publication can be brought forward on request rather than waiting for the ordinary date."
+      },
+      "examination": {
+        "title": "Request for examination",
+        "body": "Examination is not automatic — it happens on request, made within the prescribed window. An application not requested for examination in time is treated as withdrawn."
+      },
+      "fer": {
+        "title": "First Examination Report",
+        "body": "The examiner reports objections. The applicant answers them, and puts the application in order for grant, within the period the Rules prescribe."
+      },
+      "hearing": {
+        "title": "Hearing",
+        "body": "Where objections remain outstanding after the reply, the Controller may offer a hearing before deciding."
+      },
+      "grant": {
+        "title": "Grant and publication",
+        "body": "An application found in order proceeds to grant, and the grant is published in the official journal."
+      },
+      "opposition": {
+        "title": "Opposition",
+        "body": "The Act provides two routes: an opposition before grant, and an opposition after grant within the period it allows. They run on different grounds and different timetables."
+      },
+      "renewal": {
+        "title": "Renewal and term",
+        "body": "A granted patent is kept in force by renewal fees from the third year. The term runs twenty years from the date of filing."
+      }
+    }
   }
 }

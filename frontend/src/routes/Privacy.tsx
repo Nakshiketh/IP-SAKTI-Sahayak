@@ -96,6 +96,8 @@ export default function Privacy() {
         <p className="mt-3 max-w-measure text-base">{t('sharing.body')}</p>
         <p className="mt-3 max-w-measure text-base">{t('sharing.model')}</p>
         <p className="mt-3 max-w-measure text-base">{t('sharing.escalate')}</p>
+        <p className="mt-3 max-w-measure text-base">{t('sharing.analyses')}</p>
+        <p className="mt-3 max-w-measure text-base text-muted">{t('sharing.analysesDelete')}</p>
       </section>
 
       <section className="mt-12">
