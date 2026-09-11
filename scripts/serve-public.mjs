@@ -12,7 +12,10 @@
  *
  * No dependencies, so it needs no install of its own.
  *
- *   node scripts/serve-public.mjs [--port 8080] [--api http://127.0.0.1:8000]
+ *   node scripts/serve-public.mjs [--port 8080] [--host 127.0.0.1] [--api http://127.0.0.1:8000]
+ *
+ * Loopback by default, for a tunnel on this machine. A container passes
+ * `--host 0.0.0.0`, because its host's router cannot reach loopback.
  */
 
 import { createReadStream, existsSync, statSync } from 'node:fs';
@@ -29,6 +32,7 @@ function flag(name, fallback) {
 }
 
 const PORT = Number(flag('port', process.env.PORT ?? '8080'));
+const HOST = flag('host', '127.0.0.1');
 const API = new URL(flag('api', process.env.SAHAYAK_API_TARGET ?? 'http://127.0.0.1:8000'));
 
 const TYPES = {
@@ -153,8 +157,8 @@ const server = http.createServer((request, response) => {
   return serveFile(index, response, path === '/' ? 200 : 200);
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+server.listen(PORT, HOST, () => {
   process.stdout.write(`serving ${DIST}\n`);
   process.stdout.write(`  /api -> ${API.origin}\n`);
-  process.stdout.write(`  http://127.0.0.1:${PORT}\n`);
+  process.stdout.write(`  http://${HOST}:${PORT}\n`);
 });

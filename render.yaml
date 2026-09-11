@@ -1,0 +1,18 @@
+# Render Blueprint: the whole site on one free web service, built from the
+# Dockerfile. On render.com: New → Blueprint → pick this repository → Apply.
+#
+# Free instances sleep after ~15 idle minutes and take about a minute to wake.
+# The disk is not kept: accounts, analyses and the audit log start empty after
+# every deploy or wake, and every sign-in token dies with the process.
+services:
+  - type: web
+    name: ip-sakti-sahayak
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      # Hides the API docs and the raw audit viewer; nothing else changes.
+      - key: SAHAYAK_ENVIRONMENT
+        value: production

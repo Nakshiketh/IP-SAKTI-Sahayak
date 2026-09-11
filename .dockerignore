@@ -1,0 +1,16 @@
+.git
+.github
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.ruff_cache
+frontend/dist
+**/.env
+**/.env.local
+data/index
+data/index-samples
+data/chunks
+data/*.sqlite3
+corpus/raw
+corpus/**/raw
