@@ -123,6 +123,24 @@ class Settings(BaseSettings):
 
     audit_enabled: bool = True
 
+    # -- feature flags -----------------------------------------------------
+    # Declared in Phase 0 of the upgrade so later phases can hide work behind a
+    # flag rather than deleting reusable code. Nothing reads them yet, and
+    # Phase 0 changes no behaviour. The frontend half is
+    # `frontend/src/config/features.ts`; keep the two in step.
+    #
+    # `feature_scan_badge_login` is on, which departs from the phase pack's
+    # suggested default: badge scanning is the sign-in in use and the login
+    # page is not to be disturbed. See docs/upgrade/PROGRESS.md.
+
+    feature_jury_demo: bool = False
+    feature_voice: bool = False
+    feature_helpline_sim: bool = False
+    feature_document_intel: bool = False
+    feature_admin_insights: bool = False
+    feature_scan_badge_login: bool = True
+    feature_public_ask: bool = False
+
     @property
     def cors_origin_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]

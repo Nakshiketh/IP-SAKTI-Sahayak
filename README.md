@@ -47,7 +47,7 @@ with a built index reads that index instead of the guidance corpus. The demo fix
 What proves the pipeline works is `make ingest-samples`: fictional instruments of a fictional
 territory, built by the same code into a real index that the real retrieval reads.
 
-`docs/ARCHITECTURE.md` lists what is built and what is planned; `docs/MASTER_BUILD.md` carries the
+`docs/ARCHITECTURE.md` lists what is built and what is planned; `docs/upgrade/archive/MASTER_BUILD.md` carries the
 full phase sequence; `docs/DEMO.md` is the five-minute walkthrough with the exact questions.
 
 ## The architecture

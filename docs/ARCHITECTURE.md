@@ -1,7 +1,7 @@
 # Architecture
 
 Status as of Phase 12. Sections marked **planned** are not built; do not describe them as working
-anywhere in the interface (see the honesty audit in `docs/REVIEW_GATE.md`).
+anywhere in the interface (see the honesty audit in `docs/upgrade/archive/REVIEW_GATE.md`).
 
 ## The shape of the thing
 
