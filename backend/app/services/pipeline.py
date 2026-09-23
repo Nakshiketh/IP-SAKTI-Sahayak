@@ -51,6 +51,7 @@ from app.services.audit import AuditLog, AuditRow, hash_question
 from app.services.context import build_context
 from app.services.guardrails import Refusal, classify_refusal
 from app.services.language import Detection, detect_language
+from app.services.procedures import expand_procedure
 from app.services.records_service import RecordsService
 from app.services.retrieval import Retriever
 from app.services.routing import Route, route
@@ -337,6 +338,13 @@ class Pipeline:
         # claim on something the confidence rule has already discounted.
         floor = confidence_service.RERANK_FLOOR
         cited_passages = [p for p in passages if (p.rerank_score or 0.0) >= floor]
+        # A procedural question that landed on a procedure gets every step of
+        # it, in order. Confidence was scored above, from retrieval alone.
+        expansion = expand_procedure(request.question, cited_passages, store, floor=floor)
+        if expansion.passages is not cited_passages:
+            cited_passages = expansion.passages
+            known = {p.chunk.chunk_id for p in cited_passages}
+            passages = cited_passages + [p for p in passages if p.chunk.chunk_id not in known]
         context = build_context(
             cited_passages,
             token_budget=self._settings.context_token_budget,
@@ -355,6 +363,8 @@ class Pipeline:
                 product_class=request.product_class,
                 context=context,
                 all_passages_are_demo=all_demo,
+                procedure_id=expansion.procedure_id,
+                lead_passages=expansion.lead,
             )
         )
         yield StageEvent(clock.stage("generate"))

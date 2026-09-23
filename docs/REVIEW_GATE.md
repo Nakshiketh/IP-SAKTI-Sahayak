@@ -4,7 +4,7 @@ Run after Phases 1, 3, 4, 7 and 8. One extra turn each; the highest-value step i
 
 ---
 
-Review the phase you just completed against `PROMPT.md` and `docs/BANNED.md` before I continue.
+Review the phase you just completed against `AGENTS.md` and `docs/BANNED.md` before I continue.
 Produce a report in four parts. Do not fix anything until I have read it.
 
 ## 1. AI-LOOK AUDIT

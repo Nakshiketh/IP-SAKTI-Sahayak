@@ -144,7 +144,7 @@ describe('zero decisions before the first answer', () => {
     renderAt();
 
     const starter = screen.getByRole('button', {
-      name: 'What changes if we want to sell the same product in the UK?',
+      name: 'How do we file one international patent application for several countries?',
     });
     await user.click(starter);
     expect(await screen.findByRole('heading', { name: 'Answer' })).toBeInTheDocument();
@@ -313,7 +313,7 @@ describe('honesty', () => {
     await settled();
     // Stated once, under the answer it qualifies — not as a banner above it and
     // not repeated on every source card.
-    expect(screen.getAllByText(/Verify against the official text/i)).toHaveLength(1);
+    expect(screen.getAllByText(/Check the official text before you rely/i)).toHaveLength(1);
   });
 
   it('carries the not-legal-advice pill', () => {

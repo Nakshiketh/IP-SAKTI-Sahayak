@@ -61,6 +61,8 @@ class Invention(BaseModel):
     brand_name: str | None = None
     packaging_note: str | None = None
     region_note: str | None = None
+    #: Classical texts the formulation is said to come from, as TKDL names them.
+    source_texts: list[str] = Field(default_factory=list)
     version: int = 0
 
 
@@ -148,6 +150,30 @@ class ClassicalHit(BaseModel):
     via: Literal["name", "ingredients"]
 
 
+class TkdlText(BaseModel):
+    """A classical text the user named that TKDL lists among the books it transcribes."""
+
+    name: str
+    system: str
+    author: str | None = None
+    list_url: str
+
+
+class TkdlLink(BaseModel):
+    id: str
+    title: str
+    url: str
+
+
+class TkdlFinding(BaseModel):
+    """Public TKDL references only. The TKDL database itself is never searched."""
+
+    texts: list[TkdlText] = Field(default_factory=list)
+    book_count: int
+    links: list[TkdlLink]
+    retrieved_on: str
+
+
 class KnowledgeFinding(BaseModel):
     reference_size: int
     formulation_count: int
@@ -155,6 +181,7 @@ class KnowledgeFinding(BaseModel):
     traditional_count: int
     classical: list[ClassicalHit]
     tkdl_searched: Literal[False] = False
+    tkdl: TkdlFinding | None = None
     notes: list[Reason]
 
 

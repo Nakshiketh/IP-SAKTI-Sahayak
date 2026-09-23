@@ -46,22 +46,28 @@ afterEach(() => {
 });
 
 describe('honesty about what is built', () => {
-  it('separates a stage that is finished from one running on illustrative data', async () => {
+  it('separates a stage that is running from one with nothing behind it', async () => {
     await renderSettled();
-    // Reading the question, choosing a namespace and rendering do not depend on
-    // the corpus, so they are as real as they will get. Everything from
-    // retrieval to the abstention decision runs in full but over the fixture
-    // store. Translation has an interface and nothing behind it.
+    // Every stage from reading the question to the abstention decision runs
+    // over the verified sources. Translation has an interface and nothing
+    // behind it, and says so.
     const by = (state: string) => PIPELINE_STAGES.filter((stage) => stage.state === state);
     expect(by('live').map((stage) => stage.id)).toEqual([
       'detect',
       'understand',
       'clarify',
       'route',
+      'retrieve',
+      'rerank',
+      'context',
+      'generate',
+      'map',
+      'confidence',
+      'abstain',
       'render',
     ]);
     expect(by('planned').map((stage) => stage.id)).toEqual(['translate']);
-    expect(by('demo')).toHaveLength(7);
+    expect(by('demo')).toHaveLength(0);
   });
 
   // The per-stage build-state badge and the page-level build-status notice were

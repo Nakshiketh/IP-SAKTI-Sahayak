@@ -12,15 +12,17 @@ from __future__ import annotations
 
 from app.core.errors import GenerationUnavailable
 from app.core.settings import Settings
-from app.llm.fixture import FixtureLLMClient
+from app.llm.composer import GroundedComposerClient
 from app.llm.types import LLMClient
 
 
 def build_llm_client(settings: Settings) -> LLMClient:
     provider = settings.llm_provider.strip().lower()
 
-    if provider == "fixture":
-        return FixtureLLMClient(settings.fixtures_dir)
+    if provider in ("fixture", "grounded"):
+        # Composes answers from verified passages, and hands demo passages to
+        # the fixture generator exactly as before.
+        return GroundedComposerClient(settings.knowledge_base_path, settings.fixtures_dir)
 
     if provider == "anthropic":
         if not settings.llm_api_key:
@@ -38,5 +40,7 @@ def build_llm_client(settings: Settings) -> LLMClient:
         )
 
     raise GenerationUnavailable(
-        "Unknown SAHAYAK_LLM_PROVIDER: " + settings.llm_provider + ". Use fixture or anthropic."
+        "Unknown SAHAYAK_LLM_PROVIDER: "
+        + settings.llm_provider
+        + ". Use grounded, fixture or anthropic."
     )

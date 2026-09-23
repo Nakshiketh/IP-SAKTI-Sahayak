@@ -224,7 +224,7 @@ def summary(analysis: Analysis, invention: Invention) -> str:
     prior = analysis.prior_art
     if prior.state == "not_loaded":
         lines.append(
-            "- Patents and prior art: no patent records are loaded on this instance, so no patent was searched. "
+            "- Patents and prior art: no patent records are held on this site, so patents were not searched here. "
             "The registries to search are listed in the findings."
         )
     elif prior.state == "failed":
@@ -278,7 +278,7 @@ def explain_patent(analysis: Analysis) -> str:
     prior = analysis.prior_art
     if prior.state == "not_loaded":
         return (
-            "No patent was flagged because none could be searched: no patent records are loaded on this instance. "
+            "No patent was flagged because none could be searched: no patent records are held on this site. "
             "That is not a finding that none exists. The findings list the registries to search, with the terms to use."
         )
     if not prior.matches:
@@ -344,6 +344,32 @@ def explain_missing(invention: Invention, missing_slots: list[str]) -> str:
     if optional:
         lines.append(f"Would sharpen the assessment: {listing(optional)}.")
     return "\n".join(lines)
+
+
+def explain_tkdl(invention: Invention, tkdl) -> str:
+    """What can and cannot be said about the TKDL, from its public pages only."""
+    parts = [
+        "The Traditional Knowledge Digital Library (TKDL) is a Government of India database of "
+        "formulations transcribed from classical texts of Ayurveda, Unani, Siddha, Sowa-Rigpa and Yoga. "
+        "Its full database is open only to patent offices under the TKDL Access Agreement, so your "
+        "formulation cannot be checked against it here. The public TKDL website offers a "
+        "representative database of about 1,250 formulations that anyone can search."
+    ]
+    if invention.source_texts:
+        parts.append(
+            "You named "
+            + listing(invention.source_texts)
+            + f", listed by TKDL among the {tkdl.book_count} classical books it transcribes. "
+            "What that text documents is traditional knowledge and prior art for a patent; only "
+            "what you changed can be new."
+        )
+    else:
+        parts.append(
+            "If your formulation comes from a classical text, tell me which one — I will check it "
+            "against TKDL's published list of the books it transcribes."
+        )
+    parts.append("The official links are in the Traditional knowledge tab.")
+    return " ".join(parts)
 
 
 OTHER_QUESTION = (

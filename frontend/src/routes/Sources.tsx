@@ -12,16 +12,31 @@ import {
   type ManifestDocument,
 } from '@/services/corpusManifest';
 import { isIngested, RECORDS_SOURCES, type RecordsSource } from '@/services/recordsManifest';
+import { chunks as knowledgeChunks } from '@corpus/guidance/knowledge-base.json';
+import {
+  sourceHost,
+  VERIFIED_DOCUMENTS,
+  VERIFIED_REVIEWED_ON,
+  verifiedFor,
+  type VerifiedDocument,
+} from '@/services/verifiedSources';
 
 /**
- * Driven entirely by the two manifests. There is no hard-coded list of sources,
- * groups or facet options anywhere on this page: adding a document to
- * corpus/manifest.json changes what renders, with no code edit.
+ * Driven entirely by data files. There is no hard-coded list of sources,
+ * groups or facet options anywhere on this page.
  *
- * Nothing has been fetched, so every version, date, link and passage count is
- * empty — and each one says what it is missing rather than showing a dash. The
- * page states that once at the top and then lets the fields speak.
+ * The first section lists the verified official sources answers are built
+ * from (`corpus/guidance/sources.json`), each with its link and the date
+ * it was checked. The second lists the wider library planned for full-text
+ * indexing (`corpus/manifest.json`); a document there that a verified source
+ * already covers shows that source's official link.
  */
+
+/** How many verified passages each official document contributes to answers. */
+const PASSAGES_BY_DOCUMENT = knowledgeChunks.reduce(
+  (counts, chunk) => counts.set(chunk.document_id, (counts.get(chunk.document_id) ?? 0) + 1),
+  new Map<string, number>(),
+);
 
 type Dating = 'any' | 'dated' | 'undated';
 
@@ -47,9 +62,9 @@ const HONEST_ITEMS = [
   { key: 'primary', state: 'planned' },
   { key: 'versions', state: 'planned' },
   { key: 'dates', state: 'live' },
-  { key: 'beyond', state: 'planned' },
-  { key: 'uncertainty', state: 'demo' },
-  { key: 'check', state: 'demo' },
+  { key: 'beyond', state: 'live' },
+  { key: 'uncertainty', state: 'live' },
+  { key: 'check', state: 'live' },
   { key: 'subscription', state: 'planned' },
   { key: 'escalate', state: 'planned' },
 ] as const satisfies ReadonlyArray<{ key: string; state: BuildState }>;
@@ -75,11 +90,94 @@ export default function Sources() {
         <p className="mt-3 max-w-measure text-md text-muted">{t('standfirst')}</p>
       </header>
 
+      <VerifiedSection />
       <CorpusSection />
       <RecordsSection />
       <HonestySection />
       <NotCoveredSection />
     </article>
+  );
+}
+
+function VerifiedSection() {
+  const { t } = useTranslation('sources');
+  const { t: tc } = useTranslation('common');
+
+  return (
+    <section id="verified" className="mt-14 scroll-mt-8">
+      <h2 className="text-xl">{t('verified.heading')}</h2>
+      <p className="mt-2 max-w-measure text-muted">
+        {t('verified.standfirst', {
+          count: VERIFIED_DOCUMENTS.length,
+          date: VERIFIED_REVIEWED_ON,
+        })}
+      </p>
+
+      {(['IN', 'INTL'] as const).map((jurisdiction) => {
+        const documents = VERIFIED_DOCUMENTS.filter((doc) => doc.jurisdiction === jurisdiction);
+        return (
+          <div key={jurisdiction} className="mt-10">
+            <h3 className="border-b border-rule-strong pb-2 text-md">
+              {tc(`jurisdiction.${jurisdiction}`)}{' '}
+              <span className="text-xs text-muted">{documents.length}</span>
+            </h3>
+            <ul className="m-0 mt-4 grid list-none gap-4 p-0 lg:grid-cols-2">
+              {documents.map((doc) => (
+                <li key={doc.document_id}>
+                  <VerifiedCard doc={doc} />
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+
+function VerifiedCard({ doc }: { doc: VerifiedDocument }) {
+  const { t } = useTranslation('sources');
+
+  const rows: Array<[string, React.ReactNode]> = [
+    [t('corpus.fields.organization'), doc.organization],
+    [t('corpus.fields.documentType'), t(`corpus.documentTypes.${doc.document_type as 'act'}`)],
+    ...(doc.version_label
+      ? ([[t('corpus.fields.version'), doc.version_label]] as Array<[string, React.ReactNode]>)
+      : []),
+    [t('verified.checked'), VERIFIED_REVIEWED_ON],
+    [
+      t('verified.usedIn'),
+      t('verified.passages', { count: PASSAGES_BY_DOCUMENT.get(doc.document_id) ?? 0 }),
+    ],
+    [
+      t('corpus.fields.link'),
+      <a
+        key="link"
+        href={doc.source_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-stamp underline underline-offset-4"
+      >
+        {sourceHost(doc.source_url)}
+      </a>,
+    ],
+  ];
+
+  return (
+    <Card variant="data" as="article" className="h-full border-l-2 border-stamp p-4">
+      <div className="flex flex-wrap items-baseline gap-2">
+        <h4 className="text-base">{doc.document_title}</h4>
+        <Badge tone="sourced">{t('corpus.verification.verified')}</Badge>
+      </div>
+      <dl className="m-0 mt-3 grid grid-cols-[9rem_1fr] gap-x-3 gap-y-1 text-xs">
+        {rows.map(([label, value]) => (
+          <div key={label} className="contents">
+            <dt className="text-muted">{label}</dt>
+            <dd className="m-0 break-words">{value}</dd>
+          </div>
+        ))}
+      </dl>
+    </Card>
   );
 }
 
@@ -248,6 +346,10 @@ function DocumentCard({ doc }: { doc: ManifestDocument }) {
   const { t } = useTranslation('sources');
   const { t: tc } = useTranslation('common');
 
+  // A planned document already covered by a verified source links to it.
+  const verified = verifiedFor(doc.document_id);
+  const link = doc.source_url ?? verified?.source_url ?? null;
+
   const rows: Array<[string, React.ReactNode]> = [
     [t('corpus.fields.organization'), doc.organization],
     [t('corpus.fields.jurisdiction'), tc(`jurisdiction.${doc.jurisdiction}`)],
@@ -263,9 +365,14 @@ function DocumentCard({ doc }: { doc: ManifestDocument }) {
     [t('corpus.fields.passages'), <Empty key="p">{t('corpus.empty.passages')}</Empty>],
     [
       t('corpus.fields.link'),
-      doc.source_url ? (
-        <a href={doc.source_url} className="text-stamp underline underline-offset-4">
-          {doc.source_url}
+      link ? (
+        <a
+          href={link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-stamp underline underline-offset-4"
+        >
+          {sourceHost(link)}
         </a>
       ) : (
         <Empty>{t('corpus.empty.link')}</Empty>
@@ -277,7 +384,11 @@ function DocumentCard({ doc }: { doc: ManifestDocument }) {
     <Card variant="data" as="article" className="h-full p-4">
       <div className="flex flex-wrap items-baseline gap-2">
         <h4 className="text-base">{doc.title}</h4>
-        <Badge tone="caution">{t(`corpus.verification.${doc.verification_status}`)}</Badge>
+        {verified ? (
+          <Badge tone="sourced">{t('corpus.verification.verified')}</Badge>
+        ) : (
+          <Badge tone="caution">{t(`corpus.verification.${doc.verification_status}`)}</Badge>
+        )}
       </div>
       <dl className="m-0 mt-3 grid grid-cols-[9rem_1fr] gap-x-3 gap-y-1 text-xs">
         {rows.map(([label, value]) => (

@@ -100,11 +100,11 @@
     "sourceCount_other": "{{count}} स्रोत",
     "showPassage": "उतारा दाखवा",
     "hidePassage": "उतारा लपवा",
-    "openSource": "स्रोत उघडा",
+    "openSource": "अधिकृत स्रोत उघडा",
     "openSourceUnavailable": "अजून कोणतीही लिंक नाही",
     "sourceNumber": "स्रोत {{number}}",
     "verifiedBadge": "पडताळणी झालेले",
-    "sourceNote": "स्रोत संकलनाधीन संदर्भ संचातून घेतले आहेत. यावर अवलंबून राहण्यापूर्वी अधिकृत मजकूराशी पडताळा."
+    "sourceNote": "प्रत्येक स्रोत तो ज्या अधिकृत दस्तऐवज किंवा पोर्टलवरून घेतला आहे त्याच्याशी जोडलेला आहे. एखाद्या उत्तरावर अवलंबून राहण्यापूर्वी अधिकृत मजकूर तपासा."
   },
   "jurisdiction": {
     "IN": "भारत",
@@ -186,12 +186,12 @@
     "errConfirm": "Type the password again.",
     "errMismatch": "The two passwords do not match.",
     "errGeneric": "Something went wrong. Try again.",
-    "demoHint": "डेमो बिल्ड. demo / demo1234 ने साइन इन करा, किंवा IP-SAKTI सहायक बॅज स्कॅन करा.",
+    "demoHint": "नवीन आहात? सुरू करण्यासाठी खाते तयार करा, किंवा तुमचा IP-SAKTI सहायक बॅज स्कॅन करा.",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
     "account": "Account",
     "checking": "Checking your session…",
-    "usernameExample": "demo",
+    "usernameExample": "तुमचे वापरकर्तानाव",
     "scanVerified": "QR पडताळला – प्रवेश मंजूर. पोर्टल उघडत आहे…",
     "scanMismatch": "अवैध QR कोड – प्रवेश नाकारला",
     "scanOffline": "बॅज तपासणीशी संपर्क झाला नाही. पुन्हा प्रयत्न करत आहे…",

@@ -15,7 +15,9 @@ import sahayak from '@/locales/en/sahayak.json';
 import Home from '@/routes/Home';
 import { CORPUS_DOCUMENTS } from '@/services/corpusManifest';
 import Sahayak from '@/routes/Sahayak';
-import { DEMO_ANSWERS, demoCitationsFor } from '@/services/answers.mock';
+import knowledgeBase from '@corpus/guidance/knowledge-base.json';
+import verifiedSources from '@corpus/guidance/sources.json';
+import { EXAMPLE_ANSWERS, type PassageCitation } from '@/services/answers.example';
 
 function LocationProbe() {
   const location = useLocation();
@@ -37,6 +39,11 @@ function renderHome() {
 beforeEach(() => {
   vi.stubGlobal('scrollTo', vi.fn());
 });
+
+/** Visible in the sense a reader sees it: no hidden ancestor. */
+function isVisible(node: HTMLElement): boolean {
+  return node.closest('[hidden]') === null;
+}
 
 describe('the hero', () => {
   it('carries the question the reader typed into the workspace', async () => {
@@ -65,12 +72,12 @@ describe('the hero', () => {
 });
 
 describe('the route to a patent', () => {
-  it('is an ordered list of all twelve steps, in procedural order', () => {
+  it('is an ordered list of all fifteen steps, in procedural order', () => {
     renderHome();
     const list = screen.getByRole('list', { name: /steps to get a patent/i });
     const items = within(list).getAllByRole('listitem');
     expect(items).toHaveLength(PATENT_STEPS.length);
-    expect(items).toHaveLength(12);
+    expect(items).toHaveLength(15);
 
     // The order is the content. Asserted against the data rather than a
     // hard-coded list, so reordering the array has to be a deliberate act.
@@ -102,10 +109,26 @@ describe('the route to a patent', () => {
   it('names the traditional-knowledge sources on the first search step', () => {
     // The one substantive claim this section makes about Ayurveda: a
     // formulation's prior art includes documented traditional knowledge, so
-    // the TKDL belongs in step one rather than as an afterthought.
-    const first = PATENT_STEPS[0]!;
-    expect(first.documents).toContain('in-tkdl-access-model');
-    expect(first.documents).toContain('in-tk-biological-material-guidelines');
+    // the TKDL belongs in the first search rather than as an afterthought.
+    const search = PATENT_STEPS.find((step) => step.id === 'search')!;
+    expect(PATENT_STEPS.indexOf(search)).toBe(1);
+    expect(search.documents).toContain('in-tkdl-access-model');
+    expect(search.documents).toContain('in-tk-biological-material-guidelines');
+    expect(search.official).toContain('in-tkdl');
+  });
+
+  it('links every step to verified official sources', () => {
+    const verified = new Map(
+      verifiedSources.documents.map((doc) => [doc.document_id, doc.source_url] as const),
+    );
+    for (const step of PATENT_STEPS) {
+      expect(step.official.length, step.id).toBeGreaterThan(0);
+      for (const id of step.official) {
+        expect(verified.get(id), `${step.id} links an unknown source: ${id}`).toMatch(
+          /^https:\/\//,
+        );
+      }
+    }
   });
 
   it('opens a step to reveal its citation and forms, and closes it again', async () => {
@@ -113,7 +136,7 @@ describe('the route to a patent', () => {
     renderHome();
 
     const list = screen.getByRole('list', { name: /steps to get a patent/i });
-    const filing = within(list).getAllByRole('listitem')[3]!;
+    const filing = within(list).getAllByRole('listitem')[5]!;
     const toggle = within(filing).getByRole('button');
 
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -121,9 +144,13 @@ describe('the route to a patent', () => {
     expect(toggle).toHaveAttribute('aria-expanded', 'true');
 
     // Form 1 and the agent authorisation both belong to the filing step.
-    expect(within(filing).getByText(/Form 1/)).toBeVisible();
-    expect(within(filing).getByText(/Form 26/)).toBeVisible();
+    expect(within(filing).getByText('Form 1 — application for grant')).toBeVisible();
+    expect(within(filing).getByText('Form 26 — authorisation of a patent agent')).toBeVisible();
     expect(within(filing).getByText(/Patents Act 1970/)).toBeVisible();
+    // And the official portal to file on, as a working link.
+    expect(
+      within(filing).getByRole('link', { name: /e-filing services — Patents/ }),
+    ).toHaveAttribute('href', expect.stringMatching(/^https:\/\/ipronline\.ipindia\.gov\.in\//));
 
     await user.click(toggle);
     expect(toggle).toHaveAttribute('aria-expanded', 'false');
@@ -139,7 +166,7 @@ describe('the route to a patent', () => {
       expect(ask).toHaveAttribute('href', askHref(home.patentSteps.questions[step.id]));
     });
 
-    // Twelve different questions, not one question linked twelve times.
+    // Different questions, not one question linked to every step.
     const questions = PATENT_STEPS.map((step) => home.patentSteps.questions[step.id]);
     expect(new Set(questions).size).toBe(PATENT_STEPS.length);
   });
@@ -170,8 +197,8 @@ describe('the route to a patent', () => {
       }
     });
 
-    expect(PATENT_STEPS[0]!.tool).toBe('priorArt');
-    expect(PATENT_STEPS[1]!.tool).toBe('classify');
+    expect(PATENT_STEPS[1]!.tool).toBe('priorArt');
+    expect(PATENT_STEPS[2]!.tool).toBe('classify');
   });
 
   it('lands a reader at the first step in the prior-art tool itself', async () => {
@@ -217,25 +244,31 @@ describe('the demonstrated answer', () => {
     const user = userEvent.setup();
     renderHome();
 
-    // India is showing: its sources, and not the UK's.
-    expect(screen.getByText('The Patents Act, 1970')).toBeVisible();
-    expect(screen.queryByText('Traditional herbal registration scheme')).not.toBeVisible();
+    const indian = 'Guidelines for Examination of Ayush Related Inventions, 2025';
+    const international = 'PCT — The International Patent System';
+    // India is showing: its sources, and not the international ones.
+    expect(screen.getAllByText(indian).some(isVisible)).toBe(true);
+    expect(screen.queryAllByText(international).some(isVisible)).toBe(false);
 
-    await user.click(screen.getByRole('tab', { name: 'United Kingdom' }));
+    await user.click(screen.getByRole('tab', { name: 'International' }));
 
-    expect(screen.getByText('Traditional herbal registration scheme')).toBeVisible();
-    expect(screen.queryByText('The Patents Act, 1970')).not.toBeVisible();
+    expect(screen.getAllByText(international).some(isVisible)).toBe(true);
+    expect(screen.queryAllByText(indian).some(isVisible)).toBe(false);
   });
 
-  it('gives the two jurisdictions different confidence, not one blended answer', () => {
-    expect(DEMO_ANSWERS.IN.confidence).toBe('moderate');
-    expect(DEMO_ANSWERS.INTL.confidence).toBe('low');
-    expect(DEMO_ANSWERS.IN.jurisdiction).not.toBe(DEMO_ANSWERS.INTL.jurisdiction);
+  it('keeps each jurisdiction to its own sources, never one blended answer', () => {
+    for (const jurisdiction of ['IN', 'INTL'] as const) {
+      const answer = EXAMPLE_ANSWERS[jurisdiction];
+      expect(answer.jurisdiction).toBe(jurisdiction);
+      for (const citation of answer.citations) expect(citation.jurisdiction).toBe(jurisdiction);
+    }
   });
 
   it('carries the source note on the demonstrated answer', () => {
     renderHome();
-    expect(screen.getAllByText(/Verify against the official text/i).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/Check the official text before you rely/i).length).toBeGreaterThan(
+      0,
+    );
   });
 
   it('renders the four blocks in a fixed order', () => {
@@ -253,37 +286,39 @@ describe('the demonstrated answer', () => {
     const user = userEvent.setup();
     renderHome();
 
+    const first = EXAMPLE_ANSWERS.IN.citations[0] as PassageCitation;
+    const before = screen.getAllByText(first.passage, { exact: false }).length;
     const [firstToggle] = screen.getAllByRole('button', { name: 'Show the passage' });
-    expect(screen.queryByText(/Demo passage/)).not.toBeInTheDocument();
-
     await user.click(firstToggle!);
-    expect(screen.getAllByText(/Demo passage/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(first.passage, { exact: false }).length).toBeGreaterThan(before);
   });
 });
 
-describe('demo content can never pass for a verified source', () => {
-  it('marks every demo citation, in both jurisdictions', () => {
-    for (const answer of Object.values(DEMO_ANSWERS)) {
-      expect(answer.is_demo).toBe(true);
+describe('the example answer is built from verified sources', () => {
+  const texts = new Map(knowledgeBase.chunks.map((chunk) => [chunk.chunk_id, chunk.text] as const));
+
+  it('marks every citation verified, with an official https link', () => {
+    for (const answer of Object.values(EXAMPLE_ANSWERS)) {
+      expect(answer.is_demo).toBe(false);
       for (const citation of answer.citations) {
-        expect(citation.verification_status).toBe('demo');
-        expect(citation.document_id.startsWith('demo-')).toBe(true);
+        expect(citation.verification_status).toBe('verified');
+        expect(citation.url).toMatch(/^https:\/\//);
       }
     }
   });
 
-  it('quotes no statutory wording it has not retrieved', () => {
-    for (const answer of Object.values(DEMO_ANSWERS)) {
-      for (const citation of demoCitationsFor(answer)) {
-        expect(citation.passage).toMatch(/^Demo passage\./);
+  it('quotes each passage exactly as the verified corpus holds it', () => {
+    for (const answer of Object.values(EXAMPLE_ANSWERS)) {
+      for (const citation of answer.citations as PassageCitation[]) {
+        expect(citation.passage).toBe(texts.get(citation.citation_id));
       }
     }
   });
 
-  it('carries no invented as-of date or corpus version', () => {
-    for (const answer of Object.values(DEMO_ANSWERS)) {
-      expect(answer.as_of_date).toBeNull();
-      expect(answer.corpus_version).toBeNull();
+  it('carries the date and version of the sources it used', () => {
+    for (const answer of Object.values(EXAMPLE_ANSWERS)) {
+      expect(answer.as_of_date).toBe(verifiedSources.reviewed_on);
+      expect(answer.corpus_version).toBe(verifiedSources.corpus_version);
     }
   });
 });

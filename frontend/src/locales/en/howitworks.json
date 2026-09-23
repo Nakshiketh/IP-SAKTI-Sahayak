@@ -4,10 +4,10 @@
     "description": "How a question becomes an answer, why the sources are retrieved rather than remembered, and when the system declines to answer."
   },
   "heading": "How a question becomes a cited answer",
-  "standfirst": "This page is for two readers: someone assessing the engineering, and someone deciding whether to trust an answer it gave them. It is the only page here that uses technical vocabulary, and it is the only page that describes machinery rather than law.",
+  "standfirst": "How a question becomes a cited answer, and when the system declines to answer rather than guess.",
   "status": {
     "heading": "What is actually built",
-    "body": "Every stage below now runs. What most of them still run over is a small set of demonstration sources, because no document has been ingested — so they are marked as built on illustrative data rather than as finished. Each stage carries its own state, nothing here is written in the present tense unless the code does it today, and translation is marked unbuilt because returning text unchanged is not translating it. The one thing that would make this page useless is describing an ambition as a capability."
+    "body": "Every answer is built from verified official sources — the Acts, Rules, guidelines and government portals listed on the Sources page — and every claim links to the one it came from."
   },
   "pipeline": {
     "navLabel": "The pipeline",
@@ -44,7 +44,7 @@
       },
       "retrieve": {
         "name": "Retrieval",
-        "does": "Hybrid search over the selected namespace: keyword matching and dense vectors, fused. Metadata filters are applied before scoring — jurisdiction, effective date window, document type, product class and topic — so superseded text is never a candidate.",
+        "does": "Keyword search (BM25) over the selected namespace, with metadata filters applied before scoring — jurisdiction, effective-date window, document type, product class and topic — so superseded text is never a candidate. A dense-vector channel is fused in by rank once an embedding model is configured; today it reports itself unavailable rather than returning noise.",
         "outputs": "A candidate set of passages with their scores and metadata.",
         "fails": "Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
       },
@@ -62,7 +62,7 @@
       },
       "generate": {
         "name": "Generation",
-        "does": "Answers from the provided passages and nothing else, under a prompt that forbids stating anything not present in them. Output is schema-constrained: the four blocks, plus a machine-readable map from each claim to the passages supporting it.",
+        "does": "With no language model configured, the answer is composed from the packed passages themselves: every sentence is the text of a verified passage, cited to it, and a procedural question is answered as numbered steps in the order they happen. With a model configured, it answers from the same passages and nothing else, under a schema that maps each claim to the passages behind it.",
         "outputs": "Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
         "fails": "If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
       },
@@ -97,7 +97,7 @@
         "fails": "If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
       }
     },
-    "buildSummary": "Of these {{total}} stages, {{live}} are finished, {{demo}} run in full but over illustrative sources rather than ingested documents, and {{planned}} has an interface with nothing behind it. Each carries its own state below."
+    "buildSummary": "Of these {{total}} stages, {{live}} are running, {{demo}} run on partial data, and {{planned}} has an interface with nothing behind it."
   },
   "retrieval": {
     "navLabel": "Why retrieval",
@@ -110,7 +110,7 @@
   "abstention": {
     "navLabel": "Abstention",
     "heading": "Declining to answer is a feature",
-    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. All five are reachable today — the demo script names a question that reaches each of them.",
+    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. All five are reachable today.",
     "offers": "What you are offered",
     "states": {
       "nothing": {
@@ -172,7 +172,7 @@
       },
       "stores": {
         "name": "Stores",
-        "items": "Chunk store per namespace · append-only audit log. No vector index and no records database yet, so nothing here is searched by meaning and no filed record is stored."
+        "items": "Verified official sources, kept separately for India and for international sources · append-only audit log."
       },
       "corpus": {
         "name": "Corpus pipeline",
@@ -250,7 +250,7 @@
       },
       "citationCoverage": {
         "name": "Citation coverage",
-        "what": "Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "what": "Whether an answer cites at least one instrument the test question expects.",
         "target": "as high as the corpus allows"
       },
       "abstentionReason": {

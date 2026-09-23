@@ -30,7 +30,7 @@ from app.services.translation import build_translator
 @lru_cache
 def get_namespaces() -> Namespaces:
     settings = get_settings()
-    return Namespaces(settings.index_dir, settings.fixtures_dir)
+    return Namespaces(settings.index_dir, settings.fixtures_dir, settings.knowledge_base_path)
 
 
 @lru_cache

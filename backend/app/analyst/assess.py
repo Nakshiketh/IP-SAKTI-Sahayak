@@ -114,6 +114,18 @@ def assess(
             )
         )
 
+    if knowledge.tkdl and knowledge.tkdl.texts:
+        # Said to come from a classical text TKDL transcribes: what that text
+        # documents is prior art, so only what was changed can be new.
+        if indicator == "potentially_novel":
+            indicator = "further_assessment"
+        reasons.append(
+            Reason(
+                code="tkdl_source_text",
+                params={"name": knowledge.tkdl.texts[0].name},
+                basis="evidence",
+            )
+        )
     if close and not subset:
         reasons.append(
             Reason(code="no_single_product_has_all", params={"total": total}, basis="evidence")

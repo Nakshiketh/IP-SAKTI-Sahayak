@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 import { Badge, Button, Heading, type HeadingLevel } from '@/components/ui';
 import { cn } from '@/lib/cn';
-import type { DemoCitation } from '@/services/answers.mock';
 import type { Citation } from '@/types/domain';
+
+/** A citation that carries its own passage text, as the static examples do. */
+type CitationWithPassage = Citation & { passage: string };
 
 /**
  * A passage an answer rests on.
@@ -19,7 +21,7 @@ import type { Citation } from '@/types/domain';
  *               a smaller badge, it gets a different edge.
  */
 interface SourceCardProps {
-  citation: Citation | DemoCitation;
+  citation: Citation | CitationWithPassage;
   number: number;
   /**
    * The passage this citation points at. Supplied by the query result, which
@@ -35,7 +37,16 @@ interface SourceCardProps {
   className?: string;
 }
 
-function hasPassage(citation: Citation | DemoCitation): citation is DemoCitation {
+/** The site a source lives on, so a reader can see it is the official one. */
+function sourceHost(url: string): string | null {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
+function hasPassage(citation: Citation | CitationWithPassage): citation is CitationWithPassage {
   return 'passage' in citation && typeof citation.passage === 'string';
 }
 
@@ -97,9 +108,13 @@ export function SourceCard({
           <a
             href={citation.url}
             className="rounded-data text-xs text-stamp underline underline-offset-4"
-            rel="noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             {t('answer.openSource')}
+            {sourceHost(citation.url) ? (
+              <span className="text-muted no-underline"> · {sourceHost(citation.url)}</span>
+            ) : null}
           </a>
         ) : (
           <span className="text-xs text-muted">{t('answer.openSourceUnavailable')}</span>

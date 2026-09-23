@@ -1,0 +1,421 @@
+{
+  "note": "The official documents and portals the verified guidance corpus restates, each with the URL it was checked against. Passages in knowledge-base.json cite these by document_id. Kept in its own file so the web app can list and link the sources without loading every passage.",
+  "corpus_version": "kb-2026.09.22",
+  "reviewed_on": "2026-09-22",
+  "documents": [
+    {
+      "document_id": "in-patents-act-1970",
+      "document_title": "The Patents Act, 1970 (as amended up to 1 August 2024)",
+      "organization": "Government of India · published by the Office of the Controller General of Patents, Designs and Trade Marks (IP India)",
+      "jurisdiction": "IN",
+      "document_type": "act",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/73b5bf10-b04e-4f45-abef-87ff117315dc.pdf",
+      "version_label": "Consolidated text incorporating amendments till 01-08-2024"
+    },
+    {
+      "document_id": "in-patents-rules-2003",
+      "document_title": "The Patents Rules, 2003 (consolidated to 21 September 2021)",
+      "organization": "Government of India · published by IP India",
+      "jurisdiction": "IN",
+      "document_type": "rules",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/5c2404f2-42f4-4aee-b0c9-dc06d687bbf5.pdf",
+      "version_label": "Consolidated to 21-09-2021; read with the Patents (Amendment) Rules, 2024"
+    },
+    {
+      "document_id": "in-patents-amendment-rules-2024",
+      "document_title": "The Patents (Amendment) Rules, 2024",
+      "organization": "Ministry of Commerce and Industry (DPIIT) · Gazette of India, 15 March 2024",
+      "jurisdiction": "IN",
+      "document_type": "rules",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/17e7b633-4b6f-4737-9408-8c8fe72c9cfc.pdf",
+      "version_label": "Published 15-03-2024",
+      "effective_from": "2024-03-15"
+    },
+    {
+      "document_id": "in-patent-forms-list-2024",
+      "document_title": "List of Forms under the Patents Rules (as amended by the Patents (Amendment) Rules, 2024)",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India)",
+      "jurisdiction": "IN",
+      "document_type": "form",
+      "source_url": "https://ipindia.gov.in/frontend/pdf/patents/schedules/Schedule_2.pdf"
+    },
+    {
+      "document_id": "in-ayush-inventions-guidelines-2025",
+      "document_title": "Guidelines for Examination of Ayush Related Inventions, 2025",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India)",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/335e2746-58c1-4b56-a1e5-cdd172a92a3c.pdf"
+    },
+    {
+      "document_id": "in-tk-biological-material-guidelines",
+      "document_title": "Guidelines for Processing of Patent Applications relating to Traditional Knowledge and Biological Material, 2012",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India)",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/220f0e1c-1301-4f0f-84a0-6709fa66c592.pdf",
+      "version_label": "2012; its account of section 6 of the Biological Diversity Act predates the 2023 amendment"
+    },
+    {
+      "document_id": "in-patent-office-manual",
+      "document_title": "Manual of Patent Office Practice and Procedure, 2019",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India)",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/storage/uploads/docs-operator/e1adfe40-7af3-4180-ba04-2e0099c6dca5.pdf"
+    },
+    {
+      "document_id": "in-portal-patent-efiling",
+      "document_title": "IP India comprehensive e-filing services — Patents",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipronline.ipindia.gov.in/epatentfiling/goForLogin/doLogin"
+    },
+    {
+      "document_id": "in-portal-patent-forms-fees",
+      "document_title": "Patents — Forms and Official Fees",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/patents-before-you-apply-forms-official-fees"
+    },
+    {
+      "document_id": "in-portal-patent-search",
+      "document_title": "Indian Patent Advanced Search System (InPASS) and application status",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://iprsearch.ipindia.gov.in/PublicSearch/"
+    },
+    {
+      "document_id": "in-portal-patent-journal",
+      "document_title": "Official Journal of the Patent Office",
+      "organization": "Office of the Controller General of Patents, Designs and Trade Marks (IP India) · official publication",
+      "jurisdiction": "IN",
+      "document_type": "notification",
+      "source_url": "https://search.ipindia.gov.in/IPOJournal/Journal/Patent"
+    },
+    {
+      "document_id": "in-tkdl",
+      "document_title": "Traditional Knowledge Digital Library (TKDL)",
+      "organization": "Council of Scientific and Industrial Research (CSIR) with the Ministry of Ayush",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/"
+    },
+    {
+      "document_id": "in-tkdl-about",
+      "document_title": "About TKDL",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/Abouttkdl.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-faq",
+      "document_title": "TKDL — Frequently asked questions",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/Faq.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-source-info",
+      "document_title": "TKDL — Source of information",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/SourceInfo.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-conditions",
+      "document_title": "TKDL — Conditions of use",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/Terms_Use.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-general-info",
+      "document_title": "TKDL — General information",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/GenInfo.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-representative",
+      "document_title": "TKDL — About the representative database",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/More.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-tkdl-tkrc",
+      "document_title": "Traditional Knowledge Resource Classification (TKRC)",
+      "organization": "Traditional Knowledge Digital Library — CSIR with the Ministry of Ayush · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.tkdl.res.in/tkdl/langdefault/common/TKRC.asp?GL=Eng"
+    },
+    {
+      "document_id": "in-trade-marks-filing-process",
+      "document_title": "Trade Marks — Filing Process (step by step)",
+      "organization": "Trade Marks Registry, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/application-workflow/trademark-filing-process"
+    },
+    {
+      "document_id": "in-trade-marks-basics",
+      "document_title": "Basics of Trade Marks",
+      "organization": "Trade Marks Registry, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/page-content/basics-of-trademarks"
+    },
+    {
+      "document_id": "in-portal-trade-mark-efiling",
+      "document_title": "IP India comprehensive e-filing services — Trade Marks",
+      "organization": "Trade Marks Registry, Office of the CGPDTM (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindiaonline.gov.in/trademarkefiling/user/frmloginnew.aspx"
+    },
+    {
+      "document_id": "in-portal-trade-mark-search",
+      "document_title": "Trade Mark public search",
+      "organization": "Trade Marks Registry, Office of the CGPDTM (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://tmsearch.ipindia.gov.in/ords/r/tisa/trademark_search600/login"
+    },
+    {
+      "document_id": "in-madrid-ip-india",
+      "document_title": "International trade mark protection through the Madrid System",
+      "organization": "Trade Marks Registry, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/page-content/international-trade-mark-protection"
+    },
+    {
+      "document_id": "in-nice-classification",
+      "document_title": "Nice Classification of goods and services (applied by the Trade Marks Registry)",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://www.wipo.int/en/web/classification-nice"
+    },
+    {
+      "document_id": "in-gi-introduction",
+      "document_title": "Geographical Indications — an introduction",
+      "organization": "Geographical Indications Registry, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/page-content/geographical-indications-an-introduction"
+    },
+    {
+      "document_id": "in-portal-gi",
+      "document_title": "Geographical Indications e-filing and public search",
+      "organization": "Geographical Indications Registry, Office of the CGPDTM (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://online.ipindia.gov.in/eGir/login"
+    },
+    {
+      "document_id": "in-designs-basics",
+      "document_title": "Basics of Designs",
+      "organization": "Designs Office, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/page-content/basics-of-designs-1"
+    },
+    {
+      "document_id": "in-portal-design",
+      "document_title": "Designs e-filing and design search",
+      "organization": "Designs Office, Office of the CGPDTM (IP India) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://online.ipindia.gov.in/eDesign/goForLogin/doLogin"
+    },
+    {
+      "document_id": "in-copyright-basics",
+      "document_title": "Basics of Copyright",
+      "organization": "Copyright Office, Office of the CGPDTM (IP India) · official page",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://ipindia.gov.in/page-content/basic-of-copyright-1"
+    },
+    {
+      "document_id": "in-law-commission-289",
+      "document_title": "Report No. 289: Trade Secrets and Economic Espionage (March 2024)",
+      "organization": "Law Commission of India",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://cdnbbsr.s3waas.gov.in/s3ca0daec69b5adc880fb464895726dbdf/uploads/2024/03/202403061982318841.pdf"
+    },
+    {
+      "document_id": "in-bd-amendment-act-2023",
+      "document_title": "The Biological Diversity (Amendment) Act, 2023",
+      "organization": "Government of India · Gazette of India",
+      "jurisdiction": "IN",
+      "document_type": "act",
+      "source_url": "https://egazette.gov.in/WriteReadData/2023/247815.pdf"
+    },
+    {
+      "document_id": "in-nba-ipr-forms-2025",
+      "document_title": "Office Memorandum on e-forms for intellectual property rights applications (10 July 2025)",
+      "organization": "National Biodiversity Authority",
+      "jurisdiction": "IN",
+      "document_type": "notification",
+      "source_url": "https://www.nbaindia.nic.in/sites/default/files/2026-07/imp_formIII.pdf"
+    },
+    {
+      "document_id": "in-portal-nba-abs",
+      "document_title": "ABS e-filing portal",
+      "organization": "National Biodiversity Authority · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://absefiling.nbaindia.in/"
+    },
+    {
+      "document_id": "in-drugs-and-cosmetics-act-rules",
+      "document_title": "The Drugs and Cosmetics Act, 1940 and the Drugs and Cosmetics Rules, 1945",
+      "organization": "Government of India · compilation published by the Central Drugs Standard Control Organisation (CDSCO)",
+      "jurisdiction": "IN",
+      "document_type": "rules",
+      "source_url": "https://cdsco.gov.in/opencms/export/sites/CDSCO_WEB/Pdf-documents/acts_rules/2016DrugsandCosmeticsAct1940Rules1945.pdf",
+      "version_label": "CDSCO compilation; check later amendments notified by the Ministry of Ayush"
+    },
+    {
+      "document_id": "in-portal-e-aushadhi",
+      "document_title": "e-Aushadhi — online licensing of Ayurveda, Siddha, Sowa-Rigpa, Unani and Homoeopathy drugs",
+      "organization": "Ministry of Ayush · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://e-aushadhi.gov.in/"
+    },
+    {
+      "document_id": "in-pcimh",
+      "document_title": "Pharmacopoeia Commission for Indian Medicine & Homoeopathy (PCIM&H)",
+      "organization": "Ministry of Ayush",
+      "jurisdiction": "IN",
+      "document_type": "pharmacopoeia",
+      "source_url": "https://pcimh.gov.in/"
+    },
+    {
+      "document_id": "in-cdsco",
+      "document_title": "Central Drugs Standard Control Organisation",
+      "organization": "Directorate General of Health Services, Ministry of Health and Family Welfare",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://cdsco.gov.in/opencms/opencms/en/Home/"
+    },
+    {
+      "document_id": "in-fssai-ayurveda-aahara-2022",
+      "document_title": "Food Safety and Standards (Ayurveda Aahara) Regulations, 2022",
+      "organization": "Food Safety and Standards Authority of India (FSSAI) · Gazette notification",
+      "jurisdiction": "IN",
+      "document_type": "regulation",
+      "source_url": "https://fssai.gov.in/upload/notifications/2022/05/62789a20b54bdGazette_Notification_Ayurveda_Aahara_09_05_2022.pdf"
+    },
+    {
+      "document_id": "in-portal-foscos",
+      "document_title": "FoSCoS — Food Safety Compliance System (licensing and registration)",
+      "organization": "Food Safety and Standards Authority of India (FSSAI) · official portal",
+      "jurisdiction": "IN",
+      "document_type": "guideline",
+      "source_url": "https://foscos.fssai.gov.in/"
+    },
+    {
+      "document_id": "intl-pct",
+      "document_title": "PCT — The International Patent System",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/pct-system"
+    },
+    {
+      "document_id": "intl-patentscope",
+      "document_title": "PATENTSCOPE",
+      "organization": "World Intellectual Property Organization (WIPO) · official database",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": "https://www.wipo.int/en/web/patentscope"
+    },
+    {
+      "document_id": "intl-paris-convention",
+      "document_title": "Paris Convention for the Protection of Industrial Property",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/treaties/ip/paris/index"
+    },
+    {
+      "document_id": "intl-madrid",
+      "document_title": "Madrid System — international trademark protection",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/madrid-system"
+    },
+    {
+      "document_id": "intl-hague",
+      "document_title": "Hague System — the international design system",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/hague-system"
+    },
+    {
+      "document_id": "intl-brand-database",
+      "document_title": "Global Brand Database",
+      "organization": "World Intellectual Property Organization (WIPO) · official database",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": "https://branddb.wipo.int/"
+    },
+    {
+      "document_id": "intl-nice-classification",
+      "document_title": "Nice Classification of goods and services",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/classification-nice"
+    },
+    {
+      "document_id": "intl-wipo-gratk-2024",
+      "document_title": "WIPO Treaty on Intellectual Property, Genetic Resources and Associated Traditional Knowledge (2024)",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.wipo.int/en/web/treaties/ip/gratk/index"
+    },
+    {
+      "document_id": "intl-wipo-tk",
+      "document_title": "Genetic Resources, Traditional Knowledge and Traditional Cultural Expressions",
+      "organization": "World Intellectual Property Organization (WIPO)",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": "https://www.wipo.int/en/web/traditional-knowledge"
+    },
+    {
+      "document_id": "intl-nagoya-protocol",
+      "document_title": "The Nagoya Protocol on Access and Benefit-sharing",
+      "organization": "Secretariat of the Convention on Biological Diversity (United Nations)",
+      "jurisdiction": "INTL",
+      "document_type": "treaty",
+      "source_url": "https://www.cbd.int/abs/"
+    },
+    {
+      "document_id": "intl-absch",
+      "document_title": "Access and Benefit-Sharing Clearing-House",
+      "organization": "Secretariat of the Convention on Biological Diversity (United Nations) · official database",
+      "jurisdiction": "INTL",
+      "document_type": "guideline",
+      "source_url": "https://absch.cbd.int/en/"
+    }
+  ]
+}

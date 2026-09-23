@@ -5,13 +5,21 @@
   },
   "heading": "What this is built on",
   "standfirst": "Every answer comes from these sources. Here is what is in them, where they came from, and when they were last checked.",
+  "verified": {
+    "heading": "Official sources answers are built from",
+    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals. Each was checked against its official page on {{date}}, and every answer links back to the one it relied on — open it to read the provision yourself.",
+    "checked": "Checked on",
+    "usedIn": "Used in answers",
+    "passages_one": "{{count}} passage",
+    "passages_other": "{{count}} passages"
+  },
   "notFetched": {
-    "title": "Nothing here has been fetched yet",
-    "body": "This is the source set the product intends to answer from, not a set it has read. No document has been downloaded, no licence has been checked, and no passage has been indexed. Every field below that would normally carry a URL, a version or a date is empty, because those are filled from the document itself and nowhere else."
+    "title": "Full-text library in preparation",
+    "body": "The library below is the wider set of instruments being prepared for full-text search. Until a document is indexed, answers come from the verified sources above; where one of them already covers a document below, its official link is shown."
   },
   "corpus": {
-    "heading": "Legal and regulatory sources",
-    "layer": "Layer 1 — normative. These are what an answer cites.",
+    "heading": "Full-text library",
+    "layer": "The wider set of instruments being prepared for full-text search. Where a verified source above already covers one, its official link is shown here.",
     "searchLabel": "Search sources",
     "searchPlaceholder": "Search by title or organization…",
     "filters": "Filters",
@@ -72,8 +80,8 @@
     },
     "verification": {
       "verified": "Verified",
-      "unverified": "Unverified",
-      "demo": "Unverified"
+      "unverified": "Not yet indexed",
+      "demo": "Not yet indexed"
     }
   },
   "records": {
@@ -91,8 +99,8 @@
       "terms": "Terms"
     },
     "access": {
-      "bulk_open": "Bulk data — ingestible",
-      "api_open": "Open API — ingestible",
+      "bulk_open": "Bulk data",
+      "api_open": "Open API",
       "portal_link_only": "Interactive portal — linked out to, never fetched"
     },
     "recordTypes": {
@@ -110,17 +118,17 @@
       "snapshot": "—",
       "count": "—"
     },
-    "portalNote": "No fetcher exists for this source anywhere in the codebase, and none will be written. The product links out and does not run the search on your behalf."
+    "portalNote": "Search this on the official portal. This site links to it rather than searching on your behalf."
   },
   "honest": {
     "heading": "How this is kept honest",
-    "standfirst": "Each commitment, and the mechanism that is supposed to enforce it. Where the mechanism is not built yet, it says so — a commitment with no machinery behind it is a hope.",
+    "standfirst": "Each commitment, and how it is kept.",
     "colCommitment": "Commitment",
     "colMechanism": "Mechanism",
     "items": {
       "primary": {
         "commitment": "Prefer primary official sources",
-        "mechanism": "Ingestion rejects a secondary source unless it is flagged as commentary, and commentary is never cited as authority."
+        "mechanism": "Answers cite primary official sources — Acts, Rules, official guidelines and government portals — never commentary."
       },
       "versions": {
         "commitment": "Track versions and amendments",
@@ -161,7 +169,7 @@
       "outcome": "No opinion on whether an application will be granted, refused or opposed.",
       "jurisdictions": "No jurisdictions beyond those listed above. A question about a country not in the source set gets no answer rather than a plausible one.",
       "realtime": "No real-time registry status. Records are snapshots with a date on them, and the date is shown.",
-      "novelty": "No novelty conclusions. The prior-art feature is an orientation aid over ingested records, not a search of every database an examiner would consult.",
+      "novelty": "No novelty conclusions. The prior-art tools help you search; they do not search every database an examiner would consult.",
       "representation": "No legal representation, and no relationship that could be mistaken for one."
     }
   }

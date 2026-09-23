@@ -74,7 +74,7 @@ class RunContext:
 
 
 def build_pipeline(settings: Settings) -> tuple[Pipeline, RunContext]:
-    namespaces = Namespaces(settings.index_dir, settings.fixtures_dir)
+    namespaces = Namespaces(settings.index_dir, settings.fixtures_dir, settings.knowledge_base_path)
     records = RecordsService(RecordsStore(settings.records_db_path), settings.records_manifest_path)
     llm = build_llm_client(settings)
     translator = build_translator(settings)
@@ -143,12 +143,19 @@ def run_case(pipeline: Pipeline, case: GoldCase) -> CaseResult:
         )
 
     answer = outcome.answer
-    retrieved = {passage.citation_id for passage in outcome.evidence.passages}
+    ranked = {passage.citation_id for passage in outcome.evidence.passages}
+    # A procedural question also packs the other steps of the procedure it
+    # landed on, taken from the same store after ranking (see
+    # `app.services.procedures`). Those passages were retrieved for this
+    # question too, and the expansion only adds passages in force, so they
+    # count as retrieved and in window here. Anything else cited is not.
+    expanded = set(outcome.passage_text) - ranked
+    retrieved = ranked | expanded
     in_window = {
         passage.citation_id
         for passage in outcome.evidence.passages
         if passage.within_effective_window
-    }
+    } | expanded
     citations = list(answer.citations) if answer else []
 
     return CaseResult(

@@ -100,11 +100,11 @@
     "sourceCount_other": "{{count}} উৎস",
     "showPassage": "অনুচ্ছেদ দেখান",
     "hidePassage": "অনুচ্ছেদ লুকান",
-    "openSource": "উৎস খুলুন",
+    "openSource": "আনুষ্ঠানিক উৎস খুলুন",
     "openSourceUnavailable": "এখনও কোনো লিঙ্ক নেই",
     "sourceNumber": "উৎস {{number}}",
     "verifiedBadge": "যাচাইকৃত",
-    "sourceNote": "উৎসগুলি একটি সঙ্কলনাধীন রেফারেন্স সেট থেকে নেওয়া। এর উপর নির্ভর করার আগে সরকারি পাঠ্যের সঙ্গে যাচাই করুন।"
+    "sourceNote": "প্রতিটি উৎস যে আনুষ্ঠানিক নথি বা পোর্টাল থেকে নেওয়া, তার সঙ্গে লিঙ্ক করা আছে। কোনো উত্তরের উপর নির্ভর করার আগে আনুষ্ঠানিক পাঠ্য যাচাই করুন।"
   },
   "jurisdiction": {
     "IN": "ভারত",
@@ -186,12 +186,12 @@
     "errConfirm": "Type the password again.",
     "errMismatch": "The two passwords do not match.",
     "errGeneric": "Something went wrong. Try again.",
-    "demoHint": "ডেমো বিল্ড। demo / demo1234 দিয়ে সাইন ইন করুন, বা IP-SAKTI সহায়ক ব্যাজ স্ক্যান করুন।",
+    "demoHint": "নতুন? শুরু করতে একটি অ্যাকাউন্ট তৈরি করুন, অথবা আপনার IP-SAKTI সহায়ক ব্যাজ স্ক্যান করুন।",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
     "account": "Account",
     "checking": "Checking your session…",
-    "usernameExample": "demo",
+    "usernameExample": "আপনার ব্যবহারকারীর নাম",
     "scanVerified": "QR যাচাই হয়েছে – প্রবেশ অনুমোদিত। পোর্টাল খোলা হচ্ছে…",
     "scanMismatch": "অবৈধ QR কোড – প্রবেশ অস্বীকৃত",
     "scanOffline": "ব্যাজ যাচাইয়ের সঙ্গে যোগাযোগ করা যায়নি। আবার চেষ্টা করা হচ্ছে…",

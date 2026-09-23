@@ -66,6 +66,8 @@ export interface Invention {
   brand_name: string | null;
   packaging_note: string | null;
   region_note: string | null;
+  /** Classical texts the formulation is said to come from, as TKDL names them. */
+  source_texts?: string[];
   version: number;
 }
 
@@ -132,7 +134,16 @@ export interface KnowledgeFinding {
   traditional_count: number;
   classical: { id: string; label: string; via: 'name' | 'ingredients' }[];
   tkdl_searched: false;
+  /** Public TKDL references only; the TKDL database itself is never searched. */
+  tkdl?: TkdlFinding | null;
   notes: Reason[];
+}
+
+export interface TkdlFinding {
+  texts: { name: string; system: string; author: string | null; list_url: string }[];
+  book_count: number;
+  links: { id: string; title: string; url: string }[];
+  retrieved_on: string;
 }
 
 export interface PatentMatch {

@@ -34,6 +34,7 @@ from app.analyst.models import (
 )
 from app.analyst.reader import ItemInput, Reading, match_existing, read
 from app.analyst.store import AnalystStore
+from app.analyst.tkdl import get_tkdl
 from app.analyst.vocabulary import Vocabulary, fold
 from app.core.errors import ApiError
 
@@ -213,6 +214,16 @@ def apply_reading(reading: Reading, invention: Invention, vocabulary: Vocabulary
     return changes
 
 
+def note_source_texts(text: str, invention: Invention) -> list[str]:
+    """Record any classical text named in the message that TKDL lists as transcribed."""
+    named = [w.name for w in get_tkdl().find(text) if w.name not in invention.source_texts]
+    if not named:
+        return []
+    invention.source_texts.extend(named)
+    invention.version += 1
+    return ["Classical source: " + ", ".join(named)]
+
+
 def apply_edit(edit: InventionEdit, invention: Invention, vocabulary: Vocabulary) -> list[str]:
     changes: list[str] = []
     if edit.ingredients is not None:
@@ -379,6 +390,7 @@ class AnalystService:
                 changes = ["Started a new invention"]
             else:
                 changes = apply_reading(reading, invention, self.vocabulary)
+                changes += note_source_texts(text, invention)
                 state.declined.extend(s for s in reading.declined if s not in state.declined)
             yield stage("extract")
         elif edit is not None:
@@ -408,6 +420,7 @@ class AnalystService:
                 for i in invention.ingredients
             ]
             + [invention.form, invention.category, invention.use_terms, invention.title]
+            + [invention.source_texts]
         )
         details = _fingerprint(invention.model_dump(exclude={"version"}))
         rerun = rerun or "rerun" in reading.intents
@@ -542,6 +555,9 @@ class AnalystService:
             answered = True
         if "missing" in reading.intents:
             parts.append(dialogue.explain_missing(invention, missing))
+            answered = True
+        if "tkdl" in reading.intents:
+            parts.append(dialogue.explain_tkdl(invention, get_tkdl()))
             answered = True
         if "other_question" in reading.intents:
             parts.append(dialogue.OTHER_QUESTION)

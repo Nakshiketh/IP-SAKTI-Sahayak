@@ -30,7 +30,6 @@ COMMON_EXCLUDES=(
   --exclude='ci.yml'
   --exclude='REVIEW_GATE.md'
   --exclude='AGENTS.md'
-  --exclude='PROMPT.md'
 )
 
 status=0

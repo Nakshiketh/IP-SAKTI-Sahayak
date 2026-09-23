@@ -5,10 +5,10 @@
     "description": "एक प्रश्न उत्तर कैसे बनता है, स्रोतों को याद रखने के बजाय पुनर्प्राप्त क्यों किया जाता है, और सिस्टम कब उत्तर देने से मना करता है।"
   },
   "heading": "एक प्रश्न उद्धृत उत्तर कैसे बनता है",
-  "standfirst": "यह पृष्ठ दो पाठकों के लिए है: इंजीनियरिंग का आकलन करने वाला कोई व्यक्ति, और उस पर भरोसा करने का निर्णय लेने वाला कोई व्यक्ति।",
+  "standfirst": "कोई प्रश्न स्रोत-सहित उत्तर कैसे बनता है, और सिस्टम अनुमान लगाने के बजाय कब उत्तर देने से मना करता है।",
   "status": {
     "heading": "वास्तव में क्या निर्मित है",
-    "body": "नीचे दिए गए सभी चरण अब कार्य करते हैं। अधिकांश चरण अभी भी सांकेतिक प्रदर्शन स्रोतों पर चलते हैं।"
+    "body": "हर उत्तर सत्यापित आधिकारिक स्रोतों से बनता है — स्रोत पृष्ठ पर सूचीबद्ध अधिनियम, नियम, दिशानिर्देश और सरकारी पोर्टल — और हर दावा अपने स्रोत से जुड़ा होता है।"
   },
   "pipeline": {
     "navLabel": "पाइपलाइन",
@@ -173,7 +173,7 @@
       },
       "stores": {
         "name": "Stores",
-        "items": "Vector index per namespace · chunk store · metadata database · records database · append-only audit log"
+        "items": "सत्यापित आधिकारिक स्रोत, भारत और अंतरराष्ट्रीय स्रोतों के लिए अलग-अलग · केवल-जोड़ने योग्य ऑडिट लॉग।"
       },
       "corpus": {
         "name": "Corpus pipeline",
@@ -251,7 +251,7 @@
       },
       "citationCoverage": {
         "name": "उद्धरण कवरेज",
-        "what": "(उद्धरण कवरेज) Whether an answer cites at least one instrument the gold case expects. Bounded above by what has been ingested, so it reads zero until documents are fetched.",
+        "what": "क्या उत्तर कम से कम एक ऐसे दस्तावेज़ का हवाला देता है जिसकी परीक्षण प्रश्न अपेक्षा करता है।",
         "target": "as high as the corpus allows"
       },
       "abstentionReason": {

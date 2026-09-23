@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { SectionSourceList, SourceScope, Src } from '@/components/sourcing/Sourced';
 import { IncisedMark } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
-import { CORPUS_VERSION } from '@/services/corpusManifest';
 import type { DocumentId } from '@/services/corpusManifest';
 import type { ProductClass } from '@/types/domain';
+import { VERIFIED_CORPUS_VERSION } from '@/services/verifiedSources';
 
 /**
  * Reference material, and it should look like reference material.
@@ -451,7 +451,7 @@ export default function WhatIsCovered() {
               </dl>
 
               <p className="mt-6 max-w-measure border-l-2 border-lac pl-4 text-base">
-                {t('abs.asOfNote', { version: CORPUS_VERSION })}
+                {t('abs.asOfNote', { version: VERIFIED_CORPUS_VERSION })}
               </p>
 
               <SectionSourceList />

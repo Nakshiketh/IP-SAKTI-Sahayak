@@ -100,11 +100,11 @@
     "sourceCount_other": "{{count}} ஆதாரங்கள்",
     "showPassage": "பத்தியைக் காட்டு",
     "hidePassage": "பத்தியை மறை",
-    "openSource": "ஆதாரத்தைத் திற",
+    "openSource": "அதிகாரப்பூர்வ மூலத்தைத் திறக்கவும்",
     "openSourceUnavailable": "இன்னும் இணைப்பு இல்லை",
     "sourceNumber": "ஆதாரம் {{number}}",
     "verifiedBadge": "சரிபார்க்கப்பட்டது",
-    "sourceNote": "மூலங்கள் தொகுக்கப்பட்டு வரும் ஒரு குறிப்புத் தொகுப்பிலிருந்து எடுக்கப்பட்டவை. இதை நம்புவதற்கு முன் அதிகாரப்பூர்வ விசையைச் சரிபார்க்கவும்."
+    "sourceNote": "ஒவ்வொரு மூலமும் அது எடுக்கப்பட்ட அதிகாரப்பூர்வ ஆவணம் அல்லது இணையதளத்துடன் இணைக்கப்பட்டுள்ளது. ஒரு பதிலை நம்புவதற்கு முன் அதிகாரப்பூர்வ உரையைச் சரிபார்க்கவும்."
   },
   "jurisdiction": {
     "IN": "இந்தியா",
@@ -186,12 +186,12 @@
     "errConfirm": "Type the password again.",
     "errMismatch": "The two passwords do not match.",
     "errGeneric": "Something went wrong. Try again.",
-    "demoHint": "டெமோ பதிப்பு. demo / demo1234 மூலம் உள்நுழையுங்கள், அல்லது IP-SAKTI சகாயக் பேட்ஜை ஸ்கேன் செய்யுங்கள்.",
+    "demoHint": "புதியவரா? தொடங்க ஒரு கணக்கை உருவாக்குங்கள், அல்லது உங்கள் IP-SAKTI சகாயக் பேட்ஜை ஸ்கேன் செய்யுங்கள்.",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
     "account": "Account",
     "checking": "Checking your session…",
-    "usernameExample": "demo",
+    "usernameExample": "உங்கள் பயனர்பெயர்",
     "scanVerified": "QR சரிபார்க்கப்பட்டது – அணுகல் வழங்கப்பட்டது. போர்டல் திறக்கிறது…",
     "scanMismatch": "தவறான QR குறியீடு – அணுகல் மறுக்கப்பட்டது",
     "scanOffline": "பேட்ஜ் சரிபார்ப்பை அணுக முடியவில்லை. மீண்டும் முயல்கிறது…",

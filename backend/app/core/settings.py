@@ -48,6 +48,12 @@ class Settings(BaseSettings):
     data_dir: Path = Field(default=REPO_ROOT / "data")
     corpus_dir: Path = Field(default=REPO_ROOT / "corpus")
 
+    #: The verified guidance corpus: passages restating official sources, each
+    #: with the URL it was checked against. Served for any jurisdiction whose
+    #: built index is absent. Point at a missing file to fall back to the demo
+    #: fixture.
+    knowledge_base_override: Path | None = None
+
     #: Where the built index is read from. Overridable so an ingest can be
     #: served without being moved on top of the one in place — pointing this at
     #: `data/index-samples` is how the sample build is demonstrated.
@@ -125,6 +131,12 @@ class Settings(BaseSettings):
     def index_dir(self) -> Path:
         """Where the corpus pipeline writes the built index."""
         return self.index_dir_override or (self.data_dir / "index")
+
+    @property
+    def knowledge_base_path(self) -> Path:
+        return self.knowledge_base_override or (
+            self.corpus_dir / "guidance" / "knowledge-base.json"
+        )
 
     @property
     def fixtures_dir(self) -> Path:

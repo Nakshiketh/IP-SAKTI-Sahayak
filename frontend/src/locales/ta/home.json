@@ -147,15 +147,15 @@
     "cta": "ஒரு கேள்வி கேளுங்கள்"
   },
   "patentSteps": {
-    "heading": "Steps to get a patent",
-    "standfirst": "The route an application takes in India, in order, and what Sahayak does for you at each step. Every step names the instrument that governs it — open one to see the citation and the forms it involves.",
+    "heading": "Steps to get a patent in India",
+    "standfirst": "The route an application takes, in the order it happens: what to do at each step, where to do it, the forms involved and the official source to check. Open a step for the legal provision and the official links.",
     "aria": "Steps to get a patent, in order",
     "stepOf": "Step {{number}} of {{total}}",
     "expand": "Show the source for this step",
     "collapse": "Hide the source for this step",
     "sourceLabel": "Where this is set out",
     "formsLabel": "Forms",
-    "notRetrieved": "Named for reference. Ask Sahayak for a cited answer on any of these.",
+    "notRetrieved": "Summarised from the official sources above. Deadlines run from your own filing or priority date — ask Sahayak for the cited detail on your case.",
     "cta": "Ask about your own case",
     "sahayakLabel": "What Sahayak does here",
     "phases": {
@@ -175,10 +175,12 @@
       "ask": "Ask Sahayak about this step"
     },
     "questions": {
-      "disclosure": "What prior art should we search before filing a patent for our Ayurvedic formulation, including traditional knowledge?",
-      "patentability": "Which exclusions in section 3 of the Patents Act apply to a herbal formulation?",
+      "disclosure": "What must I do before filing a patent so the invention stays new?",
+      "search": "How do I check whether something is already patented?",
+      "patentability": "Can a traditional knowledge formulation be patented?",
       "drafting": "What is the difference between a provisional and a complete patent specification?",
-      "filing": "Which forms are needed to file a patent application in India?",
+      "biodiversity": "Do I need NBA approval to patent an invention using Indian medicinal plants?",
+      "filing": "What documents are required for a patent application?",
       "complete": "When must a complete specification be filed after a provisional patent application?",
       "publication": "When is a patent application published, and can it be published early?",
       "examination": "How do I request examination of a patent application?",
@@ -186,66 +188,104 @@
       "hearing": "What happens at a patent hearing before the Controller?",
       "grant": "When is a patent granted, and where is the grant published?",
       "opposition": "What is the difference between pre-grant and post-grant patent opposition?",
-      "renewal": "How long does a patent last in India, and when are renewal fees due?"
+      "renewal": "How long does a patent last in India, and when are renewal fees due?",
+      "working": "What do I have to file after my patent is granted?"
     },
     "forms": {
       "form1": "Form 1 — application for grant",
       "form2": "Form 2 — provisional or complete specification",
-      "form3": "Form 3 — statement of foreign applications",
-      "form5": "Form 5 — declaration of inventorship",
+      "form3": "Form 3 — statement and undertaking on foreign applications",
+      "form4": "Form 4 — extension of time",
+      "form5": "Form 5 — declaration as to inventorship",
       "form9": "Form 9 — request for early publication",
       "form18": "Form 18 — request for examination",
-      "form26": "Form 26 — authorisation of a patent agent"
+      "form18a": "Form 18A — expedited examination",
+      "form25": "Form 25 — permission to file outside India",
+      "form26": "Form 26 — authorisation of a patent agent",
+      "form27": "Form 27 — statement of working",
+      "form28": "Form 28 — startup, small entity or educational institution",
+      "nbaForm7": "NBA Form 7 — prior approval before grant (section 3(2) persons)",
+      "nbaForm8": "NBA Form 8 — registration before grant (Indian applicants)",
+      "nbaForm9": "NBA Form 9 — approval at commercialisation"
     },
     "steps": {
       "disclosure": {
-        "title": "Disclosure and prior-art search",
-        "body": "Record the invention and search what is already known. For an Ayurvedic formulation this includes traditional-knowledge sources such as the TKDL, because documented traditional knowledge stands as prior art."
+        "title": "Record the invention and keep it confidential",
+        "body": "Write down what the formulation or process is, exactly what is new about it, and the data showing its effect. Do not publish, present, advertise or sell it before you file: an invention disclosed anywhere before the filing date is no longer new.",
+        "where": "Your own records — nothing is filed yet. Use confidentiality agreements with anyone you share it with."
+      },
+      "search": {
+        "title": "Search the prior art, including traditional knowledge",
+        "body": "Search Indian patent records, international patent records and traditional-knowledge sources. The Patent Office examines Ayush inventions against the Traditional Knowledge Digital Library, and a formulation documented in the classical texts counts as prior art.",
+        "where": "IP India public search (InPASS), WIPO PATENTSCOPE, the TKDL and the Ayush Research Portal."
       },
       "patentability": {
-        "title": "Patentability check",
-        "body": "Work out whether the subject matter falls within the exclusions from patentability — in particular those covering new forms of known substances, mere admixtures, and traditional knowledge or aggregations of known properties."
+        "title": "Test novelty, inventive step and industrial application",
+        "body": "An invention must be new, involve an inventive step and be capable of industrial application. Section 3 excludes traditional knowledge and aggregations of known properties (3(p)), mere admixtures (3(e)) and new forms or uses of known substances without enhanced efficacy (3(d)). For a polyherbal composition, plan experiments that show a synergistic effect — without it, known ingredients combined for the same use are treated as obvious.",
+        "where": "Assess it yourself or with a registered patent agent, against IP India's Guidelines for Examination of Ayush Related Inventions."
       },
       "drafting": {
-        "title": "Draft the specification",
-        "body": "Prepare either a provisional specification, which secures a filing date while the work continues, or a complete specification with claims."
+        "title": "Prepare the specification — provisional or complete",
+        "body": "A provisional specification secures a filing date while work continues. The complete specification must describe the invention fully with the best method of performing it, end with claims, and disclose the source and geographical origin of any biological material used.",
+        "where": "Form 2, filed through IP India's patent e-filing portal."
+      },
+      "biodiversity": {
+        "title": "Check the National Biodiversity Authority requirement",
+        "body": "If the invention is based on a biological resource accessed from India, or traditional knowledge associated with it, the NBA must be involved before grant: Indian applicants register on Form 8 and seek approval on Form 9 when they commercialise; foreign persons and foreign-controlled entities need prior approval on Form 7.",
+        "where": "National Biodiversity Authority, through its ABS e-filing portal (absefiling.nbaindia.in)."
       },
       "filing": {
-        "title": "File at the Patent Office",
-        "body": "File the application with its accompanying forms at the appropriate patent office. An application filed through a patent agent carries an authorisation form as well."
+        "title": "File the application",
+        "body": "File Form 1 with the specification on Form 2, Form 3 on corresponding applications abroad, Form 5 declaring the inventors, Form 26 if a patent agent acts for you, and Form 28 to claim startup, small-entity or educational-institution fees.",
+        "where": "IP India patent e-filing portal. The office — Kolkata, Delhi, Mumbai or Chennai — follows where the applicant lives or does business, or where the invention originated."
       },
       "complete": {
-        "title": "Complete specification after a provisional",
-        "body": "Where a provisional was filed first, the complete specification follows within the period the Act allows, or the application is treated as abandoned."
+        "title": "File the complete specification within 12 months",
+        "body": "If you filed a provisional, file the complete specification within twelve months of the filing date, or the application is deemed abandoned. The same twelve months is the window to claim this filing's priority in other Paris Convention countries. A resident of India must file in India at least six weeks before filing abroad, or get permission on Form 25.",
+        "where": "IP India e-filing portal; abroad, each national office or one PCT application through WIPO."
       },
       "publication": {
-        "title": "Publication",
-        "body": "Applications are published after the period set out in the Act. Publication can be brought forward on request rather than waiting for the ordinary date."
+        "title": "Publication at 18 months",
+        "body": "The application is published 18 months from the filing or priority date, whichever is earlier. Ask for early publication on Form 9 and it is ordinarily published within a month. Once published, anyone may file a pre-grant opposition.",
+        "where": "Official Journal of the Patent Office, on IP India's journal portal."
       },
       "examination": {
-        "title": "Request for examination",
-        "body": "Examination is not automatic — it happens on request, made within the prescribed window. An application not requested for examination in time is treated as withdrawn."
+        "title": "Request examination on Form 18 within 31 months",
+        "body": "Examination is not automatic. File Form 18 within 31 months from the priority or filing date, whichever is earlier (48 months for applications filed before 15 March 2024), or the application is treated as withdrawn. Startups, small entities, female applicants and some others may ask for expedited examination on Form 18A.",
+        "where": "IP India patent e-filing portal."
       },
       "fer": {
-        "title": "First Examination Report",
-        "body": "The examiner reports objections. The applicant answers them, and puts the application in order for grant, within the period the Rules prescribe."
+        "title": "Answer the First Examination Report within 6 months",
+        "body": "The Controller sends the First Examination Report with the examiner's objections. Reply to every objection and amend the application to put it in order for grant within six months of the report; one three-month extension is available on Form 4 if requested before the six months end. Miss the deadline and the application is deemed abandoned.",
+        "where": "Reply online through the IP India e-filing portal, yourself or through a registered patent agent."
       },
       "hearing": {
-        "title": "Hearing",
-        "body": "Where objections remain outstanding after the reply, the Controller may offer a hearing before deciding."
+        "title": "Attend the hearing, if objections remain",
+        "body": "If objections remain after your reply, the Controller offers a hearing, which may be held by video-conference. File written submissions within fifteen days of the hearing. The Controller then allows amendments and grants the patent, or refuses it; a refusal can be appealed to the High Court.",
+        "where": "Before the Controller at the appropriate patent office; hearing notices appear on IP India's cause list."
       },
       "grant": {
-        "title": "Grant and publication",
-        "body": "An application found in order proceeds to grant, and the grant is published in the official journal."
+        "title": "Grant",
+        "body": "Once the application is in order, the patent is granted, entered in the register, and the grant is published in the Official Journal. Any NBA approval or registration needed must be in place before grant.",
+        "where": "Track the status on IP India's application-status search."
       },
       "opposition": {
-        "title": "Opposition",
-        "body": "The Act provides two routes: an opposition before grant, and an opposition after grant within the period it allows. They run on different grounds and different timetables."
+        "title": "Watch for opposition",
+        "body": "Before grant, anyone may oppose a published application. After grant, any interested person may oppose within one year of the grant being published. Grounds include prior publication and anticipation by the traditional knowledge of a local or indigenous community.",
+        "where": "Filed with the Controller at the appropriate patent office."
       },
       "renewal": {
-        "title": "Renewal and term",
-        "body": "A granted patent is kept in force by renewal fees from the third year. The term runs twenty years from the date of filing."
+        "title": "Pay renewal fees — the term is 20 years",
+        "body": "A patent lasts twenty years from the filing date. Renewal fees fall due from the end of the second year and must be paid before each year ends, with up to six months' extension on Form 4. Paying at least four years in advance electronically earns a 10% reduction. An unpaid patent ceases to have effect.",
+        "where": "IP India e-filing portal (renewal fee payment)."
+      },
+      "working": {
+        "title": "File the statement of working (Form 27)",
+        "body": "The patentee and every licensee must file Form 27 on commercial working of the patent in India once for every three financial years, starting with the year after grant, within six months after each period ends.",
+        "where": "IP India e-filing portal."
       }
-    }
+    },
+    "whereLabel": "Where",
+    "officialLabel": "Official sources"
   }
 }

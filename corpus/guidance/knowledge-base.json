@@ -1,0 +1,2042 @@
+{
+  "note": "The verified guidance corpus Ask Sahayak answers from. Every passage restates a provision or an official page in plain language and names, by document_id, the document in sources.json it comes from; every document there carries the official URL it was checked against. Passages are summaries, not quotations: the linked source is the authority. Re-check each source and update reviewed_on in sources.json whenever a listed instrument is amended.",
+  "procedures": {
+    "in-patent": {
+      "title": "Getting a patent in India",
+      "jurisdiction": "IN",
+      "triggers": [
+        "patent",
+        "patents",
+        "patenting",
+        "patented",
+        "patentable",
+        "patentability",
+        "invention",
+        "prior art",
+        "examination report",
+        "fer",
+        "form 18",
+        "specification",
+        "inventor"
+      ],
+      "after": {
+        "filing": 8,
+        "filed": 8,
+        "file": 8,
+        "applying": 8,
+        "application": 8,
+        "publication": 9,
+        "published": 9,
+        "examination": 10,
+        "request": 10,
+        "fer": 10,
+        "report": 10,
+        "hearing": 12,
+        "grant": 13,
+        "granted": 13,
+        "getting": 13
+      },
+      "caveat": "Deadlines run from your own filing or priority date, and some differ for applications filed before 15 March 2024. Check each date against the cited Rules, or with a registered patent agent, before you act."
+    },
+    "in-trade-mark": {
+      "title": "Registering a trade mark in India",
+      "jurisdiction": "IN",
+      "triggers": [
+        "trademark",
+        "trademarks",
+        "trade mark",
+        "trade marks",
+        "brand",
+        "brand name",
+        "logo"
+      ],
+      "after": {
+        "filing": 4,
+        "filed": 4,
+        "application": 4,
+        "applying": 4,
+        "publication": 4,
+        "registration": 5,
+        "registered": 5
+      },
+      "caveat": "Official fees and form versions change; check the current ones on IP India's trade mark pages before filing."
+    }
+  },
+  "chunks": [
+    {
+      "chunk_id": "kb-in-patent-01-confidential",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 1,
+      "step_title": "Keep the invention confidential and write it down",
+      "heading": "Section 2(1)(l) — new invention",
+      "section_path": [
+        "Section 2(1)(l)"
+      ],
+      "text": "Do not publish, present, advertise or sell the invention before you file. A \"new invention\" under the Act is one not anticipated by publication in any document or by use, in India or elsewhere, before the filing date of the application with complete specification. Record what the formulation or process is, exactly what is new about it, and the experimental data showing its effect.",
+      "topics": [
+        "novelty",
+        "new invention",
+        "disclosure",
+        "publication before filing",
+        "confidential",
+        "keep secret",
+        "before filing",
+        "first step",
+        "how to patent",
+        "apply for patent"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-02-search",
+      "document_id": "in-ayush-inventions-guidelines-2025",
+      "procedure": "in-patent",
+      "step": 2,
+      "step_title": "Search what is already known (prior art)",
+      "heading": "3.3 Examination; Annexure-I databases",
+      "section_path": [
+        "Para 3.3",
+        "Annexure-I"
+      ],
+      "text": "The Patent Office tests novelty and inventive step of Ayush inventions against the Traditional Knowledge Digital Library (TKDL) and other databases, so search the same sources first: Indian patent records, international patent databases, and traditional-knowledge sources such as the TKDL and the Ayush Research Portal (ayushportal.nic.in), which the guidelines list in Annexure-I.",
+      "topics": [
+        "prior art search",
+        "patentability search",
+        "already patented",
+        "check existing patents",
+        "search",
+        "traditional knowledge",
+        "ayush research portal",
+        "novelty search",
+        "is it already patented"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-02-search-inpass",
+      "document_id": "in-portal-patent-search",
+      "procedure": "in-patent",
+      "step": 2,
+      "heading": "Indian patent search",
+      "section_path": [
+        "Public search"
+      ],
+      "text": "Search published and granted Indian patent applications free of charge on IP India's public search (InPASS) at iprsearch.ipindia.gov.in, by keyword, applicant, classification or application number.",
+      "topics": [
+        "inpass",
+        "indian patent search",
+        "search patents india",
+        "already patented",
+        "check whether patented",
+        "patent database",
+        "prior art",
+        "application status"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-02-search-tkdl",
+      "document_id": "in-tkdl",
+      "procedure": "in-patent",
+      "step": 2,
+      "heading": "Access to the TKDL",
+      "section_path": [
+        "Home — access"
+      ],
+      "text": "The public TKDL website shows a representative database of Ayurvedic, Unani, Siddha and Sowa-Rigpa formulations; access to the full database is available to patent offices only, under the TKDL Access Agreement. Treat a formulation documented in the classical texts as prior art even if you cannot see its TKDL record.",
+      "topics": [
+        "classical formulation",
+        "prior art",
+        "traditional knowledge",
+        "ayurvedic formulations database",
+        "search traditional knowledge"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-03-patentability",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 3,
+      "step_title": "Check the three patentability tests and the exclusions",
+      "heading": "Sections 2(1)(j), 2(1)(ja), 2(1)(ac) and 3",
+      "section_path": [
+        "Section 2(1)(j)",
+        "Section 2(1)(ja)",
+        "Section 2(1)(ac)",
+        "Section 3"
+      ],
+      "text": "An invention must be a new product or process, involve an inventive step (a technical advance or economic significance that is not obvious to a person skilled in the art) and be capable of industrial application. Section 3 excludes, among others: an invention that in effect is traditional knowledge or an aggregation or duplication of known properties of traditionally known components (section 3(p)); a mere admixture giving only the aggregate of its components' properties (section 3(e)); and a new form or new use of a known substance without enhanced efficacy (section 3(d)).",
+      "topics": [
+        "patentability",
+        "novelty",
+        "inventive step",
+        "industrial application",
+        "section 3",
+        "3(p)",
+        "3(e)",
+        "3(d)",
+        "not inventions",
+        "exclusions",
+        "traditional knowledge",
+        "can i patent",
+        "is it patentable",
+        "herbal formulation",
+        "polyherbal",
+        "patent ayurveda formulation",
+        "reformulated classical preparation",
+        "modified classical formulation",
+        "reformulation",
+        "anything patentable",
+        "classical preparation",
+        "what is patentable"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary",
+        "new_non_classical_drug"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-03-ayush-principles",
+      "document_id": "in-ayush-inventions-guidelines-2025",
+      "procedure": "in-patent",
+      "step": 3,
+      "heading": "3.4 Guiding principles 1–6",
+      "section_path": [
+        "Para 3.4",
+        "Guiding principles 1–6"
+      ],
+      "text": "For Ayush inventions the Office applies these principles: an extract of a plant whose use is known is not novel, though a new process for obtaining it may be patentable; combining ingredients already known for the same disease is treated as obvious unless the specific combination or ratio shows an unexpected or synergistic effect; finding an optimum range by routine experimentation is not inventive; picking one ingredient out of a known formulation for the same use is not inventive; and new equipment or devices for known Ayush procedures may be patentable.",
+      "topics": [
+        "ayush patent",
+        "ayurveda patent",
+        "polyherbal",
+        "combination",
+        "synergy",
+        "synergistic",
+        "extract",
+        "plant extract",
+        "process patent",
+        "herbal formulation",
+        "patent ayurveda formulation",
+        "what can be patented ayurveda",
+        "device",
+        "obvious",
+        "reformulated classical preparation",
+        "modified classical formulation",
+        "reformulation",
+        "anything patentable",
+        "added ingredients",
+        "changed proportions",
+        "new ratio"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ],
+      "product_classes": [
+        "patent_proprietary",
+        "new_non_classical_drug",
+        "classical_generic"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-03-synergy-data",
+      "document_id": "in-ayush-inventions-guidelines-2025",
+      "procedure": "in-patent",
+      "step": 3,
+      "heading": "Annexure-II — synergism",
+      "section_path": [
+        "Annexure-II"
+      ],
+      "text": "To show that a composition is more than a mere admixture under section 3(e), put experimental data in the specification proving that the combined effect of the ingredients is greater than the sum of their individual effects. The guidelines give worked illustrations of acceptable synergy data in Annexure-II.",
+      "topics": [
+        "synergy data",
+        "synergistic effect",
+        "3(e)",
+        "admixture",
+        "experimental data",
+        "combination",
+        "polyherbal",
+        "composition claim"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-04-specification",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 4,
+      "step_title": "Prepare the specification — provisional or complete",
+      "heading": "Sections 9 and 10",
+      "section_path": [
+        "Section 9(1)",
+        "Section 10(4)"
+      ],
+      "text": "The specification is filed on Form 2. You may file a provisional specification first to secure a filing date, but the complete specification must then be filed within twelve months of the filing date or the application is deemed abandoned (section 9(1)). The complete specification must fully describe the invention and the best method of performing it, end with claims, and disclose the source and geographical origin of any biological material used in the invention (section 10(4)(d)(ii)(D)).",
+      "topics": [
+        "provisional specification",
+        "complete specification",
+        "form 2",
+        "twelve months",
+        "12 months",
+        "claims",
+        "drafting",
+        "best method",
+        "source and geographical origin",
+        "biological material",
+        "specification",
+        "declare biological source",
+        "biological source in patent application"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-05-nba",
+      "document_id": "in-bd-amendment-act-2023",
+      "procedure": "in-patent",
+      "step": 5,
+      "step_title": "Check the biodiversity (NBA) requirement",
+      "heading": "Section 6 as substituted by the 2023 amendment",
+      "section_path": [
+        "Section 8 (amending section 6 of the Biological Diversity Act, 2002)"
+      ],
+      "text": "If the invention is based on research or information on a biological resource accessed from India, or on traditional knowledge associated with it, the National Biodiversity Authority must be involved before the patent is granted: a person or entity covered by section 3(2) (broadly, foreign persons and foreign-controlled entities) needs the NBA's prior approval, and an Indian applicant covered by section 7 must register with the NBA; the Indian applicant then needs the NBA's prior approval at the time of commercialisation.",
+      "topics": [
+        "nba",
+        "national biodiversity authority",
+        "biodiversity approval",
+        "biological resource",
+        "section 6",
+        "benefit sharing",
+        "abs",
+        "access and benefit sharing",
+        "before grant",
+        "medicinal plants",
+        "herbs from india"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-05-nba-forms",
+      "document_id": "in-nba-ipr-forms-2025",
+      "procedure": "in-patent",
+      "step": 5,
+      "heading": "Forms under the Biological Diversity (Amendment) Rules, 2024",
+      "section_path": [
+        "Revised filing requirements"
+      ],
+      "text": "Use the NBA's current forms, filed online on the NBA ABS e-filing portal (absefiling.nbaindia.in): Form 7 for prior approval before grant of an intellectual property right (persons under section 3(2)); Form 8 for registration before grant (persons under section 7); Form 9 for prior approval at commercialisation after Form 8 registration. The old Form III no longer applies to these cases.",
+      "topics": [
+        "nba form",
+        "form 7",
+        "form 8",
+        "form 9",
+        "form iii",
+        "abs e-filing",
+        "nba application",
+        "biodiversity approval forms",
+        "benefit sharing",
+        "register with nba"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-05-form1-declaration",
+      "document_id": "in-tk-biological-material-guidelines",
+      "procedure": "in-patent",
+      "step": 5,
+      "heading": "Paras 17–18 — disclosure and NBA permission",
+      "section_path": [
+        "Para 17",
+        "Para 18"
+      ],
+      "text": "Form 1 carries a declaration on whether the invention uses biological material from India, and the examiner raises an objection if the specification does not disclose the source and geographical origin of the biological material used.",
+      "topics": [
+        "form 1 declaration",
+        "biological material",
+        "source and geographical origin",
+        "objection",
+        "nba permission",
+        "traditional knowledge",
+        "disclosure",
+        "declare biological source",
+        "biological source in patent application",
+        "declaration"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-06-file",
+      "document_id": "in-patent-forms-list-2024",
+      "procedure": "in-patent",
+      "step": 6,
+      "step_title": "File the application",
+      "heading": "Forms 1, 2, 3, 5, 26 and 28",
+      "section_path": [
+        "List of Forms"
+      ],
+      "text": "File Form 1 (application for grant), Form 2 (provisional or complete specification), Form 3 (statement and undertaking about corresponding applications abroad, under section 8), Form 5 (declaration as to inventorship), Form 26 (authorisation, if a patent agent files for you) and, to claim reduced fees, Form 28 (small entity, startup or educational institution). The application may be made by the true and first inventor, the inventor's assignee, or the legal representative of a deceased inventor (section 6).",
+      "topics": [
+        "form 1",
+        "form 2",
+        "form 3",
+        "form 5",
+        "form 26",
+        "form 28",
+        "documents required",
+        "which forms",
+        "filing patent",
+        "apply for patent",
+        "who can apply",
+        "startup",
+        "small entity",
+        "patent agent",
+        "required documents"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-06-where",
+      "document_id": "in-portal-patent-efiling",
+      "procedure": "in-patent",
+      "step": 6,
+      "heading": "Where to file",
+      "section_path": [
+        "e-filing"
+      ],
+      "text": "File online through IP India's patent e-filing portal (ipronline.ipindia.gov.in). The appropriate office — Kolkata, Delhi, Mumbai or Chennai — is decided by where the first-named applicant resides, has a place of business or where the invention originated, or by the address for service in India for an applicant with none (Patents Rules, rule 4).",
+      "topics": [
+        "where to file",
+        "e-filing",
+        "online filing",
+        "patent office",
+        "kolkata",
+        "delhi",
+        "mumbai",
+        "chennai",
+        "appropriate office",
+        "portal",
+        "which office",
+        "ip india"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-06-fees",
+      "document_id": "in-portal-patent-forms-fees",
+      "procedure": "in-patent",
+      "step": 6,
+      "heading": "Official fees",
+      "section_path": [
+        "Forms and official fees"
+      ],
+      "text": "Official fees are set in the First Schedule to the Patents Rules, with lower fees for natural persons, startups, small entities and educational institutions; check the current amounts and download the forms on IP India's Forms and Official Fees page before filing.",
+      "topics": [
+        "fees",
+        "cost",
+        "official fee",
+        "how much",
+        "patent fee",
+        "startup fee",
+        "small entity fee",
+        "first schedule"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-07-abroad",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 7,
+      "step_title": "Plan any filing abroad",
+      "heading": "Sections 39 and 135",
+      "section_path": [
+        "Section 39",
+        "Section 135"
+      ],
+      "text": "A person resident in India may not file for a patent outside India unless an Indian application for the same invention was filed at least six weeks earlier (with no secrecy direction), or the Controller has granted written permission, requested on Form 25 (section 39). An application in another convention country claiming priority from your Indian application must generally be made within twelve months, and the same twelve-month window applies in India for a convention application based on a foreign one (section 135).",
+      "topics": [
+        "foreign filing",
+        "file abroad",
+        "foreign filing permission",
+        "form 25",
+        "section 39",
+        "six weeks",
+        "priority",
+        "convention application",
+        "twelve months",
+        "international patent",
+        "other countries"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-07-pct",
+      "document_id": "in-patents-rules-2003",
+      "procedure": "in-patent",
+      "step": 7,
+      "heading": "Rule 20(4) — national phase in India",
+      "section_path": [
+        "Rule 20(4)(i)"
+      ],
+      "text": "An international (PCT) application designating India must enter the Indian national phase within thirty-one months from the priority date.",
+      "topics": [
+        "pct",
+        "national phase",
+        "31 months",
+        "thirty one months",
+        "international application",
+        "entering india"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-08-publication",
+      "document_id": "in-patents-rules-2003",
+      "procedure": "in-patent",
+      "step": 8,
+      "step_title": "Publication",
+      "heading": "Rules 24 and 24A",
+      "section_path": [
+        "Rule 24",
+        "Rule 24A"
+      ],
+      "text": "The application is published in the Official Journal of the Patent Office after eighteen months from the filing or priority date, whichever is earlier (rule 24). You can ask for early publication on Form 9 (rule 24A); it is then ordinarily published within one month of the request. After publication, anyone may file a pre-grant opposition (section 25(1)) until the patent is granted.",
+      "topics": [
+        "publication",
+        "18 months",
+        "eighteen months",
+        "early publication",
+        "form 9",
+        "journal",
+        "published",
+        "what happens after filing",
+        "after filing",
+        "pre-grant opposition"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-08-journal",
+      "document_id": "in-portal-patent-journal",
+      "procedure": "in-patent",
+      "step": 8,
+      "heading": "Official Journal",
+      "section_path": [
+        "Patent journal"
+      ],
+      "text": "Published applications and grants appear in the Official Journal of the Patent Office on IP India's journal portal, and the progress of your own application can be tracked on the application-status search at iprsearch.ipindia.gov.in.",
+      "topics": [
+        "journal",
+        "official journal",
+        "track application",
+        "application status",
+        "published applications",
+        "grant publication"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-09-rfe",
+      "document_id": "in-patents-amendment-rules-2024",
+      "procedure": "in-patent",
+      "step": 9,
+      "step_title": "Request examination (Form 18)",
+      "heading": "Rule 24B(1) as amended",
+      "section_path": [
+        "Rule 24B(1)"
+      ],
+      "text": "Examination is not automatic. File a request for examination on Form 18 within thirty-one months from the priority date or filing date, whichever is earlier; applications filed before 15 March 2024 keep the earlier forty-eight-month period. If no request is made in time, the application is treated as withdrawn (section 11B(4)).",
+      "topics": [
+        "request for examination",
+        "form 18",
+        "31 months",
+        "thirty-one months",
+        "48 months",
+        "examination",
+        "rfe",
+        "after filing",
+        "what to do after filing",
+        "next step after filing",
+        "deadline",
+        "withdrawn"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-09-expedited",
+      "document_id": "in-patents-rules-2003",
+      "procedure": "in-patent",
+      "step": 9,
+      "heading": "Rule 24C — expedited examination",
+      "section_path": [
+        "Rule 24C(1)"
+      ],
+      "text": "Expedited examination can be requested online on Form 18A where, among other grounds, the applicant is a startup or a small entity, a natural person applicant (or at least one of joint natural-person applicants) is female, the applicant is a Government department or Government-owned institution or company, or India was chosen as the International Searching or Preliminary Examining Authority for the corresponding PCT application.",
+      "topics": [
+        "expedited examination",
+        "form 18a",
+        "fast track",
+        "startup",
+        "small entity",
+        "women applicant",
+        "female applicant",
+        "faster grant",
+        "speed up"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-10-fer",
+      "document_id": "in-patents-rules-2003",
+      "procedure": "in-patent",
+      "step": 10,
+      "step_title": "Answer the First Examination Report",
+      "heading": "Rule 24B(3), (5) and (6); section 21",
+      "section_path": [
+        "Rule 24B(3)",
+        "Rule 24B(5)",
+        "Rule 24B(6)"
+      ],
+      "text": "After examination the Controller issues a first statement of objections (the First Examination Report, FER). You must answer every objection and put the application in order for grant within six months from the date the FER is issued (rule 24B(5)); this can be extended once by three months on a request in Form 4 made before the six months expire (rule 24B(6)). An application not put in order within the time is deemed abandoned (section 21(1)).",
+      "topics": [
+        "fer",
+        "first examination report",
+        "examination report",
+        "objections",
+        "respond",
+        "reply",
+        "six months",
+        "6 months",
+        "form 4",
+        "extension",
+        "abandoned",
+        "examiner objections",
+        "how to respond"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-11-hearing",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 11,
+      "step_title": "Hearing, if objections remain",
+      "heading": "Sections 14 and 117A",
+      "section_path": [
+        "Section 14",
+        "Section 117A"
+      ],
+      "text": "If the examiner's report is adverse or requires amendment, the Controller must tell you the gist of the objections and, if you ask within the prescribed period, give you an opportunity to be heard before deciding (section 14). An appeal against a refusal lies to the High Court (section 117A).",
+      "topics": [
+        "hearing",
+        "controller",
+        "objections remain",
+        "refusal",
+        "appeal",
+        "high court",
+        "amendment",
+        "section 14"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-11-hearing-practice",
+      "document_id": "in-patent-office-manual",
+      "procedure": "in-patent",
+      "step": 11,
+      "heading": "Chapter 09.05 — hearing",
+      "section_path": [
+        "Para 09.05"
+      ],
+      "text": "If your reply does not satisfy the requirements, or you contest an objection, the Controller offers a hearing and decides on the merits; hearings may be held by video-conference. File your written submissions and any supporting documents within fifteen days from the date of the hearing. After hearing you, the Controller may allow amendments and grant the patent, or refuse the application under section 15.",
+      "topics": [
+        "hearing",
+        "video conference",
+        "written submissions",
+        "fifteen days",
+        "15 days",
+        "after hearing",
+        "refusal",
+        "section 15",
+        "controller decision"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-12-grant",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 12,
+      "step_title": "Grant",
+      "heading": "Section 43",
+      "section_path": [
+        "Section 43"
+      ],
+      "text": "Once the application is found in order and not refused, the patent is granted with the seal of the Patent Office and the grant date is entered in the register. The Controller publishes the grant, after which the application, specification and related documents are open for public inspection.",
+      "topics": [
+        "grant",
+        "patent granted",
+        "certificate",
+        "register",
+        "when is patent granted",
+        "publication of grant"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-12-nba-before-grant",
+      "document_id": "in-bd-amendment-act-2023",
+      "procedure": "in-patent",
+      "step": 12,
+      "heading": "NBA approval or registration before grant",
+      "section_path": [
+        "Section 6(1) and 6(1A)"
+      ],
+      "text": "Where the invention is based on a biological resource accessed from India or associated traditional knowledge, the NBA approval (section 3(2) persons) or NBA registration (section 7 persons) must be in place before the grant.",
+      "topics": [
+        "nba before grant",
+        "grant",
+        "biodiversity approval",
+        "biological resource"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-13-opposition",
+      "document_id": "in-patents-act-1970",
+      "procedure": "in-patent",
+      "step": 13,
+      "step_title": "Watch for opposition",
+      "heading": "Section 25(1) and 25(2)",
+      "section_path": [
+        "Section 25(1)",
+        "Section 25(2)"
+      ],
+      "text": "Before grant, any person may oppose a published application by representation to the Controller (section 25(1)). After grant, any person interested may give notice of opposition within one year from the date the grant is published (section 25(2)). Grounds include wrongful obtaining, prior publication, and that the invention is anticipated by traditional knowledge available within any local or indigenous community.",
+      "topics": [
+        "opposition",
+        "pre-grant opposition",
+        "post-grant opposition",
+        "one year",
+        "challenge",
+        "oppose",
+        "section 25"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-14-renewal",
+      "document_id": "in-patents-rules-2003",
+      "procedure": "in-patent",
+      "step": 14,
+      "step_title": "Pay renewal fees to keep the patent in force",
+      "heading": "Rule 80; section 53",
+      "section_path": [
+        "Rule 80",
+        "Section 53"
+      ],
+      "text": "A patent lasts twenty years from the filing date (for a PCT application, from the international filing date) (section 53). Renewal fees fall due from the end of the second year and must be paid before each year expires (rule 80(1)); the time can be extended by up to six months on Form 4 (rule 80(1A)). Since the 2024 amendment, paying renewal fees electronically in advance for at least four years earns a ten per cent reduction. A patent whose renewal fee is not paid ceases to have effect.",
+      "topics": [
+        "renewal",
+        "renewal fees",
+        "term",
+        "twenty years",
+        "20 years",
+        "how long does a patent last",
+        "maintenance",
+        "keep in force",
+        "ceases",
+        "lapse"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-patent-15-working",
+      "document_id": "in-patents-amendment-rules-2024",
+      "procedure": "in-patent",
+      "step": 15,
+      "step_title": "File the statement of working (Form 27)",
+      "heading": "Rule 131(2) as substituted",
+      "section_path": [
+        "Rule 131(2)"
+      ],
+      "text": "Every patentee and licensee must file a statement of commercial working in India on Form 27 once for every period of three financial years, starting with the financial year after the year of grant, within six months after each period ends; the Controller may extend this by up to three months on a request in Form 4.",
+      "topics": [
+        "form 27",
+        "working statement",
+        "statement of working",
+        "commercial working",
+        "post grant",
+        "after grant",
+        "three financial years",
+        "compliance after grant"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-what",
+      "document_id": "in-tkdl-about",
+      "heading": "What TKDL is",
+      "section_path": [
+        "What TKDL is"
+      ],
+      "text": "The Traditional Knowledge Digital Library (TKDL) is India's database for protecting its traditional medicinal knowledge from misappropriation at international patent offices. It converts the classical texts of Ayurveda, Siddha, Unani, Sowa-Rigpa and Yoga into English, Japanese, French, German and Spanish, structured with the Traditional Knowledge Resource Classification. The About TKDL page states that more than 4.54 lakh formulations and practices have been transcribed.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge digital library",
+        "traditional knowledge",
+        "what is tkdl",
+        "about tkdl",
+        "misappropriation",
+        "biopiracy",
+        "classical texts",
+        "languages"
+      ],
+      "ip_rights": [
+        "traditional_knowledge",
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-access",
+      "document_id": "in-tkdl-about",
+      "heading": "Who can access TKDL",
+      "section_path": [
+        "Who can access TKDL"
+      ],
+      "text": "Access to the full TKDL database is available only to patent offices — sixteen of them, including the European Patent Office, the USPTO, the Japan Patent Office, the UK patent office and the Indian Patent Office — under the TKDL Access (non-disclosure) Agreement. Examiners may use it for search and examination only, and may not reveal its contents to third parties except as needed for citation. Pre-grant oppositions citing TKDL evidence are also filed at international patent offices.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "who can access tkdl",
+        "tkdl access",
+        "access agreement",
+        "patent offices",
+        "can i search tkdl",
+        "is tkdl public",
+        "restricted",
+        "non disclosure"
+      ],
+      "ip_rights": [
+        "traditional_knowledge",
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-conditions",
+      "document_id": "in-tkdl-conditions",
+      "heading": "Conditions of use",
+      "section_path": [
+        "Conditions of use"
+      ],
+      "text": "Patent offices access TKDL at no cost. The Access Agreement does not permit TKDL content to be disclosed to third parties, except that a printout may be given to the patent applicant for the purpose of citation.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "conditions of use",
+        "tkdl printout",
+        "citation",
+        "disclosure",
+        "tkdl terms"
+      ],
+      "ip_rights": [
+        "traditional_knowledge",
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-record",
+      "document_id": "in-tkdl-faq",
+      "heading": "What a TKDL record contains",
+      "section_path": [
+        "What a TKDL record contains"
+      ],
+      "text": "TKDL is not itself the prior art: the classical books of the Indian systems of medicine are, and TKDL is the tool that makes them searchable. Each TKDL record gives the name of the drug, the origin of the knowledge, its constituents with the parts used and their quantities, the method of preparation and usage, and bibliographic details, with modern names for plants and diseases (for example Curcuma longa for turmeric).",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "tkdl record",
+        "what does tkdl contain",
+        "formulation record",
+        "constituents",
+        "method of preparation",
+        "is tkdl prior art",
+        "classical books"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-status",
+      "document_id": "in-tkdl-general-info",
+      "heading": "Status and limits of the database",
+      "section_path": [
+        "Status and limits of the database"
+      ],
+      "text": "TKDL is a proprietary database of the Government of India. It is not exhaustive and does not affect rights relating to any traditional knowledge not listed in it, and it is not intended for medical or health advice.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "proprietary",
+        "government of india",
+        "not exhaustive",
+        "limits",
+        "tkdl disclaimer",
+        "formulation not in tkdl"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-books",
+      "document_id": "in-tkdl-source-info",
+      "heading": "Books TKDL transcribes",
+      "section_path": [
+        "Books TKDL transcribes"
+      ],
+      "text": "TKDL transcribes 119 Ayurveda, 55 Unani, 91 Siddha, 1 Sowa-Rigpa and 15 Yoga texts — 281 in all, chosen on the advice of experts in each system. Its Source of Information page links the list of books for each system, with title, author and edition.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "books",
+        "texts",
+        "list of books",
+        "source of information",
+        "which texts",
+        "ayurvedic texts",
+        "classical texts in tkdl",
+        "charaka samhita",
+        "ashtanga hridaya",
+        "bhaishajya ratnavali"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-public-search",
+      "document_id": "in-tkdl-representative",
+      "heading": "The public representative database",
+      "section_path": [
+        "The public representative database"
+      ],
+      "text": "Anyone can search TKDL's public representative database of about 1,250 formulations selected from classical texts of Ayurveda, Unani, Siddha and Sowa-Rigpa, by keyword, disease, IPC code, bibliography or title. Open it by choosing Ayurveda, Unani, Siddha or Sowa-Rigpa on the TKDL home page. It is a sample, not the full database.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "search tkdl",
+        "public tkdl",
+        "representative database",
+        "how to search tkdl",
+        "free search",
+        "check my formulation in tkdl",
+        "tkdl search",
+        "already documented"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-tkdl-tkrc",
+      "document_id": "in-tkdl-tkrc",
+      "heading": "TKRC and patent classification",
+      "section_path": [
+        "TKRC and patent classification"
+      ],
+      "text": "The Traditional Knowledge Resource Classification (TKRC) arranges Ayurveda, Unani, Siddha and Yoga knowledge in sections, classes and groups on the pattern of the International Patent Classification, and its codes are linked to IPC codes; TKDL states that TKRC led to about 200 subgroups under A61K 36/00 for medicinal plant preparations.",
+      "topics": [
+        "tkdl",
+        "traditional knowledge",
+        "traditional knowledge digital library",
+        "tkrc",
+        "classification",
+        "ipc",
+        "a61k 36",
+        "international patent classification",
+        "codes"
+      ],
+      "ip_rights": [
+        "traditional_knowledge",
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-01-search",
+      "document_id": "in-trade-marks-filing-process",
+      "procedure": "in-trade-mark",
+      "step": 1,
+      "step_title": "Search and choose the class",
+      "heading": "Steps 01–02",
+      "section_path": [
+        "Step 01",
+        "Step 02"
+      ],
+      "text": "Search existing trade marks for identical or similar marks, decide between a word mark and a logo mark, and identify the correct Nice class or classes for your goods; you can file a single-class or a multi-class application.",
+      "topics": [
+        "trademark search",
+        "brand name search",
+        "check brand available",
+        "class",
+        "nice class",
+        "word mark",
+        "logo",
+        "register brand",
+        "trademark registration steps",
+        "how to register trademark"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-01-search-portal",
+      "document_id": "in-portal-trade-mark-search",
+      "procedure": "in-trade-mark",
+      "step": 1,
+      "heading": "Public search",
+      "section_path": [
+        "Trade mark public search"
+      ],
+      "text": "Run the search on IP India's trade mark public search portal (tmsearch.ipindia.gov.in), by word, phonetic similarity or device, within the classes you intend to file in.",
+      "topics": [
+        "trademark search portal",
+        "public search",
+        "phonetic search",
+        "is my brand name taken",
+        "similar marks"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-01-classes",
+      "document_id": "in-trade-marks-basics",
+      "procedure": "in-trade-mark",
+      "step": 1,
+      "heading": "Classification",
+      "section_path": [
+        "Trade marks for goods and services (classification)"
+      ],
+      "text": "Trade marks are registered for specific goods or services grouped under the Nice Classification: classes 1–34 cover goods and classes 35–45 cover services. The registration protects the mark only for the goods and services listed, so describe them accurately.",
+      "topics": [
+        "nice classification",
+        "classes 1-34",
+        "class 5",
+        "class 3",
+        "which class",
+        "goods",
+        "services",
+        "trademark class ayurvedic medicine"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-01-nice-classes",
+      "document_id": "in-nice-classification",
+      "procedure": "in-trade-mark",
+      "step": 1,
+      "heading": "Class headings",
+      "section_path": [
+        "Class 3",
+        "Class 5"
+      ],
+      "text": "Under the Nice Classification, medicinal and pharmaceutical preparations — including Ayurvedic medicines — fall in class 5, and cosmetics and non-medicated toiletries in class 3; foods and drinks fall in the food classes. Check the current edition's class headings and explanatory notes for your exact goods before filing.",
+      "topics": [
+        "class 5",
+        "class 3",
+        "trademark class",
+        "which class",
+        "ayurvedic medicine class",
+        "cosmetics class",
+        "nice classification",
+        "classes of goods"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-02-documents",
+      "document_id": "in-trade-marks-filing-process",
+      "procedure": "in-trade-mark",
+      "step": 2,
+      "step_title": "Prepare the documents",
+      "heading": "Steps 03–04",
+      "section_path": [
+        "Step 03",
+        "Step 04"
+      ],
+      "text": "Confirm your applicant category (individual, startup, MSME or others), which decides the official fee, and prepare: applicant details, a clear representation of the mark, a description of the goods or services, a user affidavit with supporting documents if you claim prior use, and a power of attorney if an agent files for you.",
+      "topics": [
+        "trademark documents",
+        "documents required trademark",
+        "user affidavit",
+        "power of attorney",
+        "msme",
+        "startup",
+        "individual",
+        "fee category",
+        "prior use"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-03-file",
+      "document_id": "in-portal-trade-mark-efiling",
+      "procedure": "in-trade-mark",
+      "step": 3,
+      "step_title": "File Form TM-A online",
+      "heading": "Steps 05–06",
+      "section_path": [
+        "Form TM-A"
+      ],
+      "text": "File a new application on Form TM-A (single-class or multi-class) through IP India's trade mark e-filing portal: log in, upload the documents and pay the prescribed fee.",
+      "topics": [
+        "form tm-a",
+        "tm-a",
+        "file trademark",
+        "trademark application",
+        "online filing",
+        "e-filing",
+        "where to file trademark",
+        "portal"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-04-examination",
+      "document_id": "in-trade-marks-filing-process",
+      "procedure": "in-trade-mark",
+      "step": 4,
+      "step_title": "Examination, publication and opposition",
+      "heading": "Steps 07–09",
+      "section_path": [
+        "Step 07",
+        "Step 08",
+        "Step 09"
+      ],
+      "text": "Track the application online. If the examination report raises objections, file a reply and attend the hearing if one is scheduled. The accepted application is published in the Trade Marks Journal, and third parties may oppose it within four months of publication.",
+      "topics": [
+        "trademark examination",
+        "objection",
+        "reply",
+        "hearing",
+        "trade marks journal",
+        "opposition",
+        "four months",
+        "4 months",
+        "what happens after filing trademark"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-05-renewal",
+      "document_id": "in-trade-marks-basics",
+      "procedure": "in-trade-mark",
+      "step": 5,
+      "step_title": "Keep it renewed",
+      "heading": "Validity and renewal of registration",
+      "section_path": [
+        "Validity and renewal"
+      ],
+      "text": "A registered trade mark is valid for ten years from the date of application and can be renewed indefinitely for further periods of ten years by filing the renewal form with the fee. A mark that is not renewed may be removed from the register.",
+      "topics": [
+        "trademark renewal",
+        "10 years",
+        "ten years",
+        "how long trademark",
+        "validity",
+        "term of trademark"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-mark-refusal-grounds",
+      "document_id": "in-trade-marks-basics",
+      "heading": "What cannot be registered",
+      "section_path": [
+        "What cannot be registered"
+      ],
+      "text": "Registration is refused for marks lacking distinctiveness, generic or descriptive terms, deceptive marks or marks likely to confuse the public, marks with prohibited or offensive matter, and marks identical or deceptively similar to existing marks. A brand made only of a classical formulation's name or an ingredient name therefore risks refusal as generic or descriptive; add a distinctive element.",
+      "topics": [
+        "refused",
+        "cannot register",
+        "descriptive",
+        "generic",
+        "classical formulation name",
+        "chyawanprash name",
+        "ingredient name as brand",
+        "distinctive",
+        "deceptive"
+      ],
+      "ip_rights": [
+        "trademark",
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-madrid-from-india",
+      "document_id": "in-madrid-ip-india",
+      "heading": "Filing an international application from India",
+      "section_path": [
+        "Madrid — international trade mark protection"
+      ],
+      "text": "To protect a brand abroad from India, file an international application under the Madrid Protocol through the Trade Marks Registry of IP India, based on your Indian trade mark application or registration, and designate the member countries where you want protection; WIPO records the international registration and each designated country examines the mark under its own law.",
+      "topics": [
+        "madrid",
+        "madrid protocol",
+        "international trademark",
+        "brand abroad",
+        "protect brand in other countries",
+        "export brand",
+        "trademark in other countries",
+        "register brand internationally",
+        "foreign trademark"
+      ],
+      "ip_rights": [
+        "trademark"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-copyright-trade-mark-artwork",
+      "document_id": "in-copyright-basics",
+      "heading": "Registration of copyright",
+      "section_path": [
+        "Is it necessary to register a work to claim copyright?"
+      ],
+      "text": "Copyright arises automatically when an original work is created; registration with the Copyright Office is not mandatory but serves as evidence. Label artwork and packaging graphics are artistic works, product literature is a literary work, and computer programmes are literary works under section 2(o) of the Copyright Act, 1957.",
+      "topics": [
+        "copyright",
+        "label artwork",
+        "packaging design copyright",
+        "artwork",
+        "register copyright",
+        "literary work",
+        "software",
+        "brochure",
+        "website content",
+        "is registration necessary"
+      ],
+      "ip_rights": [
+        "copyright"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-gi-basics",
+      "document_id": "in-gi-introduction",
+      "heading": "Who may apply; validity",
+      "section_path": [
+        "Who can apply",
+        "Validity and renewal"
+      ],
+      "text": "A geographical indication is registered on an application in the prescribed form, addressed to the Registrar of Geographical Indications with the fee, by an association of persons or producers, or an organisation or authority representing the producers' interest — not by a single business for its own product. Registration is valid for ten years and can be renewed for further ten-year periods; individual producers of the goods can then register as authorised users.",
+      "topics": [
+        "geographical indication",
+        "gi tag",
+        "gi registration",
+        "who can apply gi",
+        "authorised user",
+        "producers",
+        "regional product",
+        "gi validity",
+        "ten years"
+      ],
+      "ip_rights": [
+        "geographical_indication"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-gi-portal",
+      "document_id": "in-portal-gi",
+      "heading": "Where to file and search",
+      "section_path": [
+        "GI e-filing"
+      ],
+      "text": "GI applications are filed online on IP India's GI e-filing portal (online.ipindia.gov.in/eGir), and registered GIs and authorised users can be checked on the GI public search (search.ipindia.gov.in/GIRPublicSearch).",
+      "topics": [
+        "gi portal",
+        "gi e-filing",
+        "gi search",
+        "registered gi list",
+        "apply gi online"
+      ],
+      "ip_rights": [
+        "geographical_indication"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-design-basics",
+      "document_id": "in-designs-basics",
+      "heading": "Term and what can be registered",
+      "section_path": [
+        "Term",
+        "What cannot be registered"
+      ],
+      "text": "A registered design protects the new and original appearance applied to an article — for example the shape of a bottle, jar or pack — not how it works. Protection lasts ten years from the registration date (the filing or priority date), extendable once by five years to a maximum of fifteen; a design that is not new or original cannot be registered, so file before showing the design publicly.",
+      "topics": [
+        "design registration",
+        "industrial design",
+        "bottle shape",
+        "packaging shape",
+        "jar design",
+        "design term",
+        "10 years",
+        "15 years",
+        "appearance"
+      ],
+      "ip_rights": [
+        "design"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-design-portal",
+      "document_id": "in-portal-design",
+      "heading": "Where to file and search",
+      "section_path": [
+        "Design e-filing"
+      ],
+      "text": "Design applications are filed online on IP India's design e-filing portal (online.ipindia.gov.in/eDesign); search registered designs first on the design search at search.ipindia.gov.in/designsearch.",
+      "topics": [
+        "design portal",
+        "design e-filing",
+        "design search",
+        "file design online"
+      ],
+      "ip_rights": [
+        "design"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-trade-secret",
+      "document_id": "in-law-commission-289",
+      "heading": "Chapter I — the present position",
+      "section_path": [
+        "Chapter I"
+      ],
+      "text": "India has no specific statute on trade secrets. Confidential formulations and know-how are protected through contract (non-disclosure and employment agreements), the common-law and equitable action for breach of confidence, and provisions of criminal law. The Law Commission's Report No. 289 (March 2024) recommended a dedicated law and proposed a draft bill; check whether Parliament has since enacted one.",
+      "topics": [
+        "trade secret",
+        "confidential formula",
+        "know how",
+        "nda",
+        "non disclosure",
+        "keep formula secret",
+        "breach of confidence",
+        "secret recipe",
+        "secret formula"
+      ],
+      "ip_rights": [
+        "trade_secret"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-abs-access",
+      "document_id": "in-bd-amendment-act-2023",
+      "heading": "Section 7 as substituted — prior intimation",
+      "section_path": [
+        "Section 9 (substituting section 7)"
+      ],
+      "text": "An Indian person or entity accessing a biological resource or associated knowledge for commercial utilisation must give prior intimation to the State Biodiversity Board. This does not apply to codified traditional knowledge, cultivated medicinal plants and their products, local people and communities including growers and cultivators, and vaids, hakims and registered AYUSH practitioners practising indigenous medicine for their livelihood; the cultivated-medicinal-plant exemption needs a certificate of origin from the Biodiversity Management Committee.",
+      "topics": [
+        "state biodiversity board",
+        "prior intimation",
+        "commercial utilisation",
+        "section 7",
+        "cultivated medicinal plants",
+        "certificate of origin",
+        "biodiversity management committee",
+        "codified traditional knowledge",
+        "exemption",
+        "raw material herbs",
+        "abs",
+        "wild collect",
+        "wild-collected herb",
+        "collect herbs",
+        "before we commercialise"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-abs-codified",
+      "document_id": "in-bd-amendment-act-2023",
+      "heading": "Section 2(ea) — codified traditional knowledge",
+      "section_path": [
+        "Section 2(ea)"
+      ],
+      "text": "\"Codified traditional knowledge\" means knowledge derived from the authoritative books specified in the First Schedule to the Drugs and Cosmetics Act, 1940 — the classical texts of Ayurveda, Siddha and Unani.",
+      "topics": [
+        "codified traditional knowledge",
+        "authoritative books",
+        "first schedule",
+        "classical texts",
+        "definition"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-abs-portal",
+      "document_id": "in-portal-nba-abs",
+      "heading": "Applying to the NBA",
+      "section_path": [
+        "ABS e-filing"
+      ],
+      "text": "Applications to the National Biodiversity Authority — for access approvals, intellectual-property approvals and registrations, and certificates of origin — are filed online on the NBA ABS e-filing portal (absefiling.nbaindia.in); fees are paid to the National Biodiversity Fund.",
+      "topics": [
+        "nba portal",
+        "abs e-filing",
+        "apply nba",
+        "benefit sharing application",
+        "certificate of origin",
+        "nba fees"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-classification",
+      "document_id": "in-drugs-and-cosmetics-act-rules",
+      "heading": "Section 3(a) and 3(h); rule 158-B(I)",
+      "section_path": [
+        "Section 3(a)",
+        "Section 3(h)",
+        "Rule 158-B(I)"
+      ],
+      "text": "An Ayurvedic, Siddha or Unani drug under section 3(a) is one manufactured exclusively to a formula described in the authoritative books listed in the First Schedule (a classical medicine). A patent or proprietary medicine under section 3(h) contains only ingredients mentioned in those books but is not itself a formulation in them, and is not given by parenteral route. Rule 158-B also lists as patent or proprietary medicines Balya/Poshak (health-promoting), Saundarya Prasadak (oral, skin, hair and body care) and Aushadh Ghana (plant extract) formulations.",
+      "topics": [
+        "classification",
+        "classical medicine",
+        "patent or proprietary medicine",
+        "proprietary ayurvedic medicine",
+        "section 3(a)",
+        "section 3(h)",
+        "authoritative books",
+        "first schedule",
+        "what category is my product",
+        "regulatory category",
+        "saundarya prasadak",
+        "balya",
+        "poshak",
+        "aushadh ghana",
+        "ayurvedic cosmetic"
+      ],
+      "regulatory_areas": [
+        "licensing"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary",
+        "cosmetic"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-158b-evidence",
+      "document_id": "in-drugs-and-cosmetics-act-rules",
+      "heading": "Rule 158-B(II) — safety and effectiveness",
+      "section_path": [
+        "Rule 158-B(II)"
+      ],
+      "text": "Rule 158-B sets the evidence for a manufacturing licence by category. A classical medicine made as per text for its textual indication needs no safety study and no proof of effectiveness; used for a new indication, proof of effectiveness is required. A patent or proprietary medicine with textual ingredients and textual rationale needs no safety study but needs published literature on its ingredients and a pilot study for effectiveness; if it contains any ingredient from Schedule E(1), safety and effectiveness evidence is required.",
+      "topics": [
+        "safety study",
+        "effectiveness",
+        "proof of effectiveness",
+        "pilot study",
+        "schedule e(1)",
+        "new indication",
+        "licence evidence",
+        "clinical data",
+        "rule 158-b",
+        "what evidence"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "clinical_evidence"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-licence",
+      "document_id": "in-drugs-and-cosmetics-act-rules",
+      "heading": "Rules 152, 153 and 157",
+      "section_path": [
+        "Rule 153",
+        "Rule 154",
+        "Rule 157"
+      ],
+      "text": "To manufacture Ayurvedic (including Siddha) or Unani drugs for sale, apply to the State Licensing Authority on Form 24-D; the licence is issued on Form 25-D. The manufacturing premises must meet the Good Manufacturing Practices in Schedule T, which the Licensing Authority verifies before issuing the GMP certificate.",
+      "topics": [
+        "manufacturing licence",
+        "form 24-d",
+        "form 25-d",
+        "state licensing authority",
+        "schedule t",
+        "gmp",
+        "licence to manufacture ayurvedic",
+        "how to get licence",
+        "ayush licence",
+        "loan licence",
+        "before manufacturing",
+        "manufacture ayurvedic product",
+        "what do we need to manufacture"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "manufacturing_gmp"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-e-aushadhi",
+      "document_id": "in-portal-e-aushadhi",
+      "heading": "Online licensing",
+      "section_path": [
+        "Latest updates"
+      ],
+      "text": "Licence applications and other licence-related approvals for Ayurveda, Siddha, Sowa-Rigpa and Unani drugs are processed online through the Ministry of Ayush's e-Aushadhi portal; the portal's June 2026 guidelines make processing through it mandatory, and fresh ASU licence applications opened there from 28 April 2026.",
+      "topics": [
+        "e-aushadhi",
+        "online licence",
+        "ayush portal",
+        "apply licence online",
+        "where to apply licence",
+        "ayush licensing portal",
+        "state licensing authority"
+      ],
+      "regulatory_areas": [
+        "licensing"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-phytopharmaceutical",
+      "document_id": "in-drugs-and-cosmetics-act-rules",
+      "heading": "Rule 2(eb) — phytopharmaceutical drug",
+      "section_path": [
+        "Rule 2(eb)"
+      ],
+      "text": "A phytopharmaceutical drug is a purified and standardised fraction of an extract of a medicinal plant or its part, with at least four defined bio-active or phyto-chemical compounds assessed qualitatively and quantitatively, for internal or external (not parenteral) use. It is regulated as a drug by the central drug regulator (CDSCO), not licensed on the authority of the classical texts; confirm the current approval pathway with CDSCO.",
+      "topics": [
+        "phytopharmaceutical",
+        "standardised fraction",
+        "four bioactive",
+        "cdsco",
+        "new drug",
+        "botanical drug",
+        "purified fraction"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "clinical_evidence"
+      ],
+      "product_classes": [
+        "phytopharmaceutical",
+        "new_non_classical_drug"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-cdsco",
+      "document_id": "in-cdsco",
+      "heading": "Central drug regulator",
+      "section_path": [
+        "About CDSCO"
+      ],
+      "text": "The Central Drugs Standard Control Organisation is the national drug regulator under the Directorate General of Health Services. It administers the rules on new drugs, including phytopharmaceuticals, and on cosmetics; its website lists the current rules, guidance documents and online application systems. Ayurvedic, Siddha and Unani drug licences are issued by the State Licensing Authorities instead.",
+      "topics": [
+        "cdsco",
+        "dcgi",
+        "central licensing authority",
+        "new drug approval",
+        "cosmetics",
+        "phytopharmaceutical approval"
+      ],
+      "regulatory_areas": [
+        "licensing",
+        "cosmetic"
+      ],
+      "product_classes": [
+        "phytopharmaceutical",
+        "new_non_classical_drug",
+        "cosmetic"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-pharmacopoeia",
+      "document_id": "in-pcimh",
+      "heading": "Quality standards",
+      "section_path": [
+        "Pharmacopoeia"
+      ],
+      "text": "Quality standards for Ayurvedic drugs and their raw materials are laid down in the Ayurvedic Pharmacopoeia of India, and the Ayurvedic Formulary of India describes the classical formulations; both are prepared by the Pharmacopoeia Commission for Indian Medicine & Homoeopathy under the Ministry of Ayush (pcimh.gov.in).",
+      "topics": [
+        "pharmacopoeia",
+        "api",
+        "ayurvedic pharmacopoeia of india",
+        "afi",
+        "ayurvedic formulary",
+        "quality standards",
+        "monograph",
+        "testing standards"
+      ],
+      "regulatory_areas": [
+        "quality_standards"
+      ],
+      "product_classes": [
+        "classical_generic",
+        "patent_proprietary"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-ayurveda-aahara",
+      "document_id": "in-fssai-ayurveda-aahara-2022",
+      "heading": "Ayurveda Aahara",
+      "section_path": [
+        "Regulations, 2022"
+      ],
+      "text": "Foods made to Ayurvedic recipes and principles are regulated as food, not drugs, under the Food Safety and Standards (Ayurveda Aahara) Regulations, 2022, which require a licence or approval from FSSAI before such products are placed on the market and prescribe the Ayurveda Aahara logo. Read the regulation for the permitted recipes, claims and labelling rules that apply to your product.",
+      "topics": [
+        "ayurveda aahara",
+        "ayurveda aahar",
+        "ayurvedic food",
+        "fssai",
+        "food product",
+        "nutraceutical",
+        "herbal tea",
+        "food or medicine",
+        "logo",
+        "health food",
+        "ayurvedic food product"
+      ],
+      "regulatory_areas": [
+        "food_nutraceutical",
+        "labelling"
+      ],
+      "product_classes": [
+        "ayurveda_aahar"
+      ]
+    },
+    {
+      "chunk_id": "kb-in-reg-foscos",
+      "document_id": "in-portal-foscos",
+      "heading": "Where to apply",
+      "section_path": [
+        "FoSCoS"
+      ],
+      "text": "FSSAI licences and registrations for food businesses, including Ayurveda Aahara products, are applied for online on FSSAI's FoSCoS portal (foscos.fssai.gov.in).",
+      "topics": [
+        "foscos",
+        "fssai licence",
+        "food licence",
+        "apply fssai",
+        "food registration"
+      ],
+      "regulatory_areas": [
+        "food_nutraceutical",
+        "licensing"
+      ],
+      "product_classes": [
+        "ayurveda_aahar"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-pct-route",
+      "document_id": "intl-pct",
+      "heading": "How the PCT works",
+      "section_path": [
+        "PCT system"
+      ],
+      "text": "The Patent Cooperation Treaty lets you file one international patent application that has effect in all PCT contracting states, followed by an international search report and written opinion. It does not grant an international patent: within the national-phase deadline (commonly 30 or 31 months from the priority date, depending on the country) you must enter each country where you want protection, and each national office decides on grant.",
+      "topics": [
+        "pct",
+        "international patent",
+        "patent in other countries",
+        "worldwide patent",
+        "national phase",
+        "30 months",
+        "31 months",
+        "international application",
+        "file abroad",
+        "wipo patent"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-pct-india-entry",
+      "document_id": "intl-pct",
+      "heading": "Entering India",
+      "section_path": [
+        "National phase"
+      ],
+      "text": "For India, the national phase must be entered within thirty-one months from the priority date (Indian Patents Rules, rule 20(4)(i)). Residents of India must also respect the foreign-filing rule in section 39 of the Patents Act before filing any application abroad.",
+      "topics": [
+        "pct india",
+        "national phase india",
+        "31 months",
+        "section 39",
+        "foreign filing permission"
+      ],
+      "ip_rights": [
+        "patent"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-paris-priority",
+      "document_id": "intl-paris-convention",
+      "heading": "Right of priority",
+      "section_path": [
+        "Article 4"
+      ],
+      "text": "Under the Paris Convention, a first filing in one member country gives a right of priority for later filings in other member countries: twelve months for patents and utility models, and six months for industrial designs and trade marks.",
+      "topics": [
+        "paris convention",
+        "priority",
+        "12 months",
+        "six months",
+        "convention priority",
+        "priority date",
+        "file in other countries"
+      ],
+      "ip_rights": [
+        "patent",
+        "trademark",
+        "design"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-patentscope",
+      "document_id": "intl-patentscope",
+      "heading": "International prior-art search",
+      "section_path": [
+        "PATENTSCOPE"
+      ],
+      "text": "WIPO's PATENTSCOPE database gives free access to published international (PCT) applications and to patent documents from many national and regional offices, and is the usual starting point for an international prior-art search.",
+      "topics": [
+        "patentscope",
+        "international prior art",
+        "search patents worldwide",
+        "already patented abroad",
+        "global patent search",
+        "wipo database"
+      ],
+      "ip_rights": [
+        "patent"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-madrid",
+      "document_id": "intl-madrid",
+      "heading": "Madrid System",
+      "section_path": [
+        "Madrid System"
+      ],
+      "text": "The Madrid System lets a trade mark owner protect a mark in many member countries with one international application and one set of fees, managed centrally through WIPO. The international application is based on a national application or registration and is filed through that office (for an Indian owner, the Trade Marks Registry of IP India), designating the countries where protection is wanted; each designated country examines the mark under its own law.",
+      "topics": [
+        "madrid",
+        "international trademark",
+        "trademark in other countries",
+        "brand abroad",
+        "export brand",
+        "madrid protocol",
+        "wipo trademark",
+        "register brand internationally"
+      ],
+      "ip_rights": [
+        "trademark"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-brand-db",
+      "document_id": "intl-brand-database",
+      "heading": "Global Brand Database",
+      "section_path": [
+        "Global Brand Database"
+      ],
+      "text": "Before designating countries, search WIPO's Global Brand Database, which combines trade mark records from international registrations and many national offices, for identical or similar marks.",
+      "topics": [
+        "global brand database",
+        "international trademark search",
+        "brand search abroad",
+        "check brand worldwide"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-nice",
+      "document_id": "intl-nice-classification",
+      "heading": "Nice Classification",
+      "section_path": [
+        "Nice Classification"
+      ],
+      "text": "The Nice Classification, administered by WIPO, groups goods into classes 1–34 and services into classes 35–45; it is used by India and most other offices. Medicinal and pharmaceutical preparations fall in class 5, and cosmetics and non-medicated toiletries in class 3 — check the current edition's class headings and explanatory notes for your exact goods.",
+      "topics": [
+        "nice classification",
+        "class 5",
+        "class 3",
+        "trademark class",
+        "which class ayurvedic",
+        "classes of goods"
+      ],
+      "ip_rights": [
+        "trademark"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-hague",
+      "document_id": "intl-hague",
+      "heading": "Hague System",
+      "section_path": [
+        "Hague System"
+      ],
+      "text": "The Hague System allows up to 100 industrial designs to be protected in its member territories through one international application filed with WIPO. Check WIPO's list of Hague members first: where your country of origin or target market is not a member, designs must be filed nationally.",
+      "topics": [
+        "hague",
+        "international design",
+        "design abroad",
+        "packaging design other countries",
+        "industrial design international"
+      ],
+      "ip_rights": [
+        "design"
+      ],
+      "regulatory_areas": [
+        "import_export"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-gratk",
+      "document_id": "intl-wipo-gratk-2024",
+      "heading": "Disclosure requirement",
+      "section_path": [
+        "Treaty summary"
+      ],
+      "text": "The WIPO Treaty on Intellectual Property, Genetic Resources and Associated Traditional Knowledge, adopted in Geneva on 24 May 2024, requires patent applicants whose claimed invention is based on genetic resources or associated traditional knowledge to disclose the country of origin (or source) of the genetic resources and the Indigenous Peoples or local community providing the knowledge. It enters into force three months after fifteen eligible parties ratify or accede; check WIPO's treaty page for its current status and parties.",
+      "topics": [
+        "gratk",
+        "wipo treaty",
+        "genetic resources",
+        "traditional knowledge treaty",
+        "disclosure of origin",
+        "patent disclosure",
+        "2024 treaty",
+        "wipo tk treaty"
+      ],
+      "ip_rights": [
+        "patent",
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-wipo-tk",
+      "document_id": "intl-wipo-tk",
+      "heading": "WIPO work on traditional knowledge",
+      "section_path": [
+        "Traditional knowledge"
+      ],
+      "text": "WIPO's programme on genetic resources, traditional knowledge and traditional cultural expressions publishes the negotiating texts of its Intergovernmental Committee, practical guides on documenting traditional knowledge, and the GRATK Treaty; use it to understand how traditional knowledge is treated in international IP.",
+      "topics": [
+        "wipo traditional knowledge",
+        "igc",
+        "traditional cultural expressions",
+        "documenting traditional knowledge",
+        "wipo guidance"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-nagoya",
+      "document_id": "intl-nagoya-protocol",
+      "heading": "Access and benefit-sharing",
+      "section_path": [
+        "Nagoya Protocol"
+      ],
+      "text": "The Nagoya Protocol to the Convention on Biological Diversity requires that genetic resources and associated traditional knowledge be accessed with the prior informed consent of the providing country and on mutually agreed terms, with benefits shared fairly and equitably. Each party sets its own access rules — in India through the Biological Diversity Act and the National Biodiversity Authority.",
+      "topics": [
+        "nagoya protocol",
+        "access and benefit sharing",
+        "abs",
+        "prior informed consent",
+        "mutually agreed terms",
+        "benefit sharing",
+        "cbd",
+        "genetic resources"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    },
+    {
+      "chunk_id": "kb-intl-absch",
+      "document_id": "intl-absch",
+      "heading": "Finding a country's ABS requirements",
+      "section_path": [
+        "ABS Clearing-House"
+      ],
+      "text": "The ABS Clearing-House lists each Nagoya Protocol party's national focal point, competent national authorities, legislative measures and internationally recognised certificates of compliance; check it for the access rules of every country whose genetic resources you use.",
+      "topics": [
+        "abs clearing house",
+        "national focal point",
+        "certificate of compliance",
+        "country abs rules",
+        "competent national authority"
+      ],
+      "ip_rights": [
+        "traditional_knowledge"
+      ],
+      "regulatory_areas": [
+        "abs_compliance"
+      ]
+    }
+  ]
+}

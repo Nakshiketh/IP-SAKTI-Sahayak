@@ -124,7 +124,7 @@ def test_the_sample_face_pack_journey(client: TestClient) -> None:
     assert "Purifying Neem Pack" in last_reply(step)
 
     step = turn(client, headers, cid, "Why is a patent relevant?")
-    assert "no patent records are loaded" in last_reply(step).lower()
+    assert "no patent records are held on this site" in last_reply(step).lower()
 
     step = turn(client, headers, cid, "What makes mine different?")
     assert "not automatically patentable" in last_reply(step)
@@ -208,3 +208,98 @@ def test_every_product_carries_a_fetched_source() -> None:
         for ingredient in product["ingredients"]:
             if ingredient.get("amount"):
                 assert product["composition_basis"], product["product_id"]
+
+
+# -- the Traditional Knowledge Digital Library ----------------------------------
+
+
+def test_tkdl_reference_holds_only_its_public_book_lists() -> None:
+    from app.analyst.tkdl import TKDL_PATH, get_tkdl
+
+    raw = json.loads(TKDL_PATH.read_text(encoding="utf-8"))
+    # The counts TKDL's own Source of Information page states.
+    assert {k: len(v) for k, v in raw["books"].items()} == {
+        "Ayurveda": 119,
+        "Unani": 55,
+        "Siddha": 91,
+        "Sowa-Rigpa": 1,
+    }
+    # Bibliographic fields only: no formulation, composition or record content.
+    for rows in raw["books"].values():
+        for row in rows:
+            assert set(row) == {"title", "author", "edition"}
+    for page in raw["pages"]:
+        assert page["url"].startswith("https://www.tkdl.res.in/")
+    assert get_tkdl().book_count == 266
+
+
+def test_tkdl_recognises_named_classical_texts_and_nothing_else() -> None:
+    from app.analyst.tkdl import get_tkdl
+
+    tkdl = get_tkdl()
+    found = {w.name for w in tkdl.find("A lepa from Ashtanga Hridayam, as in Bhaishajya Ratnavali")}
+    assert found == {"Bhaishajya Ratnavali", "Ashtanga Hridaya"}
+    assert [w.name for w in tkdl.find("Charaka Samhita")] == ["Charaka Samhita"]
+    assert tkdl.find(SAMPLE) == []
+
+
+def test_a_named_classical_text_reaches_the_findings(client: TestClient) -> None:
+    headers = token(client)
+    cid = client.post("/api/v1/analyst/conversations", headers=headers).json()["id"]
+    turn(client, headers, cid, SAMPLE)
+    step = turn(client, headers, cid, "It is adapted from a lepa in Ashtanga Hridayam.")
+    assert step["invention"]["source_texts"] == ["Ashtanga Hridaya"]
+
+    step = turn(client, headers, cid, "Run the analysis again")
+    knowledge = step["analysis"]["knowledge"]
+    assert knowledge["tkdl_searched"] is False
+    assert [t["name"] for t in knowledge["tkdl"]["texts"]] == ["Ashtanga Hridaya"]
+    assert knowledge["tkdl"]["texts"][0]["list_url"].startswith("https://www.tkdl.res.in/")
+    assert any(n["code"] == "tkdl_text_named" for n in knowledge["notes"])
+    reasons = [r["code"] for r in step["analysis"]["assessment"]["reasons"]]
+    assert "tkdl_source_text" in reasons
+    assert step["analysis"]["assessment"]["indicator"] != "potentially_novel"
+
+
+def test_asking_about_the_tkdl_is_answered_from_its_public_pages(client: TestClient) -> None:
+    headers = token(client)
+    cid = client.post("/api/v1/analyst/conversations", headers=headers).json()["id"]
+    turn(client, headers, cid, SAMPLE)
+    reply = last_reply(turn(client, headers, cid, "Is my formulation in the TKDL?"))
+    assert "TKDL Access Agreement" in reply
+    assert "representative database" in reply
+
+
+def test_a_rerun_command_is_not_taken_as_an_answer(client: TestClient) -> None:
+    headers = token(client)
+    cid = client.post("/api/v1/analyst/conversations", headers=headers).json()["id"]
+    step = turn(client, headers, cid, SAMPLE)
+    step = turn(client, headers, cid, "skip")
+    step = turn(client, headers, cid, "Run the analysis again")
+    assert step["invention"]["process_steps"] == []
+    assert step["analysis"] is not None
+
+
+def test_not_been_sold_is_read_as_confidential() -> None:
+    reading = read(
+        "It has not been sold or published yet.", Invention(), "novelty", get_vocabulary()
+    )
+    assert reading.fields.get("disclosure") == "confidential"
+    assert reading.add_features == []
+
+
+def test_an_answer_to_something_else_is_not_filed_under_the_last_question() -> None:
+    vocabulary = get_vocabulary()
+    reading = read(
+        "We ran a patch test on 20 volunteers and a 6-month stability test.",
+        Invention(),
+        "process",
+        vocabulary,
+    )
+    assert reading.fields.get("evidence")
+    assert reading.add_steps == []
+    reading = read(
+        "We will sell it under the brand name Kesari Aura", Invention(), "problem", vocabulary
+    )
+    assert reading.fields.get("brand_name") == "Kesari Aura"
+    assert "problem" not in reading.fields

@@ -13,6 +13,7 @@ import type {
   InventionEdit,
   ProductMatch,
   Reason,
+  TkdlFinding,
 } from '@/services/analyst';
 
 /**
@@ -426,8 +427,57 @@ function KnowledgeTab({ analysis }: { analysis: Analysis }) {
           <p className="mt-2 text-muted">{t('knowledge.classicalNone')}</p>
         )}
       </div>
+      {k.tkdl ? <TkdlBlock tkdl={k.tkdl} /> : null}
       <ReasonList reasons={k.notes} />
       <p className="text-xs text-muted">{t('knowledge.category')}</p>
+    </div>
+  );
+}
+
+/** Public TKDL references only: the texts named, and the official pages. */
+function TkdlBlock({ tkdl }: { tkdl: TkdlFinding }) {
+  const t = useTx();
+  return (
+    <div>
+      <h3 className="text-md">{t('knowledge.tkdl.heading')}</h3>
+      {tkdl.texts.length ? (
+        <ul className="m-0 mt-2 list-none space-y-1 p-0">
+          {tkdl.texts.map((text) => (
+            <li key={text.name} className="border-l-2 border-stamp pl-3">
+              {text.name}{' '}
+              <span className="text-muted">
+                — {t('knowledge.tkdl.listed', { system: text.system })}
+              </span>{' '}
+              <a
+                href={text.list_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-stamp underline underline-offset-4"
+              >
+                {t('knowledge.tkdl.bookList')}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-2 text-muted">
+          {t('knowledge.tkdl.askForText', { count: tkdl.book_count })}
+        </p>
+      )}
+      <p className="mt-2 text-xs text-muted">{t('knowledge.tkdl.restricted')}</p>
+      <p className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-xs">
+        {tkdl.links.map((link) => (
+          <a
+            key={link.id}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-stamp underline underline-offset-4"
+          >
+            {t(`knowledge.tkdl.links.${link.id}`, { defaultValue: link.title })}
+          </a>
+        ))}
+      </p>
     </div>
   );
 }

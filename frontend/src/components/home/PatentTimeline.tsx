@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { SectionSourceList, SourceScope, Src } from '@/components/sourcing/Sourced';
 import { buttonStyles } from '@/components/ui';
 import { cn } from '@/lib/cn';
+import { sourceHost, verifiedDocument } from '@/services/verifiedSources';
 import {
   askHref,
   PATENT_PHASES,
@@ -438,6 +439,10 @@ function StepItem({
               <Src key={id} doc={id} />
             ))}
           </p>
+          <p className="route-rise mt-2 max-w-measure text-xs" style={at(2)}>
+            <span className="text-ink">{t('patentSteps.whereLabel')}: </span>
+            <span className="text-muted">{t(`patentSteps.steps.${step.id}.where`)}</span>
+          </p>
 
           {/* The hand-off. Every link here opens something the workspace really
               does: a tool it renders, or the question as a reader would ask it. */}
@@ -512,6 +517,27 @@ function StepItem({
               <span className="text-ink">{t('patentSteps.sourceLabel')}: </span>
               {step.locator}
             </p>
+
+            <div className="mt-2">
+              <p className="max-w-none text-ink">{t('patentSteps.officialLabel')}</p>
+              {/* Plain blocks rather than a nested list: the steps are the list. */}
+              {step.official.map((id) => {
+                const doc = verifiedDocument(id);
+                return (
+                  <p key={id} className="mt-1 max-w-none">
+                    <a
+                      href={doc.source_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-stamp underline underline-offset-4"
+                    >
+                      {doc.document_title}
+                    </a>
+                    <span className="text-muted"> · {sourceHost(doc.source_url)}</span>
+                  </p>
+                );
+              })}
+            </div>
 
             {step.forms.length > 0 ? (
               <div className="mt-2">

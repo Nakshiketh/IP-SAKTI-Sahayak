@@ -135,8 +135,9 @@ PUBLIC = re.compile(
     re.IGNORECASE,
 )
 CONFIDENTIAL = re.compile(
-    r"\b(not (?:yet )?(?:sold|public|launched|published|disclosed|shared)|confidential|secret|"
-    r"haven'?t (?:sold|shared|published|launched|disclosed)|nobody (?:knows|has seen)|kept private)\b",
+    r"\b(not (?:yet )?(?:been )?(?:sold|public|launched|published|disclosed|shared)|confidential|secret|"
+    r"haven'?t (?:yet )?(?:been )?(?:sold|shared|published|launched|disclosed)|nobody (?:knows|has seen)|"
+    r"kept private)\b",
     re.IGNORECASE,
 )
 BRAND = re.compile(
@@ -179,6 +180,14 @@ INTENTS = (
         re.compile(
             r"\b(what makes|how is (?:it|mine|my)|in what way)\b.*\b(different|unique|new|novel|distinct)\b|"
             r"\bwhat(?:'s| is) (?:different|new|unique)\b|\bdifferences?\b",
+            re.I,
+        ),
+    ),
+    (
+        "tkdl",
+        re.compile(
+            r"\b(tkdl|traditional knowledge digital library|classical texts?|"
+            r"(?:is|are) (?:it|this|mine|my \w+) (?:in|from) (?:the )?(?:tkdl|classical|ayurvedic texts?))\b",
             re.I,
         ),
     ),
@@ -401,6 +410,10 @@ def read(
             reading.fields["disclosure"] = "public"
         reading.said_yes = True
         return reading
+    # A short command ("run the analysis again") is a command, not an answer to
+    # whatever was last asked.
+    if "rerun" in reading.intents and len(norm.split()) <= 8 and not QUANTITY.search(norm):
+        return reading
     if is_question and reading.intents and not QUANTITY.search(norm):
         return reading
 
@@ -549,19 +562,26 @@ def read(
     for sentence in free:
         if sentence.endswith("?"):
             continue
+        # A sentence that plainly answers something else — test results, a brand,
+        # whether it has been sold — is not also the answer to the last question.
+        evidence_line = bool(EVIDENCE_CUE.search(sentence))
+        other_line = bool(
+            BRAND.search(sentence) or CONFIDENTIAL.search(sentence) or PUBLIC.search(sentence)
+        )
+        answers = last_asked if not (evidence_line or other_line) else None
         uses = use_terms(sentence)
         if uses and USE_CUE.search(sentence) and sentence not in use_parts and last_asked != "use":
             use_parts.append(sentence)
-        elif last_asked == "process" or (PROCESS_VERB.search(sentence) and not uses):
+        elif answers == "process" or (PROCESS_VERB.search(sentence) and not uses):
             reading.add_steps.append(sentence.rstrip("."))
-        if PROBLEM_CUE.search(sentence) or last_asked == "problem":
+        if PROBLEM_CUE.search(sentence) or answers == "problem":
             reading.fields["problem"] = sentence
         if (
             NOVELTY_CUE.search(sentence)
             and not re.search(r"\bnew (face|hair|product|formulation|invention)", sentence, re.I)
-        ) or last_asked == "novelty":
+        ) or answers == "novelty":
             reading.add_features.append(sentence)
-        if EVIDENCE_CUE.search(sentence) or last_asked == "evidence":
+        if evidence_line or (last_asked == "evidence" and not other_line):
             reading.fields["evidence"] = sentence
         if CONFIDENTIAL.search(sentence):
             reading.fields["disclosure"] = "confidential"
@@ -573,7 +593,7 @@ def read(
             reading.fields["region_note"] = sentence
     if use_parts:
         reading.fields["intended_use"] = " ".join(dict.fromkeys(part.strip() for part in use_parts))
-    if reading.add_steps or last_asked == "process":
+    if reading.add_steps:
         reading.add_parameters.extend(find_parameters(norm))
 
     brand = BRAND.search(norm)

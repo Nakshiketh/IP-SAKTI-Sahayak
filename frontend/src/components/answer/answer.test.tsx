@@ -102,7 +102,7 @@ describe('source cards', () => {
       expect(within(card).queryByText('verified')).not.toBeInTheDocument();
     }
     // The provenance is stated once, under the answer.
-    expect(screen.getByText(/Verify against the official text/i)).toBeInTheDocument();
+    expect(screen.getByText(/Check the official text before you rely/i)).toBeInTheDocument();
   });
 
   it('says plainly when there is no link to the source yet', () => {

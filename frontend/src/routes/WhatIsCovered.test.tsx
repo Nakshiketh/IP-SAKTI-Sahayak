@@ -151,7 +151,7 @@ describe('access and benefit sharing', () => {
 
   it('shows the corpus version rather than implying the page is current', () => {
     renderPage();
-    expect(screen.getByText(/0\.0\.0-unbuilt/)).toBeInTheDocument();
+    expect(screen.getByText(/kb-\d{4}\.\d{2}\.\d{2}/)).toBeInTheDocument();
   });
 
   it('states that obligations differ by who you are', () => {

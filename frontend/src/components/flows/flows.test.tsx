@@ -110,7 +110,7 @@ describe('the classification flow', () => {
     for (const marker of markers) {
       expect(marker.getAttribute('aria-label')).toMatch(/^Source \d+: /);
     }
-    expect(screen.getByText(/does not get to state law from a lookup table/i)).toBeInTheDocument();
+    expect(screen.getByText(/Ask Sahayak for the cited detail/i)).toBeInTheDocument();
   });
 
   it('says what would change the answer', async () => {
@@ -192,8 +192,8 @@ describe('the prior-art flow', () => {
     );
     await user.click(screen.getByRole('button', { name: 'Build the search terms' }));
 
-    expect(screen.getByText(/No records have been ingested/)).toBeInTheDocument();
-    expect(screen.getByText(/That is not a result — it is the absence of one/)).toBeInTheDocument();
+    expect(screen.getByText(/No patent records are held on this site/)).toBeInTheDocument();
+    expect(screen.getByText(/Search the official databases linked below/)).toBeInTheDocument();
   });
 
   it('builds terms from what was typed and says what it cannot add', async () => {

@@ -1,15 +1,16 @@
-import { useId, useState } from 'react';
+import { lazy, Suspense, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import { AnswerView } from '@/components/answer';
 import { PatentTimeline } from '@/components/home/PatentTimeline';
 import { QuestionBox } from '@/components/home/QuestionBox';
 import { buttonStyles, IncisedMark, TabPanel, Tabs } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { LOCALES } from '@/i18n/languages';
-import { DEMO_ANSWERS } from '@/services/answers.mock';
 import type { Jurisdiction } from '@/types/domain';
+
+// The worked example reads the verified corpus, so it loads in its own chunk.
+const ExampleAnswer = lazy(() => import('@/components/home/ExampleAnswer'));
 
 /**
  * Six sections, and each one is a different shape.
@@ -18,7 +19,7 @@ import type { Jurisdiction } from '@/types/domain';
  *   2 steps         the route to a patent, revealed as it is read
  *   2 coupling      a comparison table, because that is what the content is
  *   3 coverage      two panels and a band, because it is a distinction
- *   4 answer        the real answer component on demo fixtures
+ *   4 answer        the real answer component on the verified sources
  *   5 languages     a list of specimens, one per script
  *   6 closing       a single paragraph and one link
  *
@@ -26,7 +27,14 @@ import type { Jurisdiction } from '@/types/domain';
  * reads as generated even when each one is individually fine.
  */
 
-const INTRO_STEPS = ['category', 'details', 'ingredients', 'protection', 'result', 'guidance'] as const;
+const INTRO_STEPS = [
+  'category',
+  'details',
+  'ingredients',
+  'protection',
+  'result',
+  'guidance',
+] as const;
 const INTRO_TYPES = ['patent', 'trademark', 'copyright', 'tradeSecret'] as const;
 const INTRO_NEEDS = ['name', 'purpose', 'ingredients', 'materials'] as const;
 const COUPLING_ROWS = ['classical', 'proprietary', 'newDrug'] as const;
@@ -53,7 +61,6 @@ const REG_ITEMS = [
 
 export default function Home() {
   const { t } = useTranslation('home');
-  const { t: tc } = useTranslation('common');
   useDocumentMeta(t('meta.title'), t('meta.description'));
 
   const tabsId = useId();
@@ -225,7 +232,7 @@ export default function Home() {
         <p className="mt-10 border-l-2 border-leaf pl-4 text-md">{t('covers.band')}</p>
       </section>
 
-      {/* 4 — A real answer, from the real component, on demo fixtures. */}
+      {/* 4 — A real answer, from the real component, on the verified sources. */}
       <section className="border-y border-rule bg-surface-sunk">
         <div className="mx-auto max-w-[75rem] px-5 py-14">
           <h2 className="text-xl">{t('answer.heading')}</h2>
@@ -249,13 +256,9 @@ export default function Home() {
 
             {(['IN', 'INTL'] as const).map((id) => (
               <TabPanel key={id} id={id} idBase={tabsId} active={jurisdiction === id}>
-                <AnswerView
-                  className="pt-6"
-                  answer={DEMO_ANSWERS[id]}
-                  confidenceReason={tc('confidence.demoReason', {
-                    count: DEMO_ANSWERS[id].citations.length,
-                  })}
-                />
+                <Suspense fallback={<div className="min-h-[24rem]" aria-busy="true" />}>
+                  <ExampleAnswer jurisdiction={id} />
+                </Suspense>
               </TabPanel>
             ))}
           </div>

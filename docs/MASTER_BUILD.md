@@ -1,11 +1,11 @@
 # IP-SAKTI Sahayak — Master Build Document
 
 Single source of truth for the build. Part 1 (project brief) lives at repo root in
-`PROMPT.md` / `AGENTS.md` and is not duplicated here.
+`AGENTS.md` and is not duplicated here.
 
 ## How to use this
 
-1. `PROMPT.md` and `AGENTS.md` carry the project brief. Every phase is executed against them.
+1. `AGENTS.md` carries the project brief. Every phase is executed against them.
 2. Run one phase per agent task. Never two at once.
 3. After Phases 1, 3, 4, 7 and 8, run the Review Gate (Part 6). Highest-value step in the document.
 4. Commit and tag at each phase boundary (`git tag phase-3`).
@@ -19,7 +19,7 @@ Single source of truth for the build. Part 1 (project brief) lives at repo root 
 
 ## PHASE 0 — Scaffold, contracts, domain model
 
-Set up the IP-SAKTI Sahayak monorepo per PROMPT.md. No UI screens yet.
+Set up the IP-SAKTI Sahayak monorepo per AGENTS.md. No UI screens yet.
 
 1. Scaffold `/frontend`: Vite + React 18 + TypeScript strict + Tailwind + React Router.
    Path alias `@/`. ESLint + Prettier. vitest + testing-library.

@@ -13,6 +13,7 @@ import sources from '@/locales/en/sources.json';
 import Sources from '@/routes/Sources';
 import { CORPUS_DOCUMENTS, GROUP_ORDER } from '@/services/corpusManifest';
 import { isIngested, RECORDS_SOURCES } from '@/services/recordsManifest';
+import { VERIFIED_DOCUMENTS } from '@/services/verifiedSources';
 
 /** Derived, never typed: a hard-coded total here is the same defect the page forbids. */
 const TOTAL = CORPUS_DOCUMENTS.length;
@@ -31,7 +32,18 @@ describe('driven by the manifests', () => {
     expect(screen.getByText(`Showing ${TOTAL} of ${TOTAL} documents`)).toBeInTheDocument();
 
     for (const doc of CORPUS_DOCUMENTS) {
-      expect(screen.getByRole('heading', { name: doc.title })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: doc.title }).length).toBeGreaterThan(0);
+    }
+  });
+
+  it('lists every verified official source with a working https link', () => {
+    renderPage();
+    for (const doc of VERIFIED_DOCUMENTS) {
+      const [heading] = screen.getAllByRole('heading', { name: doc.document_title });
+      const card = heading!.closest('article')!;
+      const link = within(card).getByRole('link');
+      expect(link).toHaveAttribute('href', doc.source_url);
+      expect(doc.source_url).toMatch(/^https:\/\//);
     }
   });
 
@@ -60,7 +72,7 @@ describe('driven by the manifests', () => {
   it('renders every records source', () => {
     renderPage();
     for (const source of RECORDS_SOURCES) {
-      expect(screen.getByRole('heading', { name: source.name })).toBeInTheDocument();
+      expect(screen.getAllByRole('heading', { name: source.name }).length).toBeGreaterThan(0);
     }
   });
 
@@ -187,7 +199,7 @@ describe('records are never authority', () => {
   it('states on every portal source that no fetcher exists for it', () => {
     renderPage();
     const portals = RECORDS_SOURCES.filter((s) => s.access_mode === 'portal_link_only');
-    expect(screen.getAllByText(/No fetcher exists for this source/)).toHaveLength(portals.length);
+    expect(screen.getAllByText(/This site links to it rather than searching on your behalf/)).toHaveLength(portals.length);
   });
 });
 

@@ -34,7 +34,11 @@ from app.analyst.models import (
     Reason,
     Registry,
     Source,
+    TkdlFinding,
+    TkdlLink,
+    TkdlText,
 )
+from app.analyst.tkdl import TkdlReference, get_tkdl
 from app.analyst.vocabulary import Term, Vocabulary
 from app.core.settings import REPO_ROOT
 
@@ -316,7 +320,30 @@ def find_products(invention: Invention, product_set: ProductSet) -> ProductsFind
 # -- traditional knowledge -----------------------------------------------------
 
 
-def check_knowledge(invention: Invention, vocabulary: Vocabulary) -> KnowledgeFinding:
+def tkdl_finding(invention: Invention, tkdl: TkdlReference) -> TkdlFinding:
+    """The classical texts named for this formulation, and the official TKDL pages."""
+    by_name = {work.name: work for work in tkdl.works}
+    texts = [
+        TkdlText(name=work.name, system=work.system, author=work.author, list_url=work.list_url)
+        for name in invention.source_texts
+        if (work := by_name.get(name)) is not None
+    ]
+    links = [
+        TkdlLink(id="home", title="Traditional Knowledge Digital Library", url=tkdl.home_url),
+        *(
+            TkdlLink(id=page.id, title=page.title, url=page.url)
+            for page in tkdl.pages
+            if page.id in ("about", "source_info", "conditions")
+        ),
+    ]
+    return TkdlFinding(
+        texts=texts, book_count=tkdl.book_count, links=links, retrieved_on=tkdl.retrieved_on
+    )
+
+
+def check_knowledge(
+    invention: Invention, vocabulary: Vocabulary, tkdl: TkdlReference | None = None
+) -> KnowledgeFinding:
     rows = []
     for ingredient in invention.ingredients:
         term = vocabulary.get(ingredient.vocabulary_id) if ingredient.vocabulary_id else None
@@ -344,7 +371,17 @@ def check_knowledge(invention: Invention, vocabulary: Vocabulary) -> KnowledgeFi
         for m in vocabulary.classical_matches(text, ids)
     ]
     traditional = sum(1 for row in rows if row.recognised == "traditional")
+    tkdl_ref = tkdl or get_tkdl()
+    finding = tkdl_finding(invention, tkdl_ref)
     notes = [
+        Reason(
+            code="tkdl_text_named",
+            params={"name": text.name, "system": text.system, "count": tkdl_ref.book_count},
+            basis="evidence",
+        )
+        for text in finding.texts
+    ]
+    notes += [
         Reason(code="reference_not_database", basis="evidence"),
         Reason(code="tkdl_not_searched", basis="evidence"),
     ]
@@ -360,6 +397,7 @@ def check_knowledge(invention: Invention, vocabulary: Vocabulary) -> KnowledgeFi
         ingredients=rows,
         traditional_count=traditional,
         classical=classical,
+        tkdl=finding,
         notes=notes,
     )
 

@@ -51,10 +51,10 @@
     "items": {
       "reformulated": "We reformulated a classical preparation — is there anything patentable in it?",
       "manufacturing": "What do we need in place before manufacturing an Ayurvedic product in India?",
-      "uk": "What changes if we want to sell the same product in the UK?",
+      "uk": "How do we file one international patent application for several countries?",
       "brandName": "Can we register our brand name if it contains a classical formulation name?",
       "gi": "Does our regional herb qualify for a geographical indication?",
-      "healthClaim": "Our product has a health claim on the label — what are the limits?",
+      "healthClaim": "How is an Ayurveda Aahara food product regulated, and where do we apply?",
       "classification": "Is our product a medicine, a nutraceutical or a cosmetic?",
       "wildCollect": "We wild-collect a herb — what compliance applies before we commercialise?",
       "bioSource": "Do we need to declare the biological source in a patent application?",
@@ -117,7 +117,7 @@
     },
     "sources_out_of_date": {
       "title": "What I found sits outside its effective window",
-      "body": "The position on record here may have changed. The passages and their dates are below, and the corpus version is on the answer."
+      "body": "The position on record here may have changed. The passages and their dates are below."
     },
     "needs_more_facts": {
       "title": "This turns on something only you can tell me",
@@ -201,7 +201,7 @@
       "drivenBy": "What decided it",
       "changesHeading": "What would change this",
       "consequencesHeading": "What follows from it",
-      "consequencesNote": "These are orientation, drawn from the same pending sources as the reference page. When the corpus is ingested they are replaced by the retrieved passages themselves — a classification flow does not get to state law from a lookup table.",
+      "consequencesNote": "A general orientation. Ask Sahayak for the cited detail on your own product.",
       "panelRegulatory": "Regulatory route",
       "panelIp": "Intellectual property posture",
       "panelAbs": "Access and benefit sharing",
@@ -238,7 +238,7 @@
       "firstStep": "What usually comes first",
       "sharing": "What the benefit-sharing question is",
       "patent": "How it meets a patent application",
-      "amended": "The Indian regime was amended, and the rules under it remade, within the last few years. Some categories of user were treated differently after that change than before it, so any statement here is only as good as its effective date — and this corpus has none yet. Treat this as orientation and check the position against the published instrument.",
+      "amended": "The Biological Diversity Act was amended in 2023 and its rules remade in 2024, so check the current position against the published instrument.",
       "questions": {
         "who": "Who is accessing the resource?",
         "access": "Are you accessing a biological resource, or knowledge associated with one?",
@@ -267,20 +267,20 @@
       "offer": "You can see what is already on the record for something like this — as orientation, not as a search.",
       "open": "See what is on the record",
       "title": "What is already on the record?",
-      "intro": "Describe the formulation and this builds the search terms an examiner would start from, looks in whatever records have been ingested, and links out to the databases it cannot search.",
+      "intro": "Describe the formulation and this builds the search terms an examiner would start from, and links to the official databases to search.",
       "inputLabel": "Describe the formulation",
       "inputPlaceholder": "Ingredients, dosage form, what it is for…",
       "build": "Build the search terms",
       "termsHeading": "Search terms",
-      "termsNote": "Generated from what you typed. A real search would also use Sanskrit and vernacular names, botanical binomials and classification codes; those come from the corpus, which is not ingested yet.",
-      "resultsHeading": "What was found in ingested records",
-      "noRecords": "No records have been ingested, so nothing was searched and nothing was found. That is not a result — it is the absence of one.",
+      "termsNote": "Generated from what you typed. Add Sanskrit and vernacular names, botanical names and classification codes when you search.",
+      "resultsHeading": "Records found",
+      "noRecords": "No patent records are held on this site. Search the official databases linked below.",
       "elsewhereHeading": "Databases this cannot search",
       "elsewhereNote": "These databases cannot be searched from here. Nothing on this page has been searched on your behalf.",
       "linkPending": "link not yet verified",
       "tkdlHeading": "The Traditional Knowledge Digital Library",
       "tkdlBody": "This product cannot search it. Access is restricted to patent offices under access agreements, and no amount of orientation here substitutes for what an examiner will see there. If prior art matters to a decision you are about to take, that is a question for a patent professional.",
-      "banner": "This is an orientation aid, not a novelty search. It covers only ingested records as of {{snapshot}} and not every database an examiner would consult. Finding nothing here does not mean an invention is new.",
+      "banner": "This is an orientation aid, not a novelty search. Finding nothing here does not mean an invention is new.",
       "snapshotNone": "no snapshot taken"
     }
   }

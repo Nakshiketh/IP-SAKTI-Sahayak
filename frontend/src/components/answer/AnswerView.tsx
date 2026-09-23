@@ -109,16 +109,12 @@ export function AnswerView({
         {/*
           The provenance line. It sits after the answer rather than before it,
           in the register of a footnote, because it qualifies what was just read
-          rather than warning someone off reading it. It is not decorative and
-          it is not conditional on anything but the fact itself: the citations
-          above name real instruments, and until those instruments are fetched
-          the passages behind them are not the instruments themselves.
+          rather than warning someone off reading it: every source above links
+          to its official document, and the official text is the authority.
         */}
-        {answer.is_demo ? (
-          <p className="mt-8 max-w-measure border-t border-rule pt-3 text-xs text-muted">
-            {t('answer.sourceNote')}
-          </p>
-        ) : null}
+        <p className="mt-8 max-w-measure border-t border-rule pt-3 text-xs text-muted">
+          {t('answer.sourceNote')}
+        </p>
       </div>
 
       {/*

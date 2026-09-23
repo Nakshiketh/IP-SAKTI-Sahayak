@@ -99,11 +99,11 @@
     "sourceCount_other": "{{count}} sources",
     "showPassage": "Show the passage",
     "hidePassage": "Hide the passage",
-    "openSource": "Open the source",
+    "openSource": "Open the official source",
     "openSourceUnavailable": "Link not available",
     "sourceNumber": "Source {{number}}",
     "verifiedBadge": "verified",
-    "sourceNote": "Sources are drawn from a reference set under compilation. Verify against the official text before relying on this."
+    "sourceNote": "Every source links to the official document or portal it comes from. Check the official text before you rely on an answer."
   },
   "jurisdiction": {
     "IN": "India",
@@ -185,12 +185,12 @@
     "errConfirm": "Type the password again.",
     "errMismatch": "The two passwords do not match.",
     "errGeneric": "Something went wrong. Try again.",
-    "demoHint": "Demo build. Sign in as demo / demo1234, or scan the IP-SAKTI Sahayak badge.",
+    "demoHint": "New here? Create an account to get started, or scan your IP-SAKTI Sahayak badge.",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
     "account": "Account",
     "checking": "Checking your session…",
-    "usernameExample": "demo",
+    "usernameExample": "your username",
     "scanVerified": "QR verified – access granted. Opening the portal…",
     "scanMismatch": "Invalid QR Code – Access Denied",
     "scanOffline": "The badge check could not be reached. Retrying…",

@@ -1,0 +1,1404 @@
+{
+  "note": "Publicly available information from the official Traditional Knowledge Digital Library website, read on the date in retrieved_on. It holds page references, facts stated on those pages, and TKDL's published lists of the classical books it transcribes (title, author, edition). It holds no TKDL formulation records: the full TKDL database is proprietary to the Government of India and open only to patent offices under the TKDL Access (non-disclosure) Agreement.",
+  "retrieved_on": "2026-09-22",
+  "home_url": "https://www.tkdl.res.in/",
+  "pages": [
+    {
+      "id": "about",
+      "title": "About TKDL",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/Abouttkdl.asp?GL=Eng"
+    },
+    {
+      "id": "faq",
+      "title": "TKDL — Frequently asked questions",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/Faq.asp?GL=Eng"
+    },
+    {
+      "id": "source_info",
+      "title": "TKDL — Source of information",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/SourceInfo.asp?GL=Eng"
+    },
+    {
+      "id": "conditions",
+      "title": "TKDL — Conditions of use",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/Terms_Use.asp?GL=Eng"
+    },
+    {
+      "id": "general_info",
+      "title": "TKDL — General information",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/GenInfo.asp?GL=Eng"
+    },
+    {
+      "id": "representative",
+      "title": "TKDL — About the representative database",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/More.asp?GL=Eng"
+    },
+    {
+      "id": "tkrc",
+      "title": "Traditional Knowledge Resource Classification (TKRC)",
+      "url": "https://www.tkdl.res.in/tkdl/langdefault/common/TKRC.asp?GL=Eng"
+    }
+  ],
+  "book_lists": [
+    {
+      "system": "Ayurveda",
+      "url": "https://www.tkdl.res.in/tkdl/core/Common/AyurvedaBooksList.asp",
+      "count": 119
+    },
+    {
+      "system": "Unani",
+      "url": "https://www.tkdl.res.in/tkdl/core/Common/UnaniBooksList.asp",
+      "count": 55
+    },
+    {
+      "system": "Siddha",
+      "url": "https://www.tkdl.res.in/tkdl/core/Common/SiddhaBooksList.asp",
+      "count": 91
+    },
+    {
+      "system": "Sowa-Rigpa",
+      "url": "https://www.tkdl.res.in/tkdl/core/Common/SowarigpaBooksList.asp",
+      "count": 1
+    }
+  ],
+  "books": {
+    "Ayurveda": [
+      {
+        "title": "Abhinava Navajivanam",
+        "author": null,
+        "edition": "Compiled by Acharya Siddhinandan Mishra, Published by Chaukhamba Orientalia (Varanasi), 1st edition 2000"
+      },
+      {
+        "title": "Agnipuranam",
+        "author": null,
+        "edition": "Translated by Trinisha Jha and Ghanshyam Tripathi, Published by Hindi Sahitya Sammelana, Prayaya, Edn. 2nd 1998"
+      },
+      {
+        "title": "Anandakanda",
+        "author": "Manthana Bhairava",
+        "edition": "Edited with Tamil translation by S.V. Radhakrishna Shastri, Published by T.M.S.S.M. Library, Tanjore, Madras, Edn. 1st 1952"
+      },
+      {
+        "title": "Anangaranga",
+        "author": "Kalyanamalla",
+        "edition": "Edited by Ramasagar Tripathi, Published by Chaukhambha Sanskrit Pratisthan, Ed 1st Reprint 1999"
+      },
+      {
+        "title": "Anupana Manjari",
+        "author": "Acharya Vishram",
+        "edition": "Published by Gujarat Ayurveda University Jamnagar, Gujarat. Edn. 1972"
+      },
+      {
+        "title": "Arkaprakash",
+        "author": "Lankapatiravana",
+        "edition": "Edited and translation by Indradeva Tripathi, Published by Krishnadas Academy, Varanasi, Edn. 1st 1995"
+      },
+      {
+        "title": "Aryabhishaka (Hindustana Cha Vaidyaraja)",
+        "author": "Shankaradajishastripade",
+        "edition": "Published by Ramesh Vitthal Raghuvanshi, Published by Shri Gajanana Book Dipot, Bhavanishankara road, Dadara, Mumbai on 15th August 1973"
+      },
+      {
+        "title": "Asava Vigyan",
+        "author": "Swami Harisharanananda Vaidya",
+        "edition": "Translated by Swami Harisharanananda Vaidya, Published by The Punjab Ayurvedic Pharmacy, Amritsar, 3rd edition 2000"
+      },
+      {
+        "title": "Ashavashastram",
+        "author": "Nakula",
+        "edition": "Published by S. Gopalan,T.M.S.S.M. Library, Govt. of Madras,Tanjore, Edn. 1952"
+      },
+      {
+        "title": "Ashtanga Hridaya",
+        "author": "Vagabhata",
+        "edition": "Commentary by Arunadutta edited by Bhishagacharya Harishastri Paradakara Vaidya, Published by Chaukhamba Orientalia, Varanasi, Edn. 8th,1998"
+      },
+      {
+        "title": "Ashtanga Sangraha - Part-I (KA)",
+        "author": "Vagbhata",
+        "edition": "Commentary by Indu, Published by Central Council for Research in Ayurveda & Siddha, New Delhi, 1991"
+      },
+      {
+        "title": "Ashtanga Sangraha - Part-II",
+        "author": "Vagbhata",
+        "edition": "Commentary by Indu, Published by Central Council for Research in Ayurveda & Siddha, New Delhi, 1991"
+      },
+      {
+        "title": "Ayurveda Sarasangraha",
+        "author": null,
+        "edition": "Published by Shri Baidyanath Ayurveda Bhavan Limited, Calcutta, Edn. 2003"
+      },
+      {
+        "title": "Ayurveda Vigyana sara",
+        "author": null,
+        "edition": "Translated by Yugeshvar Jha, edited by Brahmashankar Shastri, Published by Chaukhambha Sanskrit Series Office, Varanasi, Third Edition,1976"
+      },
+      {
+        "title": "Ayurvedaprakasha",
+        "author": "Madhava",
+        "edition": "Translated by Gulrajasharma Mishra, Published by Chaukhamba Bharati Academy, Varanasi, Edn. Reprint 1999"
+      },
+      {
+        "title": "Ayurvedic Formulary of India - Part II",
+        "author": "Govt of India",
+        "edition": "Published by Govt of India, Ministry of Health & Family Welfare, Deptt. Of I.S.M. & H., New Delhi, Edn. 1st, 2000"
+      },
+      {
+        "title": "Basavarajiyam",
+        "author": "Basavaraja",
+        "edition": "Published by Chaukhambha Sanskrit Pratisthan, Delhi, Edn. 1st Reprint 2005"
+      },
+      {
+        "title": "Bhaishajya Ratnavali",
+        "author": "Govinda Dasa",
+        "edition": "Edited by Rajeshvaradutta Shastri, Translated by Ambikaduttashastri, Published by Chaukhamba Sanskrit Sansthan, Varanasi, Edn. 14th, 2001"
+      },
+      {
+        "title": "Bharata Bhaishajya Ratnakara - Vol. I",
+        "author": null,
+        "edition": "Compiled by Naginadasa Chaganalala Shah ,Translated by Gopinath Gupta, B. Jain Publishers, New Delhi, Edn. 2nd. Reprint, August 1999."
+      },
+      {
+        "title": "Bharata Bhaishajya Ratnakara - Vol. II",
+        "author": null,
+        "edition": "Compiled by Naginadasa Chaganalala Shah ,Translated by Gopinath Gupta, B. Jain Publishers, New Delhi, Edn. 2nd. Reprint, August 1999"
+      },
+      {
+        "title": "Bharata Bhaishajya Ratnakara - Vol. III",
+        "author": null,
+        "edition": "Compiled by Naginadasa Chaganalala Shah ,Translated by Gopinath Gupta, B. Jain Publishers, New Delhi, Edn. 2nd. Reprint, August 1999."
+      },
+      {
+        "title": "Bharata Bhaishajya Ratnakara - Vol. IV",
+        "author": null,
+        "edition": "Compiled by Naginadasa Chaganalala Shah ,Translated by Gopinath Gupta, B. Jain Publishers, New Delhi, Edn. 2nd. Reprint, August 1999"
+      },
+      {
+        "title": "Bharata Bhaishajya Ratnakara - Vol. V",
+        "author": null,
+        "edition": "Compiled by Naginadasa Chaganalala Shah ,Translated by Gopinath Gupta, B. Jain Publishers, New Delhi, Edn. 2nd. Reprint, August 1999"
+      },
+      {
+        "title": "Bhavaprakasha - Part-I",
+        "author": "Bhavamishra",
+        "edition": "Edited & translated by Brahmashankara Mishra & RupaLalaji Vaishya Published by Chaukhambha Sanskrit Sansthan, Varanasi, Edn. 9th, 1999."
+      },
+      {
+        "title": "Bhavaprakasha - Part-II",
+        "author": "Bhavamishra",
+        "edition": "Edited & translated by Brahmashankara Mishra Published by Chaukhamba Sanskrit Sansthan, Varanasi, Edn. 7th, 2000"
+      },
+      {
+        "title": "Bhela Samhita",
+        "author": "Bhela",
+        "edition": "English Translation, Commentary by K. H. Krishnamurthy, Edited by P. V. Sharma, Published by Chaukhanbha Vishvabharti, Varanasi, Edn. 1st 2000"
+      },
+      {
+        "title": "Bhishakkarmasiddhi",
+        "author": "Dr. Ramanath Dwivedi",
+        "edition": "Published by Chaukhamba Bharti Academy Varanasi, Edition (Reprint) - 2005."
+      },
+      {
+        "title": "Bopadeva Shatakama (Shatashloki)",
+        "author": "Bopadeva",
+        "edition": "Translated by Bharati Kumaramangalam, Edited by Pammi Satyanarayana Shastri, Published by Chaukhambha Sanskrit Series Office, Varanasi, Edn. 1st 2008"
+      },
+      {
+        "title": "Brihadrasarajasundara",
+        "author": null,
+        "edition": "Compiled & Translated by, Dattaram Chaube, Published by Chaukhamba Orientalia, Varanasi, Edn. 3rd 2000"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-2 (Part III)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das ,Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1995"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-1 (Part-II)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das, Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashan, Mumbai-4, Edn. 1995"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-2 (Part-IV)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das ,Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1995"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-3 (Part V)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das ,Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1996"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-3 (Part-VI)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das ,Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1996"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-4 (Part VII)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das, Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1997"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara (Shaligramanighantubhushanam) - Vol.-4 (Part-VIII)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das, Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1997"
+      },
+      {
+        "title": "Brihat Nighantu Ratnakara - Vol.-1 (Part I)",
+        "author": null,
+        "edition": "Compiled by Gangavishnu Shri Krishna Das ,Translated by Shri Dattarama Shrikrishnalala Mathura, Published by Khemaraja Shrikrishnadas Prakashana, Mumbai-4, Edn. 1995"
+      },
+      {
+        "title": "Chakradattah",
+        "author": "Cakrapanidatta",
+        "edition": "Translated by Indradeva Tripathi, Published by Chaukhamba Sanskrit Sansthan (Varanasi), Edn. 4th 2002."
+      },
+      {
+        "title": "Charaka Samhita - Vol.-I",
+        "author": "Agnivesha",
+        "edition": "Edited & translated by P.V Sharma, Published by Chaukhamba Orientalia, Varanasi, Edn. 6th, 2000"
+      },
+      {
+        "title": "Charaka Samhita, Vol.-II",
+        "author": "Agnivesha",
+        "edition": "Edited & translated by P.V Sharma, Published by Chaukhamba Orientalia, Varanasi, Edn. 5th, 2000."
+      },
+      {
+        "title": "Charu Chikitsa",
+        "author": null,
+        "edition": "Complied by Vaidya Gopinathaji Gupt, Published by Unjha Pharmacy, Gujarat, 4th edition 1950"
+      },
+      {
+        "title": "Chikitsa kalika",
+        "author": "Tisatacharya",
+        "edition": "Sanskrit commentary by Chandrata & Editing with English Commentary by Priyavrata Sharma, Published by Chaukhambha Surbharati Prakashan, Varanasi, First Edition,1987"
+      },
+      {
+        "title": "Dhanvantarinighantu",
+        "author": "Mahendra Bhaugika",
+        "edition": "Edited by P.V. Sharma & translated by Guru Prasad Sharma, Published by Chaukhambha Orientalia, Varanasi, Edn. 3rd, 2002"
+      },
+      {
+        "title": "Dravyaguna Sangraha",
+        "author": "Cakrapani Datta",
+        "edition": "Commentary by Shivadasa sen, edited & translated by Umapati Mishra, Published by Chaukhambha Surbharati Prakashan (Varanasi), Edn. 1st 2009"
+      },
+      {
+        "title": "Gadanigraha - Part-1 (Prayoga Khanda)",
+        "author": "Sodhala",
+        "edition": "Edited by Ganga Sahaya Pandeya & Commentary by Indradeva Tripathi Published by Chaukhamba Sanskrit Sansthan, Varanasi, Edn. 3rd 1999"
+      },
+      {
+        "title": "Gadanigraha - Part-2 (Kaya Chikitsa Khanda)",
+        "author": "Sodhala",
+        "edition": "Edited by Ganga Sahaya Pandeya & Commentary by Indradeva Tripathi, Published by Chaukhamba Sanskrit Sansthan (Varanasi), Edn. 3rd 1999"
+      },
+      {
+        "title": "Gadanigraha - Part-3 (Shalakya-Panchakarma Khanda)",
+        "author": "Sodhala",
+        "edition": "Edited by Ganga Sahaya Pandeya & Commentary by Indradeva Tripathi, Published by Chaukhamba Sanskrit Sansthan (Varanasi), Edn. 3rd 1999"
+      },
+      {
+        "title": "Gajashastrama",
+        "author": "Palakapya Muni",
+        "edition": "Edited with Tamil Translation by K. S. Subrahmanya Sastri, Published by T.M.S.S.M. Library, Tanjore, Edn. 1958"
+      },
+      {
+        "title": "Gajayurveda",
+        "author": "Pala Kapya",
+        "edition": "Gaj¢yurvedaª -"
+      },
+      {
+        "title": "Harita Samhita",
+        "author": "Harita",
+        "edition": "Translated by Hariharaprasada Tripathi, Published by Chaukhambha Krishnadas Academy (Varanasi), Edn. 1st 2005"
+      },
+      {
+        "title": "Kaiyadevanighantu (Pathyapathyavibodhaka)",
+        "author": "Kaiyadeva",
+        "edition": "Edited and translated by P.V. Sharma and Guru Prasad Sharma, Published by Chaukhambha Orientalia, Varanasi, Edn. 1st, 1979"
+      },
+      {
+        "title": "Kakachandishvara kalpatantra",
+        "author": "Kakachandishvara",
+        "edition": "Translated by Harihara Prasad Tripathi, Published by Chaukhambha Sanskrit Series Office, Varanasi, First Edition, 2004"
+      },
+      {
+        "title": "Kamasutrama",
+        "author": "Vatsyayana Muni",
+        "edition": "Edited with Commentary by Shridevdutta Shastri, Published by Chaukhamba Sanskrit Samsthan, Varanasi, Edn. 7th 2003"
+      },
+      {
+        "title": "Kashyapa Samhita or Vriddhajivakiya Tantra",
+        "author": "Vrddhajivaka",
+        "edition": "Edited & translated by P.V. Tiwari Published by Chaukhamba Visvabharati, Varanasi, Edn. 1st, 1996"
+      },
+      {
+        "title": "Kuipakva Rasa - Nirman Vigyan",
+        "author": "Harisharanananda",
+        "edition": "Published by Punjab Ayurvedic Pharmacy, Amritsar, Edn 1st 1941"
+      },
+      {
+        "title": "Lohasarvasvam",
+        "author": "Sureshvara",
+        "edition": "Translated by Uttam Vaidya Pammi Satyanarayana Shastry, Published by Chaukhambha Sanskrit Series Office, Varanasi, Edn. 1st 2005"
+      },
+      {
+        "title": "Madanapalanighantu",
+        "author": "Madanapala",
+        "edition": "Translated by Rama Prasad, Published by Khemaraj Shri Krishnadas Prakashan, Bombay, Edn. 1998"
+      },
+      {
+        "title": "Nighanturatnakara - Part-2",
+        "author": null,
+        "edition": "Edited and Marathi Translation by GRS Datar, BAS Tamankar, KS Mahabal, Published by VV Patel, Vishnu Vasudev Godbole, Bombay, Edn. 1867"
+      },
+      {
+        "title": "Nighanturatnakara - Part-3",
+        "author": null,
+        "edition": "Edited and Marathi Translation by GRS Datar, BAS Tamankar, KS Mahabal, Published by VV Patel Vishnu Vasudev Godbole, Bombay, Edn. 1868"
+      },
+      {
+        "title": "Pakadarpana",
+        "author": "Maharaja Nala",
+        "edition": "Edited by Vamacharana Bhattacharya with Hindi commentary by Indradeva Tripathi, Published by Chaukhambha Sanskrit Sansthan, Varanasi, Third Edition, 2006"
+      },
+      {
+        "title": "Priyanighantu",
+        "author": "Priyavrata Sharma",
+        "edition": "Published by Chaukhamba Surabharti Prakashana, Varanasi, Edn. 1st 2004"
+      },
+      {
+        "title": "Rajamartanda (Yogasarasangraha /Nanavidhayogasangraha)",
+        "author": "Bhoja",
+        "edition": "Translated by Dr.K.Nishteswar & Dr.R.Vidyanath, Published by Chaukhamba Orientalia (Varanasi), Edn. 1st 2008"
+      },
+      {
+        "title": "Rajanighantu",
+        "author": "Pandita Narahari",
+        "edition": "Edited with Hindi Commentary by Indradeo Tripathi, Published by Krishnadas Academy, Varanasi, Edn. 2nd 1998"
+      },
+      {
+        "title": "Rasa Manjari",
+        "author": "Acharya Shalinath",
+        "edition": "Translatied and edited by Narayan Prasad Mukundarama, Published by Chaukhamba Sanskrit Pratishthan Delhi, Edition (Reprint) -2004"
+      },
+      {
+        "title": "Rasa Yoga Shataka",
+        "author": "Pradyumnacharya Vaidya Nilangekar",
+        "edition": "Published by Shrikripa Mudranalya, Hydrabad,1st Edition, June 1965"
+      },
+      {
+        "title": "Rasachandanshu or Rasaratnasangraha",
+        "author": "Shrishankara",
+        "edition": "Editted by Vaidyaraja Datto Ballal Borkar, Published by Yagneshwar Gopal Dixit, Book seller, Budhwaar Peth, Pune, 2nd Edn.1928"
+      },
+      {
+        "title": "Rasahrdayatantrama",
+        "author": "Govindabhagavatpada",
+        "edition": "Commentary by Chaturbhuja Mishra & Translated by Daulatram Rasashastri, Chaukhamba Publishers (Varanasi), Edn. 2nd 2001"
+      },
+      {
+        "title": "Rasakamadhenu - Part 1-3",
+        "author": "Chudamani Mishra",
+        "edition": "Edited by Yadavaji Trikamji Acharya, Published by Chaukhamba Orientalia (Varanasi), Edn. 1st 1988"
+      },
+      {
+        "title": "Rasakamadhenu Samhita - Part 4",
+        "author": "Cudamani",
+        "edition": "Edited by Jivaramakalidasa Sastri, Published by Chaukhambha Publishers, Varanasi, Edn. 1st 1992"
+      },
+      {
+        "title": "Rasamritam",
+        "author": "Yadavaji Trikamaji Acharya",
+        "edition": "Translated by Damodar Joshi and G Prabhakar Rao, Published by Chaukhambha Sanskrit Bhawan, Varanasi, 2003"
+      },
+      {
+        "title": "Rasapaddhatih",
+        "author": "Bindu",
+        "edition": "Commentary by Siddhinandan Mishra, Published by Chaukhambha Orientalia, Varanasi, Edn. 1st, 1987"
+      },
+      {
+        "title": "Rasapradipa",
+        "author": "Ravidatta Shastri",
+        "edition": "Translated by Prof. Siddhi Nandan Mishra, Padmini Rao & Prakash Deshapande, Published by Chaukhamba Orientalia (Varanasi), Edn. 1st, 2009"
+      },
+      {
+        "title": "Rasaprakashasudhakara",
+        "author": "Yashodhara Bhatt",
+        "edition": "Translated by Siddhinandan Mishra, Published by Chaukhamba Orientalia (Varanasi) Edn. 2nd 1998"
+      },
+      {
+        "title": "Rasarajamahodadhi - Part-1",
+        "author": "Bhagat Bhagavanadasa",
+        "edition": "Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press Mumbai, Edition May- 2008"
+      },
+      {
+        "title": "Rasarajamahodadhi - Part-2",
+        "author": "Bhagat Bhagavanadasa",
+        "edition": "Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press, Mumbai, Edition, April-2007"
+      },
+      {
+        "title": "Rasarajamahodadhi - Part-3",
+        "author": "Bhagat Bhagavanadasa",
+        "edition": "Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press, Mumbai, Edition, December-2007"
+      },
+      {
+        "title": "Rasarajamahodadhi - Part-4",
+        "author": "Gaurishankar Tripathi Vaidyashastri",
+        "edition": "Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press Mumbai, Edition, October-2008"
+      },
+      {
+        "title": "Rasarajamahodadhi - Part-5",
+        "author": "Bhagat Bhagavanadasa",
+        "edition": "Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press, Mumbai, Edition, October-2008"
+      },
+      {
+        "title": "Rasaratnakara Rasakhandam",
+        "author": "Nityanathasiddha",
+        "edition": "Commentary by Indradeva Tripathi, Published by Chaukhamba Amar Bharati (Varanasi), Edn. 1st 1985"
+      },
+      {
+        "title": "Rasaratnakara Rasayanakhanda",
+        "author": "Nityanatha siddha",
+        "edition": "Commentary by Indradeo Tripathi, Published by Chaukhamba Amar Bharati (Varanasi), Edn. 2nd 1992"
+      },
+      {
+        "title": "Rasaratnakara Riddhikhandam",
+        "author": "Nityanathasiddhah",
+        "edition": "Commentary by Swaminath Mishra, Published by Chaukhamba Orientalia (Varanasi) Edn. 1st 1991"
+      },
+      {
+        "title": "Rasaratnakara-Rasendra Khandam",
+        "author": "Nityanathasiddha",
+        "edition": "Commentary by Datto Vallal Borakara, Published by Shri Gajanan Book Depot, (Pune), Edn. 2nd 1986"
+      },
+      {
+        "title": "Rasaratnasamucchaya",
+        "author": "Vagbhatta",
+        "edition": "Translated by Dharmananda Sharma, Edited by Atrideva Gupta, Published by Motilal Banarasidasa, Varanasi, Second edition 1962, Reprint - Delhi 1999"
+      },
+      {
+        "title": "Rasarnavam",
+        "author": null,
+        "edition": "Commentary by Indradeo Tripathi & edited by Krishna Dixit, Published by Chaukhambha Sanskrit Series Office, Varanasi, Edn. 4th 2001"
+      },
+      {
+        "title": "Rasatantrasara Evam Siddhaprayogasangraha - Part-I",
+        "author": null,
+        "edition": "Published by Krishan Gopal Ayurveda Bhawan, Edn. 8th,1990"
+      },
+      {
+        "title": "Rasatantrasara Evam Siddhaprayogasangraha - Part-II",
+        "author": null,
+        "edition": "Published by Krishan Gopal Ayurveda Bhawan, Edn 8th 1990"
+      },
+      {
+        "title": "Rasatarangini",
+        "author": "Sadanandasharma",
+        "edition": "Published by Kashinathshastri, Motilal Banarasidas, Varanasi, Edn. 11th 1979 (Reprinted-Delhi, 2000)"
+      },
+      {
+        "title": "Rasayoga Sagara - Vol.-I",
+        "author": null,
+        "edition": "Compiled and Translated by Vaidya Pandita Hariprapanna Ji, Published by Krishnadas Academy, Varanasi, Edn. Reprint, 1999."
+      },
+      {
+        "title": "Rasayoga Sagara - Vol.-II",
+        "author": null,
+        "edition": "Compiled and Translated by Vaidya Pandita Hariprapanna Ji , Published by Krishnadas Academy, Varanasi, Edn. Reprint, 1998"
+      },
+      {
+        "title": "Rasayogaratnakara",
+        "author": null,
+        "edition": "Translated by Pammi Satyanarayana Sastry, Editied by Koppula Hemadri,, Dr. Achanta Lakshmipathi Published by Ayurveda Library Trust, 2- Geeta Apartments, New Ayodhyanagar, (Vijayawada), Ist Edn. 2005"
+      },
+      {
+        "title": "Rasendrachintamani",
+        "author": "Dundukanatha",
+        "edition": "Translated by Siddhinandan Mishra, Published by Chaukhamba Orientalia (Varanasi), Edn. 1st 1999"
+      },
+      {
+        "title": "Rasendrachudamani",
+        "author": "Somadeva",
+        "edition": "Translated by Siddhinandan Mishra, Published by Chaukhamba Orientalia (Varanasi), Edn. 2nd 1999"
+      },
+      {
+        "title": "Rasendramangalam -Part I",
+        "author": "Nagarjun",
+        "edition": "Commentary and English Translation by H.S. Sharma, Published by Chaukhambha Orientalia, Varanasi, Edn. 1st 2003"
+      },
+      {
+        "title": "Rasendrasambhava",
+        "author": "Vishwanath Dwivedi",
+        "edition": "Published by Krishnadas Academy, Varanasi, 1997"
+      },
+      {
+        "title": "Rasendrasarasangraha",
+        "author": "Gopalakrishna Bhatta",
+        "edition": "Commentary by Indradeva Tripathi, Published by Chaukhambha Orientalia, Varanasi, Edn. 3rd 2003"
+      },
+      {
+        "title": "Sahastrayoga",
+        "author": "Govt of India",
+        "edition": "Translated by D.V. Panditarao, Published by Central Council for Research in Ayurveda & Siddha, New Delhi, 1990"
+      },
+      {
+        "title": "Sharangadhara Samhita",
+        "author": "Sharangadhara charya",
+        "edition": "Translated by Smt. Shailaja Srivastava, Published by Chaukhamba Orientalia, Varanasi, Edn. 2nd, 1998."
+      },
+      {
+        "title": "Siddaprayogalatika",
+        "author": "Acharya Gulraj Sharma Mishra",
+        "edition": "Translated by Vaidya Shivakaran Sharma Chhangani, Published by Chaukhamba Orientalia (Varanasi), Edn. 2nd 2005"
+      },
+      {
+        "title": "Siddhabheshajamanimala",
+        "author": "Krishnaram Bhatta",
+        "edition": "Commentary by Kaladhara Bhatta, Published by Chaukhambha Krishnadas Academy, Varanasi, Edn. 3rd 2003"
+      },
+      {
+        "title": "Siddhayogasangraha",
+        "author": null,
+        "edition": "Compiled by Yadavji Trikamji Acharya, Published by Shri Baidyanath Ayurved Bhawan, Allahabad, Edn. 1st 1978"
+      },
+      {
+        "title": "Sodhalanighantu (Namasangraha Va Gunasangraha)",
+        "author": "Sodhala",
+        "edition": "Edited by P.V. Sharma, Published by Oriental Institute, Baroda, Edn 1st 1978"
+      },
+      {
+        "title": "Sushruta Samhita - Vol.-I",
+        "author": "Sushruta",
+        "edition": "Edited & translated by P.V Sharma, Published by Chaukhamba Vishvabharati, Varanasi, Edn. Ist, 1999"
+      },
+      {
+        "title": "Sushruta Samhita - Vol.-II",
+        "author": "Sushruta",
+        "edition": "Edited & translated by P.V Sharma Published by Chaukhamba Visvabharati, Varanasi, Edn. Ist, 2000"
+      },
+      {
+        "title": "Sushruta Samhita - Vol.-III",
+        "author": "Sushruta",
+        "edition": "Edited & translated by P.V Sharma, Published by Chaukhamba Vishvabharati, Varanasi, Edn. Ist, 2001."
+      },
+      {
+        "title": "The Ayurvedic Pharmacopoeia of India - Part 1, Vol-II",
+        "author": "Govt of India",
+        "edition": "Published by Govt of India,Ministry of Health & Family Welfare"
+      },
+      {
+        "title": "The Ayurvedic Pharmacopoeia of India - Part 1, Vol-III",
+        "author": "Govt of India",
+        "edition": "Published by Govt of India, Ministry of Health & Family Welfare, Edn. First 2001"
+      },
+      {
+        "title": "The Ayurvedic Pharmacopoeia of India - Part 1, Vol.-I",
+        "author": "Govt of India",
+        "edition": "Published by Govt of India, Ministry of Health & Family Welfare, Deptt. Of I.S.M. & H., New Delhi, Edn. 1st, Reprinted - 2001,"
+      },
+      {
+        "title": "Trishati",
+        "author": "Sharangadhar",
+        "edition": "Commentary by Ram Prasad, Published by Bhartiya Kala Prakashan, Delhi, Edition 2005."
+      },
+      {
+        "title": "Vaidyajivanam",
+        "author": "Lolimbaraja",
+        "edition": "Commentary by Indradeva Tripathi, Published by Chaukhamba Orientalia, Varanasi Edn. 2nd 1995"
+      },
+      {
+        "title": "Vaidyamanorama",
+        "author": "Kali Dasa",
+        "edition": "Hindi translation, Published by Central Council for Research in Ayurveda & Siddha, Govt. of India, New Delhi, Edn. 2005"
+      },
+      {
+        "title": "Vangasena",
+        "author": "Vangasena",
+        "edition": "Commentary by Shaligram Vaishya, Edited by Shankar lalji Jain, Published by Khemraj Shrikrishna Das Prakashan, Bombay, Edn. 1996"
+      },
+      {
+        "title": "Vrihad Yoga Tarangini Part - I",
+        "author": "Trimalla Bhatta",
+        "edition": "Edited by Hanumanta Shastri, Published by Ananda Ashram Mudranalya, Edn. 1914"
+      },
+      {
+        "title": "Vriksha Ayurveda",
+        "author": "Surapala Muni",
+        "edition": "Commentary & Edited by Shrikrishna Jugnu, Published by Chaukhambha Sanskrit Series Office, Varanasi, Edn.2004"
+      },
+      {
+        "title": "Vrinda Vaidyaka",
+        "author": "Vrinda",
+        "edition": "Translated by Hariharaprasad Tripathi, Published by Chaukhambha Krishnadas Academy (Varanasi), Frist edition, 2007"
+      },
+      {
+        "title": "Vrindamadhava",
+        "author": "Madhava",
+        "edition": "Marathi translated by Datto vallala Borkar, Published by Yagyeshwara Gopal Dixit, Bookseller, Pune, Edn. 1922"
+      },
+      {
+        "title": "Yogachintamani",
+        "author": "Harshakirti",
+        "edition": "Translated by Dattaram Chaube, Published by Khemraj Shrikrishnadas, Shri Venkateshwar Press, Mumbai, Edition, November -2006"
+      },
+      {
+        "title": "Yogaratnakara",
+        "author": null,
+        "edition": "Commentary by Lakshmipatishastri, Edited by Brahmashankara Shastri, Published by Chaukhamba Sanskrit Sansthan (Varanasi) Edn. 7th 2002"
+      },
+      {
+        "title": "Yogaratnakara",
+        "author": null,
+        "edition": "Commentary by Lakshmipatishastri, Published by Chaukhamba Sanskrit Sansthan, Varanasi, Edn. 8th 2004"
+      },
+      {
+        "title": "Yogatrangini",
+        "author": "Trimalla Bhatta",
+        "edition": "Commentary by Duttarama Mathura, Published by Chaukhamba Vidyabhavan, Varanasi, Edn. Reprint 2003"
+      }
+    ],
+    "Unani": [
+      {
+        "title": "Al-Abnia-'an-Haqaayiq-al-Advia",
+        "author": "Mowaffaq Al- Din Abu Mansoor Ali Al- Harvi",
+        "edition": "Tehran, Iran, 1951"
+      },
+      {
+        "title": "Al-Jaam'e-li-Mufradaat-al-Advia-wal-Aghzia, Vol. I",
+        "author": "Ziya Al- Din Abdullah Ibn Al- Baitar",
+        "edition": "Matba Amra, Cairo, Egypt, 1874"
+      },
+      {
+        "title": "Al-Jaam'e-li-Mufradaat-al-Advia-wal-Aghzia, Vol. II",
+        "author": "Ziya Al- Din Abdullah Ibn Al- Baitar",
+        "edition": "Matba Amra, Cairo, Egypt, 1874"
+      },
+      {
+        "title": "Al-Jaam'e-li-Mufradaat-al-Advia-wal-Aghzia, Vol. III",
+        "author": "Ziya Al- Din Abdullah Ibn Al- Baitar",
+        "edition": "Matba Amra, Cairo, Egypt, 1874"
+      },
+      {
+        "title": "Al-Jaam'e-li-Mufradaat-al-Advia-wal-Aghzia,Vol. IV",
+        "author": "Ziya Al- Din Abdullah Ibn Al- Baitar",
+        "edition": "Matba Amra, Cairo, Egypt, 1874"
+      },
+      {
+        "title": "Al-Qaanoon-fil-Tibb, Vol. II",
+        "author": "Abu Ali Ibn-e-Sina",
+        "edition": "Institute of History of Medicine and Medical Research, Jamia Hamdard, New Delhi-62, 1987"
+      },
+      {
+        "title": "Al-Qaanoon-fil-Tibb, Vol. V",
+        "author": "Abu Ali Ibn-e-Sina",
+        "edition": "Publication Department, Jamia Hamdard, New Delhi-62, 1996"
+      },
+      {
+        "title": "Bayaaz-e- Kabir, Vol. II",
+        "author": "Mohammad Kabiruddin",
+        "edition": "Daftar-al- Maseeh, Karol Bagh, New Delhi, 1938"
+      },
+      {
+        "title": "Hidayat al Mutallimeen Fit Tib",
+        "author": "Abu Bakr Rabi Bin Ahmad Al Akhwaini Al Bukhaari",
+        "edition": "Published By Danish Gaah-e- firdausi, Mashhad, Iran, 1371,"
+      },
+      {
+        "title": "I'laaj al Amraaz",
+        "author": "Mohammad Shareef Khan",
+        "edition": "Afzal-al- Matabe, Barqi Press, Delhi, 1921"
+      },
+      {
+        "title": "Ikseer Azam, Vol. I",
+        "author": "Mohammad Azam Khan",
+        "edition": "Munshi Nawal Kishore, Lucknow, Fourth Edition"
+      },
+      {
+        "title": "Ikseer Azam, Vol. II",
+        "author": "Mohammad Azam Khan",
+        "edition": "Munshi Nawal Kishore, Lucknow, 1872"
+      },
+      {
+        "title": "Ikseer Azam, Vol. III",
+        "author": "Mohammad Azam Khan",
+        "edition": "Munshi Nawal Kishore, Lucknow, 1917"
+      },
+      {
+        "title": "Ikseer Azam, Vol. IV",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1872"
+      },
+      {
+        "title": "Kaamil-al-Sena'ah, Part I",
+        "author": "Ali Ibn-e-Abbaas Majoosi",
+        "edition": "Central Council for Research in Unani Medicine, 61-65 Institutional Area, Janak Puri, New Delhi-58, 2005"
+      },
+      {
+        "title": "Kaamil-al-Sena'ah, Part II",
+        "author": "Ali Ibn-e-Abbaas Majoosi",
+        "edition": "Central Council for Research in Unani Medicine, 61-65 Institutional Area, Janak Puri, New Delhi-58, 2005"
+      },
+      {
+        "title": "Khazaain-al-Advia, Vol II",
+        "author": "Mohammad Najmul Ghani Khan",
+        "edition": "Nadeem Yunus Printer / Sheikh Mohd Basheer & Sons, Lahore, 1911"
+      },
+      {
+        "title": "Khazaain-al-Advia, Vol III",
+        "author": "Mohammad Najmul Ghani Khan",
+        "edition": "Nadeem Yunus Printer / Sheikh Mohd Basheer & Sons, Lahore, 1926"
+      },
+      {
+        "title": "Khazaain-al-Advia, Vol. I",
+        "author": "Mohammad Najmul Ghani Khan",
+        "edition": "Nadeem Yunus Printer / Sheikh Mohd Basheer & Sons, Lahore, 1911"
+      },
+      {
+        "title": "Kitaab-al-'Umdah-fil-Jeraahat, Part II",
+        "author": "Aminuddaulah Abul Farj Ibn Al-Quff Maseehi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, 1937"
+      },
+      {
+        "title": "Kitaab-al-'Umdah-fil-Jeraahat, Part I",
+        "author": "Aminuddaulah Abul Farj Ibn Al-Quff Maseehi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, 1937"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.I",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, 1974"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.II",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, 1976"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.IV",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, 1978"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.IX",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1960"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.V",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (Second Edition) 1979"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.VI",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1958"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.VII",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1958"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.X",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1961"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XI",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1962"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XII",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1962"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XIV",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1963"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XIX",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1966"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XV",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1963"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XVI",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1963"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XX",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1967"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XXI Part I",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1968"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb, Vol.XXI Part II",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1968"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb,Vol.III",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (Second Edition) 1977"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb,Vol.VIII",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1959"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb,Vol.XIII",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1962"
+      },
+      {
+        "title": "Kitaab-al-Haawi-fil-Tibb,Vol.XXIII Part II",
+        "author": "Abu Bakr Mohammad.Bin Zakariyya Al-Razi",
+        "edition": "Dayerah-al- Ma'aarif Usmania, Hyderabad, (First Edition) 1970"
+      },
+      {
+        "title": "Miftaah al Khazaain",
+        "author": "Kareem Bakhsh",
+        "edition": "Dar-al- Kutub Rafeeq-al- Atibba wal Hakeem, Lahore, 1930"
+      },
+      {
+        "title": "Muheet Azam Vol. II ( Part II)",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1898"
+      },
+      {
+        "title": "Muheet Azam, Vol. IV",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1895"
+      },
+      {
+        "title": "Muheet-e-Azam Vol. II",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1887"
+      },
+      {
+        "title": "Muheet-e-Azam Vol. II",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1895"
+      },
+      {
+        "title": "Muheet-e-Azam Vol. III",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1887"
+      },
+      {
+        "title": "Muheet-e-Azam Vol. IV (Part I)",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1899 AD"
+      },
+      {
+        "title": "Muheet-e-Azam, Vol. I",
+        "author": "Mohammad Azam Khan",
+        "edition": "Matba Nizami, Kanpur, 1896"
+      },
+      {
+        "title": "Qaraabaadeen Azam",
+        "author": "Mohammad Azam Khan",
+        "edition": "Central council for Research in Unani Medicine,61-65 Institutional Area, Janak Puri, New Delhi-58,2006"
+      },
+      {
+        "title": "Qaraabaadeen Azam wa Akmal",
+        "author": "Mohammad Akmal Khan",
+        "edition": "Matba Siddiqi, Delhi / Matba Mustafai, Delhi, 1897"
+      },
+      {
+        "title": "Qaraabaadeen Majeedi",
+        "author": "Anonymous",
+        "edition": "Ajanta Offset and packagings Ltd., Delhi-110052, 1986"
+      },
+      {
+        "title": "Qaraabaadeen Najm-al-Ghani",
+        "author": "Mohammad Najmul Ghani Khan",
+        "edition": "Munshi Nawal Kishore, Lucknow, (Second Edition) 1928"
+      },
+      {
+        "title": "Qaraabaadeen Qaadri",
+        "author": "Mohammad Akbar Arzani",
+        "edition": "Ahmadi Publication, Delhi, 1968"
+      }
+    ],
+    "Siddha": [
+      {
+        "title": "18 Siddhar Chillarai Kovai, Part - 1",
+        "author": null,
+        "edition": "Edited by S.P.Ramachandran, Published by Thamarai Noolagam, Chennai (Edn. 1st, April. 1996)"
+      },
+      {
+        "title": "18 Siddhar Chillarai Kovai, Part - 2",
+        "author": null,
+        "edition": "Edited by R.C.Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd, Reprint April 2005)"
+      },
+      {
+        "title": "Aavialikkum Amuthamurai Churukkam (Athmarakshaamirtha Vaithiya saarasangiraham)",
+        "author": "Kandasamy Mudaliar",
+        "edition": "Published byPalani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai ( Edn. 1st. 1975)"
+      },
+      {
+        "title": "Agasthiya Maha Munivar Aruli Seitha Thaila Muraigal-100",
+        "author": "Agathiyar",
+        "edition": "Published by R. G. Pathi company, Chennai - 600001"
+      },
+      {
+        "title": "Agasthiyar 2000 Volume-I",
+        "author": "Agathiyar",
+        "edition": "Dr. S. Venkatarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. First, 1958)"
+      },
+      {
+        "title": "Agasthiyar 2000 Volume-II",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Venkatarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. First, 1958)"
+      },
+      {
+        "title": "Agasthiyar 2000 Volume-III",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Venkatarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. First, 1963)"
+      },
+      {
+        "title": "Agasthiyar Aruliya Anuboga Vaithiya Kalanjiyam",
+        "author": "Agathiyar",
+        "edition": "Edited by P. S. Seni Naayagar, Published by T. R. Balakrishna Mudaliyar, No. 2, Ezhuthukkaean street, Kaalaadi Pettai, Chennai - 600019 ( Published in 1963)"
+      },
+      {
+        "title": "Agasthiyar Poorana Kaaviyam - 1000",
+        "author": "Agathiyar",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 1st, October 1995)"
+      },
+      {
+        "title": "Agasthiyar Rana Vaithiyam",
+        "author": "Agathiyar",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 2nd, July 2000)"
+      },
+      {
+        "title": "Agasthiyar Vaithiya Kaandam Paandu Vaippu 600",
+        "author": "Agathiyar",
+        "edition": "Edited by A. Dheenadhayalu Mudaliyar, Published by Sri Adhimoolam Achukoodam, Chennai (Published in 1933)"
+      },
+      {
+        "title": "Agasthiyar Vaithiya Pooranam 205",
+        "author": "Agathiyar",
+        "edition": "Published by Sri Ramachandra Vilas Press, Vadakku Maasi Veethi, Madurai (Edn. 2nd, 1956)"
+      },
+      {
+        "title": "Agasthiyar Vaithiya Sathagam",
+        "author": "Agathiyar",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 1st, April 2000)"
+      },
+      {
+        "title": "Agathiyar - 12000, Part - 1",
+        "author": "Agasthiyar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint, Dec 1995)"
+      },
+      {
+        "title": "Agathiyar - 12000, Part - 2",
+        "author": "Agathiyar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint Aug 1996)"
+      },
+      {
+        "title": "Agathiyar - 12000, Part - 3",
+        "author": "Agathiyar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint Aug 1999)"
+      },
+      {
+        "title": "Agathiyar - 12000, Part - 4",
+        "author": "Agathiyar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint Aug 1999"
+      },
+      {
+        "title": "Agathiyar - 12000, Part - 5",
+        "author": "Agathiyar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint Feb 2000)"
+      },
+      {
+        "title": "Agathiyar Amutha Kalai Gnanam - 1200",
+        "author": "Agasthiyar",
+        "edition": "Edited by S.P. Ramachandran, Published by Thamarai Noolagam, Chennai ( Edn. 1st, May 1996)"
+      },
+      {
+        "title": "Agathiyar Attavanai Vaagadam",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Rengarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 2nd, March 2007)"
+      },
+      {
+        "title": "Agathiyar Chenduram - 300",
+        "author": "Agasthiyar",
+        "edition": "Edited by:S.P. Ramachandran, Published by Thamarai Noolagam, Chennai ( Edn. 1st, Dec 1998)"
+      },
+      {
+        "title": "Agathiyar Kanma Kaandam - 300",
+        "author": "Agasthiyar",
+        "edition": "Edited by Dr.R.Thigarajan, Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai(Edn. 2nd, 1976)"
+      },
+      {
+        "title": "Agathiyar Logamaaranam 110",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Rengarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 3rd, November 2001)"
+      },
+      {
+        "title": "Agathiyar Maamunivar Aruliya Paripooranam 1200",
+        "author": "Agathiyar",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 1st, May 1997)"
+      },
+      {
+        "title": "Agathiyar Nayanavithi - 500 (Agathiyar- Nagamunivar Nayanavithi)",
+        "author": "Agasthiyar",
+        "edition": "Edited by: T.S.Amirthalingam pillai, Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai ( Edn. 1st 1976)"
+      },
+      {
+        "title": "Agathiyar Nool Thirattu",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Rengarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 2nd, 2004)"
+      },
+      {
+        "title": "Agathiyar Pallu Irunooru",
+        "author": "Agathiyar",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. First, April 2000)"
+      },
+      {
+        "title": "Agathiyar Paripooranam - 400",
+        "author": "Agasthiyar",
+        "edition": "Published by B.Rathina Nayakar & sons, Thirumagal Vilaasa Press, Chennai"
+      },
+      {
+        "title": "Agathiyar Pin 80",
+        "author": "Agasthiyar",
+        "edition": "Edited by K. Manickkavellan Mudaliar, Published by Sivakami Vilas Press, Chennai (Published in 1927)"
+      },
+      {
+        "title": "Agathiyar Rana Nool",
+        "author": "Agathiyar",
+        "edition": "Published by Arulmigu Palani Thandayuthapani Swami Thirukovil Siddha Maruthuva Nool Veliyeetu Kuzhu (Edn. 1st, 1975)"
+      },
+      {
+        "title": "Agathiyar Vaakiyam 50",
+        "author": "Agathiyar",
+        "edition": "Edited by Dr. S. Prema, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 2nd, 2006)"
+      },
+      {
+        "title": "Agathiyar Vaithiya Chillarai Kovai",
+        "author": "Agasthiyar",
+        "edition": "Published by A. Rangaswamy Mudaliyar sons, Chennai Poomagal Vilas Achookoodam, 1982"
+      },
+      {
+        "title": "Agathiyar Vaithya Kaviyam - 1500",
+        "author": "Agasthiyar",
+        "edition": "Edited by S.P. Ramachandran, Published by Thamarai Noolagam, Chennai (Edn. 2nd Reprint, Aug 2001)"
+      },
+      {
+        "title": "Agathiyar Vaithya Rathina Churukkam",
+        "author": "Agasthiyar",
+        "edition": "Edited by S.P.Ramachandran, Published by Thamarai Noolagam, Chennai (Edn. 2nd, Reprint 1998)"
+      },
+      {
+        "title": "Agathiyar Vaithya Vallathi - 600",
+        "author": "Agasthiyar",
+        "edition": "Edited by R.C.Mohan, Published byThamarai Noolagam, Chennai (Edn.1st, April 2001)"
+      },
+      {
+        "title": "Agathiyar Vaithyam- 600, (Agathiyar Vaithyam- 600 and Rasa Vatham-100)",
+        "author": "Agasthiyar",
+        "edition": "Edited by R.C.Mohan, Published by Thamarai Noolagam, Chennai (Edn. 1st, Oct 2003)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 1",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abudalla Shahib, Published by Thamarai Noolagam, Chennai (Edn. 1st, 1995)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 10",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2002)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 2",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 1st, 1995)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 3",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2001)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 4",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 1st, 1995)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 6",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2001)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 7",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2002)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 8",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2002)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part - 9",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Thamarai Noolagam, Chennai (Edn. 2nd, 2002)"
+      },
+      {
+        "title": "Anuboga Vaithya Navaneetham, Part -5",
+        "author": "Abdulla Sahib",
+        "edition": "Edited by Mohammad Abdullah Shahib, Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai (Edn. 2nd, 1975)"
+      },
+      {
+        "title": "Balavakadam",
+        "author": "Agasthiyar",
+        "edition": "Edited by Dr.Pon. Gurusironmani, Published by Govt.of Tamil Nadu, Chennai (Edn. 3rd, 1992)"
+      },
+      {
+        "title": "Boga Munivar Vaithyam - 700",
+        "author": "Bogar",
+        "edition": "Edited by V.Ayodiyathasar, Published by B.Rathina Nayakar Sons, Thirumagal Vilasa Press, Chennai"
+      },
+      {
+        "title": "Bogar - 7000, Part - 1",
+        "author": "Bogar",
+        "edition": "Edited by P. Gangadhara Thevar, Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai ( Edn. 2nd, Reprint 1975)"
+      },
+      {
+        "title": "Bogar - 7000, Part - 3",
+        "author": "Bogar",
+        "edition": "Edited by P.Gangadhara Thevar, Published byPalani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai ( Edn. 1st, 1975)"
+      },
+      {
+        "title": "Bogar - 7000, Part - 4",
+        "author": "Bogar",
+        "edition": "Edited by R.C.Mohan, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint. 2005)"
+      },
+      {
+        "title": "Bogar - 7000, Part - 5",
+        "author": "Bogar",
+        "edition": "Edited by R.C.Mohan, Published byThamarai Noolagam, Chennai (Edn. 3rd, Reprint 2003)"
+      },
+      {
+        "title": "Bogar - 7000, Part - 6",
+        "author": "Bogar",
+        "edition": "Edited by R.C.Mohan, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint 2005)"
+      },
+      {
+        "title": "Bogar - 7000, Part - 7",
+        "author": "Bogar",
+        "edition": "Edited by R.C.Mohan, Published byThamarai Noolagam, Chennai (Edn. 3rd, Reprint 2002)"
+      },
+      {
+        "title": "Bogar Kalpa Vithi, (Siddhar Kaaya Karpam)",
+        "author": "Bogar",
+        "edition": "Published by C.C.R.A.S, New Delhi (Edn. 2nd, Reprint 2004)"
+      },
+      {
+        "title": "Bramamuni Karukkadai Chuthiram",
+        "author": "Bramamuni",
+        "edition": "Edited by Shunmugamudaliar, Published by Viveka Vilakka Press, Chennai (1944)"
+      },
+      {
+        "title": "Brammamuni Maruthuva Vilakkam",
+        "author": "Bramamuni",
+        "edition": "Editor: R. C. Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd, February 1993)"
+      },
+      {
+        "title": "Brammamuni Vaithiya Soothiram (Therayar Swami Vaithiyam-500) Part II",
+        "author": "Brammamuni",
+        "edition": "Edited by Dr. K. Maruthamuthu, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 2nd, 2006)"
+      },
+      {
+        "title": "Chikithsa Rathna Deepam",
+        "author": "Kannusamy Pillai",
+        "edition": "Edited by C.Kannuswami Pillai, Published by B.Rathna Nayakar & sons, Thirumagal Achagam, Chennai (Edn. 1956)"
+      },
+      {
+        "title": "Chimittu Rathna Churukkam",
+        "author": null,
+        "edition": "Edited by Vaidhilinga Dhesikar, Published by Sakalakala Nilayam Press, Chennai (Edn. 1st, 1887)"
+      },
+      {
+        "title": "Dhanvanthri Aeranda Thylam",
+        "author": "Dhanvanthri",
+        "edition": "Edited by Dr. M. Nandakumar, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 3rd, May 2007)"
+      },
+      {
+        "title": "Dhanvanthri Bhagawan Thailam 500",
+        "author": "Dhanvanthri",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 2nd, January 2000)"
+      },
+      {
+        "title": "Dhanvanthri Vaithiyam Part - II",
+        "author": "Dhanvanthri",
+        "edition": "Edited by Dr. S. Venkatarajan, Published by Thanjavur Maharaja Sarfoji's Sarasvati Mahal Noolagam, Thanjavur (Edn. 3rd, 2006)"
+      },
+      {
+        "title": "Kannusamiyam Ennum Vaidhiya Sekaram",
+        "author": "Kannusamy Pillai",
+        "edition": "Edited by C.Kannuswami Pillai, Published by B.Rathna Nayakar & sons, Thirumagal Achagam, chennai (Edn. 7th, 1963)"
+      },
+      {
+        "title": "Karuvoorar Pala Thirattu",
+        "author": "Karuvoorar",
+        "edition": "Edited by R. C. Mohan, Published by Thamarai Noolagam, Chennai (Edn. 3rd, December 2005)"
+      },
+      {
+        "title": "Konganavar Vatha Kaviyam Part-1",
+        "author": "Konganavar",
+        "edition": "Pub.: S.P.Ramachandhiran, Thamarai Noolagam, Chennai (Edn. 2nd, May 2000)"
+      },
+      {
+        "title": "Konganavar Vatha Kaviyam Part-2",
+        "author": "Konganavar",
+        "edition": "Pub.: S.P.Ramachandhiran, Thamarai Noolagam, Chennai (Edn. 2nd , July 2002)"
+      },
+      {
+        "title": "Matchamuni Perunool - 800",
+        "author": "Matchamuni",
+        "edition": "CCRAS, New Delhi (Edn. 1st, 1985)"
+      },
+      {
+        "title": "Naga Muni Nayanavithi - 200 (Agathiyar- Nagamunivar Nayanavithi)",
+        "author": "Nagamuni",
+        "edition": "Edited by Dr.V.Visuvanathan, Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai (Edn. 2nd, 1976)"
+      },
+      {
+        "title": "Pulippani Vaithyam - 500",
+        "author": "Pulippani",
+        "edition": "Edited by S.P.Ramachandhiran, Published by Thamarai Noolagam, Chennai (Edn. 1st, 1999)"
+      },
+      {
+        "title": "Ramadevar ennum Yaakobu 1- Panchamithiram 300, 2-Thandagam 110, 3- Kallaadam, 4-Vagaara kaandam, 5- Gnana kaandam",
+        "author": "Yaakobu",
+        "edition": "Edited by S. P. Ramachandiran, Published by Thamarai Noolagam, Chennai (Edn. 2nd, July 2000)"
+      },
+      {
+        "title": "Ramadevar ennum Yaakobu Vaithiya Chintamani 700, Gurunool-55, Soothiram-55, Seibaagam-16, Idaibaagam-16",
+        "author": "Yaakobu",
+        "edition": "Edited by R. C. Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd, August 2008)"
+      },
+      {
+        "title": "Siddha Vaithiya Pathartha Guna Vilakkam - Moola Varkam",
+        "author": "C. Kannusamy Pillai",
+        "edition": "Published by B.Rathina Nayakar & sons, Thirumagal Vilaasa Press, Chennai (Published in 2010)"
+      },
+      {
+        "title": "Therayar Kappiyam",
+        "author": "Therayar",
+        "edition": "Published by Pandit S.S.Anandam Research Institute of Siddha Medicine, Chennai, (Edn 1st, 1975)"
+      },
+      {
+        "title": "Therayar Karisal",
+        "author": "Therayar",
+        "edition": "Edited by Maarkalinga Nayanar, Published by Viveka Vilakka Press, Chennai (Edn. 1st, 1931)"
+      },
+      {
+        "title": "Therayar Kudineer",
+        "author": "Therayar",
+        "edition": "Published by C.C.R.A.S, New Delhi (Edn. 2nd, Reprint 1996)"
+      },
+      {
+        "title": "Therayar Maha Karisal",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarajan, Published byPandit S.S.Anandam Anbu Selvi Press,Chennai (Edn. 1st, 1974)"
+      },
+      {
+        "title": "Therayar Sekarappa",
+        "author": "Therayar",
+        "edition": "Published by C.C.R.A.S, New Delhi (Edn. 1st, 1979)"
+      },
+      {
+        "title": "Therayar Thailavarukka Churukkam",
+        "author": "Therayar",
+        "edition": "Edited by Subramanya Pandithar, Published by Devaraja Nayakar, Chennai (Edn. 1958)"
+      },
+      {
+        "title": "Therayar Tharu",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarajan, Published by Pandit S.S.Anandam Research Institute of Siddha Medicine, Chennai (1997)"
+      },
+      {
+        "title": "Therayar Venba",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarasan, Published by Pandit S.S.Anandam, Chennai (Edn. 2nd, 1975)"
+      },
+      {
+        "title": "Therayar Yamaha Venba, Part - 1",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarajan, Published by Directorate of Indian systems of Medicine & Homeopathy, Chennai (Edn. 2nd, Reprint 2003)"
+      },
+      {
+        "title": "Therayar Yamaha Venba, Part - 2",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarajan, Published bySri Booma Devi Printers, Chennai (Edn. 1st, 1997)"
+      },
+      {
+        "title": "Therayar Yamaha Venba, Part - 3",
+        "author": "Therayar",
+        "edition": "Edited by Dr.R.Thiyagarajan, Published bySri Booma Devi Printers, Chennai (Edn. 1st, 1997)"
+      },
+      {
+        "title": "Thirumoolar Karukkidai Vaithyam - 600",
+        "author": "Thirumoolar",
+        "edition": "Edited by S.P.Ramachandran, Published byThamarai Noolagam, Chennai (Edn. 2nd, Reprint Feb 1998)"
+      },
+      {
+        "title": "Thiruvalluvar Gnana Vettiyan - 1500",
+        "author": "Thriuvalluvar",
+        "edition": "Edited by R.C.Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd Reprint 2005)"
+      },
+      {
+        "title": "Veeramamunivar Nasa Kaandam",
+        "author": "Veeramamunivar",
+        "edition": "Edited by Ma. Vadivel Mudaliar, Published by Manickavel Mudaliar, Chennai (Edn. 1st, 1926)"
+      },
+      {
+        "title": "Yakkopu Vaithiyam - 300 (Yakkopu Vaithiyam-300,Chendhura Suthiram- 150, Suthiram-55,Suthira Churukkam -155 and 57)",
+        "author": "Yakkopu",
+        "edition": "Edited by R.C.Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd, Reprint 2004)"
+      },
+      {
+        "title": "Yugi Karisal - 151 (Yugi Muni Pooranam -100, Yugi Muni Karisal - 151, Yugi Muni Karisal-36)",
+        "author": "Yugi",
+        "edition": "Edited by R.C.Mohan, Published by Thamarai Noolagam, Chennai (Edn. 2nd, Reprint 2004)"
+      },
+      {
+        "title": "Yugi Muni Vatha Kaandam-1000",
+        "author": "Yugi",
+        "edition": "Edited by S.P.Ramachandhiran, Published by Thamarai Noolagam, Chennai (Edn. 1st, 1998)"
+      },
+      {
+        "title": "Yugi Munivar Vaithya Chinthamani",
+        "author": "Yugi",
+        "edition": "Published by Palani Thandayuthapani Devasthanam publications, Directorate of Indian systems of Medicine, Chennai (Edn. 2nd, 1976)"
+      }
+    ],
+    "Sowa-Rigpa": [
+      {
+        "title": "Dud-tsi nying-po yan-lag gyad-pa sang-wa man-ngag gi-gyud zes-ja-wa (Four Tantras)",
+        "author": "Buddha Shakamuni",
+        "edition": "compiled by Youthok Yontan Gonbo - Published By - T. Sonam Tashigang B.P.O.- sNyimo Leh-Ladakh 1973"
+      }
+    ]
+  }
+}

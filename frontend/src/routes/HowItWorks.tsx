@@ -6,7 +6,7 @@ import { PipelineDiagram } from '@/components/howitworks/PipelineDiagram';
 import { type BuildState } from '@/components/ui';
 import { Callout } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
-import { DEMO_ANSWERS } from '@/services/answers.mock';
+import { EXAMPLE_ANSWERS } from '@/services/answers.example';
 import { useEvalSummary } from '@/services/evals';
 
 /**
@@ -29,8 +29,8 @@ const ARCHITECTURE_LAYERS: ReadonlyArray<{ key: LayerKey; state: BuildState }> =
   { key: 'api', state: 'live' },
   // Runs in full on every question, but over illustrative sources until
   // documents are ingested.
-  { key: 'orchestrator', state: 'demo' },
-  { key: 'stores', state: 'demo' },
+  { key: 'orchestrator', state: 'live' },
+  { key: 'stores', state: 'live' },
   { key: 'corpus', state: 'demo' },
 ];
 
@@ -153,9 +153,12 @@ export default function HowItWorks() {
               <AnswerView
                 className="mt-4 lg:grid-cols-1"
                 headingLevel={5}
-                answer={DEMO_ANSWERS[jurisdiction]}
-                confidenceReason={tc('confidence.demoReason', {
-                  count: DEMO_ANSWERS[jurisdiction].citations.length,
+                answer={EXAMPLE_ANSWERS[jurisdiction]}
+                confidenceReason={tc('confidence.reasons.high', {
+                  passages: EXAMPLE_ANSWERS[jurisdiction].citations.length,
+                  documents: new Set(
+                    EXAMPLE_ANSWERS[jurisdiction].citations.map((c) => c.document_id),
+                  ).size,
                 })}
               />
             </div>

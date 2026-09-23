@@ -8,6 +8,7 @@ import {
   type DocumentId,
   type ManifestDocument,
 } from '@/services/corpusManifest';
+import { sourceHost, verifiedFor } from '@/services/verifiedSources';
 
 /**
  * Inline sourcing for a reference page.
@@ -100,11 +101,27 @@ export function SectionSourceList({ className }: { className?: string }) {
     <div className={cn('mt-5 border-t border-rule-faint pt-3', className)}>
       <p className="max-w-none text-xs text-muted">{t('sourceList.heading')}</p>
       <ol className="m-0 mt-1.5 list-none p-0">
-        {documents.map((doc, index) => (
-          <li key={doc.document_id} className="text-xs text-muted">
-            <span className="tabular-nums">{index + 1}.</span> {documentLabel(doc)}
-          </li>
-        ))}
+        {documents.map((doc, index) => {
+          const official = doc.source_url ?? verifiedFor(doc.document_id)?.source_url ?? null;
+          return (
+            <li key={doc.document_id} className="text-xs text-muted">
+              <span className="tabular-nums">{index + 1}.</span> {documentLabel(doc)}
+              {official ? (
+                <>
+                  {' — '}
+                  <a
+                    href={official}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-stamp underline underline-offset-4"
+                  >
+                    {sourceHost(official)}
+                  </a>
+                </>
+              ) : null}
+            </li>
+          );
+        })}
       </ol>
     </div>
   );

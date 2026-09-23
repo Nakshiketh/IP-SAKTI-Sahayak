@@ -100,11 +100,11 @@
     "sourceCount_other": "{{count}} మూలాధారాలు",
     "showPassage": "భాగాన్ని చూపు",
     "hidePassage": "భాగాన్ని దాచు",
-    "openSource": "మూలాన్ని తెరువు",
+    "openSource": "అధికారిక మూలాన్ని తెరవండి",
     "openSourceUnavailable": "ఇంకా లింక్ లేదు",
     "sourceNumber": "మూలం {{number}}",
     "verifiedBadge": "ధృవీకరించబడింది",
-    "sourceNote": "మూలాలు సంకలనంలో ఉన్న సందర్భ సంపుటి నుండి తీసుకోబడ్డాయి. దీనిపై ఆధారపడక ముందు అధికారిక పాఠ్యంతో సరిచూడండి."
+    "sourceNote": "ప్రతి మూలం అది తీసుకున్న అధికారిక పత్రం లేదా పోర్టల్‌కు లింక్ చేయబడింది. ఏదైనా సమాధానంపై ఆధారపడే ముందు అధికారిక పాఠాన్ని తనిఖీ చేయండి."
   },
   "jurisdiction": {
     "IN": "భారతదేశం",
@@ -186,12 +186,12 @@
     "errConfirm": "Type the password again.",
     "errMismatch": "The two passwords do not match.",
     "errGeneric": "Something went wrong. Try again.",
-    "demoHint": "డెమో బిల్డ్. demo / demo1234తో సైన్ ఇన్ చేయండి, లేదా IP-SAKTI సహాయక్ బ్యాడ్జ్‌ను స్కాన్ చేయండి.",
+    "demoHint": "కొత్తవారా? ప్రారంభించడానికి ఖాతాను సృష్టించండి, లేదా మీ IP-SAKTI సహాయక్ బ్యాడ్జ్‌ను స్కాన్ చేయండి.",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
     "account": "Account",
     "checking": "Checking your session…",
-    "usernameExample": "demo",
+    "usernameExample": "మీ వినియోగదారు పేరు",
     "scanVerified": "QR ధృవీకరించబడింది – ప్రవేశం మంజూరైంది. పోర్టల్ తెరుస్తోంది…",
     "scanMismatch": "చెల్లని QR కోడ్ – ప్రవేశం నిరాకరించబడింది",
     "scanOffline": "బ్యాడ్జ్ తనిఖీని చేరుకోలేకపోయాం. మళ్లీ ప్రయత్నిస్తోంది…",

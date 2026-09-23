@@ -17,3 +17,11 @@ from __future__ import annotations
 import os
 
 os.environ.setdefault("SAHAYAK_AUDIT_ENABLED", "false")
+
+# The pipeline's own tests run over the demo fixture, whose answers and
+# passages they assert on. The verified guidance corpus the site serves is
+# tested on its own in `test_knowledge_base.py`, which builds its pipeline
+# against the real file.
+os.environ.setdefault(
+    "SAHAYAK_KNOWLEDGE_BASE_OVERRIDE", os.path.join(os.path.dirname(__file__), "no-knowledge-base")
+)

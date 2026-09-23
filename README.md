@@ -28,12 +28,21 @@ they run. Ingestion fetches, parses, segments a document at its own sections, ta
 validates and indexes it. A gold set of 170 questions runs against the whole of it and publishes
 its numbers to the site.
 
-No corpus has been ingested yet, and that is a different thing from the pipeline not existing. All
-37 entries in `corpus/manifest.json` carry a null `source_url`, because those fields are filled only
-from the document actually fetched and guessing one is the fabrication this product exists to
-prevent. So `make ingest` reports 37 skips and builds nothing, both namespaces are served by a
-committed demo fixture whose passage bodies are placeholders, and every answer is marked
-"Illustrative example".
+Answers come from the verified guidance corpus, `corpus/guidance/knowledge-base.json`: plain-
+language passages restating the Patents Act and Rules (with the 2024 amendments), IP India's
+Guidelines for Examination of Ayush Related Inventions (2025), the Biological Diversity Act as
+amended in 2023, the NBA's current IPR forms, the Drugs and Cosmetics Rules for Ayurvedic drugs,
+FSSAI's Ayurveda Aahara regulations, the trade mark, GI, design and copyright pages of IP India,
+and the WIPO and CBD systems — 44 official documents and portals, each with the URL it was
+checked against and the date it was checked. With no model configured, the grounded composer
+(`backend/app/llm/composer.py`) writes each answer from those passages alone, and answers a
+procedural question as numbered steps (`backend/app/services/procedures.py`). Re-check the
+sources and update `reviewed_on` in that file whenever an instrument is amended.
+
+The full-text library in `corpus/manifest.json` is still waiting to be ingested: its entries carry
+a null `source_url` until each document is fetched, so `make ingest` reports skips. A jurisdiction
+with a built index reads that index instead of the guidance corpus. The demo fixture under
+`data/fixtures` is served only when neither exists, and is what the test suites run against.
 
 What proves the pipeline works is `make ingest-samples`: fictional instruments of a fictional
 territory, built by the same code into a real index that the real retrieval reads.
@@ -102,9 +111,8 @@ make refresh           # re-fetch and report what moved; writes nothing without 
 make ingest-records    # Layer 2; today, 17 sources and nothing loaded
 ```
 
-No API key is needed. With none configured the generator writes only over the demo passages and
-refuses to write over anything else, so an unconfigured install can be demonstrated but cannot
-present a fixture answer as retrieval from a real document. To answer from a real corpus, install
+No API key is needed. With none configured, the grounded composer answers from the verified
+guidance passages and cites each one; it writes nothing a passage does not say. To answer from a real corpus, install
 the `llm` extra and set `SAHAYAK_LLM_PROVIDER=anthropic` with a key.
 
 To run the interface with no backend at all, set `VITE_SAHAYAK_API=mock`: it answers from the same

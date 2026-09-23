@@ -7,7 +7,7 @@
   "heading": "Analyse my invention",
   "standfirst": "Describe your invention the way you would to a colleague. The analyst asks only for what it still needs, compares your formulation with what it can search, and shows the evidence behind every finding.",
   "label": "Preliminary AI-assisted assessment — not legal advice",
-  "engineRules": "Messages are read by built-in rules on this instance. No language model is configured.",
+  "engineRules": "संदेश अंगभूत नियमांनी वाचले जातात; निष्कर्ष फक्त येथे दाखवलेला डेटा वापरतात.",
   "stepsLink": "Prefer a step-by-step form?",
   "history": {
     "label": "Your analyses",
@@ -15,7 +15,7 @@
     "delete": "Delete this analysis",
     "confirmDelete": "Delete it permanently",
     "cancel": "Keep it",
-    "stored": "Analyses are saved to your account on this instance so you can return to them. Delete removes the conversation and its findings."
+    "stored": "विश्लेषणे तुमच्या खात्यात जतन होतात, त्यामुळे तुम्ही त्यांवर परत येऊ शकता. हटवल्यास संभाषण आणि त्याचे निष्कर्ष काढले जातात."
   },
   "chat": {
     "heading": "Conversation",
@@ -189,10 +189,23 @@
       "name": "matched by name",
       "ingredients": "matched by its defining ingredients"
     },
-    "category": "Traditional knowledge is a separate category from commercial products and from patents. Being traditionally known is not the same as being patented, and it is not a finding either way on its own."
+    "category": "Traditional knowledge is a separate category from commercial products and from patents. Being traditionally known is not the same as being patented, and it is not a finding either way on its own.",
+    "tkdl": {
+      "heading": "Traditional Knowledge Digital Library (TKDL)",
+      "listed": "{{system}} text listed by TKDL",
+      "bookList": "TKDL book list",
+      "askForText": "If your formulation comes from a classical text, name it in the chat to check it against the {{count}} books TKDL lists as transcribed.",
+      "restricted": "The full TKDL database is open only to patent offices under the TKDL Access Agreement, so it is not searched here.",
+      "links": {
+        "home": "Search the public TKDL database",
+        "about": "About TKDL",
+        "source_info": "Books TKDL transcribes",
+        "conditions": "TKDL conditions of use"
+      }
+    }
   },
   "priorArt": {
-    "not_loaded": "No patent or prior-art records are loaded on this instance, so no patent was searched. This is not a finding that none exists.",
+    "not_loaded": "या साइटवर कोणतेही पेटंट किंवा पूर्वकला रेकॉर्ड ठेवले जात नाहीत, म्हणून येथे पेटंट शोधले गेले नाहीत. याचा अर्थ काहीच अस्तित्वात नाही असा नाही.",
     "failed": "The records search failed, so no filing was compared. Run the analysis again shortly.",
     "searched": "{{count}} filed and granted records were searched.",
     "noneFound": "None of the records searched shares enough features to flag.",
@@ -336,7 +349,9 @@
     "filing_already_public": "Tell a patent agent when and where the formulation was made public: disclosure before filing can count against novelty.",
     "consult_professional": "Consult a registered patent agent for the final legal assessment.",
     "confirm_product_class": "Confirm the product's regulatory class — cosmetic, Ayurvedic medicine or other — because it shapes what can realistically be claimed.",
-    "trademark_search": "Search the trade marks register for {{name}} before printing packaging."
+    "trademark_search": "Search the trade marks register for {{name}} before printing packaging.",
+    "tkdl_text_named": "{{name}} is one of the {{count}} classical books TKDL lists as transcribed. What it documents is traditional knowledge and counts as prior art.",
+    "tkdl_source_text": "You say it comes from {{name}}, a classical text TKDL transcribes. What that text documents is prior art, so only what you changed can be new."
   },
   "engineModel": "Messages are read by a hosted language model, and every value it extracts is checked against your own words before it is used.",
   "scale": {

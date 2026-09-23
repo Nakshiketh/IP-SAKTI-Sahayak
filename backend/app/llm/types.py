@@ -76,6 +76,12 @@ class GenerationRequest(BaseModel):
     context: Context
     #: True when every packed passage is demo. Decides which client may run.
     all_passages_are_demo: bool = False
+    #: Set when the context is one whole procedure, in step order, so the
+    #: answer can be written as numbered steps.
+    procedure_id: str | None = None
+    #: When set, the first this-many passages answer the question and the rest
+    #: are related material.
+    lead_passages: int | None = None
 
 
 class LLMClient(Protocol):
