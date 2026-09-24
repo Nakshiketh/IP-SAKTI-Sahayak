@@ -1,3 +1,4 @@
+import type { ProtectionEntry } from '@/components/answer/ProtectionMap';
 import { readStoredSession } from '@/services/auth';
 
 /**
@@ -9,7 +10,8 @@ import { readStoredSession } from '@/services/auth';
  * rather than animating a guess.
  */
 
-export type Indicator = 'nothing_found_in_sources_searched' | 'related_material_found' | 'match_in_public_sources';
+export type Indicator =
+  'nothing_found_in_sources_searched' | 'related_material_found' | 'match_in_public_sources';
 export type Level = 'high' | 'moderate' | 'low';
 export type StageId =
   'understand' | 'extract' | 'products' | 'knowledge' | 'prior_art' | 'compare' | 'assess';
@@ -197,6 +199,17 @@ export interface IpOption {
   reasons: Reason[];
 }
 
+/**
+ * The source-grounded half of the product check.
+ *
+ * Optional because a run stored before this existed still has to load. Only
+ * the parts the interface reads are declared; the rest arrives and is ignored
+ * rather than being mirrored here for its own sake.
+ */
+export interface Intelligence {
+  protection: ProtectionEntry[];
+}
+
 export interface Analysis {
   created_at: number;
   invention_version: number;
@@ -208,6 +221,7 @@ export interface Analysis {
   assessment: Assessment;
   ip_options: IpOption[];
   next_steps: Reason[];
+  intelligence?: Intelligence | null;
 }
 
 export interface Message {

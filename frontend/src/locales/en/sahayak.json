@@ -371,5 +371,151 @@
     "geographical_indication": "Geographical indication",
     "copyright": "Copyright",
     "trade_secret": "Trade secret"
+  },
+  "provenance": {
+    "heading": "Why am I seeing this?",
+    "document": "Document",
+    "authority": "Published by",
+    "section": "Section",
+    "jurisdiction": "Legal system",
+    "verification": "Checked",
+    "reviewedAt": "Last confirmed",
+    "asOf": "Read on",
+    "applies": "Applies to you",
+    "needsFacts": "would need to know: {{facts}}",
+    "ranking": "Ranking signal",
+    "rankingNote": "how well this passage matched your words — not how confident the answer is",
+    "openOfficial": "Open the official source",
+    "reviewState": {
+      "verified_official": "Fetched from the official host and hashed",
+      "human_reviewed": "Read against the official original by a person",
+      "needs_review": "Awaiting review",
+      "unverified": "Not verified",
+      "superseded": "Superseded",
+      "unavailable": "Unavailable"
+    },
+    "applicability": {
+      "applies": "Applies",
+      "may_apply": "May apply",
+      "not_indicated": "Not indicated by your facts"
+    }
+  },
+  "receipt": {
+    "heading": "Answer receipt",
+    "caseId": "Answer ID",
+    "queryId": "Query ID",
+    "asOf": "Sources read on",
+    "corpusVersion": "Corpus version",
+    "jurisdiction": "Legal system",
+    "language": "Language",
+    "sources": "Source documents",
+    "verification": "Verification",
+    "verificationValue": "{{verified}} of {{total}} citations from verified sources",
+    "reviewDates": "Source review dates",
+    "noReviewYet": "No source has been confirmed by a person yet",
+    "confidenceByIssue": "Confidence by issue",
+    "overallOnly": "Whole answer: {{level}}",
+    "claimsRemoved": "Claims removed",
+    "safetyFlags": "Safety flags",
+    "noFlags": "None"
+  },
+  "abstainCode": {
+    "insufficient_authoritative_evidence": "No usable source was found for this",
+    "missing_material_facts": "A fact that decides the answer is missing",
+    "unsupported_jurisdiction": "This legal system is not covered",
+    "conflicting_authoritative_sources": "Two sources of equal standing disagree",
+    "source_status_uncertain": "A governing source may have changed",
+    "professional_interpretation_required": "This needs a provision applied to your facts",
+    "request_for_legal_verdict": "This asked for a verdict this product must not give",
+    "out_of_scope_clinical_query": "This is a clinical question",
+    "out_of_scope_non_ip": "This is outside intellectual property and these products"
+  },
+  "protection": {
+    "heading": "What you could protect",
+    "standfirst": "Six kinds of protection, and where each stands on the facts you have given. “Needs more information” is not the same as “not available”.",
+    "right": {
+      "patent": "Patent",
+      "trademark": "Trade mark",
+      "design": "Design",
+      "copyright": "Copyright",
+      "geographical_indication": "Geographical indication",
+      "trade_secret": "Trade secret"
+    },
+    "relevance": {
+      "relevant": "Relevant",
+      "possibly_relevant": "Possibly relevant",
+      "needs_more_information": "Needs more information",
+      "not_indicated": "Not indicated"
+    },
+    "whyHeading": "Why",
+    "factsHeading": "What would settle it",
+    "sourcesHeading": "Read",
+    "nextHeading": "Next step",
+    "reason": {
+      "protectionProcessDescribed": "You described a process or a distinctive feature.",
+      "protectionNeedProcess": "Nothing yet says whether there is a new process or technique.",
+      "protectionPatentGeneral": "A patent may be available for a new technical contribution.",
+      "protectionBrandGiven": "You gave a brand name.",
+      "protectionNeedBrand": "Nothing yet says whether a name or logo is involved.",
+      "protectionNoBrand": "No name or logo was mentioned.",
+      "protectionPackagingMentioned": "You mentioned packaging or appearance.",
+      "protectionNeedAppearance": "Nothing yet describes the product's appearance or packaging.",
+      "protectionLabelAndText": "Label artwork, text and photographs are original work.",
+      "protectionRegionMentioned": "You mentioned a place of origin.",
+      "protectionNoOriginClaim": "No claim was made linking the product to a place.",
+      "protectionKeptConfidential": "You said it has been kept confidential.",
+      "protectionAlreadyPublic": "It has already been made public.",
+      "protectionNeedDisclosure": "Nothing yet says whether it has been kept confidential."
+    },
+    "step": {
+      "protectionStepPriorArtSearch": "Run a prior-art search before filing anything.",
+      "protectionStepSearchRegister": "Search the trade marks register for the name.",
+      "protectionStepDecideName": "Decide whether you will sell under a name of your own.",
+      "protectionStepDesignNovelty": "Check whether the appearance is new before you publish it.",
+      "protectionStepDescribeAppearance": "Describe the shape, surface or packaging.",
+      "protectionStepKeepRecords": "Keep dated records of who made the artwork and text.",
+      "protectionStepCheckGiRegister": "Check whether a geographical indication already covers this.",
+      "protectionStepWriteItDown": "Write down what is confidential and who has access.",
+      "protectionStepDecideDisclosure": "Decide what has already been shown outside the company."
+    }
+  },
+  "sourceMatrix": {
+    "heading": "The sources this rests on",
+    "standfirst": "Every document behind this answer, with how far each has been checked.",
+    "columns": {
+      "document": "Document",
+      "authority": "Published by",
+      "jurisdiction": "Legal system",
+      "section": "Provision",
+      "status": "Checked",
+      "reviewed": "Last confirmed"
+    },
+    "notReviewed": "Not yet"
+  },
+  "brief": {
+    "open": "Prepare for expert review",
+    "heading": "Case brief",
+    "standfirst": "Everything a professional would need to pick this up, on one page.",
+    "printed": "Prepared on {{date}} by IP-SAKTI Sahayak. Information, not legal advice.",
+    "copy": "Copy summary",
+    "copied": "Copied",
+    "exportJson": "Export JSON",
+    "print": "Print",
+    "sections": {
+      "question": "The question asked",
+      "facts": "Facts stated",
+      "missing": "Facts still missing",
+      "classification": "Classification",
+      "issues": "Issues and confidence",
+      "conflicts": "Overlaps and conflicts",
+      "sources": "Sources and excerpts",
+      "unresolved": "Unresolved questions",
+      "specialists": "Suggested specialists",
+      "audit": "Audit information"
+    },
+    "noFacts": "No facts were stated in the question.",
+    "noneMissing": "Nothing material is missing.",
+    "noConflicts": "No overlap or conflict was found.",
+    "candidates": "Still open: {{classes}}"
   }
 }

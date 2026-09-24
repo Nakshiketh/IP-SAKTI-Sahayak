@@ -3,8 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { AnswerView } from '@/components/answer';
+import { AnswerReceipt } from '@/components/answer/AnswerReceipt';
+import { CaseBrief } from '@/components/answer/CaseBrief';
 import { ConflictMatrix } from '@/components/answer/ConflictMatrix';
 import { GuidanceEnds } from '@/components/answer/GuidanceEnds';
+import { SourceMatrix } from '@/components/answer/SourceMatrix';
 import { AbsFlow } from '@/components/flows/AbsFlow';
 import { ClassificationFlow } from '@/components/flows/ClassificationFlow';
 import { FlowOffers, type FlowKind } from '@/components/flows/FlowOffer';
@@ -25,6 +28,7 @@ import {
   Badge,
   BottomSheet,
   Button,
+  buttonStyles,
   Chip,
   Drawer,
   JurisdictionToggle,
@@ -93,6 +97,7 @@ export default function Sahayak() {
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [railOpen, setRailOpen] = useState(false);
   const [escalateOpen, setEscalateOpen] = useState(false);
+  const [briefOpen, setBriefOpen] = useState(false);
   const [phase, setPhase] = useState<StatusPhase>('done');
   const [result, setResult] = useState<QueryResult | null>(null);
   const [failure, setFailure] = useState<QueryErrorCode | null>(null);
@@ -420,6 +425,17 @@ export default function Sahayak() {
                             analysis={result.answer!.analysis}
                             citations={result.answer!.citations}
                           />
+                          <SourceMatrix className="mt-6" citations={result.answer!.citations} />
+                          <AnswerReceipt className="mt-6" answer={result.answer!} />
+                          <div className="mt-6 print:hidden">
+                            <button
+                              type="button"
+                              onClick={() => setBriefOpen(true)}
+                              className={buttonStyles({ variant: 'secondary' })}
+                            >
+                              {t('brief.open')}
+                            </button>
+                          </div>
                         </>
                       ) : null}
 
@@ -467,6 +483,20 @@ export default function Sahayak() {
           </div>
         ) : null}
       </div>
+
+      {/* The brief is a drawer rather than a route: it is read beside the
+          answer it summarises, and a reader who opens it has not left the
+          case. Printing takes only what is inside it, by the print rules. */}
+      {result?.answer ? (
+        <Drawer
+          open={briefOpen}
+          onClose={() => setBriefOpen(false)}
+          title={t('brief.heading')}
+          className="print:static print:block"
+        >
+          <CaseBrief answer={result.answer} question={result.question} />
+        </Drawer>
+      ) : null}
 
       {result && !isDesktop && isTablet ? (
         <Drawer

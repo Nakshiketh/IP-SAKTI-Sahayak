@@ -3,9 +3,9 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 4 part one done (multi-part retrieval, jury demo entry, where guidance ends, conflict matrix). Part two not started: provenance drawer, Answer Receipt, IP Protection Map UI, Case Brief.
-- Last green gate: phase 4a — backend 505, frontend 380, typecheck, eslint, ruff, evals (below_target []), build **149 kB of a 150 kB budget**. Locale and prettier checks still fail at baseline.
-- **Bundle warning**: 1 kB of headroom left. Phase 4 part two adds four more surfaces; it must lazy-load them or reclaim space first, or the budget check will fail.
+- Current phase: 4 done (flagship case, jury demo, and the surfaces that let a reader check an answer rather than trust it)
+- Last green gate: phase 4 — backend 505, frontend 403, typecheck, eslint, ruff, evals (below_target []), build **116 kB of a 150 kB budget**. Locale and prettier checks still fail at baseline.
+- Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
 
@@ -51,11 +51,11 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C9 | Confidence by issue, factor-based, with reasons | 2 | DONE | reasoning/confidence.py over data/rules/confidence.yaml: per issue, four step-down factors and three caps, reasons as keys. The answer-level rule in services/confidence.py is unchanged, so its TypeScript mirror and pinned cases still hold |
 | C10 | Abstention taxonomy (9 codes) | 2 | DONE | AbstainCode in models/domain.py; reasoning/engine.py maps the 5 older reasons and the 7 refusal kinds onto it, so both surfaces agree without changing the pinned older rule |
 | C11 | Guidance vs advice safety layer + notice + phrase filter | 2 | DONE | reasoning/phrases.py runs inside map_citations: a promise with a neutral form is rewritten, one without is dropped like an unsupported claim. Plus the existing guardrails and notices |
-| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | PARTIAL | reasoning/escalation.py decides L0–L3; components/answer/GuidanceEnds.tsx renders it as a four-step stepper with what we can say, what we cannot conclude and who should review. Case Brief is part two |
-| C13 | Flagship complex case + Jury Demo on the real pipeline | 4 | PARTIAL | data/demo/flagship_case.json seeded; GET /api/v1/demo/flagship-case serves the question only, behind `feature_jury_demo`; components/home/JuryDemo.tsx fetches it and asks it through the ordinary route. The case now answers with real sources (see below). Talk-track items beyond the matrix are part two |
-| C14 | Conflict matrix + source comparison matrix UI | 4 | PARTIAL | components/answer/ConflictMatrix.tsx: table on wide screens, stacked cards on a phone, with the resolution stated rather than implied. The source comparison matrix is part two |
-| C15 | Provenance explorer ("Why am I seeing this?") | 4 | PARTIAL | SourceCard (document, organisation, section, passage reveal, official link) inside a Drawer; no authority level, dates or verification result |
-| C16 | Answer Receipt | 1, 4 | PARTIAL | Answer carries corpus_version, as_of_date, confidence, stage timings; each citation now carries review_state, reviewed_at and provenance_pending, and the source card shows the pending badge. Dropped claims still counted in the audit row but not shown; no single receipt view yet (Phase 4) |
+| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | DONE | GuidanceEnds.tsx for L0–L3; CaseBrief.tsx opens beside the answer with the question, facts as read, missing facts, classification, issues, conflicts, sources, specialists and audit line — copy, export JSON, and the browser's own print rather than a PDF library |
+| C13 | Flagship complex case + Jury Demo on the real pipeline | 4 | DONE | data/demo/flagship_case.json; GET /api/v1/demo/flagship-case serves the question only, behind `feature_jury_demo`; JuryDemo.tsx asks it through the ordinary route. Every talk-track step up to the case brief has a surface; the language switch and voice follow-up are Phases 6 and 8 |
+| C14 | Conflict matrix + source comparison matrix UI | 4 | DONE | components/answer/{ConflictMatrix,SourceMatrix}.tsx — tables on wide screens, stacked cards on a phone. The source matrix is one row per document, with how far each has been checked and when a person last confirmed it |
+| C15 | Provenance explorer ("Why am I seeing this?") | 4 | DONE | components/answer/Provenance.tsx: passage, document, authority, section, jurisdiction, review state, review and as-of dates, applicability, and the ranking signal labelled as a ranking signal rather than a confidence |
+| C16 | Answer Receipt | 1, 4 | DONE | components/answer/AnswerReceipt.tsx, collapsed: ids, timestamp, corpus version, source documents, verification counts, source review dates, confidence per issue, claims removed and safety flags |
 | C17 | Real pipeline activity events in UI | 2, 4 | DONE | pipeline streams stage events; components/sahayak/RetrievalStatus.tsx renders real timings |
 | C18 | "In short" summaries + Simple/Expert view | 5 | MISSING | — |
 | C19 | Guided intake + glossary | 5 | PARTIAL | Analyst asks one question at a time; /assess/steps stepper exists; no glossary |
@@ -70,7 +70,7 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
 | C29 | Source Health / Regulatory Change Monitor | 9 | PARTIAL | scripts/refresh.py re-fetches and reports drift; no states, queue or admin approval |
 | C30 | Prior-Art Search Builder | 3 | DONE | analyst/searches.py builds the terms and the query string, offers a search page only when its source is citable, and validates botanical names against the stored vocabulary — an unknown name is offered as written and marked unvalidated. No IPC/CPC: the official IPC publication is not in this repo, and a guessed code searches the wrong branch. The banner is on every strategy |
-| C31 | IP Protection Map | 3, 4 | PARTIAL | analyst/protection.py gives all six rights four states — the fourth, needs_more_information, is the one that matters — with why, the facts that would settle it, citable sources and one next step. Map UI is Phase 4 |
+| C31 | IP Protection Map | 3, 4 | DONE | analyst/protection.py plus components/answer/ProtectionMap.tsx, rendered below the existing findings on /assess where its data comes from. Six branches with status chips; opening one shows why, the facts that would settle it, sources and one next step |
 | C32 | Document Intelligence | 9 | MISSING | No upload path anywhere |
 | C33 | Scan-badge off primary sign-in; public Ask without login | 5 | BLOCKED | Owner: the login page is not to be disturbed. Flag `scanBadgeLogin` ships **true**. Public Ask needs a separate decision |
 | C34 | Patent timeline demoted to "Learn" | 5 | MISSING | 15-step timeline sits on Home (components/home/PatentTimeline.tsx) |
@@ -121,6 +121,13 @@ Run on 2026-09-24 through the real pipeline, both jurisdictions.
 
 **Screenshots owed.** The gate asks for a manual browser run at 1280px and 360px saved to docs/upgrade/screens/phase4/. Not done: the dev servers were stopped by the OS under memory pressure earlier in the session and the owner asked that they not be restarted unprompted.
 
+## The English locale split (Phase 4 part two)
+All ten English namespaces were in the first chunk — 150 kB of source, most of it prose for pages a given reader never opens. `common`, `home` and `about` stay eager, because the shell and the landing page need them before anything is decided. The other seven now load beside their own route, which was already lazy: `App.tsx` wraps each lazy import so the chunk and its copy arrive together, behind the Suspense boundary that was already there.
+
+Initial load went from **149 kB to 116 kB gzipped**, and the four surfaces added in this pass cost none of it back.
+
+The rule to keep: nothing may render before its namespace is present, because there is no i18next backend to fetch a missing one and the failure shows as dotted keys on screen. Tests render route components directly, bypassing the router, so `src/test/setup.ts` puts every English namespace in place first.
+
 ## Check My Product, after Phase 3
 - The 14-product dataset stays, by the owner's decision, and keeps its own honesty: `verification: retrieved_not_reviewed` and a scope note saying finding nothing there says nothing about what else is sold. A test asserts both.
 - What was removed is the verdict it fed. Ask Sahayak refuses novelty verdicts (`RefusalKind.NOVELTY_VERDICT`) while Check My Product was printing "Potentially novel" and "Close match found — novelty at risk", from a comparison against face packs. The two halves now agree.
@@ -148,6 +155,10 @@ Run on 2026-09-24 through the real pipeline, both jurisdictions.
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: English locale namespaces are split the way the other five already were. English is the fallback, so `common`, `home` and `about` stay eager; the rest belong to lazy routes and load with them.
+- 2026-09-24: The case brief prints through the browser. A PDF library would add hundreds of kilobytes to produce a worse result than the thing every browser already does, and one more artefact to keep true.
+- 2026-09-24: The provenance drawer shows the rerank score labelled as a ranking signal. It says the passage matched the words of the question, which is not the answer being right, and a bare number invites exactly that confusion.
+- 2026-09-24: The protection map renders on /assess rather than in Ask. Its data comes from the product check, and putting it on the answer surface would have meant inventing the data there.
 - 2026-09-24: A question is split only on explicit enumeration — "(1)…(2)…", "1.…2.…", or several sentences each ending in a question mark. Guessing that prose contains two questions would split one question on an "and" and score both halves against the wrong thing.
 - 2026-09-24: The stem of an enumerated question is kept as context but never searched on. Prefixing sixty words of background to each part would reintroduce exactly the dilution the split removes.
 - 2026-09-24: The classifier reports candidates — categories no stated fact has ruled out — when no rule fires. "You are one of these, and this is what decides it" is more useful and no less honest than "undetermined".
@@ -173,6 +184,11 @@ Run on 2026-09-24 through the real pipeline, both jurisdictions.
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 4, part two
+- Done: the English locale split (149 kB → 116 kB); the provenance drawer; the Answer Receipt; the source comparison matrix; the IP Protection Map on /assess, with `Analysis.intelligence` now typed on the frontend; the Case Brief with copy, export and print. 23 new frontend tests.
+- Not done / carried over: the browser screenshots at 1280px and 360px (docs/upgrade/screens/phase4/) — the dev servers were stopped by the OS under memory pressure and the owner asked that they not be restarted unprompted. The five non-English locales carry all the Phase 4 strings in English behind `__untranslated`; Phase 6 owes the translations, and this is now the largest block of untranslated copy in the repo.
+- Next phase should first: read PHASE_05. Note that `frontend/src/test/setup.ts` now preloads every English namespace, so a test that wants to prove a namespace is absent has to remove it deliberately.
+
 ### Phase 4, part one
 - Done: multi-part question splitting and per-part retrieval (`app/services/parts.py`), which is what makes the flagship case answerable at all; classification candidates; jurisdictional conflicts naming real registry documents on both sides; `GET /api/v1/demo/flagship-case` behind the `juryDemo` flag; the Jury Demo entry on Home; "Where guidance ends" with the L0–L3 stepper; the conflict and overlap matrix. 25 new tests (16 backend including T11, 9 frontend).
 - Not done / carried over: provenance drawer, Answer Receipt, IP Protection Map UI, Case Brief page and its print stylesheet; the source comparison matrix; the browser screenshots. The five non-English locales carry the new strings in English behind `__untranslated`, as the repo already does elsewhere — Phase 6 owes the translations.

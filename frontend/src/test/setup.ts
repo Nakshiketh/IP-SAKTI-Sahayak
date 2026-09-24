@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
 import { i18n, initI18n } from '@/i18n';
+import { loadAllEnglish } from '@/i18n/resources';
 
 // Components own some of their copy — the "not legal authority" label on a
 // record card, the four confidence levels — so rendering one without i18n
@@ -10,8 +11,15 @@ import { i18n, initI18n } from '@/i18n';
 // is awaited nowhere here on purpose: English is in the first chunk, so it is
 // synchronously available the moment `init` returns, and every test then starts
 // from the same state without a suite-wide await.
-void initI18n();
-void i18n.changeLanguage('en');
+// Route namespaces now arrive with their route's chunk (see App.tsx). A test
+// that renders a route component directly never goes through the router, so
+// they are all put in place here instead — otherwise every such test would
+// assert against dotted keys.
+await initI18n();
+await i18n.changeLanguage('en');
+for (const [namespace, bundle] of Object.entries(await loadAllEnglish())) {
+  i18n.addResourceBundle('en', namespace, bundle, true, true);
+}
 
 // jsdom implements no media playback: `play()` reports "not implemented" and
 // returns nothing. The shell plays a background video on every route, so

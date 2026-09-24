@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Findings } from '@/components/analyst/Findings';
+import { ProtectionMap } from '@/components/answer/ProtectionMap';
 import { Journey, type StageState } from '@/components/analyst/Journey';
 import { Badge, Button, Chip, LiveRegion } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
@@ -416,6 +417,13 @@ export default function Analyst() {
             onEdit={(edit: InventionEdit) => void run({ edit })}
             onRerun={() => void run({ rerun: true })}
           />
+        ) : null}
+
+        {/* Added below the existing findings rather than inside them: the
+            protection map answers a different question — what you could hold —
+            and the sections above answer what was found. */}
+        {conversation?.analysis?.intelligence?.protection?.length ? (
+          <ProtectionMap className="mt-8" entries={conversation.analysis.intelligence.protection} />
         ) : null}
       </div>
     </article>

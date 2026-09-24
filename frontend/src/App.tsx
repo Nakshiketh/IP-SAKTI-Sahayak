@@ -1,7 +1,9 @@
-import { lazy, Suspense } from 'react';
+import { type ComponentType, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Shell } from '@/components/layout/Shell';
+import { i18n } from '@/i18n';
+import { ensureNamespace } from '@/i18n/resources';
 import { AuthProvider } from '@/hooks/useAuth';
 import { useAuth } from '@/hooks/authContext';
 import Home from '@/routes/Home';
@@ -32,17 +34,37 @@ import NotFound from '@/routes/NotFound';
  * that matters is the API refusing an unauthenticated request. Treat it as the
  * former and the design is honest; treat it as the latter and it is a hole.
  */
-const Login = lazy(() => import('@/routes/Login'));
-const Sahayak = lazy(() => import('@/routes/Sahayak'));
-const Assessment = lazy(() => import('@/routes/Assessment'));
-const Analyst = lazy(() => import('@/routes/Analyst'));
-const WhatIsCovered = lazy(() => import('@/routes/WhatIsCovered'));
-const HowItWorks = lazy(() => import('@/routes/HowItWorks'));
-const Sources = lazy(() => import('@/routes/Sources'));
-const About = lazy(() => import('@/routes/About'));
-const Privacy = lazy(() => import('@/routes/Privacy'));
-const DesignSystem = lazy(() => import('@/routes/DesignSystem'));
-const AuditLog = lazy(() => import('@/routes/AuditLog'));
+/**
+ * A route and the words it renders arrive together.
+ *
+ * Each namespace below is loaded beside its own chunk rather than in the first
+ * paint, so a reader downloads the copy for the page they opened and not the
+ * copy for the nine they did not. The Suspense boundary these already sit
+ * behind covers the wait, and nothing renders before its namespace is present
+ * — which matters, because there is no backend to fetch a missing one and the
+ * failure would show as dotted keys on screen.
+ */
+function route<P>(load: () => Promise<{ default: ComponentType<P> }>, namespace?: string) {
+  return lazy<ComponentType<P>>(async () => {
+    const [module] = await Promise.all([
+      load(),
+      namespace ? ensureNamespace(namespace, i18n.language) : Promise.resolve(),
+    ]);
+    return module;
+  });
+}
+
+const Login = route(() => import('@/routes/Login'));
+const Sahayak = route(() => import('@/routes/Sahayak'), 'sahayak');
+const Assessment = route(() => import('@/routes/Assessment'), 'assessment');
+const Analyst = route(() => import('@/routes/Analyst'), 'analyst');
+const WhatIsCovered = route(() => import('@/routes/WhatIsCovered'), 'covered');
+const HowItWorks = route(() => import('@/routes/HowItWorks'), 'howitworks');
+const Sources = route(() => import('@/routes/Sources'), 'sources');
+const About = route(() => import('@/routes/About'));
+const Privacy = route(() => import('@/routes/Privacy'), 'privacy');
+const DesignSystem = route(() => import('@/routes/DesignSystem'));
+const AuditLog = route(() => import('@/routes/AuditLog'));
 
 export default function App() {
   return (
