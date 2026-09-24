@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 1 done (trust foundation: source registry, provenance on citations)
-- Last green gate: phase 1 — backend 415, frontend 357, typecheck, ruff, evals (below_target []), build 147.6 kB gzip. Locale and prettier checks fail at baseline, unchanged by this phase.
+- Current phase: 2 done (reasoning pipeline, conflict engine, escalation)
+- Last green gate: phase 2 — backend 464, frontend 371, typecheck, ruff, schema, evals (below_target []), build 147.6 kB gzip. Locale and prettier checks still fail at baseline; locale out-of-sync went 35 → 30.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
 
 ## Repo map (filled in Phase 0)
@@ -43,13 +43,13 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C3 | Source registry with full metadata, authority levels, review states | 1 | DONE | backend/app/registry/{models,store,hosts,verify}.py over data/registry.sqlite3; 79 records with authority_level 1–5, ReviewState, sha256 and retrieved_at; built by scripts/registry_backfill.py, confirmed by scripts/registry_review.py. Human review of the text itself is still owed (Manual steps 4) |
 | C4 | Citation verifier removes unsupported claims | 1 | DONE | services/citations.py `map_citations` drops unverifiable claims; DROP_LIMIT collapses the answer past a third. Phase 1 added the source side: the pipeline drops passages the registry marks uncitable, and an unallowlisted host can never be cited |
 | C5 | Jurisdiction router + separate retrieval per jurisdiction | 2 | DONE | services/routing.py; retrieval/store.py `Namespaces` (one store per jurisdiction) |
-| C6 | JurisdictionConflictEngine + Conflict objects | 2 | PARTIAL | services/retrieval.py `find_contradictions` (conflicts_with / superseded_by pairs) + SOURCES_CONFLICT abstention; no Conflict object, conflict_type or resolution_status |
-| C7 | Product classification engine (rules + evidence) | 2 | PARTIAL | services/classification/{__init__.py,graph.json} decision graph + api/classify.py; graph holds no evidence_source_ids/required_facts/changes_if |
+| C6 | JurisdictionConflictEngine + Conflict objects | 2 | DONE | reasoning/conflicts.py: typed Conflict with all seven conflict_types and their resolution_status, decided from jurisdiction, supersession, effective dates, authority level and which rules fired — never from wording |
+| C7 | Product classification engine (rules + evidence) | 2 | DONE | data/rules/classification_rules.yaml (7 rules with required_facts, evidence_source_ids, changes_if) + reasoning/{facts,classify}.py. A rule whose evidence is not citable and in the corpus is inactive. The older /classify decision graph still serves its own flow |
 | C8 | Biodiversity / ABS decision support | 3 | PARTIAL | api/classify.py `abs-check` + components/flows/AbsFlow.tsx + verified ABS passages in corpus/guidance |
-| C9 | Confidence by issue, factor-based, with reasons | 2 | PARTIAL | services/confidence.py — per answer, not per issue; reasons as keys, no percentages (matches the rule) |
-| C10 | Abstention taxonomy (9 codes) | 2 | PARTIAL | 5 AbstainReason values + 7 guardrail refusal kinds; not the 9 named codes |
-| C11 | Guidance vs advice safety layer + notice + phrase filter | 2 | PARTIAL | guardrails.py refuses verdict/clinical/drafting/concealment; "Information, not legal advice" pill + source note; no post-generation blocked-phrase filter |
-| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | PARTIAL | components/sahayak/EscalationForm.tsx + api/feedback.py `escalate`; no L0–L3 levels, no Case Brief |
+| C9 | Confidence by issue, factor-based, with reasons | 2 | DONE | reasoning/confidence.py over data/rules/confidence.yaml: per issue, four step-down factors and three caps, reasons as keys. The answer-level rule in services/confidence.py is unchanged, so its TypeScript mirror and pinned cases still hold |
+| C10 | Abstention taxonomy (9 codes) | 2 | DONE | AbstainCode in models/domain.py; reasoning/engine.py maps the 5 older reasons and the 7 refusal kinds onto it, so both surfaces agree without changing the pinned older rule |
+| C11 | Guidance vs advice safety layer + notice + phrase filter | 2 | DONE | reasoning/phrases.py runs inside map_citations: a promise with a neutral form is rewritten, one without is dropped like an unsupported claim. Plus the existing guardrails and notices |
+| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | PARTIAL | reasoning/escalation.py decides L0–L3 with reason keys and specialist types, carried on every Answer. Case Brief and the UI for it are Phase 4 |
 | C13 | Flagship complex case + Jury Demo on the real pipeline | 4 | MISSING | — |
 | C14 | Conflict matrix + source comparison matrix UI | 4 | MISSING | — |
 | C15 | Provenance explorer ("Why am I seeing this?") | 4 | PARTIAL | SourceCard (document, organisation, section, passage reveal, official link) inside a Drawer; no authority level, dates or verification result |
@@ -73,7 +73,7 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C33 | Scan-badge off primary sign-in; public Ask without login | 5 | BLOCKED | Owner: the login page is not to be disturbed. Flag `scanBadgeLogin` ships **true**. Public Ask needs a separate decision |
 | C34 | Patent timeline demoted to "Learn" | 5 | MISSING | 15-step timeline sits on Home (components/home/PatentTimeline.tsx) |
 | C35 | Security review items | 10 | MISSING | docs/SECURITY.md has the threat model only |
-| C36 | Eval set A–H + multilingual evals | 2, 6 | PARTIAL | 170 cases grouped india/international/cross-border/multilingual/records/unanswerable; not the A–H classes |
+| C36 | Eval set A–H + multilingual evals | 2, 6 | PARTIAL | A–H built as structural assertions over the real pipeline in backend/tests/test_reasoning_cases.py rather than as gold rows, because the gold harness scores metrics and these assert shape. The 170-case gold set is unchanged; multilingual evals are Phase 6 |
 | C37 | Background video accessibility and performance | 5 | PARTIAL | hooks/useReducedMotion.ts exists; no pause-on-hidden, no Save-Data skip |
 
 ## KEEP / MODIFY / REMOVE / ADD (Phase 0)
@@ -87,6 +87,17 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 - By review_state: verified_official 43 (fetched from the official host and hashed), needs_review 8, unverified 28 (the corpus/manifest.json library, no URL, not citable).
 - The 8 needing review are the TKDL pages (`in-tkdl*`). The host refuses connections from this machine, so they keep `legacy_allowed`: still citable, marked "provenance pending review" on the source card, and they hold that answer below high confidence. No human review has been recorded for any source yet.
 - Missing official sources: everything in SOURCES_TO_VERIFY.md that is not one of the 51 — notably full statute text for trade marks, designs, GI and copyright; Drugs Rules Schedule T and First Schedule text; the currently notified NBA ABS regulations; WIPO GRATK party status with a checked date.
+
+## Flagship case run (Phase 2)
+Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. Two answers, India and International, never merged.
+- **Facts stated**: external_use false (oral), going_abroad true. Everything the question hedges — "may already be documented in classical texts", "know whether it is a classical drug ... or an Ayurveda Aahara product" — states nothing, so it surfaces as missing rather than as fact.
+- **Missing facts**: classical_text_formulation, therapeutic_claim, purified_extract, food_form. Exactly the four FLAGSHIP_CASE.md says must appear.
+- **Issues indicated**: patent (moderate), traditional knowledge (low in IN, moderate in INTL), biodiversity/ABS (moderate).
+- **Not indicated**: trade mark, design, GI, copyright, trade secret, drug regulation, food regulation — the over-reach check this case exists to make.
+- **Conflicts by type**: jurisdictional → separate_obligations; missing_fact → unresolved, requires_human_review.
+- **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
+- **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
+- Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
 ## Manual steps for the team
 1. **Decide C1.** Phase 3 says delete the commercial product dataset. It is 14 real, source-dated product pages that Check My Product compares against, and the owner previously asked for Check My Product not to be changed. Keep, or remove?
@@ -108,6 +119,12 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: Phase 2 extends the existing streaming pipeline instead of adding the pack's second `run_pipeline` and `POST /api/analyze`. One pipeline, one set of stage events, nothing to drift; the reasoning is a stage inside it. Owner approved.
+- 2026-09-24: Per-issue confidence sits beside the answer-level rule rather than replacing it, so the TypeScript mirror and evals/confidence-cases.json keep holding. Owner approved.
+- 2026-09-24: Facts are extracted deterministically, with no model. A model would read more from free prose and could also read in a fact nobody stated, and a fabricated fact decides the regulatory category the whole answer rests on.
+- 2026-09-24: A hedged clause states nothing. The flagship run caught the extractor reading "know whether it is ... an Ayurveda Aahara product" as a fact and raising food regulation off the reader's own list of options; hedge markers now suppress the clause and the fact is reported missing.
+- 2026-09-24: `phytopharmaceutical` had been made to require a therapeutic claim. Rule 2(eb) defines it by what the substance is, not by a claim made for it, so that requirement was removed as an invention on top of the passage.
+- 2026-09-24: The Answer's product_class now prefers what the reader stated, then what the rules decided, then the composer's reading. classification_accuracy in the evals moved 0% → 50%; the rest are questions stating no facts about the asker's own product, and two Marathi/Tamil cases the English-only fact lexicon cannot read.
 - 2026-09-24: data/registry.sqlite3 is committed (96 KB), unlike the other sqlite files in data/, which are user or run data. It is a fact table about official documents, so a clone and the Render deploy show the same provenance rather than silently showing none.
 - 2026-09-24: `prettier --check` fails on 77 files at baseline (proven by stashing the phase's own changes). Left alone rather than reformatting files this phase did not touch.
 
@@ -119,6 +136,11 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 2
+- Done: the reasoning stage (`backend/app/reasoning/`) runs inside the pipeline as the `reason` stage — deterministic fact extraction with negation and hedging, rules-driven classification whose rules switch themselves off without backed evidence, an issue classifier that says "not indicated" rather than staying silent, the seven-type conflict engine, per-provision applicability, per-issue confidence from YAML, L0–L3 escalation with specialist types, the nine abstention codes, and the blocked-phrase filter inside claim mapping. Contract extended by 8 enums and 7 models, mirrored in TypeScript. 42 new tests (T1, T5–T8, T12–T14, cases A–H, stage contract).
+- Not done / carried over: no UI reads the Analysis yet, so its reason keys have no locale strings — that is Phase 4's conflict matrix, provenance explorer and Case Brief. The flagship question still abstains at the answer level (see the run above). Fact extraction is English only, so two multilingual gold cases cannot classify; Phase 6. The conflict examples that need recorded supersession pairs wait on ingestion.
+- Next phase should first: read PHASE_03, and note that Check My Product can now call `app.reasoning.analyse` rather than growing a second classifier — the analyst package already runs its own fact-gathering conversation, and the two must not disagree about what a product is.
+
 ### Phase 1
 - Done: source registry (SourceRecord, ReviewState, authority levels 1–5, sha256 provenance) in backend/app/registry/; backfill and review CLIs; 79 records registered and 43 fetched from official hosts; citations carry review_state/reviewed_at/provenance_pending; the source card shows a pending badge in all six languages; confidence caps at moderate with reason `moderateProvenancePending`; /api/v1/corpus-version reports registry_version, citable_sources and sources_by_review_state; 17 new tests (T2, T3, T4, T9, T15, injection) in backend/tests/test_registry.py.
 - Not done / carried over: no source has been human-reviewed yet; the 8 TKDL records still report pending provenance; the corpus/manifest.json library stays unverified and uncitable; the locale and prettier gates still fail at baseline.

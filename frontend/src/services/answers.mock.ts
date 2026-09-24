@@ -177,6 +177,8 @@ function buildAnswer(jurisdiction: Jurisdiction): Answer {
     corpus_version: null,
     latency_ms: null,
     is_demo: true,
+    // No reasoning stage runs on this path; the backend supplies it.
+    analysis: null,
     citations: used.map((id) => {
       const citation = CITATIONS.get(id);
       if (!citation) throw new Error(`demo answer cites an unknown passage: ${id}`);

@@ -1,6 +1,6 @@
 # Evaluation report
 
-Run at 2026-09-24T01:11:21+00:00.
+Run at 2026-09-24T13:36:52+00:00.
 
 Measured against corpus version kb-2026.09.22, 51 documents.
 
@@ -28,12 +28,12 @@ Measured against corpus version kb-2026.09.22, 51 documents.
 | `abstention_recall` | 100.0% (39/39) | 100% | Of the times it should have declined, how often it did. |
 | `abstention_reason_accuracy` | 100.0% (39/39) |  | Declining for the reason the case expects, not merely declining. |
 | `forbidden_claim_avoidance` | 100.0% (170/170) | 100% | Answers containing none of the phrases the case forbids. |
-| `classification_accuracy` | 0.0% (0/6) |  | Product class on the answer matching the case, where the case sets one. |
+| `classification_accuracy` | 50.0% (3/6) |  | Product class on the answer matching the case, where the case sets one. |
 | `language_detection_accuracy` | 100.0% (25/25) |  | Script detection on the non-English cases. Devanagari cannot separate Hindi from Marathi, so either counts for either — the detector reports that ambiguity rather than guessing. |
 | `records_offered` | 0.0% (0/25) |  | Cases where records were expected beside the answer and appeared. |
 | `records_do_not_rescue` | not measured | 100% | Cases where a record was present and the corpus should decline: the system still declined. |
-| `latency_p50` | 13 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
-| `latency_p95` | 23 ms |  |  |
+| `latency_p50` | 17 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
+| `latency_p95` | 35 ms |  |  |
 | `errors` | 0 |  | Cases that raised rather than answering or declining. Should be zero. |
 | `answer_accuracy` | not measured |  | No reference answers exist. Writing them means stating what a source says, and no source has been read — see evals/gold/README.md. |
 | `citation_correctness` | not measured |  | Whether a cited passage supports its claim needs a judge, human or model. citation_groundedness below measures what can be checked mechanically. |

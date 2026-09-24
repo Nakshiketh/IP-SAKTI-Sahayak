@@ -99,6 +99,68 @@ export const ABSTAIN_REASONS = [
 ] as const;
 export type AbstainReason = (typeof ABSTAIN_REASONS)[number];
 
+/**
+ * The nine states the product can decline in. Finer-grained than
+ * `AbstainReason`, which the answer-level confidence rule still produces; the
+ * backend maps the older reasons and the guardrail refusals onto these.
+ */
+export const ABSTAIN_CODES = [
+  'insufficient_authoritative_evidence',
+  'missing_material_facts',
+  'unsupported_jurisdiction',
+  'conflicting_authoritative_sources',
+  'source_status_uncertain',
+  'professional_interpretation_required',
+  'request_for_legal_verdict',
+  'out_of_scope_clinical_query',
+  'out_of_scope_non_ip',
+] as const;
+export type AbstainCode = (typeof ABSTAIN_CODES)[number];
+
+/** A distinct legal question one product can raise. Not the same as a right. */
+export const ISSUE_TYPES = [
+  'patent',
+  'traditional_knowledge',
+  'biodiversity_abs',
+  'drug_regulation',
+  'food_regulation',
+  'trade_mark',
+  'design',
+  'geographical_indication',
+  'copyright',
+  'trade_secret',
+] as const;
+export type IssueType = (typeof ISSUE_TYPES)[number];
+
+export const ISSUE_STATUSES = ['indicated', 'not_indicated'] as const;
+export type IssueStatus = (typeof ISSUE_STATUSES)[number];
+
+export const CONFLICT_TYPES = [
+  'jurisdictional',
+  'scope_overlap',
+  'authority',
+  'temporal',
+  'classification',
+  'missing_fact',
+  'true_source_conflict',
+] as const;
+export type ConflictType = (typeof CONFLICT_TYPES)[number];
+
+export const RESOLUTION_STATUSES = [
+  'separate_obligations',
+  'resolved_by_authority',
+  'resolved_by_date',
+  'unresolved',
+] as const;
+export type ResolutionStatus = (typeof RESOLUTION_STATUSES)[number];
+
+export const APPLICABILITY_STATUSES = ['applies', 'may_apply', 'not_indicated'] as const;
+export type ApplicabilityStatus = (typeof APPLICABILITY_STATUSES)[number];
+
+/** How much human help an answer needs. L0 none, L3 a professional now. */
+export const ESCALATION_LEVELS = ['l0', 'l1', 'l2', 'l3'] as const;
+export type EscalationLevel = (typeof ESCALATION_LEVELS)[number];
+
 /** ISO date, `YYYY-MM-DD`. */
 export type IsoDate = string;
 /** ISO 8601 timestamp. */
@@ -218,6 +280,72 @@ export interface AnswerBlock {
 }
 
 /** One answer, for one jurisdiction. Never merged across jurisdictions. */
+/** Something the reader stated about their own situation, with their words. */
+export interface Fact {
+  key: string;
+  value: boolean;
+  span: string;
+}
+
+/** A fact a rule needed and the question did not give. Reported, never assumed. */
+export interface MissingFact {
+  key: string;
+  question: string;
+}
+
+export interface IssueFinding {
+  issue: IssueType;
+  status: IssueStatus;
+  reason_keys: string[];
+  citation_ids: string[];
+  confidence: Confidence | null;
+  confidence_reason_keys: string[];
+  missing_facts: MissingFact[];
+}
+
+/** Two sources that do not sit together, typed from metadata, never wording. */
+export interface Conflict {
+  conflict_id: string;
+  conflict_type: ConflictType;
+  issue: IssueType | null;
+  source_a: string;
+  source_b: string;
+  governing_source: string | null;
+  explanation_key: string;
+  resolution_status: ResolutionStatus;
+  reasoning_basis: string;
+  requires_human_review: boolean;
+}
+
+export interface ProvisionApplicability {
+  citation_id: string;
+  status: ApplicabilityStatus;
+  needs_facts: string[];
+}
+
+export interface Escalation {
+  level: EscalationLevel;
+  reason_keys: string[];
+  /** Types of specialist, never named people or firms. */
+  specialists: string[];
+}
+
+/** What the reasoning stage worked out, beside the answer it produced. */
+export interface Analysis {
+  facts: Fact[];
+  missing_facts: MissingFact[];
+  product_class: ProductClass;
+  alternative_classes: ProductClass[];
+  classification_rule_id: string | null;
+  changes_if: string | null;
+  issues: IssueFinding[];
+  conflicts: Conflict[];
+  applicability: ProvisionApplicability[];
+  escalation: Escalation | null;
+  abstain_code: AbstainCode | null;
+  unsupported_jurisdictions: string[];
+}
+
 export interface Answer {
   answer_id: string;
   query_id: string;
@@ -237,6 +365,7 @@ export interface Answer {
   corpus_version: string | null;
   latency_ms: number | null;
   is_demo: boolean;
+  analysis: Analysis | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -255,6 +384,13 @@ export const DOMAIN_ENUMS = {
   RecordType: RECORD_TYPES,
   AnswerBlockKind: ANSWER_BLOCK_KINDS,
   AbstainReason: ABSTAIN_REASONS,
+  AbstainCode: ABSTAIN_CODES,
+  IssueType: ISSUE_TYPES,
+  IssueStatus: ISSUE_STATUSES,
+  ConflictType: CONFLICT_TYPES,
+  ResolutionStatus: RESOLUTION_STATUSES,
+  ApplicabilityStatus: APPLICABILITY_STATUSES,
+  EscalationLevel: ESCALATION_LEVELS,
 } as const satisfies Record<string, readonly string[]>;
 
 /** Model name in the generated schema -> the fields this file declares. */
@@ -332,6 +468,45 @@ export const DOMAIN_FIELDS = {
     'snapshot_at',
     'citable_in_answers',
   ],
+  Fact: ['key', 'value', 'span'],
+  MissingFact: ['key', 'question'],
+  IssueFinding: [
+    'issue',
+    'status',
+    'reason_keys',
+    'citation_ids',
+    'confidence',
+    'confidence_reason_keys',
+    'missing_facts',
+  ],
+  Conflict: [
+    'conflict_id',
+    'conflict_type',
+    'issue',
+    'source_a',
+    'source_b',
+    'governing_source',
+    'explanation_key',
+    'resolution_status',
+    'reasoning_basis',
+    'requires_human_review',
+  ],
+  ProvisionApplicability: ['citation_id', 'status', 'needs_facts'],
+  Escalation: ['level', 'reason_keys', 'specialists'],
+  Analysis: [
+    'facts',
+    'missing_facts',
+    'product_class',
+    'alternative_classes',
+    'classification_rule_id',
+    'changes_if',
+    'issues',
+    'conflicts',
+    'applicability',
+    'escalation',
+    'abstain_code',
+    'unsupported_jurisdictions',
+  ],
   Claim: ['text', 'citation_ids'],
   AnswerBlock: ['id', 'kind', 'text', 'citation_ids', 'claims'],
   Answer: [
@@ -353,5 +528,6 @@ export const DOMAIN_FIELDS = {
     'corpus_version',
     'latency_ms',
     'is_demo',
+    'analysis',
   ],
 } as const satisfies Record<string, readonly string[]>;

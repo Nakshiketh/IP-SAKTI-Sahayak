@@ -115,6 +115,109 @@ class AbstainReason(StrEnum):
     NEEDS_MORE_FACTS = "needs_more_facts"
 
 
+class AbstainCode(StrEnum):
+    """The nine states the product can decline in, each with its own redirect.
+
+    `AbstainReason` above is the older, coarser set that the answer-level
+    confidence rule produces and the TypeScript mirror is pinned to. This is the
+    taxonomy the reasoning stage works in; `abstain_code_for` maps the old
+    reasons and the guardrail refusals onto it, so both surfaces agree without
+    the older rule having to change.
+    """
+
+    #: Nothing usable was retrieved, or every usable source was dropped.
+    INSUFFICIENT_AUTHORITATIVE_EVIDENCE = "insufficient_authoritative_evidence"
+    #: The answer turns on a fact the reader has not given.
+    MISSING_MATERIAL_FACTS = "missing_material_facts"
+    #: The question reaches a legal system this product does not hold sources for.
+    UNSUPPORTED_JURISDICTION = "unsupported_jurisdiction"
+    #: Two sources of equal authority say different things and neither governs.
+    CONFLICTING_AUTHORITATIVE_SOURCES = "conflicting_authoritative_sources"
+    #: The governing source may have been amended, or its provenance is unconfirmed.
+    SOURCE_STATUS_UNCERTAIN = "source_status_uncertain"
+    #: Answering would require applying a provision to facts, which is advice.
+    PROFESSIONAL_INTERPRETATION_REQUIRED = "professional_interpretation_required"
+    #: "Will my patent be granted?", "is this novel?", "am I infringing?"
+    REQUEST_FOR_LEGAL_VERDICT = "request_for_legal_verdict"
+    #: Dosage, treatment, diagnosis: a question for a clinician, not this product.
+    OUT_OF_SCOPE_CLINICAL_QUERY = "out_of_scope_clinical_query"
+    #: Outside intellectual property and the regulation of these products.
+    OUT_OF_SCOPE_NON_IP = "out_of_scope_non_ip"
+
+
+class IssueType(StrEnum):
+    """A distinct legal question a single product can raise.
+
+    Separate from `IPRight` on purpose: an issue is something to be reasoned
+    about and given its own confidence, while a right is a thing you hold. One
+    product can raise the patent issue and the biodiversity issue at once, and
+    the answer can be well supported on one and thin on the other.
+    """
+
+    PATENT = "patent"
+    TRADITIONAL_KNOWLEDGE = "traditional_knowledge"
+    BIODIVERSITY_ABS = "biodiversity_abs"
+    DRUG_REGULATION = "drug_regulation"
+    FOOD_REGULATION = "food_regulation"
+    TRADE_MARK = "trade_mark"
+    DESIGN = "design"
+    GEOGRAPHICAL_INDICATION = "geographical_indication"
+    COPYRIGHT = "copyright"
+    TRADE_SECRET = "trade_secret"
+
+
+class IssueStatus(StrEnum):
+    #: The stated facts raise this issue.
+    INDICATED = "indicated"
+    #: The facts do not raise it. Said plainly rather than left out, because
+    #: "we did not consider trade marks" and "trade marks do not arise here"
+    #: are different things to tell someone.
+    NOT_INDICATED = "not_indicated"
+
+
+class ConflictType(StrEnum):
+    #: The same issue answered differently by two legal systems.
+    JURISDICTIONAL = "jurisdictional"
+    #: Two different legal questions about one product, read as if they clashed.
+    SCOPE_OVERLAP = "scope_overlap"
+    #: The same point stated by sources of different authority.
+    AUTHORITY = "authority"
+    #: One source supersedes the other, or their effective dates do not overlap.
+    TEMPORAL = "temporal"
+    #: Two classification rules are both satisfied.
+    CLASSIFICATION = "classification"
+    #: The sources diverge on a fact the reader has not given.
+    MISSING_FACT = "missing_fact"
+    #: Same authority level, same jurisdiction, same date, and still contradictory.
+    TRUE_SOURCE_CONFLICT = "true_source_conflict"
+
+
+class ResolutionStatus(StrEnum):
+    #: Both apply; they are not in conflict, they are different obligations.
+    SEPARATE_OBLIGATIONS = "separate_obligations"
+    #: The higher authority governs.
+    RESOLVED_BY_AUTHORITY = "resolved_by_authority"
+    #: The later instrument governs.
+    RESOLVED_BY_DATE = "resolved_by_date"
+    #: Nothing in the sources settles it.
+    UNRESOLVED = "unresolved"
+
+
+class ApplicabilityStatus(StrEnum):
+    APPLIES = "applies"
+    MAY_APPLY = "may_apply"
+    NOT_INDICATED = "not_indicated"
+
+
+class EscalationLevel(StrEnum):
+    """How much human help this answer needs. L0 none, L3 a professional now."""
+
+    L0 = "l0"
+    L1 = "l1"
+    L2 = "l2"
+    L3 = "l3"
+
+
 class DomainModel(BaseModel):
     """Base: reject unknown fields so drift surfaces at the boundary."""
 
@@ -267,6 +370,106 @@ class AnswerBlock(DomainModel):
         return self
 
 
+class Fact(DomainModel):
+    """Something the reader stated about their own situation.
+
+    `span` is the words they used. Keeping it means a fact can always be traced
+    back to the sentence it came from, so a reader who disagrees can see exactly
+    what was read into their question.
+    """
+
+    key: str
+    value: bool
+    span: str
+
+
+class MissingFact(DomainModel):
+    """A fact a rule needed and the question did not give.
+
+    Reported rather than assumed. An assumed fact is the cheapest way to produce
+    a confident answer to a question nobody asked.
+    """
+
+    key: str
+    question: str
+
+
+class IssueFinding(DomainModel):
+    issue: IssueType
+    status: IssueStatus
+    #: Keys the interface renders: why this issue was or was not raised.
+    reason_keys: list[str] = Field(default_factory=list)
+    citation_ids: list[str] = Field(default_factory=list)
+    confidence: Confidence | None = None
+    confidence_reason_keys: list[str] = Field(default_factory=list)
+    missing_facts: list[MissingFact] = Field(default_factory=list)
+
+
+class Conflict(DomainModel):
+    """Two sources that do not sit together, and what the rules make of it.
+
+    Detected from metadata the registry and the corpus hold — authority level,
+    supersession, effective dates, jurisdiction — never by comparing the wording
+    of two passages. Comparing wording would mean guessing, and a guessed
+    conflict is worse than a missed one: it tells a reader that the law is
+    unsettled when it may not be.
+    """
+
+    conflict_id: str
+    conflict_type: ConflictType
+    issue: IssueType | None = None
+    source_a: str
+    source_b: str
+    #: Which of the two governs, where the rules settle it.
+    governing_source: str | None = None
+    #: A reason key, not prose: it is rendered in the reader's language.
+    explanation_key: str
+    resolution_status: ResolutionStatus
+    #: What the resolution rests on, e.g. "authority_level", "superseded_by".
+    reasoning_basis: str
+    requires_human_review: bool = False
+
+
+class ProvisionApplicability(DomainModel):
+    citation_id: str
+    status: ApplicabilityStatus
+    #: Facts that would settle a `may_apply`.
+    needs_facts: list[str] = Field(default_factory=list)
+
+
+class Escalation(DomainModel):
+    level: EscalationLevel
+    reason_keys: list[str] = Field(default_factory=list)
+    #: Types of specialist, never named people or firms.
+    specialists: list[str] = Field(default_factory=list)
+
+
+class Analysis(DomainModel):
+    """What the reasoning stage concluded, beside the answer it produced.
+
+    Carried on the Answer rather than replacing any of it: the prose is still
+    composed from cited passages, and this says what the product worked out on
+    the way there — which issues arose, what it could not settle, and how sure
+    it is issue by issue.
+    """
+
+    facts: list[Fact] = Field(default_factory=list)
+    missing_facts: list[MissingFact] = Field(default_factory=list)
+    product_class: ProductClass = ProductClass.UNDETERMINED
+    #: Other categories whose rules were also satisfied.
+    alternative_classes: list[ProductClass] = Field(default_factory=list)
+    classification_rule_id: str | None = None
+    #: What would move the product out of the chosen category.
+    changes_if: str | None = None
+    issues: list[IssueFinding] = Field(default_factory=list)
+    conflicts: list[Conflict] = Field(default_factory=list)
+    applicability: list[ProvisionApplicability] = Field(default_factory=list)
+    escalation: Escalation | None = None
+    abstain_code: AbstainCode | None = None
+    #: Jurisdictions named in the question that this product holds no sources for.
+    unsupported_jurisdictions: list[str] = Field(default_factory=list)
+
+
 class Answer(DomainModel):
     """One answer, for one jurisdiction. Never merged across jurisdictions."""
 
@@ -288,6 +491,8 @@ class Answer(DomainModel):
     corpus_version: str | None = None
     latency_ms: int | None = None
     is_demo: bool = False
+    #: What the reasoning stage worked out on the way to this answer.
+    analysis: Analysis | None = None
 
 
 #: Every model that participates in the frontend contract, in schema order.
@@ -298,6 +503,13 @@ CONTRACT_MODELS: tuple[type[DomainModel], ...] = (
     Record,
     Claim,
     AnswerBlock,
+    Fact,
+    MissingFact,
+    IssueFinding,
+    Conflict,
+    ProvisionApplicability,
+    Escalation,
+    Analysis,
     Answer,
 )
 
@@ -313,4 +525,11 @@ CONTRACT_ENUMS: tuple[type[Enum], ...] = (
     RecordType,
     AnswerBlockKind,
     AbstainReason,
+    AbstainCode,
+    IssueType,
+    IssueStatus,
+    ConflictType,
+    ResolutionStatus,
+    ApplicabilityStatus,
+    EscalationLevel,
 )

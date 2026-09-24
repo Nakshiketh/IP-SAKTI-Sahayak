@@ -33,6 +33,7 @@ from app.core.settings import Settings
 from app.llm.types import GenerationRequest, GenerationResult, LLMClient
 from app.models.domain import (
     AbstainReason,
+    Analysis,
     Answer,
     Citation,
     Confidence,
@@ -43,6 +44,7 @@ from app.models.domain import (
     RegulatoryArea,
     VerificationStatus,
 )
+from app.reasoning import analyse
 from app.registry.store import SourceRegistry, get_registry
 from app.retrieval.store import Namespaces
 from app.retrieval.types import RetrievalFilters, ScoredChunk
@@ -67,11 +69,19 @@ STAGE_IDS = (
     "route",
     "retrieve",
     "rerank",
+    "reason",
     "context",
     "generate",
     "map",
     "translate",
 )
+
+
+def _first_known(*classes: ProductClass) -> ProductClass:
+    for product_class in classes:
+        if product_class is not ProductClass.UNDETERMINED:
+            return product_class
+    return ProductClass.UNDETERMINED
 
 
 @dataclass
@@ -138,6 +148,10 @@ class QueryOutcome:
     is_demo: bool
     translator: str
     translated: bool
+    #: What the reasoning stage concluded. Present even on an abstention: the
+    #: issues a question raises are worth reporting whether or not the corpus
+    #: could answer them.
+    analysis: Analysis | None = None
     #: Set when the question named a place the corpus does not cover.
     uncovered_jurisdiction: str | None = None
     passage_text: dict[str, str] = field(default_factory=dict)
@@ -243,7 +257,18 @@ class Pipeline:
             empty = self._evidence(chosen.jurisdiction, [], (), today, needs_more_facts=False)
             scored_empty = confidence_service.score_confidence(empty)
             yield RetrievedEvent(passages=0, documents=0)
-            for stage_id in ("retrieve", "rerank", "context", "generate", "map", "translate"):
+            uncovered_analysis = self._analyse(
+                request, chosen, understanding, [], (), None, routing
+            )
+            for stage_id in (
+                "retrieve",
+                "rerank",
+                "reason",
+                "context",
+                "generate",
+                "map",
+                "translate",
+            ):
                 yield StageEvent(clock.stage(stage_id))
             outcome = self._finish(
                 request,
@@ -263,6 +288,7 @@ class Pipeline:
                 language_out,
                 translated=False,
                 uncovered=routing.uncovered,
+                analysis=uncovered_analysis,
             )
             self._record(outcome)
             yield ResultEvent(outcome)
@@ -305,6 +331,17 @@ class Pipeline:
             documents=len({p.document_id for p in candidates}),
         )
 
+        analysis = self._analyse(
+            request,
+            chosen,
+            understanding,
+            passages,
+            retrieved.contradictions,
+            store,
+            routing,
+        )
+        yield StageEvent(clock.stage("reason"))
+
         scored = self._cap_for_provenance(confidence_service.score_confidence(evidence), passages)
 
         if scored.level is Confidence.ABSTAIN:
@@ -331,6 +368,7 @@ class Pipeline:
                 language_in,
                 language_out,
                 translated=False,
+                analysis=analysis,
             )
             self._record(outcome)
             yield ResultEvent(outcome)
@@ -408,6 +446,7 @@ class Pipeline:
                 language_in,
                 language_out,
                 translated=False,
+                analysis=analysis,
             )
             self._record(
                 outcome, dropped=len(mapped.dropped_claims), neutralised=context.neutralised_spans
@@ -418,6 +457,16 @@ class Pipeline:
         translated = self._translate(mapped, language_in, language_out)
         yield StageEvent(clock.stage("translate"))
 
+        analysis = self._analyse(
+            request,
+            chosen,
+            understanding,
+            passages,
+            retrieved.contradictions,
+            store,
+            routing,
+            dropped_claims=len(mapped.dropped_claims),
+        )
         answer = self._assemble(
             request,
             chosen,
@@ -429,6 +478,7 @@ class Pipeline:
             language_out=language_out,
             as_of=today,
             is_demo=all_demo,
+            analysis=analysis,
         )
         outcome = self._finish(
             request,
@@ -447,6 +497,7 @@ class Pipeline:
             language_in,
             language_out,
             translated=translated,
+            analysis=analysis,
         )
         self._record(
             outcome, dropped=len(mapped.dropped_claims), neutralised=context.neutralised_spans
@@ -454,6 +505,51 @@ class Pipeline:
         yield ResultEvent(outcome)
 
     # -- helpers -----------------------------------------------------------
+
+    def _analyse(
+        self,
+        request,
+        chosen,
+        understanding,
+        passages,
+        contradictions,
+        store,
+        routing,
+        *,
+        dropped_claims: int = 0,
+        refusal: Refusal | None = None,
+    ) -> Analysis:
+        """Run the reasoning stage over what retrieval found.
+
+        Given the store rather than the retrieved passages for the corpus set:
+        a classification rule is backed by a document being in the corpus, not
+        by this particular question having retrieved it.
+        """
+        other = tuple(route.jurisdiction for route in routing.routes) if routing else ()
+        uncovered = (routing.uncovered,) if routing and routing.uncovered else ()
+        corpus_ids = (
+            frozenset(chunk.document_id for chunk in store.chunks()) if store else frozenset()
+        )
+        pending = any(
+            (record := self._registry.get(p.chunk.document_id)) is not None
+            and record.provenance_pending
+            for p in passages
+        )
+        return analyse(
+            request.question,
+            passages=list(passages),
+            jurisdiction=chosen.jurisdiction,
+            ip_rights=understanding.ip_rights,
+            regulatory_areas=understanding.regulatory_areas,
+            contradiction_pairs=tuple(contradictions),
+            corpus_document_ids=corpus_ids,
+            registry=self._registry,
+            dropped_claims=dropped_claims,
+            provenance_pending=pending,
+            other_jurisdictions=other,
+            unsupported_jurisdictions=uncovered,
+            refusal=refusal,
+        )
 
     def _citable(self, passages: list[ScoredChunk]) -> list[ScoredChunk]:
         """Drop passages whose source the registry says may not be cited.
@@ -565,6 +661,12 @@ class Pipeline:
             language_in,
             language_out,
             translated=False,
+            # A refusal is still worth reasoning about. The reader is told which
+            # issues their situation raises and who to take them to, even though
+            # this product will not answer the question they asked.
+            analysis=self._analyse(
+                request, chosen, understanding, [], (), None, None, refusal=refusal
+            ),
         )
 
     def _finish(
@@ -587,6 +689,7 @@ class Pipeline:
         *,
         translated: bool,
         uncovered: str | None = None,
+        analysis: Analysis | None = None,
     ) -> QueryOutcome:
         return QueryOutcome(
             query_id=query_id,
@@ -602,6 +705,7 @@ class Pipeline:
             evidence=evidence,
             confidence=scored,
             answer=answer,
+            analysis=analysis,
             related_records=self._related_records(request, chosen.jurisdiction),
             follow_ups=self._follow_ups(request, chosen, answer, understanding),
             stages=tuple(clock.stages),
@@ -634,16 +738,21 @@ class Pipeline:
         language_out: str,
         as_of: date,
         is_demo: bool,
+        analysis: Analysis | None = None,
     ) -> Answer:
         return Answer(
             answer_id=query_id + "-" + chosen.jurisdiction.value.lower(),
             query_id=query_id,
             jurisdiction=chosen.jurisdiction,
             language=language_out,
-            product_class=(
-                request.product_class
-                if request.product_class is not ProductClass.UNDETERMINED
-                else generated.product_class
+            # What the reader said they are wins; then what the rules decided
+            # from their stated facts; the composer's reading of the passages is
+            # the last resort, because it is the only one of the three that was
+            # not decided by a rule.
+            product_class=_first_known(
+                request.product_class,
+                analysis.product_class if analysis else ProductClass.UNDETERMINED,
+                generated.product_class,
             ),
             ip_rights=list(generated.ip_rights),
             regulatory_areas=list(generated.regulatory_areas),
@@ -660,6 +769,7 @@ class Pipeline:
             corpus_version=self._namespaces.corpus_version(),
             latency_ms=clock.total_ms,
             is_demo=is_demo,
+            analysis=analysis,
         )
 
     def _related_records(

@@ -93,6 +93,7 @@
       "route": "Jurisdiction routing",
       "retrieve": "Retrieval",
       "rerank": "Reranking",
+      "reason": "Reasoning",
       "context": "Context assembly",
       "generate": "Generation",
       "map": "Citation mapping",

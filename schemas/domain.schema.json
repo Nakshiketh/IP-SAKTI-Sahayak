@@ -123,6 +123,87 @@
         "needs_more_facts"
       ]
     },
+    "AbstainCode": {
+      "title": "AbstainCode",
+      "type": "string",
+      "enum": [
+        "insufficient_authoritative_evidence",
+        "missing_material_facts",
+        "unsupported_jurisdiction",
+        "conflicting_authoritative_sources",
+        "source_status_uncertain",
+        "professional_interpretation_required",
+        "request_for_legal_verdict",
+        "out_of_scope_clinical_query",
+        "out_of_scope_non_ip"
+      ]
+    },
+    "IssueType": {
+      "title": "IssueType",
+      "type": "string",
+      "enum": [
+        "patent",
+        "traditional_knowledge",
+        "biodiversity_abs",
+        "drug_regulation",
+        "food_regulation",
+        "trade_mark",
+        "design",
+        "geographical_indication",
+        "copyright",
+        "trade_secret"
+      ]
+    },
+    "IssueStatus": {
+      "title": "IssueStatus",
+      "type": "string",
+      "enum": [
+        "indicated",
+        "not_indicated"
+      ]
+    },
+    "ConflictType": {
+      "title": "ConflictType",
+      "type": "string",
+      "enum": [
+        "jurisdictional",
+        "scope_overlap",
+        "authority",
+        "temporal",
+        "classification",
+        "missing_fact",
+        "true_source_conflict"
+      ]
+    },
+    "ResolutionStatus": {
+      "title": "ResolutionStatus",
+      "type": "string",
+      "enum": [
+        "separate_obligations",
+        "resolved_by_authority",
+        "resolved_by_date",
+        "unresolved"
+      ]
+    },
+    "ApplicabilityStatus": {
+      "title": "ApplicabilityStatus",
+      "type": "string",
+      "enum": [
+        "applies",
+        "may_apply",
+        "not_indicated"
+      ]
+    },
+    "EscalationLevel": {
+      "title": "EscalationLevel",
+      "type": "string",
+      "enum": [
+        "l0",
+        "l1",
+        "l2",
+        "l3"
+      ]
+    },
     "Document": {
       "additionalProperties": false,
       "description": "A Layer 1 source. Normative. Citable as authority.",
@@ -795,6 +876,337 @@
       "title": "AnswerBlock",
       "type": "object"
     },
+    "Fact": {
+      "additionalProperties": false,
+      "description": "Something the reader stated about their own situation.\n\n`span` is the words they used. Keeping it means a fact can always be traced\nback to the sentence it came from, so a reader who disagrees can see exactly\nwhat was read into their question.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "value": {
+          "title": "Value",
+          "type": "boolean"
+        },
+        "span": {
+          "title": "Span",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value",
+        "span"
+      ],
+      "title": "Fact",
+      "type": "object"
+    },
+    "MissingFact": {
+      "additionalProperties": false,
+      "description": "A fact a rule needed and the question did not give.\n\nReported rather than assumed. An assumed fact is the cheapest way to produce\na confident answer to a question nobody asked.",
+      "properties": {
+        "key": {
+          "title": "Key",
+          "type": "string"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "question"
+      ],
+      "title": "MissingFact",
+      "type": "object"
+    },
+    "IssueFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "issue": {
+          "$ref": "#/$defs/IssueType"
+        },
+        "status": {
+          "$ref": "#/$defs/IssueStatus"
+        },
+        "reason_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reason Keys",
+          "type": "array"
+        },
+        "citation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Citation Ids",
+          "type": "array"
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Confidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "confidence_reason_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Confidence Reason Keys",
+          "type": "array"
+        },
+        "missing_facts": {
+          "items": {
+            "$ref": "#/$defs/MissingFact"
+          },
+          "title": "Missing Facts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "issue",
+        "status"
+      ],
+      "title": "IssueFinding",
+      "type": "object"
+    },
+    "Conflict": {
+      "additionalProperties": false,
+      "description": "Two sources that do not sit together, and what the rules make of it.\n\nDetected from metadata the registry and the corpus hold — authority level,\nsupersession, effective dates, jurisdiction — never by comparing the wording\nof two passages. Comparing wording would mean guessing, and a guessed\nconflict is worse than a missed one: it tells a reader that the law is\nunsettled when it may not be.",
+      "properties": {
+        "conflict_id": {
+          "title": "Conflict Id",
+          "type": "string"
+        },
+        "conflict_type": {
+          "$ref": "#/$defs/ConflictType"
+        },
+        "issue": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/IssueType"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_a": {
+          "title": "Source A",
+          "type": "string"
+        },
+        "source_b": {
+          "title": "Source B",
+          "type": "string"
+        },
+        "governing_source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Governing Source"
+        },
+        "explanation_key": {
+          "title": "Explanation Key",
+          "type": "string"
+        },
+        "resolution_status": {
+          "$ref": "#/$defs/ResolutionStatus"
+        },
+        "reasoning_basis": {
+          "title": "Reasoning Basis",
+          "type": "string"
+        },
+        "requires_human_review": {
+          "default": false,
+          "title": "Requires Human Review",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "conflict_id",
+        "conflict_type",
+        "source_a",
+        "source_b",
+        "explanation_key",
+        "resolution_status",
+        "reasoning_basis"
+      ],
+      "title": "Conflict",
+      "type": "object"
+    },
+    "ProvisionApplicability": {
+      "additionalProperties": false,
+      "properties": {
+        "citation_id": {
+          "title": "Citation Id",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/ApplicabilityStatus"
+        },
+        "needs_facts": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Needs Facts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "citation_id",
+        "status"
+      ],
+      "title": "ProvisionApplicability",
+      "type": "object"
+    },
+    "Escalation": {
+      "additionalProperties": false,
+      "properties": {
+        "level": {
+          "$ref": "#/$defs/EscalationLevel"
+        },
+        "reason_keys": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reason Keys",
+          "type": "array"
+        },
+        "specialists": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Specialists",
+          "type": "array"
+        }
+      },
+      "required": [
+        "level"
+      ],
+      "title": "Escalation",
+      "type": "object"
+    },
+    "Analysis": {
+      "additionalProperties": false,
+      "description": "What the reasoning stage concluded, beside the answer it produced.\n\nCarried on the Answer rather than replacing any of it: the prose is still\ncomposed from cited passages, and this says what the product worked out on\nthe way there — which issues arose, what it could not settle, and how sure\nit is issue by issue.",
+      "properties": {
+        "facts": {
+          "items": {
+            "$ref": "#/$defs/Fact"
+          },
+          "title": "Facts",
+          "type": "array"
+        },
+        "missing_facts": {
+          "items": {
+            "$ref": "#/$defs/MissingFact"
+          },
+          "title": "Missing Facts",
+          "type": "array"
+        },
+        "product_class": {
+          "$ref": "#/$defs/ProductClass",
+          "default": "undetermined"
+        },
+        "alternative_classes": {
+          "items": {
+            "$ref": "#/$defs/ProductClass"
+          },
+          "title": "Alternative Classes",
+          "type": "array"
+        },
+        "classification_rule_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Classification Rule Id"
+        },
+        "changes_if": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Changes If"
+        },
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/IssueFinding"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "conflicts": {
+          "items": {
+            "$ref": "#/$defs/Conflict"
+          },
+          "title": "Conflicts",
+          "type": "array"
+        },
+        "applicability": {
+          "items": {
+            "$ref": "#/$defs/ProvisionApplicability"
+          },
+          "title": "Applicability",
+          "type": "array"
+        },
+        "escalation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Escalation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "abstain_code": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AbstainCode"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unsupported_jurisdictions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unsupported Jurisdictions",
+          "type": "array"
+        }
+      },
+      "title": "Analysis",
+      "type": "object"
+    },
     "Answer": {
       "additionalProperties": false,
       "description": "One answer, for one jurisdiction. Never merged across jurisdictions.",
@@ -919,6 +1331,17 @@
           "default": false,
           "title": "Is Demo",
           "type": "boolean"
+        },
+        "analysis": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Analysis"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "required": [

@@ -1,0 +1,86 @@
+# Confidence per issue, and the escalation that follows from it.
+#
+# This is not the answer-level confidence rule. That one lives in
+# backend/app/services/confidence.py, is mirrored in TypeScript, and is pinned
+# by evals/confidence-cases.json; it decides whether the product answers at all.
+# This file decides how sure it is about each separate issue it found, which is
+# a different question: a query can be well supported on patents and thin on
+# biodiversity, and one number for both would hide that.
+#
+# Every issue starts HIGH and steps down one level for each factor that fires.
+# Steps are counted, never multiplied or weighted — a weight would be a number
+# nobody could defend, and the reader is shown the reasons, not the arithmetic.
+#
+# Order: high -> moderate -> low. Caps hold a level down but never raise it.
+# Reasons are keys the interface renders in the reader's language.
+
+version: "1"
+
+levels: [high, moderate, low]
+
+step_down:
+  - id: no_primary_authority
+    when: no_source_at_authority_level_1_or_2
+    reason: issueNoPrimaryAuthority
+
+  - id: citation_removed
+    when: a_claim_was_dropped_for_lack_of_support
+    reason: issueCitationRemoved
+
+  - id: missing_material_facts
+    when: one_or_more_material_facts_are_unknown
+    reason: issueMissingFacts
+
+  - id: source_status_uncertain
+    when: a_cited_source_is_review_due_or_legacy_allowed
+    reason: issueSourceStatusUncertain
+
+caps:
+  - id: professional_interpretation
+    when: the_issue_requires_professional_interpretation
+    at: moderate
+    reason: issueProfessionalInterpretation
+
+  - id: partial_jurisdiction_coverage
+    when: some_jurisdiction_in_the_question_is_not_supported
+    at: moderate
+    reason: issuePartialJurisdiction
+
+  - id: unresolved_conflict
+    when: a_conflict_on_this_issue_is_unresolved
+    at: low
+    reason: issueUnresolvedConflict
+
+# Zero usable sources is not a low-confidence answer; it is no answer.
+abstain:
+  when: no_usable_source_for_the_issue
+  code: insufficient_authoritative_evidence
+
+# The overall escalation level is the highest any single issue reaches.
+escalation:
+  l3:
+    - an_unresolved_true_source_conflict
+    - a_request_for_a_legal_verdict
+    - professional_interpretation_required_on_a_decisive_issue
+    - uncertain_source_status_on_a_decisive_issue
+  l2:
+    - any_issue_at_low_confidence
+    - a_conflict_requiring_human_review
+  l1:
+    - material_facts_missing_and_nothing_worse
+  l0:
+    - nothing_above_applies
+
+# Who the reader would be referred to, by issue. Types of specialist, never
+# named people or firms.
+specialists:
+  patent: [registered_patent_agent]
+  traditional_knowledge: [registered_patent_agent, traditional_knowledge_expert]
+  biodiversity_abs: [biodiversity_abs_consultant]
+  drug_regulation: [ayush_drug_regulatory_consultant]
+  food_regulation: [food_safety_consultant]
+  trade_mark: [trade_mark_attorney]
+  design: [registered_patent_agent]
+  geographical_indication: [geographical_indication_facilitator]
+  copyright: [intellectual_property_lawyer]
+  trade_secret: [intellectual_property_lawyer]

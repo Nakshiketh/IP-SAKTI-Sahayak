@@ -11,6 +11,9 @@ dependencies = [
   # QR sign-in: locating and sampling the QR code in a camera frame.
   "opencv-python-headless>=4.9",
   "numpy>=1.26",
+  # The reasoning rules in data/rules/*.yaml. Present transitively through
+  # uvicorn[standard] today; declared here because the rules are not optional.
+  "pyyaml>=6.0",
 ]
 
 [project.optional-dependencies]

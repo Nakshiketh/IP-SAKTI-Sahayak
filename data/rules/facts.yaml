@@ -1,0 +1,289 @@
+# The facts the reasoning stage can read out of a question, and nothing more.
+#
+# Every fact here is something a person states about their own product or
+# situation: what it is, what they did with it, where they want to sell it. No
+# entry states a legal consequence — that comes from retrieved sources, decided
+# by classification_rules.yaml, which reference these keys.
+#
+# A fact is recorded only when the question actually says it. Everything else
+# stays unknown, and an unknown fact that a rule needs is reported as missing
+# rather than assumed either way. This is the whole point: the difference
+# between "they told us it is not sold yet" and "they did not say" changes the
+# answer, so the two can never collapse into one.
+#
+# Matching:
+#   yes      phrases that assert the fact
+#   no       phrases that deny it outright
+#   negated  when a `yes` phrase falls inside a negation window
+#            ("does not contain", "has not been sold"), the fact becomes no
+#
+# Phrases match on folded tokens as a run, so "prior art" fifty tokens apart is
+# not a mention of prior art.
+
+version: "1"
+
+# A clause that hedges states nothing. "We want to know whether it is a
+# classical drug, a proprietary medicine or an Ayurveda Aahara product" lists
+# possibilities; reading those as facts would let the product classify someone
+# from their own question. A fact inside a hedged clause stays unknown, which
+# is reported as missing rather than guessed either way.
+hedges:
+  markers:
+    - "whether"
+    - "may"
+    - "might"
+    - "could"
+    - "possibly"
+    - "perhaps"
+    - "probably"
+    - "unclear"
+    - "unsure"
+    - "believe"
+    - "think"
+    - "assume"
+    - "suppose"
+    - "wondering"
+    - "wonder"
+
+negations:
+  # A `yes` phrase within this many tokens after one of these becomes a `no`.
+  window: 4
+  markers:
+    - "not"
+    - "no"
+    - "never"
+    - "without"
+    - "n't"
+    - "nor"
+    - "neither"
+    - "isn t"
+    - "hasn t"
+    - "haven t"
+    - "doesn t"
+    - "don t"
+
+facts:
+  external_use:
+    question: "Is the product applied externally rather than taken internally?"
+    yes:
+      - "applied to the skin"
+      - "applied externally"
+      - "for external use"
+      - "external application"
+      - "topical"
+      - "face pack"
+      - "face wash"
+      - "hair oil"
+      - "massage oil"
+      - "ointment"
+      - "balm"
+      - "lotion"
+      - "cream"
+    no:
+      - "taken internally"
+      - "for internal use"
+      - "swallowed"
+      - "ingested"
+      - "oral"
+      - "taken orally"
+      - "syrup"
+      - "churna"
+      - "tablet"
+      - "capsule"
+
+  classical_text_formulation:
+    question: "Is it made to a formula given in a recognised classical text?"
+    yes:
+      - "classical formulation"
+      - "classical preparation"
+      - "classical medicine"
+      - "classical polyherbal"
+      - "classical text"
+      - "as given in the classical text"
+      - "authoritative text"
+      - "authoritative book"
+      - "first schedule"
+      - "charaka samhita"
+      - "sushruta samhita"
+      - "ashtanga hridaya"
+      - "bhaishajya ratnavali"
+      - "sharangadhara samhita"
+      - "ayurvedic formulary of india"
+    no:
+      - "our own formulation"
+      - "own recipe"
+      - "not a classical"
+      - "proprietary formulation"
+      - "new formulation"
+
+  modified_classical_formula:
+    question: "Has a classical formula been changed — ingredients, ratios or process?"
+    yes:
+      - "modified the classical"
+      - "modified a classical"
+      - "changed the ratio"
+      - "changed the proportion"
+      - "changed the dosage form"
+      - "changed the ingredients"
+      - "changed two ingredients"
+      - "changed an ingredient"
+      - "substituted an ingredient"
+      - "replaced an ingredient"
+      - "added an extra ingredient"
+      - "added an ingredient"
+      - "added one more herb"
+      - "variation of the classical"
+      - "based on the classical formulation but"
+    no:
+      - "exactly as given"
+      - "exactly as described"
+      - "without any change"
+      - "unchanged"
+
+  purified_extract:
+    question: "Is it a purified extract, fraction or isolated constituent rather than the whole plant material?"
+    yes:
+      - "purified extract"
+      - "standardised extract"
+      - "standardized extract"
+      - "standardised fraction"
+      - "purified fraction"
+      - "single fraction"
+      - "isolated fraction"
+      - "isolated and standardised"
+      - "isolated and standardized"
+      - "isolated compound"
+      - "isolated constituent"
+      - "single molecule"
+      - "active fraction"
+      - "enriched fraction"
+
+  therapeutic_claim:
+    question: "Does it claim to treat, cure or prevent a disease?"
+    yes:
+      - "treats"
+      - "cures"
+      - "prevents the disease"
+      - "therapeutic claim"
+      - "for the treatment of"
+      - "medicinal claim"
+      - "heals"
+    no:
+      - "no therapeutic claim"
+      - "no medicinal claim"
+      - "no disease claim"
+      - "only a cosmetic claim"
+      - "for appearance only"
+      - "appearance only"
+
+  food_form:
+    question: "Is it sold as a food, beverage or supplement?"
+    yes:
+      - "health drink"
+      - "drink"
+      - "beverage"
+      - "herbal tea"
+      - "dietary supplement"
+      - "nutraceutical"
+      - "food supplement"
+      - "ayurveda aahara"
+      - "ready to eat"
+      - "energy bar"
+
+  cosmetic_claim:
+    question: "Is it sold for beauty, cleansing or appearance rather than for a disease?"
+    yes:
+      - "cosmetic"
+      - "for glowing skin"
+      - "for appearance"
+      - "for beauty"
+      - "beauty product"
+      - "anti ageing"
+      - "anti aging"
+      - "fairness"
+      - "for cleansing the skin"
+
+  uses_biological_resource:
+    question: "Does it use an Indian biological resource — a plant, part or extract?"
+    yes:
+      - "biological resource"
+      - "medicinal plant"
+      - "herb"
+      - "herbal"
+      - "plant extract"
+      - "wild collected"
+      - "from the forest"
+      - "botanical"
+
+  applicant_is_foreign:
+    question: "Is the applicant a foreign national, a non-resident, or a body corporate registered outside India?"
+    yes:
+      - "foreign company"
+      - "foreign national"
+      - "non resident"
+      - "our us subsidiary"
+      - "registered abroad"
+      - "based in germany"
+      - "based in the us"
+      - "foreign applicant"
+    no:
+      - "indian company"
+      - "registered in india"
+      - "indian applicant"
+
+  new_process:
+    question: "Is there a new process, method or technique involved?"
+    yes:
+      - "new process"
+      - "new method"
+      - "novel process"
+      - "new extraction"
+      - "new manufacturing process"
+      - "our own process"
+      - "developed a process"
+      - "new technique"
+
+  publicly_disclosed:
+    question: "Has it already been shown, sold, published or presented in public?"
+    yes:
+      - "already sold"
+      - "already launched"
+      - "published a paper"
+      - "presented at a conference"
+      - "put it on our website"
+      - "in the market"
+      - "on sale"
+      - "displayed at an exhibition"
+    no:
+      - "not yet sold"
+      - "not launched"
+      - "kept it confidential"
+      - "under an nda"
+      - "not disclosed"
+      - "never been sold"
+      - "never sold"
+
+  brand_name:
+    question: "Is a brand name, logo or product name involved?"
+    yes:
+      - "brand name"
+      - "our brand"
+      - "logo"
+      - "trade mark"
+      - "trademark"
+      - "product name"
+      - "name of the product"
+
+  going_abroad:
+    question: "Is protection or sale outside India being considered?"
+    yes:
+      - "abroad"
+      - "other countries"
+      - "outside india"
+      - "internationally"
+      - "worldwide"
+      - "in the us"
+      - "in europe"
+      - "in japan"
+      - "export"
+      - "pct"

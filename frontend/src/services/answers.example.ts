@@ -189,6 +189,8 @@ function buildAnswer(jurisdiction: Jurisdiction): Answer {
     corpus_version: kb.corpus_version,
     latency_ms: null,
     is_demo: false,
+    // No reasoning stage runs on this path; the backend supplies it.
+    analysis: null,
     citations: used.map(citationFor),
     related_records: [],
     blocks,

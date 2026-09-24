@@ -31,6 +31,7 @@ from app.models.domain import (
     Claim,
     VerificationStatus,
 )
+from app.reasoning.phrases import filter_text
 from app.registry.store import SourceRegistry
 from app.retrieval.types import ScoredChunk
 
@@ -49,6 +50,10 @@ class MappedAnswer:
     #: True when so much dropped that what is left is not the answer written.
     collapsed: bool = False
     unverifiable_ids: tuple[str, ...] = field(default_factory=tuple)
+    #: Phrases the blocked-phrase filter rewrote, for the audit row.
+    rewritten_phrases: tuple[str, ...] = field(default_factory=tuple)
+    #: Claims dropped for promising an outcome rather than for a bad citation.
+    blocked_claims: tuple[str, ...] = field(default_factory=tuple)
 
 
 def build_citations(
@@ -101,6 +106,8 @@ def map_citations(
 ) -> MappedAnswer:
     blocks: list[AnswerBlock] = []
     dropped: list[str] = []
+    blocked: list[str] = []
+    rewritten: list[str] = []
     unverifiable: set[str] = set()
     cited_claims = 0
     used: set[str] = set()
@@ -108,9 +115,22 @@ def map_citations(
     for index, block in enumerate(generated.blocks):
         claims: list[Claim] = []
         for claim in block.claims:
+            # The promise filter runs before the citation check, because a claim
+            # that guarantees an outcome must not survive on the strength of a
+            # perfectly good citation.
+            filtered = filter_text(claim.text.strip())
+            if filtered.blocked:
+                blocked.append(claim.text.strip())
+                dropped.append(claim.text.strip())
+                if claim.passage_ids:
+                    cited_claims += 1
+                continue
+            rewritten.extend(filtered.matched)
+            text = filtered.text
+
             named = list(dict.fromkeys(claim.passage_ids))
             if not named:
-                claims.append(Claim(text=claim.text.strip(), citation_ids=[]))
+                claims.append(Claim(text=text, citation_ids=[]))
                 continue
 
             cited_claims += 1
@@ -125,7 +145,7 @@ def map_citations(
                 continue
 
             used.update(verified)
-            claims.append(Claim(text=claim.text.strip(), citation_ids=verified))
+            claims.append(Claim(text=text, citation_ids=verified))
 
         if not claims:
             continue
@@ -151,6 +171,8 @@ def map_citations(
         dropped_claims=tuple(dropped),
         collapsed=collapsed,
         unverifiable_ids=tuple(sorted(unverifiable)),
+        rewritten_phrases=tuple(dict.fromkeys(rewritten)),
+        blocked_claims=tuple(blocked),
     )
 
 

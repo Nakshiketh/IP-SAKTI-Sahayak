@@ -1,0 +1,101 @@
+# What is this product, regulatorily? The rules decide; nothing else may.
+#
+# A rule fires only when every fact in `required_facts` is stated and matches.
+# A fact the reader has not given is missing, not false: the rule does not fire,
+# and the missing fact is reported so they know what would settle it.
+#
+# `evidence_source_ids` is what makes a rule legitimate. Each id must be a
+# source the registry says may be cited, and the corpus must actually hold a
+# passage from it — a rule whose evidence is missing, unciteable or withdrawn is
+# inactive and cannot classify anything. That is why "new drug" and
+# "phytopharmaceutical" are safe to list here: they are anchored to Rule 2(eb)
+# and to the central drug regulator's own statement of what it administers, and
+# if those passages ever leave the corpus the rules switch themselves off.
+#
+# `changes_if` names the fact that would move the product to another category.
+# It is shown to the reader, because "you are probably X, and here is what would
+# make you Y" is the honest shape of this answer.
+#
+# No rule states a legal consequence. A rule decides a category; what follows
+# from that category comes from retrieved passages, cited.
+
+version: "1"
+
+# Lower runs first. The first active rule whose facts are all satisfied decides;
+# every other satisfied rule becomes an alternative, which is how two rules
+# firing at once surfaces as a classification conflict rather than a silent pick.
+rules:
+  - id: cls-phytopharmaceutical
+    order: 10
+    category: phytopharmaceutical
+    required_facts:
+      purified_extract: true
+    evidence_source_ids: [in-drugs-and-cosmetics-act-rules, in-cdsco]
+    changes_if: "the product is the whole plant material or a classical preparation rather than a purified, standardised fraction"
+
+  - id: cls-classical
+    order: 20
+    category: classical_generic
+    required_facts:
+      classical_text_formulation: true
+      modified_classical_formula: false
+    evidence_source_ids: [in-drugs-and-cosmetics-act-rules]
+    changes_if: "the classical formula is changed in ingredients, proportions or process"
+
+  - id: cls-patent-proprietary
+    order: 30
+    category: patent_proprietary
+    required_facts:
+      classical_text_formulation: true
+      modified_classical_formula: true
+    evidence_source_ids: [in-drugs-and-cosmetics-act-rules]
+    changes_if: "an ingredient outside the First Schedule books is added, or the product is presented as a food or a cosmetic instead"
+
+  - id: cls-patent-proprietary-own-formula
+    order: 40
+    category: patent_proprietary
+    required_facts:
+      classical_text_formulation: false
+      therapeutic_claim: true
+      purified_extract: false
+    evidence_source_ids: [in-drugs-and-cosmetics-act-rules]
+    changes_if: "the therapeutic claim is dropped, or an ingredient is used that the First Schedule books do not mention"
+
+  - id: cls-ayurveda-aahara
+    order: 50
+    category: ayurveda_aahar
+    required_facts:
+      food_form: true
+      therapeutic_claim: false
+    evidence_source_ids: [in-fssai-ayurveda-aahara-2022]
+    changes_if: "a claim to treat, cure or prevent a disease is made, which takes it out of food regulation"
+
+  - id: cls-cosmetic
+    order: 60
+    category: cosmetic
+    required_facts:
+      external_use: true
+      cosmetic_claim: true
+      therapeutic_claim: false
+    evidence_source_ids: [in-drugs-and-cosmetics-act-rules, in-cdsco]
+    changes_if: "a therapeutic claim is made, or the formula is one given in the classical texts"
+
+  - id: cls-new-drug
+    order: 70
+    category: new_non_classical_drug
+    required_facts:
+      classical_text_formulation: false
+      purified_extract: true
+      therapeutic_claim: true
+      external_use: false
+    evidence_source_ids: [in-cdsco, in-drugs-and-cosmetics-act-rules]
+    changes_if: "the preparation follows a classical text, which moves it to the Ayush regulator rather than the central drug regulator"
+
+# Which facts, if unknown, leave the classification genuinely open. Reported as
+# missing material facts; they lower confidence and can raise escalation.
+material_facts:
+  - classical_text_formulation
+  - therapeutic_claim
+  - external_use
+  - purified_extract
+  - food_form
