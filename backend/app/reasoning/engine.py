@@ -144,24 +144,34 @@ def analyse(
                     there=governing_there,
                 )
             )
-    classification_conflict = conflicts.classification(
-        classification.ambiguous, classification.rule_id
-    )
-    if classification_conflict is not None:
-        found.append(classification_conflict)
-    missing_conflict = conflicts.missing_fact(
-        [fact.key for fact in classification.missing_facts],
-        decisive=classification.product_class is ProductClass.UNDETERMINED and bool(raised),
-    )
-    if missing_conflict is not None:
-        found.append(missing_conflict)
+    # Classification is only in play when the reader described a product. "How
+    # do I request examination?" states nothing about any product, so reporting
+    # five open categories and a decisive missing fact would be noise — and it
+    # would push a plain procedural question to "expert review needed", which is
+    # how an escalation level stops meaning anything.
+    described_a_product = bool(facts.stated)
+    if described_a_product:
+        classification_conflict = conflicts.classification(
+            classification.ambiguous, classification.rule_id
+        )
+        if classification_conflict is not None:
+            found.append(classification_conflict)
+        missing_conflict = conflicts.missing_fact(
+            [fact.key for fact in classification.missing_facts],
+            decisive=classification.product_class is ProductClass.UNDETERMINED and bool(raised),
+        )
+        if missing_conflict is not None:
+            found.append(missing_conflict)
 
     scored = _score_issues(
         raised,
         passages=passages,
         conflicts_found=found,
         registry=registry,
-        missing_material_facts=bool(classification.missing_facts),
+        # The same condition the report uses. Stepping confidence down for
+        # facts the answer does not list as missing would leave the reader with
+        # a lowered confidence and no way to see what caused it.
+        missing_material_facts=described_a_product and bool(classification.missing_facts),
         dropped_claims=dropped_claims,
         provenance_pending=provenance_pending,
         partial_jurisdiction=bool(unsupported_jurisdictions),
@@ -189,7 +199,7 @@ def analyse(
 
     return Analysis(
         facts=list(facts.stated),
-        missing_facts=list(classification.missing_facts),
+        missing_facts=list(classification.missing_facts) if described_a_product else [],
         product_class=classification.product_class,
         # Where a rule fired, the alternatives are the other rules that also
         # fired. Where none did, they are the categories still open.
@@ -203,7 +213,7 @@ def analyse(
             scored,
             found,
             abstain_code=code,
-            missing_facts=bool(classification.missing_facts),
+            missing_facts=described_a_product and bool(classification.missing_facts),
         ),
         abstain_code=code,
         unsupported_jurisdictions=list(unsupported_jurisdictions),

@@ -102,6 +102,17 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
+## Health check after Phase 6
+A full pass over the running system (not just the suites) found three things, all fixed.
+
+1. **The language switcher printed English inside every other language's own option** — "हिंदी — 61% translated". A Hindi reader saw Latin script in their own row. The coverage note now sits beside the switcher, in the reader's own language, about the language they are actually using. `App.test.tsx` had been asserting exactly this property and caught it.
+2. **Escalation fired on everything.** "How do I request examination?" came out L3, expert review needed. The classifier runs on every question, so a question describing no product still reported five open categories and a decisive missing fact. Classification conflicts and missing facts are now raised only when the reader described a product. That question is now L0; "Can a classical formulation be patented?" is still L3, which is right.
+3. **Confidence stepped down for facts the answer said were not missing.** The report and the confidence signal used different conditions, so a reader saw lowered confidence with nothing on screen to account for it. Both now use the same condition, and a test holds them together.
+
+Also corrected: Telugu was declared tier 1 (reviewed by the team) while 56% of it was still English. It is recorded as tier 2 until that is no longer true — a tier is a claim about what has happened, not a plan.
+
+End-to-end, through the real app: health ok, corpus kb-2026.09.22 (51 documents), registry-0d9148eee8d1 (51 citable), a streamed query through all ten stages returning 29 citations at high confidence.
+
 ## Translation was broken (Phase 6)
 `_translate` replaced `AnswerBlock.text` and left `AnswerBlock.claims` untouched. The domain model validates that the text is exactly its claims joined, so **any translator that actually translated would have raised a ValidationError and failed the request**. It never surfaced because the only implementation in use is `PassthroughTranslator`, which reports `translated=False` and returns before that line.
 

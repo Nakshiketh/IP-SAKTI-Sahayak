@@ -1,5 +1,5 @@
 {
-  "about": "What each language is, and how far it has actually been translated. `coverage` is written by scripts/i18n/check_locales.py from the locale files themselves, so it cannot drift from the truth by being forgotten. `tier` follows docs/upgrade/phases/PHASE_06_multilingual.md: tier 1 is reviewed by the team, tier 2 is machine-drafted and labelled Beta wherever it is offered. A language is only worth showing if the reader is told which of those it is.",
+  "about": "What each language is, and how far it has actually been translated. `coverage` is written by scripts/i18n/check_locales.py from the locale files themselves, so it cannot drift from the truth by being forgotten. `tier` follows docs/upgrade/phases/PHASE_06_multilingual.md: tier 1 is reviewed by the team, tier 2 is machine-drafted and labelled Beta wherever it is offered. A tier is a claim about what has happened, not a plan: Telugu is named a tier 1 language by the phase pack and is recorded here as tier 2, because more than half of it is still English and nobody has reviewed it. It moves up when that is no longer true.",
   "min_coverage_to_show": 0.95,
   "locales": [
     {
@@ -28,7 +28,7 @@
       "english_name": "Telugu",
       "dir": "ltr",
       "script": "Telu",
-      "tier": 1,
+      "tier": 2,
       "reviewed_by": null,
       "coverage": 0.44
     },

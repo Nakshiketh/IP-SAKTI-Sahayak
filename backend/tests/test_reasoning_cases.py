@@ -241,6 +241,42 @@ def test_h_and_t14_a_dosage_question_is_out_of_scope(pipeline: Pipeline) -> None
     assert not answer_text(outcome)
 
 
+# -- escalation stays proportionate -------------------------------------------
+
+
+def test_a_procedural_question_does_not_demand_a_professional(pipeline: Pipeline) -> None:
+    """An escalation level that fires on everything means nothing.
+
+    "How do I request examination?" describes no product, so there is no open
+    classification and no decisive missing fact. Reporting five candidate
+    categories and sending the reader to a patent agent would spend the L3
+    signal on a question the corpus answers directly.
+    """
+    outcome = ask(pipeline, "How do I request examination of a patent application?")
+    analysis = outcome.analysis
+    assert analysis.conflicts == [], "nothing about this is in conflict"
+    assert analysis.missing_facts == [], "no product was described, so nothing is missing"
+    assert analysis.escalation.level is EscalationLevel.L0
+
+
+def test_a_question_that_turns_on_unstated_facts_still_escalates(pipeline: Pipeline) -> None:
+    # The counterpart: this one really does depend on what the product is.
+    outcome = ask(pipeline, "Can a classical formulation be patented?")
+    assert outcome.analysis.missing_facts
+    assert outcome.analysis.escalation.level is EscalationLevel.L3
+
+
+def test_confidence_never_steps_down_for_a_fact_the_answer_calls_present(
+    pipeline: Pipeline,
+) -> None:
+    """A lowered confidence a reader cannot account for is worse than none."""
+    outcome = ask(pipeline, "How do I request examination of a patent application?")
+    analysis = outcome.analysis
+    if not analysis.missing_facts:
+        for finding in analysis.issues:
+            assert "issueMissingFacts" not in finding.confidence_reason_keys
+
+
 # -- the stage contract -------------------------------------------------------
 
 

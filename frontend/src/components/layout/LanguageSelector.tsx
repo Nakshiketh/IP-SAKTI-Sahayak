@@ -38,20 +38,24 @@ export function LanguageSelector({ className }: { className?: string }) {
           'transition-colors duration-quick ease-incise hover:border-rule-strong',
         )}
       >
-        {/* A partly translated language says so here rather than letting the
-            reader find out one English screen at a time. The share comes from
-            the locale files, not from a number somebody typed. */}
         {LOCALES.map((locale) => (
           <option key={locale.code} value={locale.code} lang={locale.code}>
-            {isFullyTranslated(locale.code)
-              ? locale.nativeName
-              : t('language.partial', {
-                  name: locale.nativeName,
-                  percent: Math.round((LOCALE_STATUS[locale.code]?.coverage ?? 0) * 100),
-                })}
+            {locale.nativeName}
           </option>
         ))}
       </select>
+
+      {/* How far the language a reader is actually in has been translated,
+          said in that language, at the moment it matters. Putting it inside
+          the options would have printed English words in every other
+          language's own row. */}
+      {isFullyTranslated(current.code) ? null : (
+        <span className="text-xs text-muted">
+          {t('language.partial', {
+            percent: Math.round((LOCALE_STATUS[current.code]?.coverage ?? 0) * 100),
+          })}
+        </span>
+      )}
     </div>
   );
 }

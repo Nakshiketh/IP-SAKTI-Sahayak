@@ -25,7 +25,7 @@
   "language": {
     "label": "மொழி",
     "changed": "மொழி {{language}} என மாற்றப்பட்டது",
-    "partial": "{{name}} — {{percent}}% translated"
+    "partial": "{{percent}}% மொழிபெயர்க்கப்பட்டது"
   },
   "skipToContent": "உள்ளடக்கத்திற்குச் செல்லவும்",
   "footer": {

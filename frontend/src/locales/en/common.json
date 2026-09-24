@@ -24,7 +24,7 @@
   "language": {
     "label": "Language",
     "changed": "Language changed to {{language}}",
-    "partial": "{{name}} — {{percent}}% translated"
+    "partial": "{{percent}}% translated"
   },
   "skipToContent": "Skip to content",
   "footer": {
