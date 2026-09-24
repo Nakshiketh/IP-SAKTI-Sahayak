@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.models.domain import Fact, MissingFact, ProductClass
 
@@ -17,6 +17,23 @@ Level = Literal["high", "moderate", "low"]
 Indicator = Literal[
     "nothing_found_in_sources_searched", "related_material_found", "match_in_public_sources"
 ]
+
+#: What these three states were called before they stopped being a verdict.
+#:
+#: Analyses saved by an earlier build still hold the old names, and a stored
+#: name that no longer validates does not fail one row — it fails the whole
+#: conversation list, so a person with any saved work cannot open Check My
+#: Product at all. Read as the equivalent new state rather than rejected.
+LEGACY_INDICATORS = {
+    "potentially_novel": "nothing_found_in_sources_searched",
+    "further_assessment": "related_material_found",
+    "high_similarity": "match_in_public_sources",
+}
+
+
+def read_indicator(value: str) -> str:
+    """One indicator, whichever vocabulary it was stored in."""
+    return LEGACY_INDICATORS.get(value, value)
 
 
 class Amount(BaseModel):
@@ -241,6 +258,11 @@ class Assessment(BaseModel):
     exclusions: list[Reason]
     would_sharpen: list[str]
 
+    @field_validator("indicator", mode="before")
+    @classmethod
+    def _accept_legacy_indicator(cls, value):
+        return read_indicator(value) if isinstance(value, str) else value
+
 
 class IpOption(BaseModel):
     type: Literal["patent", "trademark", "design", "copyright", "gi", "trade_secret"]
@@ -356,6 +378,11 @@ class RunSummary(BaseModel):
     product_matches: int
     patent_matches: int
 
+    @field_validator("indicator", mode="before")
+    @classmethod
+    def _accept_legacy_indicator(cls, value):
+        return read_indicator(value) if isinstance(value, str) else value
+
 
 class ConversationSummary(BaseModel):
     id: str
@@ -364,6 +391,11 @@ class ConversationSummary(BaseModel):
     updated_at: float
     indicator: Indicator | None
     ingredient_count: int
+
+    @field_validator("indicator", mode="before")
+    @classmethod
+    def _accept_legacy_indicator(cls, value):
+        return read_indicator(value) if isinstance(value, str) else value
 
 
 class Conversation(BaseModel):

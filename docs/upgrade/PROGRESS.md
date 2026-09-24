@@ -102,6 +102,17 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
+## Browser walkthrough (signed in as demo)
+Ran the site in Chrome after signing in: home, Ask Sahayak, Check My Product, Sources, How it works. Three real faults, none of which any test suite had caught, because each needed a browser and stored data.
+
+1. **Check My Product was completely broken for anyone with saved work.** Renaming the three indicator states in Phase 3 left every stored analysis holding the old names. The conversation list validates every row, so one old row raised a ValidationError and the whole page showed "Something went wrong while analysing". Fixed two ways: `read_indicator` maps the old vocabulary to the new so an old row always loads, and the stored rows and JSON blobs were migrated (14 columns, 6 analyses). A test pins the map, and the Phase 3 guard against the old wording now permits exactly that one documented occurrence.
+2. **A fact was lost to an inserted adjective.** "Can a classical formulation be patented?" extracted `classical_text_formulation`; "Can a classical **Ayurvedic** formulation be patented?" extracted nothing, which moved the answer from L3 to "No review needed". Phrase matching now allows one word inside a phrase — enough for "classical Ayurvedic formulation" and "classical herbal preparation", not enough for "classical music ... formulation".
+3. **The L0 copy contradicted the panel beside it.** "Nothing was left open" sat next to "What we cannot conclude: whether your formulation is novel or patentable". L0 now says the sources answer what was asked and that the listed limits still apply to every answer.
+
+Also confirmed working: sign-in (badge scanner and username), the streamed answer with cited claims, the "provenance pending review" badge on the TKDL sources, In short, the Simple/Expert toggle, the glossary, Where guidance ends, Prepare for expert review, and the sources and how-it-works pages. No console errors anywhere.
+
+**Worth knowing**: restarting the API signs everyone out, because tokens live in memory. That is risk 1 in the list below, and it bit during this walkthrough.
+
 ## Health check after Phase 6
 A full pass over the running system (not just the suites) found three things, all fixed.
 

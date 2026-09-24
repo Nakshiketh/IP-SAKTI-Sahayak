@@ -303,3 +303,40 @@ def test_an_answer_to_something_else_is_not_filed_under_the_last_question() -> N
     )
     assert reading.fields.get("brand_name") == "Kesari Aura"
     assert "problem" not in reading.fields
+
+
+def test_an_analysis_saved_under_the_old_indicator_names_still_loads() -> None:
+    """A renamed literal must not take the whole surface down.
+
+    The three states were renamed when the novelty verdict was removed. Stored
+    analyses kept the old names, and because the list of conversations is built
+    by validating every row, one old row stopped Check My Product loading at
+    all — not one entry, the page. Old names are read as their new equivalent.
+    """
+    from app.analyst.models import ConversationSummary, RunSummary, read_indicator
+
+    assert read_indicator("further_assessment") == "related_material_found"
+    assert read_indicator("potentially_novel") == "nothing_found_in_sources_searched"
+    assert read_indicator("high_similarity") == "match_in_public_sources"
+    # An unknown value is passed through, so the model still rejects nonsense.
+    assert read_indicator("match_in_public_sources") == "match_in_public_sources"
+
+    summary = ConversationSummary(
+        id="c1",
+        title="A product",
+        created_at=1.0,
+        updated_at=2.0,
+        indicator="further_assessment",
+        ingredient_count=3,
+    )
+    assert summary.indicator == "related_material_found"
+
+    run = RunSummary(
+        id=1,
+        created_at=1.0,
+        trigger="first run",
+        indicator="potentially_novel",
+        product_matches=0,
+        patent_matches=0,
+    )
+    assert run.indicator == "nothing_found_in_sources_searched"

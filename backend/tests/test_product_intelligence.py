@@ -83,6 +83,12 @@ VERDICT = re.compile(
 )
 
 
+#: The one place the old names may still appear: the map that reads an analysis
+#: saved before they were renamed. Listing it here rather than loosening the
+#: pattern means a second occurrence anywhere still fails.
+LEGACY_MAP_FILE = "models.py"
+
+
 def test_no_novelty_verdict_remains_in_any_interface_string() -> None:
     roots = [
         REPO_ROOT / "frontend" / "src" / "locales",
@@ -94,8 +100,24 @@ def test_no_novelty_verdict_remains_in_any_interface_string() -> None:
         for path in root.rglob("*"):
             if path.suffix not in {".json", ".ts", ".tsx", ".py"} or not path.is_file():
                 continue
-            found = VERDICT.search(path.read_text("utf-8"))
+            text = path.read_text("utf-8")
+            if path.name == LEGACY_MAP_FILE and "LEGACY_INDICATORS" in text:
+                # Only inside the mapping, and only as the key being migrated
+                # away from. Anywhere else in the file still fails.
+                text = text.split("LEGACY_INDICATORS")[0] + text.split("}", 1)[-1]
+            found = VERDICT.search(text)
             assert not found, f"{path.name} still says: {found.group(0)}"
+
+
+def test_the_legacy_indicator_map_is_the_only_place_the_old_names_survive() -> None:
+    from app.analyst.models import LEGACY_INDICATORS
+
+    assert set(LEGACY_INDICATORS) == {
+        "potentially_novel",
+        "further_assessment",
+        "high_similarity",
+    }
+    assert all(new not in LEGACY_INDICATORS for new in LEGACY_INDICATORS.values())
 
 
 def test_the_kept_dataset_still_describes_its_own_limits() -> None:

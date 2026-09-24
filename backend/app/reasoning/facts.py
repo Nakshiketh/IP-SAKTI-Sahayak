@@ -76,14 +76,37 @@ def _hedged_clauses(words: list[str], clauses: list[int], rules: FactRules) -> f
     )
 
 
+#: How many words may sit inside a phrase and still count as that phrase.
+#:
+#: People write "classical Ayurvedic formulation" and "classical herbal
+#: preparation". Requiring a strict run missed both, and losing
+#: `classical_text_formulation` on a single inserted adjective moved the whole
+#: answer from "a professional should see this" to "no review needed". One word
+#: is the whole budget: with more, "classical" and "formulation" a sentence
+#: apart would start matching things nobody said.
+_MAX_GAP = 1
+
+
 def _find(words: list[str], phrase: tuple[str, ...]) -> int | None:
-    """Where the phrase occurs as a run of words, or None."""
+    """Where the phrase occurs, allowing at most one word inside it.
+
+    The words must appear in order, and the whole match may run at most one
+    word longer than the phrase itself. Returns the start of the match.
+    """
     if not phrase:
         return None
-    span = len(phrase)
-    for start in range(len(words) - span + 1):
-        if tuple(words[start : start + span]) == phrase:
+    for start in range(len(words)):
+        if words[start] != phrase[0]:
+            continue
+        if len(phrase) == 1:
             return start
+        index = 1
+        for offset in range(start + 1, min(start + len(phrase) + _MAX_GAP, len(words))):
+            if words[offset] != phrase[index]:
+                continue
+            index += 1
+            if index == len(phrase):
+                return start
     return None
 
 
