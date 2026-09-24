@@ -17,6 +17,7 @@ from collections.abc import Iterator
 from pydantic import BaseModel, Field
 
 from app.analyst import dialogue
+from app.analyst import intelligence as intelligence_module
 from app.analyst.assess import assess, ip_options, next_steps
 from app.analyst.evidence import ProductSet, check_knowledge, find_products, search_prior_art
 from app.analyst.lexicon import use_terms
@@ -293,6 +294,30 @@ class AnalystService:
         self.vocabulary = vocabulary
         self.products = products
 
+    def _intelligence(self, invention: Invention, declined: list[str]):
+        """The source-grounded half of the result.
+
+        The registry and the corpus are read here rather than passed in, so a
+        deployment that has not built either still produces the rest of the
+        analysis instead of failing the whole run.
+        """
+        from app.api.deps import get_namespaces
+        from app.models.domain import Jurisdiction
+        from app.registry.store import get_registry
+
+        try:
+            store = get_namespaces().store(Jurisdiction.IN)
+            corpus_ids = frozenset(chunk.document_id for chunk in store.chunks())
+        except Exception:  # noqa: BLE001 - a missing corpus must not fail the run
+            corpus_ids = frozenset()
+        return intelligence_module.build(
+            invention,
+            self.vocabulary,
+            declined=declined,
+            corpus_document_ids=corpus_ids,
+            registry=get_registry(),
+        )
+
     # -- reading -----------------------------------------------------------
 
     def status(self) -> dict:
@@ -469,6 +494,7 @@ class AnalystService:
                 assessment=assessment,
                 ip_options=ip_options(invention, assessment, self.vocabulary),
                 next_steps=next_steps(invention, assessment, prior),
+                intelligence=self._intelligence(invention, state.declined),
             )
             yield stage("assess")
             state.fingerprints = {"products": composition, "assess": details}

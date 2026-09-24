@@ -85,13 +85,13 @@ function ReasonList({ reasons }: { reasons: readonly Reason[] }) {
 
 const INDICATOR_STYLE: Record<Indicator, { box: string; mark: string; Icon: typeof CircleCheck }> =
   {
-    potentially_novel: { box: 'border-leaf bg-leaf/[0.06]', mark: 'text-leaf', Icon: CircleCheck },
-    further_assessment: {
+    nothing_found_in_sources_searched: { box: 'border-leaf bg-leaf/[0.06]', mark: 'text-leaf', Icon: CircleCheck },
+    related_material_found: {
       box: 'border-ink/60 bg-surface-sunk',
       mark: 'text-ink',
       Icon: CircleHelp,
     },
-    high_similarity: { box: 'border-lac bg-lac/[0.06]', mark: 'text-lac', Icon: TriangleAlert },
+    match_in_public_sources: { box: 'border-lac bg-lac/[0.06]', mark: 'text-lac', Icon: TriangleAlert },
   };
 
 export function IndicatorPanel({ indicator }: { indicator: Indicator }) {

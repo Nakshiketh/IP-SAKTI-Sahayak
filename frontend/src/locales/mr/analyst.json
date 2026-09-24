@@ -35,7 +35,7 @@
     "stages": {
       "understand": "Understanding your invention",
       "extract": "Extracting the formulation",
-      "products": "Finding similar products",
+      "products": "तुमचे घटक असलेली उत्पादने शोधत आहे",
       "knowledge": "Checking traditional knowledge",
       "prior_art": "Searching prior art",
       "compare": "Comparing evidence",
@@ -60,7 +60,7 @@
     "tabsLabel": "Findings",
     "tabs": {
       "assessment": "Assessment",
-      "products": "Similar products",
+      "products": "तुमचे घटक असलेली उत्पादने",
       "knowledge": "Traditional knowledge",
       "priorArt": "Patents and prior art",
       "invention": "Your invention"
@@ -81,20 +81,20 @@
     "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
   },
   "indicator": {
-    "potentially_novel": {
-      "label": "Potentially novel",
-      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    "nothing_found_in_sources_searched": {
+      "label": "शोधलेल्या स्रोतांमध्ये जुळणारे काही नाही",
+      "body": "ज्या स्रोतांमध्ये शोधले गेले, त्यांमध्ये तुमच्या फॉर्म्युलेशनशी जुळणारे काही आढळले नाही. हा त्या स्रोतांबद्दलचा निष्कर्ष आहे, नवीनतेबद्दलचे मत नाही: व्यावसायिक पूर्व-कला शोध याहून खूप व्यापक असतो."
     },
-    "further_assessment": {
-      "label": "Further assessment required",
-      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    "related_material_found": {
+      "label": "संबंधित सामग्री आढळी",
+      "body": "संबंधित उत्पादने किंवा नोंदी आढळ्या, किंवा काही शोध घेता आले नाहीत. जे आढळे ते सर्व खाली त्याच्या स्रोतासह दिले आहे."
     },
-    "high_similarity": {
-      "label": "High similarity",
-      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    "match_in_public_sources": {
+      "label": "सार्वजनिक स्रोतांमध्ये जुळणारे आढळे",
+      "body": "तुम्ही सांगितलेले आधीच सार्वजनिक असलेल्या कशात तरी आहे — विक्रीस असलेले उत्पादन, शास्त्रीय योग किंवा दाखल केलेली नोंद. ती खाली त्याच्या स्रोतासह दिली आहे."
     },
-    "whyHeading": "Why this indicator",
-    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+    "whyHeading": "हे कशावर आधारित आहे",
+    "caveat": "शोधलेल्या स्रोतांमध्ये काय आढळे एवढेच हे सांगते. हा पेटंटयोग्यतेचा निष्कर्ष नाही, किंवा नवीनता शोधही नाही. व्यावसायिक शोधानंतर परीक्षणच ते ठरवते."
   },
   "requirements": {
     "heading": "The requirements, one at a time",
@@ -102,7 +102,7 @@
     "inventive_step": "Inventive step",
     "industrial_applicability": "Industrial applicability",
     "status": {
-      "anticipation_risk": "Close match found — novelty at risk",
+      "match_found_in_sources": "शोधलेल्या स्रोतांमध्ये जुळणारे आढळे",
       "close_match_found": "Similar items found",
       "no_single_match_found": "No single matching item found in what was searched",
       "concern": "Likely to be questioned",
@@ -137,9 +137,9 @@
     "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
     "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
     "level": {
-      "high": "High similarity",
-      "moderate": "Moderate similarity",
-      "low": "Weaker match"
+      "high": "बहुतेक घटक समान",
+      "moderate": "काही घटक समान",
+      "low": "थोडे घटक समान"
     },
     "shared": "{{shared}} of your {{total}} ingredients",
     "sameForm": "same kind of product",

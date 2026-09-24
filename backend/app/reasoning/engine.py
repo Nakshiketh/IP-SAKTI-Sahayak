@@ -29,7 +29,7 @@ from app.models.domain import (
 )
 from app.reasoning import applicability, classify, conflicts, escalation, issues
 from app.reasoning.confidence import IssueConfidence, IssueSignals, score_issue
-from app.reasoning.facts import extract_facts
+from app.reasoning.facts import ExtractedFacts, extract_facts
 from app.reasoning.rules import get_confidence_rules, get_fact_rules, load_classification_rules
 from app.registry.store import SourceRegistry
 from app.retrieval.types import ScoredChunk
@@ -110,8 +110,13 @@ def analyse(
     unsupported_jurisdictions: tuple[str, ...] = (),
     abstain_reason: AbstainReason | None = None,
     refusal: Refusal | None = None,
+    known_facts: ExtractedFacts | None = None,
 ) -> Analysis:
-    facts = extract_facts(question, get_fact_rules())
+    # A caller that already holds structured facts — Check My Product, where
+    # the person answered field by field — hands them over. Re-reading them out
+    # of a sentence would be strictly worse: phrase matching can only lose
+    # information a form already captured exactly.
+    facts = known_facts if known_facts is not None else extract_facts(question, get_fact_rules())
 
     rules, material = load_classification_rules(_backed_document_ids(registry, corpus_document_ids))
     classification = classify.classify(facts, rules, material)

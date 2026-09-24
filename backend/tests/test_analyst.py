@@ -107,7 +107,7 @@ def test_the_sample_face_pack_journey(client: TestClient) -> None:
     # Nothing loaded means nothing searched, and the indicator cannot be green.
     assert analysis["prior_art"]["state"] == "not_loaded"
     assert analysis["prior_art"]["registries_not_searched"]
-    assert analysis["assessment"]["indicator"] != "potentially_novel"
+    assert analysis["assessment"]["indicator"] != "nothing_found_in_sources_searched"
     assert "patentable" not in json.dumps(analysis).lower()
     assert analysis["knowledge"]["tkdl_searched"] is False
 
@@ -258,7 +258,7 @@ def test_a_named_classical_text_reaches_the_findings(client: TestClient) -> None
     assert any(n["code"] == "tkdl_text_named" for n in knowledge["notes"])
     reasons = [r["code"] for r in step["analysis"]["assessment"]["reasons"]]
     assert "tkdl_source_text" in reasons
-    assert step["analysis"]["assessment"]["indicator"] != "potentially_novel"
+    assert step["analysis"]["assessment"]["indicator"] != "nothing_found_in_sources_searched"
 
 
 def test_asking_about_the_tkdl_is_answered_from_its_public_pages(client: TestClient) -> None:

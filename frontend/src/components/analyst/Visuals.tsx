@@ -12,16 +12,16 @@ import type { Analysis, Indicator } from '@/services/analyst';
  * text. None moves on its own.
  */
 
-const ORDER: readonly Indicator[] = ['potentially_novel', 'further_assessment', 'high_similarity'];
+const ORDER: readonly Indicator[] = ['nothing_found_in_sources_searched', 'related_material_found', 'match_in_public_sources'];
 const ICONS = {
-  potentially_novel: CircleCheck,
-  further_assessment: CircleHelp,
-  high_similarity: TriangleAlert,
+  nothing_found_in_sources_searched: CircleCheck,
+  related_material_found: CircleHelp,
+  match_in_public_sources: TriangleAlert,
 } as const;
 const TONE: Record<Indicator, string> = {
-  potentially_novel: 'border-leaf text-leaf',
-  further_assessment: 'border-ink text-ink',
-  high_similarity: 'border-lac text-lac',
+  nothing_found_in_sources_searched: 'border-leaf text-leaf',
+  related_material_found: 'border-ink text-ink',
+  match_in_public_sources: 'border-lac text-lac',
 };
 
 /** The indicator's three positions, with the current one set in its colour. */

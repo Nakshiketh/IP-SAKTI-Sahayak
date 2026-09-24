@@ -34,7 +34,7 @@
     "stages": {
       "understand": "Understanding your invention",
       "extract": "Extracting the formulation",
-      "products": "Finding similar products",
+      "products": "Finding products that share your ingredients",
       "knowledge": "Checking traditional knowledge",
       "prior_art": "Searching prior art",
       "compare": "Comparing evidence",
@@ -59,7 +59,7 @@
     "tabsLabel": "Findings",
     "tabs": {
       "assessment": "Assessment",
-      "products": "Similar products",
+      "products": "Products sharing your ingredients",
       "knowledge": "Traditional knowledge",
       "priorArt": "Patents and prior art",
       "invention": "Your invention"
@@ -80,20 +80,20 @@
     "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
   },
   "indicator": {
-    "potentially_novel": {
-      "label": "Potentially novel",
-      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    "nothing_found_in_sources_searched": {
+      "label": "No match in the sources searched",
+      "body": "Nothing matching your formulation turned up in the sources that were searched. That is a result about those sources, not a view on novelty: a professional prior-art search covers far more than this."
     },
-    "further_assessment": {
-      "label": "Further assessment required",
-      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    "related_material_found": {
+      "label": "Related material found",
+      "body": "Related products or records turned up, or some searches could not be run. Everything found is listed below with the source it came from."
     },
-    "high_similarity": {
-      "label": "High similarity",
-      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    "match_in_public_sources": {
+      "label": "Match found in public sources",
+      "body": "Something already public contains what you described — a product on sale, a classical formulation, or a filed record. It is listed below with its source."
     },
-    "whyHeading": "Why this indicator",
-    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+    "whyHeading": "What this rests on",
+    "caveat": "This says what was found in the sources searched. It is not a finding that the invention is or is not patentable, and it is not a novelty search. Only examination, after a professional search, decides that."
   },
   "requirements": {
     "heading": "The requirements, one at a time",
@@ -101,7 +101,7 @@
     "inventive_step": "Inventive step",
     "industrial_applicability": "Industrial applicability",
     "status": {
-      "anticipation_risk": "Close match found — novelty at risk",
+      "match_found_in_sources": "Match found in the sources searched",
       "close_match_found": "Similar items found",
       "no_single_match_found": "No single matching item found in what was searched",
       "concern": "Likely to be questioned",
@@ -136,9 +136,9 @@
     "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
     "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
     "level": {
-      "high": "High similarity",
-      "moderate": "Moderate similarity",
-      "low": "Weaker match"
+      "high": "Shares most ingredients",
+      "moderate": "Shares several ingredients",
+      "low": "Shares a few ingredients"
     },
     "shared": "{{shared}} of your {{total}} ingredients",
     "sameForm": "same kind of product",

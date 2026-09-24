@@ -3,8 +3,9 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 2 done (reasoning pipeline, conflict engine, escalation)
-- Last green gate: phase 2 — backend 464, frontend 371, typecheck, ruff, schema, evals (below_target []), build 147.6 kB gzip. Locale and prettier checks still fail at baseline; locale out-of-sync went 35 → 30.
+- Current phase: 3 done (Check My Product as product and formulation intelligence)
+- Last green gate: phase 3 — backend 489, frontend 371, typecheck, eslint, ruff, evals (below_target []), build under budget. Locale and prettier checks still fail at baseline.
+- Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
 
 ## Repo map (filled in Phase 0)
@@ -38,14 +39,14 @@ Agent: read this first in every phase and update it last. Keep it under about 20
 Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or finished.
 | ID | Capability | Phase | Status | Where / notes |
 |---|---|---|---|---|
-| C1 | Commercial product dataset removed from Check My Product | 3 | MISSING | Still used: corpus/products/products.json (14 fetched face packs) read by analyst/evidence.py, models.py, assess.py, service.py, dialogue.py; UI in analyst/Findings.tsx + services/analyst.ts. **Owner decision needed** — see Manual steps |
-| C2 | Product and Formulation Intelligence (new Check My Product) | 3 | PARTIAL | analyst/ gives ingredients, product comparison, TK, prior art, IP options, next steps; no rules-with-evidence classification, no ABS intake, no roadmap seed |
+| C1 | Commercial product dataset removed from Check My Product | 3 | RESOLVED DIFFERENTLY | Owner decided 2026-09-24: keep the 14 products as an ingredient reference, remove the novelty verdict they fed. The three-state indicator is now match_in_public_sources / related_material_found / nothing_found_in_sources_searched, the requirement status says "match found in the sources searched" rather than "novelty at risk", and the overlap labels say how many ingredients are shared. A test forbids the old wording returning |
+| C2 | Product and Formulation Intelligence (new Check My Product) | 3 | DONE | analyst/intelligence.py assembles the shared Phase 2 classification (analyst/facts_bridge.py), ABS support (analyst/abs.py), the prior-art search builder (analyst/searches.py), the IP protection map and the roadmap seed (analyst/protection.py), and carries them on every Analysis |
 | C3 | Source registry with full metadata, authority levels, review states | 1 | DONE | backend/app/registry/{models,store,hosts,verify}.py over data/registry.sqlite3; 79 records with authority_level 1–5, ReviewState, sha256 and retrieved_at; built by scripts/registry_backfill.py, confirmed by scripts/registry_review.py. Human review of the text itself is still owed (Manual steps 4) |
 | C4 | Citation verifier removes unsupported claims | 1 | DONE | services/citations.py `map_citations` drops unverifiable claims; DROP_LIMIT collapses the answer past a third. Phase 1 added the source side: the pipeline drops passages the registry marks uncitable, and an unallowlisted host can never be cited |
 | C5 | Jurisdiction router + separate retrieval per jurisdiction | 2 | DONE | services/routing.py; retrieval/store.py `Namespaces` (one store per jurisdiction) |
 | C6 | JurisdictionConflictEngine + Conflict objects | 2 | DONE | reasoning/conflicts.py: typed Conflict with all seven conflict_types and their resolution_status, decided from jurisdiction, supersession, effective dates, authority level and which rules fired — never from wording |
 | C7 | Product classification engine (rules + evidence) | 2 | DONE | data/rules/classification_rules.yaml (7 rules with required_facts, evidence_source_ids, changes_if) + reasoning/{facts,classify}.py. A rule whose evidence is not citable and in the corpus is inactive. The older /classify decision graph still serves its own flow |
-| C8 | Biodiversity / ABS decision support | 3 | PARTIAL | api/classify.py `abs-check` + components/flows/AbsFlow.tsx + verified ABS passages in corpus/guidance |
+| C8 | Biodiversity / ABS decision support | 3 | DONE | analyst/abs.py asks seven material questions and no others, reports relevance as likely/possible/not_indicated (never "required"), names a source or a portal only when the registry holds it as citable, and sets requires_human_review wherever the answer turns on a definition in the Act |
 | C9 | Confidence by issue, factor-based, with reasons | 2 | DONE | reasoning/confidence.py over data/rules/confidence.yaml: per issue, four step-down factors and three caps, reasons as keys. The answer-level rule in services/confidence.py is unchanged, so its TypeScript mirror and pinned cases still hold |
 | C10 | Abstention taxonomy (9 codes) | 2 | DONE | AbstainCode in models/domain.py; reasoning/engine.py maps the 5 older reasons and the 7 refusal kinds onto it, so both surfaces agree without changing the pinned older rule |
 | C11 | Guidance vs advice safety layer + notice + phrase filter | 2 | DONE | reasoning/phrases.py runs inside map_citations: a promise with a neutral form is rewritten, one without is dropped like an unsupported claim. Plus the existing guardrails and notices |
@@ -60,15 +61,15 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 69%, te/ta/bn/mr 49%, flagged `__untranslated` |
 | C21 | i18n: international languages + RTL | 6 | MISSING | No RTL handling anywhere |
 | C22 | Case Workspace (save, resume, update, re-run, archive, delete, change reasons) | 7 | PARTIAL | analyst conversations save/resume/delete per account (analyst/store.py, data/analyses.sqlite3); no archive, roadmap or change reasons |
-| C23 | Compliance Roadmap | 7 | MISSING | analyst `next_steps` are reason codes, not tasks |
+| C23 | Compliance Roadmap | 7 | PARTIAL | analyst/protection.py `roadmap_seed` gives ordered tasks (now / before_filing / before_sale), each marked when it exists only because something is unknown, so the list shrinks as questions are answered. The workspace around it is Phase 7 |
 | C24 | Ask Sahayak case-aware upgrade (evidence cards, badges) | 7 | MISSING | Ask has no case link |
 | C25 | Feedback signal | 7 | PARTIAL | api/feedback.py exists; no UI |
 | C26 | Voice Sahayak | 8 | MISSING | — |
 | C27 | Helpline simulator + telephony adapter interface | 8 | MISSING | — |
 | C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
 | C29 | Source Health / Regulatory Change Monitor | 9 | PARTIAL | scripts/refresh.py re-fetches and reports drift; no states, queue or admin approval |
-| C30 | Prior-Art Search Builder | 3 | PARTIAL | components/flows/PriorArtFlow.tsx builds terms + registry links; no IPC/CPC, no validated botanical list |
-| C31 | IP Protection Map | 3, 4 | PARTIAL | analyst ip_options covers all six rights with relevance + reasons; no map UI |
+| C30 | Prior-Art Search Builder | 3 | DONE | analyst/searches.py builds the terms and the query string, offers a search page only when its source is citable, and validates botanical names against the stored vocabulary — an unknown name is offered as written and marked unvalidated. No IPC/CPC: the official IPC publication is not in this repo, and a guessed code searches the wrong branch. The banner is on every strategy |
+| C31 | IP Protection Map | 3, 4 | PARTIAL | analyst/protection.py gives all six rights four states — the fourth, needs_more_information, is the one that matters — with why, the facts that would settle it, citable sources and one next step. Map UI is Phase 4 |
 | C32 | Document Intelligence | 9 | MISSING | No upload path anywhere |
 | C33 | Scan-badge off primary sign-in; public Ask without login | 5 | BLOCKED | Owner: the login page is not to be disturbed. Flag `scanBadgeLogin` ships **true**. Public Ask needs a separate decision |
 | C34 | Patent timeline demoted to "Learn" | 5 | MISSING | 15-step timeline sits on Home (components/home/PatentTimeline.tsx) |
@@ -99,6 +100,13 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
+## Check My Product, after Phase 3
+- The 14-product dataset stays, by the owner's decision, and keeps its own honesty: `verification: retrieved_not_reviewed` and a scope note saying finding nothing there says nothing about what else is sold. A test asserts both.
+- What was removed is the verdict it fed. Ask Sahayak refuses novelty verdicts (`RefusalKind.NOVELTY_VERDICT`) while Check My Product was printing "Potentially novel" and "Close match found — novelty at risk", from a comparison against face packs. The two halves now agree.
+- Classification comes from the same `data/rules/classification_rules.yaml` as Ask, through `analyst/facts_bridge.py`: structured fields are authoritative, and the free-text fields fill only the gaps they leave. With no backed evidence in the corpus, nothing is classified.
+- A declined question ("I don't know", "skip") becomes a missing fact carrying the question, distinct from a fact nobody asked about.
+- The input form in the pack (§2) was not built as a new form. The analyst is conversational and asks one question at a time, and the owner asked that the Check My Product UI not be changed without cause; the substance — every field optional, "I don't know" on each, a decline becoming a missing fact — is in the conversation already.
+
 ## Manual steps for the team
 1. **Decide C1.** Phase 3 says delete the commercial product dataset. It is 14 real, source-dated product pages that Check My Product compares against, and the owner previously asked for Check My Product not to be changed. Keep, or remove?
 2. **Decide on competition names.** AGENTS.md rule 8 forbids naming any competition anywhere in the repo; the upgrade pack names SIH 2026 / SIH26045 / TATTVA X in .agents/ and docs/upgrade/. Current reading: keep them out of the product (UI, README, metadata), allow them in internal upgrade docs. Confirm.
@@ -119,6 +127,9 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: C1 resolved by the owner as "drop the verdict, keep the data". The dataset is real and honestly labelled; the indicator built on it was a novelty view the rest of the product refuses to give.
+- 2026-09-24: Check My Product calls `app.reasoning.analyse` with `known_facts` rather than growing a second classifier, so the product half and the question half cannot disagree about what a product is.
+- 2026-09-24: No IPC or CPC hints are produced. The official IPC publication is not in this repo, and a guessed classification code sends someone searching a branch their invention is not in.
 - 2026-09-24: Phase 2 extends the existing streaming pipeline instead of adding the pack's second `run_pipeline` and `POST /api/analyze`. One pipeline, one set of stage events, nothing to drift; the reasoning is a stage inside it. Owner approved.
 - 2026-09-24: Per-issue confidence sits beside the answer-level rule rather than replacing it, so the TypeScript mirror and evals/confidence-cases.json keep holding. Owner approved.
 - 2026-09-24: Facts are extracted deterministically, with no model. A model would read more from free prose and could also read in a fact nobody stated, and a fabricated fact decides the regulatory category the whole answer rests on.
@@ -136,6 +147,11 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 3
+- Done: the novelty verdict removed from Check My Product across backend, UI and six locales; `analyst/intelligence.py` assembling shared classification, ABS support, prior-art search builder, IP protection map and roadmap seed onto every Analysis; 25 new tests.
+- Not done / carried over: no UI reads `Analysis.intelligence` yet — the reason keys and section labels it produces have no locale strings, and the map, matrix and roadmap surfaces are Phase 4 and Phase 7. The pack's separate product input form was deliberately not built (see above).
+- Next phase should first: read PHASE_04, and note that both halves now produce reason keys with no translations — Phase 4 is the first phase where that debt is visible to a reader, so budget for the locale work rather than discovering it late.
+
 ### Phase 2
 - Done: the reasoning stage (`backend/app/reasoning/`) runs inside the pipeline as the `reason` stage — deterministic fact extraction with negation and hedging, rules-driven classification whose rules switch themselves off without backed evidence, an issue classifier that says "not indicated" rather than staying silent, the seven-type conflict engine, per-provision applicability, per-issue confidence from YAML, L0–L3 escalation with specialist types, the nine abstention codes, and the blocked-phrase filter inside claim mapping. Contract extended by 8 enums and 7 models, mirrored in TypeScript. 42 new tests (T1, T5–T8, T12–T14, cases A–H, stage contract).
 - Not done / carried over: no UI reads the Analysis yet, so its reason keys have no locale strings — that is Phase 4's conflict matrix, provenance explorer and Case Brief. The flagship question still abstains at the answer level (see the run above). Fact extraction is English only, so two multilingual gold cases cannot classify; Phase 6. The conflict examples that need recorded supersession pairs wait on ingestion.

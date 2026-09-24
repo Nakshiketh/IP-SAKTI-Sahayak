@@ -2,11 +2,11 @@
 
 Three states, decided by rules a reader can check against the findings:
 
-* ``high_similarity`` — one product contains every ingredient given, a classical
+* ``match_in_public_sources`` — one product contains every ingredient given, a classical
   formulation matches, or a filed record matches closely.
-* ``further_assessment`` — something close exists, or patent records were not
+* ``related_material_found`` — something close exists, or patent records were not
   available to search, or little is described beyond the ingredients.
-* ``potentially_novel`` — nothing close was found *and* a patent search actually ran
+* ``nothing_found_in_sources_searched`` — nothing close was found *and* a patent search actually ran
   *and* something distinctive is described. On an instance with no records loaded
   this state is unreachable on purpose: a clean result from a search that never ran
   is not a result.
@@ -65,7 +65,7 @@ def assess(
 
     reasons: list[Reason] = []
     if subset:
-        indicator = "high_similarity"
+        indicator = "match_in_public_sources"
         reasons.append(
             Reason(
                 code="all_ingredients_in_product",
@@ -74,7 +74,7 @@ def assess(
             )
         )
     elif knowledge.classical:
-        indicator = "high_similarity"
+        indicator = "match_in_public_sources"
         reasons.append(
             Reason(
                 code="classical_match",
@@ -83,12 +83,12 @@ def assess(
             )
         )
     elif patent_high:
-        indicator = "high_similarity"
+        indicator = "match_in_public_sources"
         reasons.append(
             Reason(code="patent_close", params={"title": patent_high[0].title}, basis="evidence")
         )
     elif close or patent_mod:
-        indicator = "further_assessment"
+        indicator = "related_material_found"
         if close:
             reasons.append(
                 Reason(
@@ -102,12 +102,12 @@ def assess(
                 Reason(code="patent_related", params={"count": len(patent_mod)}, basis="evidence")
             )
     elif not searched:
-        indicator = "further_assessment"
+        indicator = "related_material_found"
     elif not (distinct or has_process or has_evidence or invention.distinctive_features):
-        indicator = "further_assessment"
+        indicator = "related_material_found"
         reasons.append(Reason(code="little_beyond_ingredients"))
     else:
-        indicator = "potentially_novel"
+        indicator = "nothing_found_in_sources_searched"
         reasons.append(
             Reason(
                 code="no_close_product", params={"size": products.dataset_size}, basis="evidence"
@@ -117,8 +117,8 @@ def assess(
     if knowledge.tkdl and knowledge.tkdl.texts:
         # Said to come from a classical text TKDL transcribes: what that text
         # documents is prior art, so only what was changed can be new.
-        if indicator == "potentially_novel":
-            indicator = "further_assessment"
+        if indicator == "nothing_found_in_sources_searched":
+            indicator = "related_material_found"
         reasons.append(
             Reason(
                 code="tkdl_source_text",
@@ -149,7 +149,7 @@ def assess(
 
     # -- the requirements, one at a time
     if subset or knowledge.classical or patent_high:
-        novelty_status = "anticipation_risk"
+        novelty_status = "match_found_in_sources"
     elif close or patent_mod:
         novelty_status = "close_match_found"
     else:
@@ -234,11 +234,13 @@ def ip_options(
     invention: Invention, assessment: Assessment, vocabulary: Vocabulary
 ) -> list[IpOption]:
     options: list[IpOption] = []
-    patent_relevance = "relevant" if assessment.indicator == "potentially_novel" else "possible"
+    patent_relevance = (
+        "relevant" if assessment.indicator == "nothing_found_in_sources_searched" else "possible"
+    )
     patent_code = {
-        "potentially_novel": "patent_worth_pursuing",
-        "further_assessment": "patent_depends_on_search",
-        "high_similarity": "patent_limited",
+        "nothing_found_in_sources_searched": "patent_worth_pursuing",
+        "related_material_found": "patent_depends_on_search",
+        "match_in_public_sources": "patent_limited",
     }[assessment.indicator]
     options.append(
         IpOption(type="patent", relevance=patent_relevance, reasons=[Reason(code=patent_code)])
@@ -287,7 +289,7 @@ def ip_options(
         )
     else:
         reasons = [Reason(code="keep_confidential")]
-        if assessment.indicator != "high_similarity":
+        if assessment.indicator != "match_in_public_sources":
             reasons.append(Reason(code="patent_or_secret"))
         options.append(IpOption(type="trade_secret", relevance="relevant", reasons=reasons))
     return options

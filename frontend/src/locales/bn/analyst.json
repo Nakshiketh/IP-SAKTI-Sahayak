@@ -35,7 +35,7 @@
     "stages": {
       "understand": "Understanding your invention",
       "extract": "Extracting the formulation",
-      "products": "Finding similar products",
+      "products": "আপনার উপাদান আছে এমন পণ্য খোঁজা হচ্ছে",
       "knowledge": "Checking traditional knowledge",
       "prior_art": "Searching prior art",
       "compare": "Comparing evidence",
@@ -60,7 +60,7 @@
     "tabsLabel": "Findings",
     "tabs": {
       "assessment": "Assessment",
-      "products": "Similar products",
+      "products": "আপনার উপাদান আছে এমন পণ্য",
       "knowledge": "Traditional knowledge",
       "priorArt": "Patents and prior art",
       "invention": "Your invention"
@@ -81,20 +81,20 @@
     "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
   },
   "indicator": {
-    "potentially_novel": {
-      "label": "Potentially novel",
-      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    "nothing_found_in_sources_searched": {
+      "label": "খোঁজা উৎসে কোনো মিল নেই",
+      "body": "যে উৎসগুলিতে খোঁজা হয়েছে, তাতে আপনার ফর্মুলেশনের সঙ্গে মিলে এমন কিছু পাওয়া যায়নি। এটি সেই উৎসগুলি সম্পর্কে ফল, নবত্ব সম্পর্কে মত নয়: পেশাদার পূর্ব-শিল্প অনুসন্ধান এর চেয়ে অনেক বেশি বিস্তৃত।"
     },
-    "further_assessment": {
-      "label": "Further assessment required",
-      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    "related_material_found": {
+      "label": "সম্পর্কিত উপাদান পাওয়া গেছে",
+      "body": "সম্পর্কিত পণ্য বা নথি পাওয়া গেছে, অথবা কিছু অনুসন্ধান চালানো যায়নি। যা পাওয়া গেছে সব নিচে তার উৎসসহ দেওয়া আছে।"
     },
-    "high_similarity": {
-      "label": "High similarity",
-      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    "match_in_public_sources": {
+      "label": "পাবলিক উৎসে মিল পাওয়া গেছে",
+      "body": "আপনি যা বর্ণনা করেছেন তা ইতিমধ্যেই পাবলিক এমন কিছুতে রয়েছে — বিক্রয়ে থাকা পণ্য, শাস্ত্রীয় যোগ বা দাখিল করা নথি। নিচে তার উৎসসহ দেওয়া আছে।"
     },
-    "whyHeading": "Why this indicator",
-    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+    "whyHeading": "এটি কিসের উপর দাঁড়িয়ে",
+    "caveat": "খোঁজা উৎসগুলিতে কি পাওয়া গেছে এটি কেবল তাই বলে। এটি পেটেন্টযোগ্যতার সিদ্ধান্ত নয়, নবত্ব অনুসন্ধানও নয়। পেশাদার অনুসন্ধানের পর পরীক্ষাই কেবল তা ঠিক করে।"
   },
   "requirements": {
     "heading": "The requirements, one at a time",
@@ -102,7 +102,7 @@
     "inventive_step": "Inventive step",
     "industrial_applicability": "Industrial applicability",
     "status": {
-      "anticipation_risk": "Close match found — novelty at risk",
+      "match_found_in_sources": "খোঁজা উৎসে মিল পাওয়া গেছে",
       "close_match_found": "Similar items found",
       "no_single_match_found": "No single matching item found in what was searched",
       "concern": "Likely to be questioned",
@@ -137,9 +137,9 @@
     "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
     "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
     "level": {
-      "high": "High similarity",
-      "moderate": "Moderate similarity",
-      "low": "Weaker match"
+      "high": "বেশিরভাগ উপাদান অভিন্ন",
+      "moderate": "কয়েকটি উপাদান অভিন্ন",
+      "low": "কিছু উপাদান অভিন্ন"
     },
     "shared": "{{shared}} of your {{total}} ingredients",
     "sameForm": "same kind of product",

@@ -35,7 +35,7 @@
     "stages": {
       "understand": "Understanding your invention",
       "extract": "Extracting the formulation",
-      "products": "Finding similar products",
+      "products": "మీ పదార్ధాలు ఉన్న ఉత్పత్తుల కోసం చూస్తోంది",
       "knowledge": "Checking traditional knowledge",
       "prior_art": "Searching prior art",
       "compare": "Comparing evidence",
@@ -60,7 +60,7 @@
     "tabsLabel": "Findings",
     "tabs": {
       "assessment": "Assessment",
-      "products": "Similar products",
+      "products": "మీ పదార్ధాలు ఉన్న ఉత్పత్తులు",
       "knowledge": "Traditional knowledge",
       "priorArt": "Patents and prior art",
       "invention": "Your invention"
@@ -81,20 +81,20 @@
     "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
   },
   "indicator": {
-    "potentially_novel": {
-      "label": "Potentially novel",
-      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    "nothing_found_in_sources_searched": {
+      "label": "శోధించిన మూలాలలో పొలిక లేదు",
+      "body": "శోధించిన మూలాలలో మీ ఫార్ములేషన్‌కు పొలినదేమీ కనబడలేదు. ఇది ఆ మూలాల గురించిన ఫలితం, నూతనత్వంపై అభిప్రాయం కాదు: వృత్తిపరమైన పూర్వ-కళా శోధన దీనికంటే చాలా విస్తృతమైనది."
     },
-    "further_assessment": {
-      "label": "Further assessment required",
-      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    "related_material_found": {
+      "label": "సంబంధిత సమాచారం దొరికింది",
+      "body": "సంబంధిత ఉత్పత్తులు లేదా రికార్డులు దొరికాయి, లేదా కొన్ని శోధనలు జరగలేదు. దొరికినదంతా దాని మూలంతో కింద ఇవ్వబడింది."
     },
-    "high_similarity": {
-      "label": "High similarity",
-      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    "match_in_public_sources": {
+      "label": "ప్రజా మూలాలలో పొలిక దొరికింది",
+      "body": "మీరు చెప్పినది ఇప్పటికే ప్రజలకు అందుబాటులో ఉన్న దానిలో ఉంది — అమ్మకంలో ఉన్న ఉత్పత్తి, శాస్త్రీయ యోగం లేదా దాఖలైన రికార్డు. అది దాని మూలంతో కింద ఇవ్వబడింది."
     },
-    "whyHeading": "Why this indicator",
-    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+    "whyHeading": "ఇది దేనిపై ఆధారపడి ఉంది",
+    "caveat": "శోధించిన మూలాలలో ఏమి దొరికిందో ఇది చెప్తుంది. ఇది పేటెంట్ అర్హతపై నిర్ధారణ కాదు, నూతనత్వ శోధన కూడా కాదు. వృత్తిపరమైన శోధన తర్వాత పరీక్ష మాత్రమే దాన్ని నిర్ణయిస్తుంది."
   },
   "requirements": {
     "heading": "The requirements, one at a time",
@@ -102,7 +102,7 @@
     "inventive_step": "Inventive step",
     "industrial_applicability": "Industrial applicability",
     "status": {
-      "anticipation_risk": "Close match found — novelty at risk",
+      "match_found_in_sources": "శోధించిన మూలాలలో పొలిక దొరికింది",
       "close_match_found": "Similar items found",
       "no_single_match_found": "No single matching item found in what was searched",
       "concern": "Likely to be questioned",
@@ -137,9 +137,9 @@
     "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
     "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
     "level": {
-      "high": "High similarity",
-      "moderate": "Moderate similarity",
-      "low": "Weaker match"
+      "high": "చాలా పదార్ధాలు ఉమ్మడి",
+      "moderate": "కొన్ని పదార్ధాలు ఉమ్మడి",
+      "low": "కొద్ది పదార్ధాలు ఉమ్మడి"
     },
     "shared": "{{shared}} of your {{total}} ingredients",
     "sameForm": "same kind of product",

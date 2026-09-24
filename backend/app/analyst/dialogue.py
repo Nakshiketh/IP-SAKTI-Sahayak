@@ -80,10 +80,13 @@ USE_LABELS = {
     "oral_care": "oral care",
 }  # fmt: skip
 
+#: What the search found, said plainly. Not a view on novelty: these labels
+#: describe the sources that were looked in, and nothing follows from them about
+#: what an examiner would decide.
 INDICATOR_LABELS = {
-    "potentially_novel": "Potentially novel",
-    "further_assessment": "Further assessment required",
-    "high_similarity": "High similarity",
+    "nothing_found_in_sources_searched": "No match in the sources searched",
+    "related_material_found": "Related material found",
+    "match_in_public_sources": "Match found in public sources",
 }
 
 GREETING = (

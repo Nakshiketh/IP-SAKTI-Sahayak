@@ -11,8 +11,12 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
+from app.models.domain import Fact, MissingFact, ProductClass
+
 Level = Literal["high", "moderate", "low"]
-Indicator = Literal["potentially_novel", "further_assessment", "high_similarity"]
+Indicator = Literal[
+    "nothing_found_in_sources_searched", "related_material_found", "match_in_public_sources"
+]
 
 
 class Amount(BaseModel):
@@ -244,6 +248,78 @@ class IpOption(BaseModel):
     reasons: list[Reason]
 
 
+class ClassificationView(BaseModel):
+    """What the rules made of the product, and what would change it."""
+
+    product_class: ProductClass
+    alternatives: list[ProductClass] = Field(default_factory=list)
+    rule_id: str | None = None
+    changes_if: str | None = None
+    #: True when more than one rule was satisfied and nothing settles which.
+    ambiguous: bool = False
+
+
+class AbsView(BaseModel):
+    relevance: str
+    reason_keys: list[str] = Field(default_factory=list)
+    missing_facts: list[MissingFact] = Field(default_factory=list)
+    source_ids: list[str] = Field(default_factory=list)
+    requires_human_review: bool = False
+
+
+class SearchTermView(BaseModel):
+    text: str
+    kind: str
+    validated: bool = False
+
+
+class SearchPageView(BaseModel):
+    source_id: str
+    url: str
+    query: str
+
+
+class SearchStrategyView(BaseModel):
+    terms: list[SearchTermView] = Field(default_factory=list)
+    pages: list[SearchPageView] = Field(default_factory=list)
+    #: Never absent. The banner is the reason this section is safe to show.
+    banner_key: str = "priorArtNoConclusion"
+    tkdl_access_note_key: str | None = None
+
+
+class ProtectionView(BaseModel):
+    right: str
+    relevance: str
+    reason_keys: list[str] = Field(default_factory=list)
+    facts_required: list[MissingFact] = Field(default_factory=list)
+    source_ids: list[str] = Field(default_factory=list)
+    next_step_key: str | None = None
+
+
+class RoadmapTaskView(BaseModel):
+    task_id: str
+    when: str
+    issue: str | None = None
+    source_ids: list[str] = Field(default_factory=list)
+    resolves_missing_fact: bool = False
+
+
+class Intelligence(BaseModel):
+    """The source-grounded half of Check My Product."""
+
+    facts: list[Fact] = Field(default_factory=list)
+    missing_facts: list[MissingFact] = Field(default_factory=list)
+    classification: ClassificationView
+    #: Issue -> whether the stated facts raise it, from the shared reasoning.
+    issues_indicated: list[str] = Field(default_factory=list)
+    escalation_level: str | None = None
+    escalation_specialists: list[str] = Field(default_factory=list)
+    abs: AbsView
+    searches: SearchStrategyView
+    protection: list[ProtectionView] = Field(default_factory=list)
+    roadmap: list[RoadmapTaskView] = Field(default_factory=list)
+
+
 class Analysis(BaseModel):
     created_at: float
     invention_version: int
@@ -255,6 +331,10 @@ class Analysis(BaseModel):
     assessment: Assessment
     ip_options: list[IpOption]
     next_steps: list[Reason]
+    #: The source-grounded half: the shared classification rules, the ABS
+    #: question, a prior-art search strategy, the protection map and the first
+    #: tasks. Optional so a run stored before Phase 3 still loads.
+    intelligence: Intelligence | None = None
 
 
 # -- conversation --------------------------------------------------------------

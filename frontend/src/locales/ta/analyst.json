@@ -35,7 +35,7 @@
     "stages": {
       "understand": "Understanding your invention",
       "extract": "Extracting the formulation",
-      "products": "Finding similar products",
+      "products": "உங்கள் பொருட்கள் உள்ள பொருட்களைத் தேடுகிறது",
       "knowledge": "Checking traditional knowledge",
       "prior_art": "Searching prior art",
       "compare": "Comparing evidence",
@@ -60,7 +60,7 @@
     "tabsLabel": "Findings",
     "tabs": {
       "assessment": "Assessment",
-      "products": "Similar products",
+      "products": "உங்கள் பொருட்கள் உள்ள பொருட்கள்",
       "knowledge": "Traditional knowledge",
       "priorArt": "Patents and prior art",
       "invention": "Your invention"
@@ -81,20 +81,20 @@
     "historyRow": "{{indicator}} — {{products}} close products, {{patents}} records"
   },
   "indicator": {
-    "potentially_novel": {
-      "label": "Potentially novel",
-      "body": "Your formulation appears potentially novel based on the information currently analysed, but a detailed prior-art search and a professional patentability assessment are required."
+    "nothing_found_in_sources_searched": {
+      "label": "தேடப்பட்ட ஆதாரங்களில் பொருத்தம் இல்லை",
+      "body": "தேடப்பட்ட ஆதாரங்களில் உங்கள் கலவைக்கு பொருந்துவது எதுவும் கிடைக்கவில்லை. இது அந்த ஆதாரங்களைப் பற்றிய முடிவே தவிர, புதுமை குறித்த கருத்தல்ல: தொழில்முறை முந்தைய கலைத் தேடல் இதைவிட மிக விரிவானது."
     },
-    "further_assessment": {
-      "label": "Further assessment required",
-      "body": "Some differences exist, but relevant similar products or prior art — or gaps in what could be searched — need deeper analysis before any view on novelty is possible."
+    "related_material_found": {
+      "label": "தொடர்புடைய பொருள் கிடைத்தது",
+      "body": "தொடர்புடைய பொருட்கள் அல்லது பதிவுகள் கிடைத்தன, அல்லது சில தேடல்களை செய்ய முடியவில்லை. கிடைத்த அனைத்தும் அதன் ஆதாரத்துடன் கீழே தரப்பட்டுள்ளது."
     },
-    "high_similarity": {
-      "label": "High similarity",
-      "body": "Strongly similar existing information has been identified. Patent protection may be difficult unless a genuinely new technical feature can be established."
+    "match_in_public_sources": {
+      "label": "பொது ஆதாரங்களில் பொருத்தம் கிடைத்தது",
+      "body": "நீங்கள் கூறியது ஏற்கனவே பொதுவாக உள்ள ஒன்றில் இருக்கிறது — விற்பனையில் உள்ள பொருள், செம்மையான கலவை அல்லது தாக்கல் செய்யப்பட்ட பதிவு. அது அதன் ஆதாரத்துடன் கீழே தரப்பட்டுள்ளது."
     },
-    "whyHeading": "Why this indicator",
-    "caveat": "This is not a finding that the invention is or is not patentable. Only examination, after a professional search, decides that."
+    "whyHeading": "இது எதை அடிப்படையாகக் கொண்டது",
+    "caveat": "தேடப்பட்ட ஆதாரங்களில் என்ன கிடைத்தது என்பதை மட்டுமே இது கூறுகிறது. இது காப்புரிமைக்குரிய தன்மை குறித்த முடிவும் அல்ல, புதுமைத் தேடலும் அல்ல. தொழில்முறை தேடலுக்குப் பிறகு பரிசோதனை மட்டுமே அதை தீர்மானிக்கிறது."
   },
   "requirements": {
     "heading": "The requirements, one at a time",
@@ -102,7 +102,7 @@
     "inventive_step": "Inventive step",
     "industrial_applicability": "Industrial applicability",
     "status": {
-      "anticipation_risk": "Close match found — novelty at risk",
+      "match_found_in_sources": "தேடப்பட்ட ஆதாரங்களில் பொருத்தம் கிடைத்தது",
       "close_match_found": "Similar items found",
       "no_single_match_found": "No single matching item found in what was searched",
       "concern": "Likely to be questioned",
@@ -137,9 +137,9 @@
     "intro": "Compared with {{size}} face packs and herbal products in a reference set retrieved on {{date}}. A product on sale is not a patent, and a small reference set is not a market survey.",
     "none": "None of the {{size}} products in the reference set shares enough with your formulation to flag. That covers only this set — other products may exist.",
     "level": {
-      "high": "High similarity",
-      "moderate": "Moderate similarity",
-      "low": "Weaker match"
+      "high": "பெரும்பாலான பொருட்கள் பொது",
+      "moderate": "பல பொருட்கள் பொது",
+      "low": "சில பொருட்கள் பொது"
     },
     "shared": "{{shared}} of your {{total}} ingredients",
     "sameForm": "same kind of product",

@@ -9,7 +9,7 @@ import { readStoredSession } from '@/services/auth';
  * rather than animating a guess.
  */
 
-export type Indicator = 'potentially_novel' | 'further_assessment' | 'high_similarity';
+export type Indicator = 'nothing_found_in_sources_searched' | 'related_material_found' | 'match_in_public_sources';
 export type Level = 'high' | 'moderate' | 'low';
 export type StageId =
   'understand' | 'extract' | 'products' | 'knowledge' | 'prior_art' | 'compare' | 'assess';
