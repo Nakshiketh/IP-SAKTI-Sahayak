@@ -535,6 +535,36 @@
           ],
           "default": null,
           "title": "As Of Date"
+        },
+        "review_state": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Review State"
+        },
+        "reviewed_at": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reviewed At"
+        },
+        "provenance_pending": {
+          "default": false,
+          "title": "Provenance Pending",
+          "type": "boolean"
         }
       },
       "required": [

@@ -85,6 +85,9 @@ function citationFor(id: string): PassageCitation {
     rerank_score: null,
     verification_status: 'verified',
     as_of_date: kb.reviewed_on,
+    review_state: 'verified_official',
+    reviewed_at: kb.reviewed_on,
+    provenance_pending: false,
     passage: chunk.text,
   };
 }

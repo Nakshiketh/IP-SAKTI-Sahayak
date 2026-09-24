@@ -79,9 +79,13 @@ export function SourceCard({
         className,
       )}
     >
-      <div className="flex items-baseline gap-2">
+      <div className="flex flex-wrap items-baseline gap-2">
         <span className="text-xs text-muted">{t('answer.sourceNumber', { number })}</span>
         {isVerified ? <Badge tone="sourced">{t('answer.verifiedBadge')}</Badge> : null}
+        {/* Cited as a known official source that could not be re-fetched. */}
+        {'provenance_pending' in citation && citation.provenance_pending ? (
+          <Badge tone="caution">{t('answer.provenancePending')}</Badge>
+        ) : null}
       </div>
 
       <Heading level={titleLevel} className="mt-1 text-base">

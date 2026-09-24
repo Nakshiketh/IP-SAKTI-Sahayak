@@ -180,6 +180,15 @@ class Citation(DomainModel):
     rerank_score: float | None = None
     verification_status: VerificationStatus = VerificationStatus.UNVERIFIED
     as_of_date: date | None = None
+    #: How far the registry has checked this source: "verified_official",
+    #: "human_reviewed", or null when the registry holds no record for it.
+    review_state: str | None = None
+    #: When a person last confirmed it against the official original.
+    reviewed_at: date | None = None
+    #: True when the source is cited only because it is known to be official
+    #: but could not be re-fetched. The interface says so, and it caps
+    #: confidence for the answer.
+    provenance_pending: bool = False
 
 
 class Record(DomainModel):

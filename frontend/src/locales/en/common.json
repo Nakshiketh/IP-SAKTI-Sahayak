@@ -71,6 +71,7 @@
       "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
       "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
       "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
+      "moderateProvenancePending": "Based on {{passages}} passages; at least one source is awaiting provenance review.",
       "lowWeak": "The {{passages}} passages found are weak matches for this question.",
       "lowContradiction": "The passages found disagree with each other.",
       "abstainNothing": "{{passages}} passages considered; none cleared the threshold.",
@@ -103,7 +104,8 @@
     "openSourceUnavailable": "Link not available",
     "sourceNumber": "Source {{number}}",
     "verifiedBadge": "verified",
-    "sourceNote": "Every source links to the official document or portal it comes from. Check the official text before you rely on an answer."
+    "sourceNote": "Every source links to the official document or portal it comes from. Check the official text before you rely on an answer.",
+    "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
     "IN": "India",

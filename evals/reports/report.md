@@ -1,6 +1,6 @@
 # Evaluation report
 
-Run at 2026-09-22T08:26:35+00:00.
+Run at 2026-09-24T01:11:21+00:00.
 
 Measured against corpus version kb-2026.09.22, 51 documents.
 
@@ -32,8 +32,8 @@ Measured against corpus version kb-2026.09.22, 51 documents.
 | `language_detection_accuracy` | 100.0% (25/25) |  | Script detection on the non-English cases. Devanagari cannot separate Hindi from Marathi, so either counts for either — the detector reports that ambiguity rather than guessing. |
 | `records_offered` | 0.0% (0/25) |  | Cases where records were expected beside the answer and appeared. |
 | `records_do_not_rescue` | not measured | 100% | Cases where a record was present and the corpus should decline: the system still declined. |
-| `latency_p50` | 10 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
-| `latency_p95` | 19 ms |  |  |
+| `latency_p50` | 13 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
+| `latency_p95` | 23 ms |  |  |
 | `errors` | 0 |  | Cases that raised rather than answering or declining. Should be zero. |
 | `answer_accuracy` | not measured |  | No reference answers exist. Writing them means stating what a source says, and no source has been read — see evals/gold/README.md. |
 | `citation_correctness` | not measured |  | Whether a cited passage supports its claim needs a judge, human or model. citation_groundedness below measures what can be checked mechanically. |
@@ -92,7 +92,7 @@ Nothing. Every metric with a target met it.
 | `in-ip-006` | answer | answer |  | moderate | 2 | 0 |
 | `in-ip-007` | answer | answer |  | moderate | 2 | 0 |
 | `in-ip-008` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `in-ip-009` | answer | answer |  | high | 5 | 0 |
+| `in-ip-009` | answer | answer |  | moderate | 5 | 0 |
 | `in-ip-010` | answer | answer |  | high | 5 | 0 |
 | `in-ip-011` | answer | answer |  | low | 29 | 0 |
 | `in-ip-012` | answer | answer |  | low | 1 | 0 |
@@ -118,7 +118,7 @@ Nothing. Every metric with a target met it.
 | `in-reg-006` | answer | abstain | out_of_scope | abstain | 0 | 0 |
 | `in-reg-007` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
 | `in-reg-008` | answer | answer |  | low | 5 | 0 |
-| `in-reg-009` | answer | answer |  | high | 5 | 0 |
+| `in-reg-009` | answer | answer |  | moderate | 5 | 0 |
 | `in-reg-010` | answer | answer |  | moderate | 4 | 0 |
 | `in-reg-011` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
 | `in-reg-012` | answer | abstain | nothing_relevant | abstain | 0 | 0 |

@@ -164,6 +164,12 @@ export interface Citation {
   rerank_score: number | null;
   verification_status: VerificationStatus;
   as_of_date: IsoDate | null;
+  /** How far the source registry has checked this source, or null if it holds no record. */
+  review_state: string | null;
+  /** When a person last confirmed it against the official original. */
+  reviewed_at: IsoDate | null;
+  /** Cited as a known official source that could not be re-fetched; caps confidence. */
+  provenance_pending: boolean;
 }
 
 /**
@@ -304,6 +310,9 @@ export const DOMAIN_FIELDS = {
     'rerank_score',
     'verification_status',
     'as_of_date',
+    'review_state',
+    'reviewed_at',
+    'provenance_pending',
   ],
   Record: [
     'record_id',

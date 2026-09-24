@@ -42,6 +42,7 @@ class ReasonKey(StrEnum):
     MODERATE_SINGLE_DOCUMENT = "moderateSingleDocument"
     MODERATE_OUT_OF_WINDOW = "moderateOutOfWindow"
     MODERATE_THIN = "moderateThin"
+    MODERATE_PROVENANCE_PENDING = "moderateProvenancePending"
     LOW_WEAK = "lowWeak"
     LOW_CONTRADICTION = "lowContradiction"
     ABSTAIN_NOTHING = "abstainNothing"

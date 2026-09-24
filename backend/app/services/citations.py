@@ -31,6 +31,7 @@ from app.models.domain import (
     Claim,
     VerificationStatus,
 )
+from app.registry.store import SourceRegistry
 from app.retrieval.types import ScoredChunk
 
 #: Share of cited claims that may be dropped before the answer is abandoned.
@@ -51,7 +52,11 @@ class MappedAnswer:
 
 
 def build_citations(
-    passages: list[ScoredChunk], *, as_of: date, corpus_version: str | None = None
+    passages: list[ScoredChunk],
+    *,
+    as_of: date,
+    corpus_version: str | None = None,
+    registry: SourceRegistry | None = None,
 ) -> dict[str, Citation]:
     """One citation per retrieved passage, keyed by chunk id.
 
@@ -63,6 +68,10 @@ def build_citations(
     citations: dict[str, Citation] = {}
     for passage in passages:
         chunk = passage.chunk
+        # The registry, where one is built, says how far this source has been
+        # checked. Without it the fields stay null rather than claiming a
+        # verification that nobody performed.
+        record = registry.get(chunk.document_id) if registry is not None else None
         citations[chunk.chunk_id] = Citation(
             citation_id=chunk.chunk_id,
             chunk_id=chunk.chunk_id,
@@ -77,6 +86,9 @@ def build_citations(
             rerank_score=passage.rerank_score,
             verification_status=chunk.verification_status,
             as_of_date=as_of,
+            review_state=record.review_state.value if record else None,
+            reviewed_at=record.reviewed_at if record else None,
+            provenance_pending=bool(record and record.provenance_pending),
         )
     return citations
 

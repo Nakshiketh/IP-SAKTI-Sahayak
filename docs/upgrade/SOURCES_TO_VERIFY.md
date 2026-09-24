@@ -4,7 +4,9 @@ These are verification targets, not citable facts. A provision reaches answers o
 
 ## Allowlisted official hosts
 Use for citation links and source-health checks. Confirm each is reachable; add hosts only with the user's approval.
-ipindia.gov.in, indiacode.nic.in, egazette.gov.in, egazette.nic.in, ayush.gov.in, e-aushadhi.gov.in, pcimh.gov.in, fssai.gov.in, nbaindia.org, tkdl.res.in, wipo.int, cbd.int
+ipindia.gov.in, ipindiaonline.gov.in, indiacode.nic.in, egazette.gov.in, egazette.nic.in, ayush.gov.in, e-aushadhi.gov.in, pcimh.gov.in, fssai.gov.in, nbaindia.org, nbaindia.nic.in, nbaindia.in, tkdl.res.in, wipo.int, cbd.int, cdsco.gov.in, ayushportal.nic.in, s3waas.gov.in
+
+Added on 2026-09-23 while registering the sources already cited, and awaiting the owner's confirmation: ipindiaonline.gov.in and nbaindia.in (the e-filing portals of IP India and the NBA), nbaindia.nic.in (the NBA's own site), cdsco.gov.in, ayushportal.nic.in and s3waas.gov.in (the Government of India's document host, which serves the Law Commission report).
 
 ## India: patents and other IP
 - The Patents Act, 1970 (as amended): s.2(1)(j) invention; s.2(1)(ja) inventive step; s.3(d), 3(e), 3(p); s.10(4)(d)(ii)(D) source and geographical origin of biological material; s.25(1)(j) and (k) opposition grounds; s.39 foreign filing by residents.

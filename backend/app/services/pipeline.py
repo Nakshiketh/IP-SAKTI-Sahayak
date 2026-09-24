@@ -43,6 +43,7 @@ from app.models.domain import (
     RegulatoryArea,
     VerificationStatus,
 )
+from app.registry.store import SourceRegistry, get_registry
 from app.retrieval.store import Namespaces
 from app.retrieval.types import RetrievalFilters, ScoredChunk
 from app.services import citations as citation_service
@@ -176,6 +177,7 @@ class Pipeline:
         retriever: Retriever | None = None,
         audit: AuditLog | None = None,
         records: RecordsService | None = None,
+        registry: SourceRegistry | None = None,
     ) -> None:
         self._settings = settings
         self._namespaces = namespaces
@@ -184,6 +186,7 @@ class Pipeline:
         self._records = records
         self._retriever = retriever or Retriever(fusion_k=settings.fusion_k)
         self._audit = audit or AuditLog(settings.audit_db_path, enabled=settings.audit_enabled)
+        self._registry = registry if registry is not None else get_registry()
 
     # -- routing -----------------------------------------------------------
 
@@ -286,7 +289,7 @@ class Pipeline:
         yield StageEvent(clock.stage("retrieve"))
         yield StageEvent(clock.stage("rerank"))
 
-        passages = list(retrieved.passages)
+        passages = self._citable(list(retrieved.passages))
         evidence = self._evidence(
             chosen.jurisdiction,
             passages,
@@ -302,7 +305,7 @@ class Pipeline:
             documents=len({p.document_id for p in candidates}),
         )
 
-        scored = confidence_service.score_confidence(evidence)
+        scored = self._cap_for_provenance(confidence_service.score_confidence(evidence), passages)
 
         if scored.level is Confidence.ABSTAIN:
             # Nothing is packed and nothing is generated. An abstention that ran
@@ -369,7 +372,9 @@ class Pipeline:
         )
         yield StageEvent(clock.stage("generate"))
 
-        built = citation_service.build_citations(cited_passages, as_of=today)
+        built = citation_service.build_citations(
+            cited_passages, as_of=today, registry=self._registry
+        )
         mapped = citation_service.map_citations(
             generated, citations=built, supplied_ids=set(context.chunk_ids)
         )
@@ -449,6 +454,45 @@ class Pipeline:
         yield ResultEvent(outcome)
 
     # -- helpers -----------------------------------------------------------
+
+    def _citable(self, passages: list[ScoredChunk]) -> list[ScoredChunk]:
+        """Drop passages whose source the registry says may not be cited.
+
+        The registry can only speak about what it has registered. A passage
+        from a document it does not hold — a demo fixture, a sample corpus, an
+        index built elsewhere — passes through untouched; silently emptying
+        those answers would be a worse failure than the one this guards
+        against. Tightening that to "registered or nothing" waits until the
+        registry covers every corpus, in Phase 2.
+        """
+        known = self._registry.all()
+        if not known:
+            return passages
+        return [
+            p
+            for p in passages
+            if (record := known.get(p.chunk.document_id)) is None or record.usable
+        ]
+
+    def _cap_for_provenance(
+        self, scored: confidence_service.ConfidenceResult, passages: list[ScoredChunk]
+    ) -> confidence_service.ConfidenceResult:
+        """A source awaiting provenance review holds an answer below high."""
+        if scored.level is not Confidence.HIGH:
+            return scored
+        pending = any(
+            (record := self._registry.get(p.chunk.document_id)) is not None
+            and record.provenance_pending
+            for p in passages
+        )
+        if not pending:
+            return scored
+        return confidence_service.ConfidenceResult(
+            level=Confidence.MODERATE,
+            reason_key=confidence_service.ReasonKey.MODERATE_PROVENANCE_PENDING,
+            reason_vars=scored.reason_vars,
+            abstain_reason=None,
+        )
 
     def _translate(self, mapped: citation_service.MappedAnswer, source: str, target: str) -> bool:
         """Translate the blocks in place. Citation metadata is never touched."""
@@ -572,7 +616,9 @@ class Pipeline:
             translator=self._translator.name,
             translated=translated,
             passage_text={p.chunk.chunk_id: p.chunk.text for p in passages},
-            sources=citation_service.build_citations(passages, as_of=datetime.now(UTC).date()),
+            sources=citation_service.build_citations(
+                passages, as_of=datetime.now(UTC).date(), registry=self._registry
+            ),
         )
 
     def _assemble(

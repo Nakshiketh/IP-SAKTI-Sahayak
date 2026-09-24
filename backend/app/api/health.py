@@ -10,10 +10,11 @@ the demo fixture or a built corpus.
 from __future__ import annotations
 
 from fastapi import APIRouter
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from app.api.deps import get_namespaces
 from app.core.settings import Settings, get_settings
+from app.registry.store import get_registry
 
 router = APIRouter(prefix="/api/v1", tags=["system"])
 
@@ -31,6 +32,11 @@ class CorpusVersion(BaseModel):
     #: True while any namespace is still served by the demo fixture. The
     #: interface uses it to mark every answer, so a demo can never look verified.
     is_demo: bool
+    #: A hash over the sources that may be cited, and how many sit in each
+    #: review state. "registry-empty" means no registry has been built here.
+    registry_version: str = "registry-empty"
+    citable_sources: int = 0
+    sources_by_review_state: dict[str, int] = Field(default_factory=dict)
 
 
 @router.get("/health", response_model=Health)
@@ -46,6 +52,7 @@ def health() -> Health:
 @router.get("/corpus-version", response_model=CorpusVersion)
 def corpus_version() -> CorpusVersion:
     namespaces = get_namespaces()
+    registry = get_registry()
     return CorpusVersion(
         corpus_version=namespaces.corpus_version(),
         document_count=namespaces.document_count(),
@@ -54,4 +61,7 @@ def corpus_version() -> CorpusVersion:
         # implying the sources were checked today.
         as_of_date=None,
         is_demo=namespaces.is_demo(),
+        registry_version=registry.registry_version(),
+        citable_sources=len(registry.usable_ids()),
+        sources_by_review_state=registry.counts_by_state(),
     )

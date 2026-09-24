@@ -59,6 +59,11 @@ class Settings(BaseSettings):
     #: `data/index-samples` is how the sample build is demonstrated.
     index_dir_override: Path | None = None
 
+    #: Where the source registry is read from. Overridable so a test or a
+    #: rebuilt registry can be served without moving it on top of the one in
+    #: place.
+    registry_db_override: Path | None = None
+
     #: Where the records database is read from. Overridable for the same reason
     #: as the index: so a build made elsewhere can be served without being moved
     #: on top of the one in place.
@@ -149,6 +154,11 @@ class Settings(BaseSettings):
     def index_dir(self) -> Path:
         """Where the corpus pipeline writes the built index."""
         return self.index_dir_override or (self.data_dir / "index")
+
+    @property
+    def registry_db_path(self) -> Path:
+        """The source registry. Built by scripts/registry_backfill.py."""
+        return self.registry_db_override or (self.data_dir / "registry.sqlite3")
 
     @property
     def knowledge_base_path(self) -> Path:

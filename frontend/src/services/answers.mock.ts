@@ -121,6 +121,9 @@ function citationFor(chunk: FixtureChunk): DemoCitation {
     rerank_score: null,
     verification_status: 'demo',
     as_of_date: null,
+    review_state: null,
+    reviewed_at: null,
+    provenance_pending: false,
     passage: chunk.text,
   };
 }
