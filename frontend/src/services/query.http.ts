@@ -43,6 +43,28 @@ interface ErrorMessage {
 type ResultMessage = { event: 'result' } & QueryResult;
 type Message = StageMessage | RetrievedMessage | ResultMessage | ErrorMessage;
 
+/**
+ * How long to wait for the server before calling it a timeout.
+ *
+ * Long enough for a hard seven-part question on a slow connection — the
+ * flagship case runs seven retrievals — and short enough that the reader gets a
+ * decision rather than an indefinite spinner.
+ */
+const REQUEST_TIMEOUT_MS = 45_000;
+
+/** One signal that aborts when any of the given signals does. */
+function anySignal(signals: AbortSignal[]): AbortSignal {
+  const controller = new AbortController();
+  for (const signal of signals) {
+    if (signal.aborted) {
+      controller.abort();
+      break;
+    }
+    signal.addEventListener('abort', () => controller.abort(), { once: true });
+  }
+  return controller.signal;
+}
+
 const ERROR_CODES = new Set<QueryErrorCode>([
   'generation_unavailable',
   'rate_limited',
@@ -87,6 +109,14 @@ export async function runHttpQuery(question: string, options: QueryOptions): Pro
     throw new QueryError('offline', 'This device is not connected.');
   }
 
+  // A request that never answers is worse than one that fails: the reader sits
+  // with a spinner and no idea whether to wait. Long enough for a hard
+  // multi-part question on a slow connection, short enough to be a decision
+  // rather than an abandonment.
+  const deadline = new AbortController();
+  const timer = setTimeout(() => deadline.abort(), REQUEST_TIMEOUT_MS);
+  const signal = options.signal ? anySignal([options.signal, deadline.signal]) : deadline.signal;
+
   let response: Response;
   try {
     // Retried only while the request has not reached the server. Once it has,
@@ -106,14 +136,19 @@ export async function runHttpQuery(question: string, options: QueryOptions): Pro
             language_out: options.languageOut ?? null,
             session_id: options.sessionId ?? 'anonymous',
           }),
-          ...(options.signal ? { signal: options.signal } : {}),
+          signal,
         }),
-      { signal: options.signal },
+      { signal },
     );
   } catch (error) {
+    if (deadline.signal.aborted) {
+      throw new QueryError('timeout', 'The search took too long.');
+    }
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
     if (isOffline()) throw new QueryError('offline', 'This device is not connected.');
     throw new QueryError('unreachable', 'The service could not be reached.');
+  } finally {
+    clearTimeout(timer);
   }
 
   if (!response.ok) {

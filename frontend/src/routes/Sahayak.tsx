@@ -8,6 +8,7 @@ import { DetailToggle } from '@/components/answer/DetailToggle';
 import { InShort } from '@/components/answer/InShort';
 import { CaseBrief } from '@/components/answer/CaseBrief';
 import { ConflictMatrix } from '@/components/answer/ConflictMatrix';
+import { GlossaryNotes } from '@/components/answer/GlossaryNotes';
 import { GuidanceEnds } from '@/components/answer/GuidanceEnds';
 import { SourceMatrix } from '@/components/answer/SourceMatrix';
 import { AbsFlow } from '@/components/flows/AbsFlow';
@@ -19,6 +20,7 @@ import { AnswerPanel } from '@/components/sahayak/AnswerPanel';
 import { Composer } from '@/components/sahayak/Composer';
 import { ContextLine } from '@/components/sahayak/ContextLine';
 import { EscalationForm } from '@/components/sahayak/EscalationForm';
+import { FirstVisitHint } from '@/components/sahayak/FirstVisitHint';
 import { QueryFailure } from '@/components/sahayak/QueryFailure';
 import {
   RetrievalStatus,
@@ -344,7 +346,12 @@ export default function Sahayak() {
           ) : null}
 
           {!hasAnswer ? (
-            <StarterQuestions onPick={ask} open={startersOpen} onOpenChange={setStartersOpen} />
+            <>
+              {/* Shown where there is nothing else on screen, which is the only
+                  moment "where do I start" is the reader's actual question. */}
+              <FirstVisitHint id="start" className="mb-4" />
+              <StarterQuestions onPick={ask} open={startersOpen} onOpenChange={setStartersOpen} />
+            </>
           ) : null}
 
           {hasAnswer ? (
@@ -361,7 +368,11 @@ export default function Sahayak() {
               />
 
               {failure !== null ? (
-                <QueryFailure code={failure} onRetry={() => setAttempt((n) => n + 1)} />
+                <QueryFailure
+                  code={failure}
+                  onRetry={() => setAttempt((n) => n + 1)}
+                  onShorten={() => composerRef.current?.focus()}
+                />
               ) : null}
 
               {phase === 'done' && result ? (
@@ -440,6 +451,12 @@ export default function Sahayak() {
                         hideSources
                       />
 
+                      {/* The jargon this answer uses, beside it rather than
+                          inside it: annotating a cited sentence would put our
+                          wording into a source's text. */}
+                      <FirstVisitHint id="sources" className="mt-6" />
+                      <GlossaryNotes className="mt-6" answer={result.answer!} />
+
                       {/* Where guidance ends comes before the overlaps: a
                           reader should know what this will not claim before
                           they read the detail of what it did find. It shows at
@@ -447,6 +464,7 @@ export default function Sahayak() {
                           hurry most needs. */}
                       {result.answer!.analysis ? (
                         <>
+                          <FirstVisitHint id="escalation" className="mt-6" />
                           <GuidanceEnds className="mt-6" analysis={result.answer!.analysis} />
 
                           {detail === 'expert' ? (

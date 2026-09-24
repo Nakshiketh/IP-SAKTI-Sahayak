@@ -142,7 +142,9 @@
     "rate_limited": "குறுகிய காலத்தில் அதிக கேள்விகள். சிறிது நேரம் காத்திருந்து மீண்டும் முயற்சிக்கவும்.",
     "request_too_large": "அந்தக் கேள்வி அனுப்ப முடியாத அளவுக்குப் பெரியது.",
     "question_too_long": "கேள்வி அனுமதிக்கப்பட்ட வரம்பை விட நீளமானது.",
-    "unknown": "பதில் வரும் வழியில் ஏதோ தவறு நடந்துவிட்டது."
+    "unknown": "பதில் வரும் வழியில் ஏதோ தவறு நடந்துவிட்டது.",
+    "timeout": "The search took too long and was stopped. Nothing has been answered. A shorter question usually finishes.",
+    "shorter": "Ask a shorter question"
   },
   "records": {
     "tab": "தொடர்புடைய பதிவுகள்",
@@ -534,6 +536,23 @@
   "glossary": {
     "explainer": "Plain-language explainer",
     "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
-    "openSource": "Read the source"
+    "openSource": "Read the source",
+    "heading_one": "One term explained",
+    "heading_other": "{{count}} terms explained"
+  },
+  "hints": {
+    "dismiss": "Got it",
+    "start": {
+      "title": "Start by asking",
+      "body": "Type a question in your own words. You do not need the legal term for it."
+    },
+    "escalation": {
+      "title": "Where guidance ends",
+      "body": "Every answer says what it will not conclude, and who should look at the rest."
+    },
+    "sources": {
+      "title": "Every sentence has a source",
+      "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
+    }
   }
 }

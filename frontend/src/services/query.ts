@@ -121,6 +121,10 @@ export type QueryErrorCode =
   // Distinct from `unreachable`: the browser is certain there is no network, so
   // the reader can be told the cause rather than the symptom.
   | 'offline'
+  // The request reached the server and the server stopped answering. Distinct
+  // from `unreachable`, because the useful advice is different: a shorter
+  // question genuinely helps here and does nothing for an unreachable service.
+  | 'timeout'
   | 'generation_unavailable'
   | 'rate_limited'
   | 'request_too_large'

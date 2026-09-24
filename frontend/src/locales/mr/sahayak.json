@@ -142,7 +142,9 @@
     "rate_limited": "कम समय में बहुत सारे प्रश्न। एक क्षण प्रतीक्षा करें, फिर पुनः प्रयास करें।",
     "request_too_large": "वह प्रश्न भेजने के लिए बहुत बड़ा था। इसे छोटा करें और पुनः प्रयास करें।",
     "question_too_long": "वह प्रश्न स्वीकार्य सीमा से अधिक लंबा है। इसे छोटा करें और पुनः प्रयास करें।",
-    "unknown": "उत्तर के रास्ते में कुछ गलत हो गया।"
+    "unknown": "उत्तर के रास्ते में कुछ गलत हो गया।",
+    "timeout": "The search took too long and was stopped. Nothing has been answered. A shorter question usually finishes.",
+    "shorter": "Ask a shorter question"
   },
   "records": {
     "tab": "संबंधित रिकॉर्ड",
@@ -534,6 +536,23 @@
   "glossary": {
     "explainer": "Plain-language explainer",
     "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
-    "openSource": "Read the source"
+    "openSource": "Read the source",
+    "heading_one": "One term explained",
+    "heading_other": "{{count}} terms explained"
+  },
+  "hints": {
+    "dismiss": "Got it",
+    "start": {
+      "title": "Start by asking",
+      "body": "Type a question in your own words. You do not need the legal term for it."
+    },
+    "escalation": {
+      "title": "Where guidance ends",
+      "body": "Every answer says what it will not conclude, and who should look at the rest."
+    },
+    "sources": {
+      "title": "Every sentence has a source",
+      "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
+    }
   }
 }

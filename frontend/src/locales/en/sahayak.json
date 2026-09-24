@@ -141,7 +141,9 @@
     "rate_limited": "Too many questions in a short time. Wait a moment, then try again.",
     "request_too_large": "That question was too large to send. Shorten it and try again.",
     "question_too_long": "That question is longer than this accepts. Shorten it and try again.",
-    "unknown": "Something went wrong on the way to an answer. Nothing has been answered, and nothing was guessed."
+    "unknown": "Something went wrong on the way to an answer. Nothing has been answered, and nothing was guessed.",
+    "timeout": "The search took too long and was stopped. Nothing has been answered. A shorter question usually finishes.",
+    "shorter": "Ask a shorter question"
   },
   "records": {
     "tab": "Related records",
@@ -533,6 +535,23 @@
   "glossary": {
     "explainer": "Plain-language explainer",
     "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
-    "openSource": "Read the source"
+    "openSource": "Read the source",
+    "heading_one": "One term explained",
+    "heading_other": "{{count}} terms explained"
+  },
+  "hints": {
+    "dismiss": "Got it",
+    "start": {
+      "title": "Start by asking",
+      "body": "Type a question in your own words. You do not need the legal term for it."
+    },
+    "escalation": {
+      "title": "Where guidance ends",
+      "body": "Every answer says what it will not conclude, and who should look at the rest."
+    },
+    "sources": {
+      "title": "Every sentence has a source",
+      "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
+    }
   }
 }

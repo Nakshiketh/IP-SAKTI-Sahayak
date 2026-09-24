@@ -15,7 +15,16 @@ import type { QueryErrorCode } from '@/services/query';
  * Each message states what happened and what to do next, and none of them
  * implies an answer was withheld.
  */
-export function QueryFailure({ code, onRetry }: { code: QueryErrorCode; onRetry: () => void }) {
+export function QueryFailure({
+  code,
+  onRetry,
+  onShorten,
+}: {
+  code: QueryErrorCode;
+  onRetry: () => void;
+  /** Offered only where a shorter question would actually help. */
+  onShorten?: () => void;
+}) {
   const { t } = useTranslation('sahayak');
 
   return (
@@ -23,9 +32,18 @@ export function QueryFailure({ code, onRetry }: { code: QueryErrorCode; onRetry:
       <Callout tone="caution" title={t('error.title')} titleLevel={2}>
         {t(`error.${code}`)}
       </Callout>
-      <Button variant="secondary" size="sm" className="mt-4" onClick={onRetry}>
-        {t('error.retry')}
-      </Button>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Button variant="secondary" size="sm" onClick={onRetry}>
+          {t('error.retry')}
+        </Button>
+        {/* A timeout is the one failure a reader can do something about
+            themselves, so the action that helps is offered beside the retry. */}
+        {code === 'timeout' && onShorten ? (
+          <Button variant="secondary" size="sm" onClick={onShorten}>
+            {t('error.shorter')}
+          </Button>
+        ) : null}
+      </div>
     </section>
   );
 }
