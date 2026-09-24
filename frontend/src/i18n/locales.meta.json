@@ -1,0 +1,66 @@
+{
+  "about": "What each language is, and how far it has actually been translated. `coverage` is written by scripts/i18n/check_locales.py from the locale files themselves, so it cannot drift from the truth by being forgotten. `tier` follows docs/upgrade/phases/PHASE_06_multilingual.md: tier 1 is reviewed by the team, tier 2 is machine-drafted and labelled Beta wherever it is offered. A language is only worth showing if the reader is told which of those it is.",
+  "min_coverage_to_show": 0.95,
+  "locales": [
+    {
+      "code": "en",
+      "native_name": "English",
+      "english_name": "English",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 1,
+      "reviewed_by": "source language",
+      "coverage": 1.0
+    },
+    {
+      "code": "hi",
+      "native_name": "हिंदी",
+      "english_name": "Hindi",
+      "dir": "ltr",
+      "script": "Deva",
+      "tier": 1,
+      "reviewed_by": null,
+      "coverage": 0.61
+    },
+    {
+      "code": "te",
+      "native_name": "తెలుగు",
+      "english_name": "Telugu",
+      "dir": "ltr",
+      "script": "Telu",
+      "tier": 1,
+      "reviewed_by": null,
+      "coverage": 0.44
+    },
+    {
+      "code": "ta",
+      "native_name": "தமிழ்",
+      "english_name": "Tamil",
+      "dir": "ltr",
+      "script": "Taml",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.44
+    },
+    {
+      "code": "bn",
+      "native_name": "বাংলা",
+      "english_name": "Bengali",
+      "dir": "ltr",
+      "script": "Beng",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.44
+    },
+    {
+      "code": "mr",
+      "native_name": "मराठी",
+      "english_name": "Marathi",
+      "dir": "ltr",
+      "script": "Deva",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.44
+    }
+  ]
+}

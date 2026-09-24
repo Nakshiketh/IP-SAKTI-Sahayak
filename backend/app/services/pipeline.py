@@ -45,11 +45,13 @@ from app.models.domain import (
     VerificationStatus,
 )
 from app.reasoning import analyse
+from app.reasoning.phrases import filter_text
 from app.registry.store import SourceRegistry, get_registry
 from app.retrieval.store import Namespaces
 from app.retrieval.types import RetrievalFilters, ScoredChunk
 from app.services import citations as citation_service
 from app.services import confidence as confidence_service
+from app.services import invariants
 from app.services.audit import AuditLog, AuditRow, hash_question
 from app.services.context import build_context
 from app.services.guardrails import Refusal, classify_refusal
@@ -679,15 +681,50 @@ class Pipeline:
         )
 
     def _translate(self, mapped: citation_service.MappedAnswer, source: str, target: str) -> bool:
-        """Translate the blocks in place. Citation metadata is never touched."""
+        """Translate the blocks in place, and keep the English if it cannot be trusted.
+
+        Citation metadata is never touched: a translated document title is one
+        the reader cannot search for or quote.
+
+        Two checks run on what comes back, because this is the one place
+        verified text is rewritten after all the verification is done. The
+        invariants must survive — section numbers, years, the acronyms that name
+        instruments — and the blocked-phrase filter runs again, since a promise
+        the English never made can appear in a translation of it.
+
+        Failing either means showing the English with a note. A reader who asked
+        for Hindi and got English with a reason has been told the truth; one who
+        got Hindi citing the wrong section has not.
+        """
         if source == target:
             return False
-        texts = [block.text for block in mapped.blocks]
-        result = self._translator.translate(texts, source=source, target=target)
-        if not result.translated:
+
+        # Claim by claim, not block by block. A block's text is the flat
+        # rendering of its claims and the model enforces that they agree, so
+        # translating only the text leaves an answer whose sentences and whose
+        # rendering disagree — and each claim carries its own citations, which
+        # have to stay attached to the sentence they support.
+        spans = [
+            (index, claim) for index, block in enumerate(mapped.blocks) for claim in block.claims
+        ]
+        texts = [claim.text for _, claim in spans]
+        if not texts:
             return False
-        for block, text in zip(mapped.blocks, result.texts, strict=False):
-            block.text = text
+
+        result = self._translator.translate(texts, source=source, target=target)
+        if not result.translated or len(result.texts) != len(texts):
+            return False
+
+        verdict = invariants.check_all(texts, list(result.texts))
+        if not verdict.ok:
+            return False
+        if any(filter_text(text).blocked for text in result.texts):
+            return False
+
+        for (_, claim), text in zip(spans, result.texts, strict=True):
+            claim.text = text
+        for block in mapped.blocks:
+            block.text = " ".join(claim.text.strip() for claim in block.claims).strip()
         return True
 
     def _evidence(

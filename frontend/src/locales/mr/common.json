@@ -24,7 +24,8 @@
   },
   "language": {
     "label": "भाषा",
-    "changed": "भाषा बदलून {{language}} केली"
+    "changed": "भाषा बदलून {{language}} केली",
+    "partial": "{{name}} — {{percent}}% translated"
   },
   "skipToContent": "थेट मजकुरावर जा",
   "footer": {

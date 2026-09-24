@@ -24,7 +24,8 @@
   },
   "language": {
     "label": "ভাষা",
-    "changed": "ভাষা পরিবর্তন করে {{language}} করা হয়েছে"
+    "changed": "ভাষা পরিবর্তন করে {{language}} করা হয়েছে",
+    "partial": "{{name}} — {{percent}}% translated"
   },
   "skipToContent": "সরাসরি মূল বিষয়ে যান",
   "footer": {

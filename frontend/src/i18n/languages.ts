@@ -1,3 +1,5 @@
+import meta from './locales.meta.json';
+
 /**
  * The languages this product answers in.
  *
@@ -33,6 +35,49 @@ export const LOCALES: readonly LocaleDefinition[] = [
 ] as const;
 
 export const LOCALE_CODES: readonly LocaleCode[] = LOCALES.map((locale) => locale.code);
+
+/**
+ * How far each language has actually been translated, and what kind of
+ * translation it is.
+ *
+ * Read from `locales.meta.json`, which `scripts/i18n/check_locales.py --write`
+ * fills in from the locale files themselves. It cannot drift by being
+ * forgotten, which matters: a coverage figure nobody maintains is worse than
+ * none, because the switcher would keep asserting it.
+ */
+export interface LocaleStatus {
+  /** 0 to 1. The share of English keys with a different value in this locale. */
+  coverage: number;
+  /** 1 is reviewed by the team; 2 is machine-drafted and labelled Beta. */
+  tier: 1 | 2;
+  reviewedBy: string | null;
+}
+
+export const LOCALE_STATUS: Readonly<Record<LocaleCode, LocaleStatus>> = Object.fromEntries(
+  (meta.locales as { code: string; coverage: number; tier: 1 | 2; reviewed_by: string | null }[])
+    .filter((entry): entry is typeof entry & { code: LocaleCode } =>
+      LOCALES.some((locale) => locale.code === entry.code),
+    )
+    .map((entry) => [
+      entry.code,
+      { coverage: entry.coverage, tier: entry.tier, reviewedBy: entry.reviewed_by },
+    ]),
+) as Record<LocaleCode, LocaleStatus>;
+
+/**
+ * The coverage at which a language stops needing a warning beside it.
+ *
+ * Below this a reader will meet English constantly, and the switcher says so
+ * rather than letting them discover it one screen at a time. The phase pack
+ * hides such a language outright; that is not done here, because it would
+ * remove every language but English from an Indian product before the
+ * translation script has ever been given a key to run with. See PROGRESS.md.
+ */
+export const FULL_COVERAGE = meta.min_coverage_to_show as number;
+
+export function isFullyTranslated(code: LocaleCode): boolean {
+  return (LOCALE_STATUS[code]?.coverage ?? 0) >= FULL_COVERAGE;
+}
 
 export const DEFAULT_LOCALE: LocaleCode = 'en';
 

@@ -24,7 +24,8 @@
   },
   "language": {
     "label": "భాష",
-    "changed": "భాష {{language}} కు మార్చబడింది"
+    "changed": "భాష {{language}} కు మార్చబడింది",
+    "partial": "{{name}} — {{percent}}% translated"
   },
   "skipToContent": "కంటెంట్‌కు వెళ్లండి",
   "footer": {

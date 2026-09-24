@@ -3,8 +3,9 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 5 done (clarity: In short, Simple/Expert, glossary surface, hints, timeout, copy style, accessibility, background video)
-- Last green gate: phase 5 — backend 505, frontend 429, typecheck, eslint, ruff, evals (below_target []), build 116.3 kB of a 150 kB budget. Locale and prettier checks still fail at baseline.
+- Current phase: 6 part one done (translation invariants, locale metadata and checks, translation script, honest coverage labels)
+- Last green gate: phase 6a — backend 520, frontend 429, typecheck, eslint, ruff, evals (below_target []), build 116.6 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
@@ -59,8 +60,8 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C17 | Real pipeline activity events in UI | 2, 4 | DONE | pipeline streams stage events; components/sahayak/RetrievalStatus.tsx renders real timings |
 | C18 | "In short" summaries + Simple/Expert view | 5 | DONE | lib/inShort.ts selects whole claims from the answer block up to 60 words — a selection, never a paraphrase, so every sentence keeps its citation; components/answer/{InShort,DetailToggle}.tsx; hooks/useDetailLevel.ts remembers the choice in localStorage. Simple shows the answer, what it means, where guidance ends and a Show the evidence link; Expert opens the matrices and the receipt |
 | C19 | Guided intake + glossary | 5 | PARTIAL | data/glossary/en.json (twelve terms, ≤25 words each, each either pointing at a document the corpus holds or marked a plain-language explainer) plus lib/glossary.ts and components/answer/GlossaryNotes.tsx, which explains only the terms an answer actually used. The guided-intake stepper is not built: the analyst already asks one question at a time and takes "I don't know", and the owner asked that Check My Product not be rebuilt |
-| C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 69%, te/ta/bn/mr 49%, flagged `__untranslated` |
-| C21 | i18n: international languages + RTL | 6 | MISSING | No RTL handling anywhere |
+| C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 61%, te/ta/bn/mr 44%. frontend/src/i18n/locales.meta.json now records tier, script, direction and measured coverage, and the switcher states the percentage beside a partly translated language. scripts/i18n/translate_locales.py drafts the rest once a key exists; without one it changes nothing |
+| C21 | i18n: international languages + RTL | 6 | PARTIAL | `dir` is carried per locale and written onto <html> by Shell.tsx, so a right-to-left locale needs its files rather than a layout change. No international locale files exist yet: the translation script cannot run without a key |
 | C22 | Case Workspace (save, resume, update, re-run, archive, delete, change reasons) | 7 | PARTIAL | analyst conversations save/resume/delete per account (analyst/store.py, data/analyses.sqlite3); no archive, roadmap or change reasons |
 | C23 | Compliance Roadmap | 7 | PARTIAL | analyst/protection.py `roadmap_seed` gives ordered tasks (now / before_filing / before_sale), each marked when it exists only because something is unknown, so the list shrinks as questions are answered. The workspace around it is Phase 7 |
 | C24 | Ask Sahayak case-aware upgrade (evidence cards, badges) | 7 | MISSING | Ask has no case link |
@@ -100,6 +101,28 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
+
+## Translation was broken (Phase 6)
+`_translate` replaced `AnswerBlock.text` and left `AnswerBlock.claims` untouched. The domain model validates that the text is exactly its claims joined, so **any translator that actually translated would have raised a ValidationError and failed the request**. It never surfaced because the only implementation in use is `PassthroughTranslator`, which reports `translated=False` and returns before that line.
+
+It now translates claim by claim and rebuilds each block's text from them, which keeps the citations attached to the sentences they support. Found by writing a fake translator for the invariant tests, which is the first thing in this repo's life to translate anything.
+
+### What a translation must survive
+`app/services/invariants.py` checks the translated text against the English before it is shown. Not for meaning, which no mechanical check can do, but for what must survive any honest translation of a legal sentence: numbers including years and section numbers, and the acronyms that name institutions and instruments. A failed check shows the English, and the blocked-phrase filter runs on the translation too — a guarantee the English never made can appear in a translation of it.
+
+## Languages shown, and why
+| Locale | Coverage | Tier | Shown |
+|---|---|---|---|
+| en | 100% | 1 | yes |
+| hi | 61% | 1 | yes, labelled "61% translated" |
+| te | 44% | 1 | yes, labelled |
+| ta | 44% | 2 | yes, labelled |
+| bn | 44% | 2 | yes, labelled |
+| mr | 44% | 2 | yes, labelled |
+
+The phase asks for a language below 95% coverage to be hidden. That is not done, and the departure is deliberate: applying it today would remove every language but English from an Indian product, before the translation script has ever been given a key to run with. Instead the switcher states the coverage, so a reader choosing Hindi knows what they are choosing. `min_coverage_to_show` and `isFullyTranslated()` exist and are tested, so enforcing the rule once translations land is a one-line change.
+
+**One real finding from `check_locales.py`**: Telugu is declared tier 1 (reviewed by the team) but 56% of its values are still English. Either it gets translated or it drops to tier 2; it cannot claim review it has not had.
 
 ## Phase 5, what was built and what was left
 Built in part two: the glossary surface (terms found in the answer, explained beside it, never annotated into a cited sentence); three first-visit hints, each shown at the moment it is useful and dismissed for good; a real request timeout with the one action that helps.
@@ -170,6 +193,8 @@ The rule to keep: nothing may render before its namespace is present, because th
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: A translation that loses a section number, a year or an acronym is not shown. The English is shown instead. A reader who asked for Hindi and got English with a reason has been told the truth; one who got Hindi citing the wrong provision has not.
+- 2026-09-24: Bulk translations are not hand-typed. `scripts/i18n/translate_locales.py` drafts them from the English with the model, and without a key it changes nothing and leaves the languages labelled — as the phase requires.
 - 2026-09-24: The glossary is shown beside the answer, not annotated into it. Marking up words inside a cited sentence would put this product's wording into text that belongs to a source, and the citation markers already occupy that space.
 - 2026-09-24: An abbreviation of five characters or fewer in capitals is matched case-sensitively. Lower-cased, "abs" appears inside ordinary words, and a glossary that fires on the wrong word teaches a reader to ignore it.
 - 2026-09-24: Requests now time out at 45 seconds and say so. An indefinite spinner is worse than a failure: the reader cannot tell whether to wait.
@@ -204,6 +229,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 6, part one
+- Done: the translation invariant check and its English fallback; the blocked-phrase filter on translated text; the claim-level translation fix; `frontend/src/i18n/locales.meta.json`; `scripts/i18n/check_locales.py` (key parity, placeholder parity, empty values, tier-1 English leakage) and `scripts/i18n/translate_locales.py`; coverage labels in the switcher. 15 new backend tests.
+- Not done / carried over: no new languages. Tier 2 Indian and international locales, the pseudo-locale and pseudo-RTL fixtures, the hard-coded-JSX lint rule, per-script font loading, Intl formatting, and the multilingual A–H evals all wait on translations, and translations wait on an API key in `ANTHROPIC_API_KEY`. The browser screenshots in en/hi/te/ar are owed with the other phases'.
+- Next phase should first: either put a key in the environment and run `python scripts/i18n/translate_locales.py --all`, then `check_locales.py --write` — or read PHASE_07 and leave the language work where it is, which is honest but stalled.
+
 ### Phase 5, part two
 - Done: the glossary surface and lib/glossary.ts; three dismissible first-visit hints; a 45-second request timeout with a `timeout` error code, its copy, and an "Ask a shorter question" action offered only where it helps; 12 more tests.
 - Not done / carried over: the guided-intake stepper, the Home copy and proof chips, and the usability run — each with a reason above. Loading skeletons already exist in components/ui/Skeleton.tsx and were left alone.
