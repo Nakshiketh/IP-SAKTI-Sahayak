@@ -1,0 +1,79 @@
+{
+  "about": "Plain-language explanations of the terms this product uses. A definition here is a reading aid, never authority: where a term comes from an instrument the corpus holds, `source_id` points at it and the interface offers the source itself. Where it does not, the entry is shown as a plain-language explainer and the reader is told to go to the instrument for the operative words. No definition here paraphrases a provision into a rule — that is what the answer, with its citations, is for.",
+  "version": "1",
+  "language": "en",
+  "terms": [
+    {
+      "term": "ABS",
+      "expansion": "access and benefit sharing",
+      "plain_definition": "Rules about using India's plants and other biological material, and sharing the benefits with the people and places they came from.",
+      "source_id": "in-bd-amendment-act-2023"
+    },
+    {
+      "term": "NBA",
+      "expansion": "National Biodiversity Authority",
+      "plain_definition": "The national body that decides on access to India's biological resources and on benefit sharing.",
+      "source_id": "in-portal-nba-abs"
+    },
+    {
+      "term": "PCT",
+      "expansion": "Patent Cooperation Treaty",
+      "plain_definition": "One application that reserves your filing date in many countries. Each country still decides for itself whether to grant a patent.",
+      "source_id": "intl-pct"
+    },
+    {
+      "term": "Paris priority",
+      "expansion": null,
+      "plain_definition": "After filing in one member country you have a limited window to file elsewhere and keep your first filing date.",
+      "source_id": "intl-paris-convention"
+    },
+    {
+      "term": "TKDL",
+      "expansion": "Traditional Knowledge Digital Library",
+      "plain_definition": "A database of documented Indian traditional knowledge. Access is limited to patent offices under agreement, so this product cannot search it.",
+      "source_id": "in-tkdl-about"
+    },
+    {
+      "term": "prior art",
+      "expansion": null,
+      "plain_definition": "Everything already public before your filing date: products on sale, publications, patents, and documented traditional knowledge.",
+      "source_id": null
+    },
+    {
+      "term": "Section 3(p)",
+      "expansion": null,
+      "plain_definition": "The part of the Patents Act about inventions that are traditional knowledge, or that only aggregate what traditionally known components already do.",
+      "source_id": "in-patents-act-1970"
+    },
+    {
+      "term": "Schedule T",
+      "expansion": null,
+      "plain_definition": "The good manufacturing practice requirements premises must meet before a licence to make Ayurvedic, Siddha or Unani medicines is issued.",
+      "source_id": "in-drugs-and-cosmetics-act-rules"
+    },
+    {
+      "term": "Rule 158B",
+      "expansion": null,
+      "plain_definition": "The rule setting what evidence of safety and effectiveness a licence application needs, which differs by category of medicine.",
+      "source_id": "in-drugs-and-cosmetics-act-rules"
+    },
+    {
+      "term": "Ayurveda Aahara",
+      "expansion": null,
+      "plain_definition": "Food made to Ayurvedic recipes and principles. It is regulated as food by the food regulator, not as a medicine.",
+      "source_id": "in-fssai-ayurveda-aahara-2022"
+    },
+    {
+      "term": "proprietary medicine",
+      "expansion": "patent or proprietary medicine",
+      "plain_definition": "A medicine using only ingredients named in the recognised classical books, but not itself a formulation described in them.",
+      "source_id": "in-drugs-and-cosmetics-act-rules"
+    },
+    {
+      "term": "biological resource",
+      "expansion": null,
+      "plain_definition": "Plants, animals, micro-organisms and their parts or extracts. Whether a particular material counts is decided under the Act, not here.",
+      "source_id": "in-bd-amendment-act-2023"
+    }
+  ]
+}

@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 4 done (flagship case, jury demo, and the surfaces that let a reader check an answer rather than trust it)
-- Last green gate: phase 4 — backend 505, frontend 403, typecheck, eslint, ruff, evals (below_target []), build **116 kB of a 150 kB budget**. Locale and prettier checks still fail at baseline.
+- Current phase: 5 part one done (comprehension: In short, Simple/Expert, glossary, copy style, accessibility, background video). Part two not started — see the handoff.
+- Last green gate: phase 5a — backend 505, frontend 417, typecheck, eslint, ruff, evals (below_target []), build 116.3 kB of a 150 kB budget. Locale and prettier checks still fail at baseline.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
@@ -57,8 +57,8 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C15 | Provenance explorer ("Why am I seeing this?") | 4 | DONE | components/answer/Provenance.tsx: passage, document, authority, section, jurisdiction, review state, review and as-of dates, applicability, and the ranking signal labelled as a ranking signal rather than a confidence |
 | C16 | Answer Receipt | 1, 4 | DONE | components/answer/AnswerReceipt.tsx, collapsed: ids, timestamp, corpus version, source documents, verification counts, source review dates, confidence per issue, claims removed and safety flags |
 | C17 | Real pipeline activity events in UI | 2, 4 | DONE | pipeline streams stage events; components/sahayak/RetrievalStatus.tsx renders real timings |
-| C18 | "In short" summaries + Simple/Expert view | 5 | MISSING | — |
-| C19 | Guided intake + glossary | 5 | PARTIAL | Analyst asks one question at a time; /assess/steps stepper exists; no glossary |
+| C18 | "In short" summaries + Simple/Expert view | 5 | DONE | lib/inShort.ts selects whole claims from the answer block up to 60 words — a selection, never a paraphrase, so every sentence keeps its citation; components/answer/{InShort,DetailToggle}.tsx; hooks/useDetailLevel.ts remembers the choice in localStorage. Simple shows the answer, what it means, where guidance ends and a Show the evidence link; Expert opens the matrices and the receipt |
+| C19 | Guided intake + glossary | 5 | PARTIAL | data/glossary/en.json holds all twelve terms the phase lists, each 25 words or fewer, each either pointing at a document the corpus holds or marked as a plain-language explainer. Tests check both. The tooltip surface and the guided-intake stepper are part two |
 | C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 69%, te/ta/bn/mr 49%, flagged `__untranslated` |
 | C21 | i18n: international languages + RTL | 6 | MISSING | No RTL handling anywhere |
 | C22 | Case Workspace (save, resume, update, re-run, archive, delete, change reasons) | 7 | PARTIAL | analyst conversations save/resume/delete per account (analyst/store.py, data/analyses.sqlite3); no archive, roadmap or change reasons |
@@ -73,10 +73,10 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C31 | IP Protection Map | 3, 4 | DONE | analyst/protection.py plus components/answer/ProtectionMap.tsx, rendered below the existing findings on /assess where its data comes from. Six branches with status chips; opening one shows why, the facts that would settle it, sources and one next step |
 | C32 | Document Intelligence | 9 | MISSING | No upload path anywhere |
 | C33 | Scan-badge off primary sign-in; public Ask without login | 5 | BLOCKED | Owner: the login page is not to be disturbed. Flag `scanBadgeLogin` ships **true**. Public Ask needs a separate decision |
-| C34 | Patent timeline demoted to "Learn" | 5 | MISSING | 15-step timeline sits on Home (components/home/PatentTimeline.tsx) |
+| C34 | Patent timeline demoted to "Learn" | 5 | NOT DOING | The owner's standing instruction is to preserve the existing landing page. Home ordering is unchanged and this stays closed unless they ask |
 | C35 | Security review items | 10 | MISSING | docs/SECURITY.md has the threat model only |
 | C36 | Eval set A–H + multilingual evals | 2, 6 | PARTIAL | A–H built as structural assertions over the real pipeline in backend/tests/test_reasoning_cases.py rather than as gold rows, because the gold harness scores metrics and these assert shape. The 170-case gold set is unchanged; multilingual evals are Phase 6 |
-| C37 | Background video accessibility and performance | 5 | PARTIAL | hooks/useReducedMotion.ts exists; no pause-on-hidden, no Save-Data skip |
+| C37 | Background video accessibility and performance | 5 | DONE | reduced motion pauses it (already there); it now pauses while the tab is hidden, and on Save-Data or a 2G connection it is not downloaded at all rather than merely paused |
 
 ## KEEP / MODIFY / REMOVE / ADD (Phase 0)
 - KEEP: palm-leaf design system and tokens; the 11-stage pipeline and its streamed events; jurisdiction separation; citation verification; corpus/guidance (51 verified sources, 76 passages, TKDL public data); evals harness; sign-in exactly as it is, badge scanner included.
@@ -100,6 +100,13 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
+
+## Phase 5 decisions the owner did not have to make
+The owner declined to be asked and said to continue, so these were taken on their standing instructions rather than by guessing at new ones.
+
+- **C33 stays BLOCKED.** Phase 5 item 10 asks for `scanBadgeLogin=false` and for Ask to work without login. The instruction on this work has been, twice, that the login page is not to be disturbed. Neither was done. The badge scanner is still the sign-in and Ask still requires an account.
+- **C34 not done.** Item 10 also moves the 15-step patent timeline down Home. The session-one instruction was to preserve the existing landing page, so Home's ordering is untouched.
+- **"In short" is a selection, not a summary.** Writing a plainer version of the answer would put text no source says in the most prominent position on the page. It takes whole cited claims up to 60 words and stops, and renders nothing when the answer is already that short.
 
 ## The flagship case, after Phase 4 part one
 Run on 2026-09-24 through the real pipeline, both jurisdictions.
@@ -155,6 +162,8 @@ The rule to keep: nothing may render before its namespace is present, because th
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: A glossary definition either names a document the corpus holds or is labelled a plain-language explainer. There is no third state where a definition implies authority it cannot show, and a test checks every `source_id` against the corpus.
+- 2026-09-24: The background video is not downloaded at all on Save-Data or a 2G connection. Pausing it would still spend the reader's bytes, which is the thing Save-Data asks us not to do.
 - 2026-09-24: English locale namespaces are split the way the other five already were. English is the fallback, so `common`, `home` and `about` stay eager; the rest belong to lazy routes and load with them.
 - 2026-09-24: The case brief prints through the browser. A PDF library would add hundreds of kilobytes to produce a worse result than the thing every browser already does, and one more artefact to keep true.
 - 2026-09-24: The provenance drawer shows the rerank score labelled as a ranking signal. It says the passage matched the words of the question, which is not the answer being right, and a bare number invites exactly that confusion.
@@ -184,6 +193,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 5, part one
+- Done: In short and What this means for you; the Simple/Expert toggle, remembered locally; data/glossary/en.json with all twelve terms; docs/upgrade/COPY_STYLE.md; the background video's pause-on-hidden and Save-Data skip; 14 new tests including axe checks with zero violations on the guidance block, the toggle and the case brief.
+- Not done / carried over: the glossary tooltip surface (the data exists, nothing renders it yet); the guided-intake stepper for Check My Product; loading and timeout states; the three first-visit hints; the Home copy and proof chips; the usability run at 360px and 1280px with screenshots to docs/upgrade/screens/phase5/, which needs dev servers the OS stopped under memory pressure.
+- Next phase should first: read PHASE_06, and note that the untranslated block is now larger again — every Phase 4 and Phase 5 string ships in English in the five non-English locales behind `__untranslated`.
+
 ### Phase 4, part two
 - Done: the English locale split (149 kB → 116 kB); the provenance drawer; the Answer Receipt; the source comparison matrix; the IP Protection Map on /assess, with `Analysis.intelligence` now typed on the frontend; the Case Brief with copy, export and print. 23 new frontend tests.
 - Not done / carried over: the browser screenshots at 1280px and 360px (docs/upgrade/screens/phase4/) — the dev servers were stopped by the OS under memory pressure and the owner asked that they not be restarted unprompted. The five non-English locales carry all the Phase 4 strings in English behind `__untranslated`; Phase 6 owes the translations, and this is now the largest block of untranslated copy in the repo.

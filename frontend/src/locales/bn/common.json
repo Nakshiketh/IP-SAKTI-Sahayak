@@ -202,5 +202,11 @@
     "scanSwitch": "ক্যামেরা বদলান",
     "scanPrivacy": "ফ্রেমগুলি এই ইনস্ট্যান্সেই যাচাই হয় এবং কখনো সংরক্ষিত হয় না।",
     "cameraFallback": "এর বদলে আপনি ব্যাজের একটি ছবি আপলোড করতে পারেন।"
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
   }
 }

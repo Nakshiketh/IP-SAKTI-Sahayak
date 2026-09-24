@@ -517,5 +517,22 @@
     "noneMissing": "Nothing material is missing.",
     "noConflicts": "No overlap or conflict was found.",
     "candidates": "Still open: {{classes}}"
+  },
+  "inShort": {
+    "heading": "In short",
+    "meansForYou": "What this means for you"
+  },
+  "view": {
+    "label": "How much detail",
+    "simple": "Simple",
+    "expert": "Expert",
+    "showEvidence": "Show the evidence",
+    "hideEvidence": "Hide the evidence",
+    "simpleNote": "The answer, what it means for you, and how much expert review it needs."
+  },
+  "glossary": {
+    "explainer": "Plain-language explainer",
+    "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
+    "openSource": "Read the source"
   }
 }

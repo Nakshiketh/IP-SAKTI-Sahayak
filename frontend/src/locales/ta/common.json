@@ -202,5 +202,11 @@
     "scanSwitch": "கேமராவை மாற்று",
     "scanPrivacy": "சட்டகங்கள் இந்த நிறுவலிலேயே சரிபார்க்கப்படுகின்றன, ஒருபோதும் சேமிக்கப்படுவதில்லை.",
     "cameraFallback": "அதற்குப் பதிலாக பேட்ஜின் புகைப்படத்தைப் பதிவேற்றலாம்."
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
   }
 }

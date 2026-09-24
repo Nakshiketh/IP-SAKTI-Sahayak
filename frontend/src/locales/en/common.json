@@ -201,5 +201,11 @@
     "scanSwitch": "Switch camera",
     "scanPrivacy": "Frames are checked on this instance and never stored.",
     "cameraFallback": "You can upload a photo of the badge instead."
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
   }
 }

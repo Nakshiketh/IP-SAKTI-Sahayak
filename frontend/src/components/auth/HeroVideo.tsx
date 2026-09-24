@@ -53,6 +53,26 @@ function tryPlay(video: HTMLVideoElement): void {
   void Promise.resolve(video.play()).catch(() => undefined);
 }
 
+/**
+ * Should this connection be spared a full-screen video at all?
+ *
+ * A decorative background is the first thing to give up when the reader is
+ * paying for data or is on a slow link. `saveData` is the reader asking
+ * directly, and `effectiveType` is the browser's own read of the connection;
+ * both are non-standard, so both are read defensively and their absence means
+ * carry on.
+ */
+function prefersNoVideo(): boolean {
+  const connection = (
+    navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    }
+  ).connection;
+  if (!connection) return false;
+  if (connection.saveData) return true;
+  return connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g';
+}
+
 export function HeroVideo({
   videoRef,
   muted,
@@ -64,6 +84,9 @@ export function HeroVideo({
 }) {
   const look = VARIANTS[variant];
   const [failed, setFailed] = useState(false);
+  // Decided once: a connection that changes mid-session should not make the
+  // background appear and disappear behind the text being read.
+  const [skip] = useState(prefersNoVideo);
 
   /**
    * Put the `muted` *attribute* on the element before anything tries to play.
@@ -89,9 +112,9 @@ export function HeroVideo({
    */
   const attemptPlay = useCallback(() => {
     const video = videoRef.current;
-    if (!video || prefersReducedMotion()) return;
+    if (!video || prefersReducedMotion() || skip) return;
     tryPlay(video);
-  }, [videoRef]);
+  }, [videoRef, skip]);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -119,9 +142,32 @@ export function HeroVideo({
     return () => query.removeEventListener('change', apply);
   }, [videoRef]);
 
+  /**
+   * Stop while the tab is in the background.
+   *
+   * A hidden video still decodes: it costs battery and bandwidth to render
+   * frames nobody is looking at. Coming back resumes, unless something else —
+   * reduced motion, a saved-data connection — says not to.
+   */
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const apply = () => {
+      if (document.hidden) video.pause();
+      else if (!prefersReducedMotion() && !skip) tryPlay(video);
+    };
+
+    document.addEventListener('visibilitychange', apply);
+    return () => document.removeEventListener('visibilitychange', apply);
+  }, [videoRef, skip]);
+
   return (
     <div className={`fixed inset-0 -z-10 overflow-hidden print:hidden ${look.ground}`}>
-      {failed ? (
+      {/* A skipped video is not downloaded at all. Pausing it would still cost
+          the reader the bytes, which is the whole thing Save-Data asks us not
+          to spend. The poster, or the page ground, stands in. */}
+      {failed || skip ? (
         look.poster ? (
           <div
             className={`h-full w-full bg-cover bg-center ${look.filter}`}

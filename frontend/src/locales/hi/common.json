@@ -201,5 +201,11 @@
     "scanSwitch": "कैमरा बदलें",
     "scanPrivacy": "फ़्रेम इसी इंस्टेंस पर जाँचे जाते हैं और कभी सहेजे नहीं जाते।",
     "cameraFallback": "आप इसके बजाय बैज की फ़ोटो अपलोड कर सकते हैं।"
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
   }
 }

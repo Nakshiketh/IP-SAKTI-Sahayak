@@ -4,6 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 
 import { AnswerView } from '@/components/answer';
 import { AnswerReceipt } from '@/components/answer/AnswerReceipt';
+import { DetailToggle } from '@/components/answer/DetailToggle';
+import { InShort } from '@/components/answer/InShort';
 import { CaseBrief } from '@/components/answer/CaseBrief';
 import { ConflictMatrix } from '@/components/answer/ConflictMatrix';
 import { GuidanceEnds } from '@/components/answer/GuidanceEnds';
@@ -35,6 +37,7 @@ import {
   LiveRegion,
   Select,
 } from '@/components/ui';
+import { useDetailLevel } from '@/hooks/useDetailLevel';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { DESKTOP_QUERY, TABLET_QUERY, useMediaQuery } from '@/hooks/useMediaQuery';
 import { findLocale, type LocaleCode } from '@/i18n/languages';
@@ -98,6 +101,7 @@ export default function Sahayak() {
   const [railOpen, setRailOpen] = useState(false);
   const [escalateOpen, setEscalateOpen] = useState(false);
   const [briefOpen, setBriefOpen] = useState(false);
+  const [detail, setDetail] = useDetailLevel();
   const [phase, setPhase] = useState<StatusPhase>('done');
   const [result, setResult] = useState<QueryResult | null>(null);
   const [failure, setFailure] = useState<QueryErrorCode | null>(null);
@@ -403,6 +407,28 @@ export default function Sahayak() {
                     </>
                   ) : (
                     <>
+                      <DetailToggle
+                        className="mt-6 print:hidden"
+                        level={detail}
+                        onChange={setDetail}
+                      />
+
+                      {/* The short form is a selection of claims the answer
+                          already makes, so it carries their citations and adds
+                          no sentence a source did not supply. */}
+                      <InShort
+                        className="mt-5"
+                        answer={result.answer!}
+                        numbering={
+                          new Map(
+                            result.answer!.citations.map((citation, index) => [
+                              citation.citation_id,
+                              index + 1,
+                            ]),
+                          )
+                        }
+                      />
+
                       <AnswerView
                         className="mt-6 lg:grid-cols-1"
                         headingLevel={2}
@@ -416,17 +442,33 @@ export default function Sahayak() {
 
                       {/* Where guidance ends comes before the overlaps: a
                           reader should know what this will not claim before
-                          they read the detail of what it did find. */}
+                          they read the detail of what it did find. It shows at
+                          both levels, because it is the part a reader in a
+                          hurry most needs. */}
                       {result.answer!.analysis ? (
                         <>
                           <GuidanceEnds className="mt-6" analysis={result.answer!.analysis} />
-                          <ConflictMatrix
-                            className="mt-6"
-                            analysis={result.answer!.analysis}
-                            citations={result.answer!.citations}
-                          />
-                          <SourceMatrix className="mt-6" citations={result.answer!.citations} />
-                          <AnswerReceipt className="mt-6" answer={result.answer!} />
+
+                          {detail === 'expert' ? (
+                            <>
+                              <ConflictMatrix
+                                className="mt-6"
+                                analysis={result.answer!.analysis}
+                                citations={result.answer!.citations}
+                              />
+                              <SourceMatrix className="mt-6" citations={result.answer!.citations} />
+                              <AnswerReceipt className="mt-6" answer={result.answer!} />
+                            </>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setDetail('expert')}
+                              className="mt-6 text-sm underline print:hidden"
+                            >
+                              {t('view.showEvidence')}
+                            </button>
+                          )}
+
                           <div className="mt-6 print:hidden">
                             <button
                               type="button"

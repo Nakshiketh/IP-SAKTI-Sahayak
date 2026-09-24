@@ -202,5 +202,11 @@
     "scanSwitch": "కెమెరా మార్చండి",
     "scanPrivacy": "ఫ్రేమ్‌లు ఈ ఇన్‌స్టెన్స్‌లోనే తనిఖీ చేయబడతాయి, ఎప్పుడూ సేవ్ చేయబడవు.",
     "cameraFallback": "బదులుగా బ్యాడ్జ్ ఫోటోను అప్‌లోడ్ చేయవచ్చు."
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
   }
 }
