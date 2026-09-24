@@ -175,6 +175,14 @@ class Settings(BaseSettings):
         return self.data_dir / "audit.sqlite3"
 
     @property
+    def feedback_db_path(self) -> Path:
+        """Kept in its own file, not beside the audit log.
+
+        Two stores in one file invites a join that must never be possible.
+        """
+        return self.data_dir / "feedback.sqlite3"
+
+    @property
     def records_db_path(self) -> Path:
         """Layer 2, in its own file. Never under `index/`, which is Layer 1."""
         return self.records_db_override or (self.data_dir / "records.sqlite3")

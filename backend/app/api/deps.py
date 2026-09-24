@@ -22,6 +22,7 @@ from app.llm.registry import build_llm_client
 from app.records.store import RecordsStore
 from app.retrieval.store import Namespaces
 from app.services.audit import AuditLog
+from app.services.feedback_store import FeedbackStore
 from app.services.pipeline import Pipeline
 from app.services.records_service import RecordsService
 from app.services.translation import build_translator
@@ -37,6 +38,12 @@ def get_namespaces() -> Namespaces:
 def get_audit_log() -> AuditLog:
     settings = get_settings()
     return AuditLog(settings.audit_db_path, enabled=settings.audit_enabled)
+
+
+@lru_cache
+def get_feedback_store() -> FeedbackStore:
+    """Opinions, kept apart from whoever gave them."""
+    return FeedbackStore(get_settings().feedback_db_path)
 
 
 @lru_cache

@@ -302,8 +302,15 @@ class RecordsSourcesResult(Wire):
 class FeedbackBody(Wire):
     session_id: str = "anonymous"
     query_id: str | None = None
-    #: "helpful" | "not_helpful" | "wrong_source" | "wrong_jurisdiction"
+    #: "yes" | "partly" | "no". The older vocabulary is still accepted.
     verdict: str
+    #: Which part was unclear, from a fixed list. Never free text.
+    aspect: str | None = None
+    #: The shape of the answer, which is what makes the verdict useful. None of
+    #: it identifies the reader or the question.
+    jurisdiction: str | None = None
+    confidence: str | None = None
+    abstained: bool = False
     #: Free text is accepted and deliberately not stored. See the endpoint.
     note: str | None = None
 

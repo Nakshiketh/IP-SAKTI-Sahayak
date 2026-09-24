@@ -24,6 +24,8 @@ coverage/
 /data/index-samples/
 /data/chunks/
 /data/audit.sqlite3
+# Readers' opinions about answers. Run data, and not ours to publish.
+/data/feedback.sqlite3
 /data/records.sqlite3
 /data/records-samples.sqlite3
 /data/accounts.sqlite3

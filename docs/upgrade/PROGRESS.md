@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 6 part one done (translation invariants, locale metadata and checks, translation script, honest coverage labels)
-- Last green gate: phase 6a — backend 520, frontend 429, typecheck, eslint, ruff, evals (below_target []), build 116.6 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- Current phase: 7 part one done (roadmap with honest statuses, change explanation, feedback that carries nobody with it)
+- Last green gate: phase 7a — backend 550, frontend 421, typecheck, eslint, ruff, schema, evals (below_target []), build 116.9 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
@@ -63,9 +63,9 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 61%, te/ta/bn/mr 44%. frontend/src/i18n/locales.meta.json now records tier, script, direction and measured coverage, and the switcher states the percentage beside a partly translated language. scripts/i18n/translate_locales.py drafts the rest once a key exists; without one it changes nothing |
 | C21 | i18n: international languages + RTL | 6 | PARTIAL | `dir` is carried per locale and written onto <html> by Shell.tsx, so a right-to-left locale needs its files rather than a layout change. No international locale files exist yet: the translation script cannot run without a key |
 | C22 | Case Workspace (save, resume, update, re-run, archive, delete, change reasons) | 7 | PARTIAL | analyst conversations save/resume/delete per account (analyst/store.py, data/analyses.sqlite3); no archive, roadmap or change reasons |
-| C23 | Compliance Roadmap | 7 | PARTIAL | analyst/protection.py `roadmap_seed` gives ordered tasks (now / before_filing / before_sale), each marked when it exists only because something is unknown, so the list shrinks as questions are answered. The workspace around it is Phase 7 |
+| C23 | Compliance Roadmap | 7 | PARTIAL | analyst/roadmap.py builds the ten tasks from the issues actually raised, with real dependencies (prior art waits on classification; ABS waits on origin), sources checked against the registry, and five statuses ending at `completed_by_user`. There is no filed, approved or granted status and a test forbids them. The workspace UI is part two |
 | C24 | Ask Sahayak case-aware upgrade (evidence cards, badges) | 7 | MISSING | Ask has no case link |
-| C25 | Feedback signal | 7 | PARTIAL | api/feedback.py exists; no UI |
+| C25 | Feedback signal | 7 | PARTIAL | Yes / Partly / No with a closed list of aspects, stored in its own database (`data/feedback.sqlite3`) holding no session, account, query id or free text — the query id is omitted specifically so no join can re-identify a reader through the audit log. The UI is part two |
 | C26 | Voice Sahayak | 8 | MISSING | — |
 | C27 | Helpline simulator + telephony adapter interface | 8 | MISSING | — |
 | C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
@@ -101,6 +101,13 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
+
+## Feedback, and the join that must not be possible
+The audit log records *that* feedback was given, against a session, because the audit trail has to be complete and the rate limiter needs it. The verdict goes somewhere else entirely: `data/feedback.sqlite3`, holding verdict, aspect, jurisdiction, confidence and whether the answer abstained — and no session, account or query id.
+
+Leaving out the query id is the part that does the work. The audit log already ties a query id to a session, so keeping one beside the verdict would let a join put a name to an opinion. What is kept instead is the shape of the answer, which is what makes the feedback useful for finding where the product is weak.
+
+Free text is accepted and never stored, and "which part was unclear" is a closed list rather than a box: prose about someone's own formulation is exactly what must not accumulate in a table nobody reads.
 
 ## Why 60 answerable cases abstain
 `abstention_precision` sits at 39%: of 99 declines, 39 were right. Traced case by case rather than tuning the threshold.
@@ -268,6 +275,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 7, part one
+- Done: `analyst/roadmap.py` — ten tasks generated from the issues a case actually raises, with dependencies that hold a task at "needs information" until what it rests on is done, sources filtered through the registry, and a status vocabulary that stops at `completed_by_user`. `changed_facts` diffs two runs and treats learning a fact as a change, which is the commonest reason an assessment moves. Feedback split from identity, with its own database, ignored by git. 22 new tests including T17.
+- Not done / carried over: the workspace UI (tabs, evidence links, the twelve panels), the Case/CaseFact/CaseRun models and their endpoints, the roadmap and feedback surfaces, and Ask Sahayak's case-aware follow-ups. The analyst already stores cases per account and the roadmap and diff are ready for a surface to render them.
+- Next phase should first: read PHASE_08, or build the Phase 7 UI on `analyst/roadmap.py`, which is where the remaining value is — the logic exists and nothing shows it.
+
 ### Phase 6, part one
 - Done: the translation invariant check and its English fallback; the blocked-phrase filter on translated text; the claim-level translation fix; `frontend/src/i18n/locales.meta.json`; `scripts/i18n/check_locales.py` (key parity, placeholder parity, empty values, tier-1 English leakage) and `scripts/i18n/translate_locales.py`; coverage labels in the switcher. 15 new backend tests.
 - Not done / carried over: no new languages. Tier 2 Indian and international locales, the pseudo-locale and pseudo-RTL fixtures, the hard-coded-JSX lint rule, per-script font loading, Intl formatting, and the multilingual A–H evals all wait on translations, and translations wait on an API key in `ANTHROPIC_API_KEY`. The browser screenshots in en/hi/te/ar are owed with the other phases'.
