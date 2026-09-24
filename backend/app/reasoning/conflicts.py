@@ -197,19 +197,27 @@ def from_pairs(
     return conflicts
 
 
-def jurisdictional(issue: IssueType | None, other: Jurisdiction) -> Conflict:
+def jurisdictional(
+    issue: IssueType | None,
+    other: Jurisdiction,
+    *,
+    here: str | None = None,
+    there: str | None = None,
+) -> Conflict:
     """The question reached a second legal system; both sets of duties stand.
 
-    Raised from routing, not from evidence. Calling it a conflict at all is a
-    little generous — the point of naming it is that readers expect one answer,
-    and the honest shape of a cross-border question is two.
+    Raised from routing rather than from a pair of passages. Where the governing
+    document on each side is known, both are named, so a reader can compare them
+    — that is the whole use of saying this at all. Naming the other side's
+    document is not merging the two answers: its text never enters this
+    jurisdiction's context, and the two answers stay separate.
     """
     return Conflict(
         conflict_id=f"cf-jurisdiction-{other.value.lower()}",
         conflict_type=ConflictType.JURISDICTIONAL,
         issue=issue,
-        source_a="this_jurisdiction",
-        source_b=other.value,
+        source_a=here or "this_jurisdiction",
+        source_b=there or other.value,
         explanation_key="conflictJurisdictional",
         resolution_status=ResolutionStatus.SEPARATE_OBLIGATIONS,
         reasoning_basis="jurisdiction",

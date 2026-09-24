@@ -286,5 +286,14 @@
     },
     "whereLabel": "Where",
     "officialLabel": "Official sources"
+  },
+  "juryDemo": {
+    "heading": "Explore a complex IP case",
+    "standfirst": "A real Ayurveda startup question that touches patents, traditional knowledge, biodiversity and two legal systems at once. It runs live against the official sources, here, now.",
+    "run": "Run complex case",
+    "running": "Starting…",
+    "clear": "Clear and ask my own question",
+    "note": "This runs the same pipeline as any other question. Nothing is pre-recorded, and if a source is missing you will see the gap rather than a filled-in answer.",
+    "failed": "The case could not be started: {{error}}"
   }
 }

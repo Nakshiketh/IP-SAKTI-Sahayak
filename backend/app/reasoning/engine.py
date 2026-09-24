@@ -107,6 +107,10 @@ def analyse(
     dropped_claims: int = 0,
     provenance_pending: bool = False,
     other_jurisdictions: tuple[Jurisdiction, ...] = (),
+    #: The document that governs here, and the one that governs there, so a
+    #: cross-border conflict can name both sides instead of two jurisdictions.
+    governing_here: str | None = None,
+    governing_there: str | None = None,
     unsupported_jurisdictions: tuple[str, ...] = (),
     abstain_reason: AbstainReason | None = None,
     refusal: Refusal | None = None,
@@ -132,7 +136,14 @@ def analyse(
     found: list[Conflict] = conflicts.from_pairs(contradiction_pairs, passages, registry)
     for other in other_jurisdictions:
         if other is not jurisdiction:
-            found.append(conflicts.jurisdictional(raised[0].issue if raised else None, other))
+            found.append(
+                conflicts.jurisdictional(
+                    raised[0].issue if raised else None,
+                    other,
+                    here=governing_here,
+                    there=governing_there,
+                )
+            )
     classification_conflict = conflicts.classification(
         classification.ambiguous, classification.rule_id
     )
@@ -180,7 +191,9 @@ def analyse(
         facts=list(facts.stated),
         missing_facts=list(classification.missing_facts),
         product_class=classification.product_class,
-        alternative_classes=list(classification.alternatives),
+        # Where a rule fired, the alternatives are the other rules that also
+        # fired. Where none did, they are the categories still open.
+        alternative_classes=list(classification.alternatives or classification.candidates),
         classification_rule_id=classification.rule_id,
         changes_if=classification.changes_if,
         issues=findings,

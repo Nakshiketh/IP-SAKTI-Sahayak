@@ -37,16 +37,34 @@ class Classification:
     #: The sources the deciding rule rests on.
     evidence_source_ids: tuple[str, ...] = ()
     missing_facts: tuple[MissingFact, ...] = ()
+    #: Categories still open: no stated fact rules them out, but a fact the
+    #: rule needs has not been given. Reported when nothing fired, because
+    #: "you are one of these three, and this is what decides it" is a far more
+    #: useful answer than "undetermined".
+    candidates: tuple[ProductClass, ...] = ()
     #: Rules switched off because their evidence is not in the corpus.
     inactive_rule_ids: tuple[str, ...] = ()
 
     @property
     def ambiguous(self) -> bool:
-        return bool(self.alternatives)
+        """More than one category is in play, whether fired or still open."""
+        return bool(self.alternatives) or len(self.candidates) > 1
 
 
 def _satisfied(rule: ClassificationRule, facts: ExtractedFacts) -> bool:
     return all(facts.value(key) is required for key, required in rule.required_facts.items())
+
+
+def _still_open(rule: ClassificationRule, facts: ExtractedFacts) -> bool:
+    """Could this rule still fire once the unknown facts are known?
+
+    True when nothing stated contradicts it. A rule the facts have ruled out is
+    not a candidate, which is what keeps the list short enough to be useful.
+    """
+    return all(
+        facts.value(key) is None or facts.value(key) is required
+        for key, required in rule.required_facts.items()
+    )
 
 
 def classify(
@@ -60,8 +78,10 @@ def classify(
     unknown = tuple(missing(material_facts, facts))
 
     if not fired:
+        open_rules = [rule for rule in active if _still_open(rule, facts)]
         return Classification(
             missing_facts=unknown,
+            candidates=tuple(dict.fromkeys(rule.category for rule in open_rules)),
             inactive_rule_ids=inactive,
         )
 

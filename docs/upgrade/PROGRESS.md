@@ -3,8 +3,9 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 3 done (Check My Product as product and formulation intelligence)
-- Last green gate: phase 3 — backend 489, frontend 371, typecheck, eslint, ruff, evals (below_target []), build under budget. Locale and prettier checks still fail at baseline.
+- Current phase: 4 part one done (multi-part retrieval, jury demo entry, where guidance ends, conflict matrix). Part two not started: provenance drawer, Answer Receipt, IP Protection Map UI, Case Brief.
+- Last green gate: phase 4a — backend 505, frontend 380, typecheck, eslint, ruff, evals (below_target []), build **149 kB of a 150 kB budget**. Locale and prettier checks still fail at baseline.
+- **Bundle warning**: 1 kB of headroom left. Phase 4 part two adds four more surfaces; it must lazy-load them or reclaim space first, or the budget check will fail.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
 - Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
 
@@ -50,9 +51,9 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C9 | Confidence by issue, factor-based, with reasons | 2 | DONE | reasoning/confidence.py over data/rules/confidence.yaml: per issue, four step-down factors and three caps, reasons as keys. The answer-level rule in services/confidence.py is unchanged, so its TypeScript mirror and pinned cases still hold |
 | C10 | Abstention taxonomy (9 codes) | 2 | DONE | AbstainCode in models/domain.py; reasoning/engine.py maps the 5 older reasons and the 7 refusal kinds onto it, so both surfaces agree without changing the pinned older rule |
 | C11 | Guidance vs advice safety layer + notice + phrase filter | 2 | DONE | reasoning/phrases.py runs inside map_citations: a promise with a neutral form is rewritten, one without is dropped like an unsupported claim. Plus the existing guardrails and notices |
-| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | PARTIAL | reasoning/escalation.py decides L0–L3 with reason keys and specialist types, carried on every Answer. Case Brief and the UI for it are Phase 4 |
-| C13 | Flagship complex case + Jury Demo on the real pipeline | 4 | MISSING | — |
-| C14 | Conflict matrix + source comparison matrix UI | 4 | MISSING | — |
+| C12 | Escalation levels + Case Brief (print, copy, export) | 2, 4 | PARTIAL | reasoning/escalation.py decides L0–L3; components/answer/GuidanceEnds.tsx renders it as a four-step stepper with what we can say, what we cannot conclude and who should review. Case Brief is part two |
+| C13 | Flagship complex case + Jury Demo on the real pipeline | 4 | PARTIAL | data/demo/flagship_case.json seeded; GET /api/v1/demo/flagship-case serves the question only, behind `feature_jury_demo`; components/home/JuryDemo.tsx fetches it and asks it through the ordinary route. The case now answers with real sources (see below). Talk-track items beyond the matrix are part two |
+| C14 | Conflict matrix + source comparison matrix UI | 4 | PARTIAL | components/answer/ConflictMatrix.tsx: table on wide screens, stacked cards on a phone, with the resolution stated rather than implied. The source comparison matrix is part two |
 | C15 | Provenance explorer ("Why am I seeing this?") | 4 | PARTIAL | SourceCard (document, organisation, section, passage reveal, official link) inside a Drawer; no authority level, dates or verification result |
 | C16 | Answer Receipt | 1, 4 | PARTIAL | Answer carries corpus_version, as_of_date, confidence, stage timings; each citation now carries review_state, reviewed_at and provenance_pending, and the source card shows the pending badge. Dropped claims still counted in the audit row but not shown; no single receipt view yet (Phase 4) |
 | C17 | Real pipeline activity events in UI | 2, 4 | DONE | pipeline streams stage events; components/sahayak/RetrievalStatus.tsx renders real timings |
@@ -100,6 +101,26 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
+## The flagship case, after Phase 4 part one
+Run on 2026-09-24 through the real pipeline, both jurisdictions.
+
+**What changed.** The case used to abstain with no sources at all. Retrieval scored every passage against all seven of its sub-questions at once, so the best passage in the corpus came out at 0.18 against a floor of 0.35 — while the same corpus scored 0.75 when one part was asked alone. `app/services/parts.py` now splits an explicitly enumerated question and retrieves for each part, merging on best score. Nothing else about the answer changed: same passages, same citation verification, same confidence rule.
+
+| Acceptance (FLAGSHIP_CASE.md §5) | Result |
+|---|---|
+| Real call, no stored answer | PASS — the endpoint returns id, language, question and nothing else; a test asserts it |
+| ≥2 classification candidates | PASS (India) — five categories still open, with the four facts that would choose between them. The international analysis offers none, correctly: the classification rules are Indian and its corpus holds none of them |
+| India and international separate | PASS — two analyses, each citing only its own jurisdiction |
+| ≥1 conflict, separate_obligations | PASS — both sides |
+| Conflict source IDs exist in the registry | PASS — `in-patents-act-1970` ↔ `intl-nagoya-protocol` (India), `intl-absch` ↔ `in-patents-act-1970` (international). The other jurisdiction is searched only for the identity of its leading document; its passages never enter this answer |
+| No blocked verdict phrases | PASS |
+| Escalation ≥ L2 | PASS — L3 both sides |
+| Answer Receipt with corpus version and review dates | NOT BUILT — part two |
+
+**Output**: India, moderate confidence, 30 citations across 8+ official documents; international, high confidence, 5 citations. Conflicts: jurisdictional → separate obligations, missing_fact → unresolved and needing a person. Escalation L3, specialists: registered patent agent, traditional-knowledge specialist, and the ABS consultant internationally.
+
+**Screenshots owed.** The gate asks for a manual browser run at 1280px and 360px saved to docs/upgrade/screens/phase4/. Not done: the dev servers were stopped by the OS under memory pressure earlier in the session and the owner asked that they not be restarted unprompted.
+
 ## Check My Product, after Phase 3
 - The 14-product dataset stays, by the owner's decision, and keeps its own honesty: `verification: retrieved_not_reviewed` and a scope note saying finding nothing there says nothing about what else is sold. A test asserts both.
 - What was removed is the verdict it fed. Ask Sahayak refuses novelty verdicts (`RefusalKind.NOVELTY_VERDICT`) while Check My Product was printing "Potentially novel" and "Close match found — novelty at risk", from a comparison against face packs. The two halves now agree.
@@ -127,6 +148,11 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - 2026-09-24: Verification means only "these bytes came from this official URL, hashed at this time". It is deliberately separate from human review of whether the passages report the document correctly, which only `registry_review.py --approve` records.
 - 2026-09-24: A source on an unreachable but plainly official host stays citable with `legacy_allowed` rather than disappearing — it is marked pending and capped at moderate confidence. A source on a host nobody allowlisted is never citable, whatever it claims to be.
 - 2026-09-24: The pipeline treats an empty registry as "not built here" and cites the corpus as before, so a machine without data/registry.sqlite3 still answers instead of silently abstaining.
+- 2026-09-24: A question is split only on explicit enumeration — "(1)…(2)…", "1.…2.…", or several sentences each ending in a question mark. Guessing that prose contains two questions would split one question on an "and" and score both halves against the wrong thing.
+- 2026-09-24: The stem of an enumerated question is kept as context but never searched on. Prefixing sixty words of background to each part would reintroduce exactly the dilution the split removes.
+- 2026-09-24: The classifier reports candidates — categories no stated fact has ruled out — when no rule fires. "You are one of these, and this is what decides it" is more useful and no less honest than "undetermined".
+- 2026-09-24: The demo endpoint returns the question only, and reads just three fields from the seed file, so a stored answer added to that file could never reach the interface.
+- 2026-09-24: `src/components/layout/backdrop.test.tsx` fails on a loaded machine and passes otherwise. Proven pre-existing by reverting all of frontend/src to the previous commit and seeing the same failure. It waits on a lazily loaded route.
 - 2026-09-24: C1 resolved by the owner as "drop the verdict, keep the data". The dataset is real and honestly labelled; the indicator built on it was a novelty view the rest of the product refuses to give.
 - 2026-09-24: Check My Product calls `app.reasoning.analyse` with `known_facts` rather than growing a second classifier, so the product half and the question half cannot disagree about what a product is.
 - 2026-09-24: No IPC or CPC hints are produced. The official IPC publication is not in this repo, and a guessed classification code sends someone searching a branch their invention is not in.
@@ -147,6 +173,11 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 4, part one
+- Done: multi-part question splitting and per-part retrieval (`app/services/parts.py`), which is what makes the flagship case answerable at all; classification candidates; jurisdictional conflicts naming real registry documents on both sides; `GET /api/v1/demo/flagship-case` behind the `juryDemo` flag; the Jury Demo entry on Home; "Where guidance ends" with the L0–L3 stepper; the conflict and overlap matrix. 25 new tests (16 backend including T11, 9 frontend).
+- Not done / carried over: provenance drawer, Answer Receipt, IP Protection Map UI, Case Brief page and its print stylesheet; the source comparison matrix; the browser screenshots. The five non-English locales carry the new strings in English behind `__untranslated`, as the repo already does elsewhere — Phase 6 owes the translations.
+- Next phase should first: check the bundle. There is 1 kB of headroom and four surfaces still to add, so part two starts by lazy-loading the new answer sections or reclaiming space, not by writing more components.
+
 ### Phase 3
 - Done: the novelty verdict removed from Check My Product across backend, UI and six locales; `analyst/intelligence.py` assembling shared classification, ABS support, prior-art search builder, IP protection map and roadmap seed onto every Analysis; 25 new tests.
 - Not done / carried over: no UI reads `Analysis.intelligence` yet — the reason keys and section labels it produces have no locale strings, and the map, matrix and roadmap surfaces are Phase 4 and Phase 7. The pack's separate product input form was deliberately not built (see above).

@@ -25,7 +25,7 @@ import time
 import uuid
 from collections.abc import Iterator
 from contextlib import suppress
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from datetime import UTC, date, datetime
 
 from app.core.errors import ApiError
@@ -54,6 +54,7 @@ from app.services.audit import AuditLog, AuditRow, hash_question
 from app.services.context import build_context
 from app.services.guardrails import Refusal, classify_refusal
 from app.services.language import Detection, detect_language
+from app.services.parts import Part, merge_parts, split_question
 from app.services.procedures import expand_procedure
 from app.services.records_service import RecordsService
 from app.services.retrieval import Retriever
@@ -148,6 +149,10 @@ class QueryOutcome:
     is_demo: bool
     translator: str
     translated: bool
+    #: The parts a multi-part question was split into, and which part each
+    #: passage answered. Empty for an ordinary one-part question.
+    parts: tuple[Part, ...] = ()
+    answered_parts: dict[str, str] = field(default_factory=dict)
     #: What the reasoning stage concluded. Present even on an abstention: the
     #: issues a question raises are worth reporting whether or not the corpus
     #: could answer them.
@@ -301,13 +306,12 @@ class Pipeline:
             ip_rights=frozenset(request.ip_rights),
             regulatory_areas=frozenset(request.regulatory_areas),
         )
-        retrieved = self._retriever.retrieve(
-            understanding.expanded_query or request.question,
-            store,
-            filters=filters,
-            candidates=self._settings.retrieval_candidates,
-            keep=self._settings.rerank_keep,
-            on=today,
+        # A question with several numbered parts is retrieved for one part at
+        # a time. Scoring a passage against all seven parts at once is what
+        # made the hardest questions retrieve nothing at all.
+        parts = split_question(request.question)
+        retrieved, answered_parts = self._retrieve_parts(
+            parts, understanding, request, store, filters, today
         )
         # Retrieval and reranking are one call into the retriever; the split
         # below reports them as the two stages a reader sees, with the fused
@@ -331,6 +335,7 @@ class Pipeline:
             documents=len({p.document_id for p in candidates}),
         )
 
+        governing = self._governing_documents(request, chosen, routing, passages, filters, today)
         analysis = self._analyse(
             request,
             chosen,
@@ -339,6 +344,7 @@ class Pipeline:
             retrieved.contradictions,
             store,
             routing,
+            governing=governing,
         )
         yield StageEvent(clock.stage("reason"))
 
@@ -466,6 +472,7 @@ class Pipeline:
             store,
             routing,
             dropped_claims=len(mapped.dropped_claims),
+            governing=governing,
         )
         answer = self._assemble(
             request,
@@ -498,6 +505,8 @@ class Pipeline:
             language_out,
             translated=translated,
             analysis=analysis,
+            parts=parts if len(parts) > 1 else (),
+            answered_parts=answered_parts,
         )
         self._record(
             outcome, dropped=len(mapped.dropped_claims), neutralised=context.neutralised_spans
@@ -505,6 +514,82 @@ class Pipeline:
         yield ResultEvent(outcome)
 
     # -- helpers -----------------------------------------------------------
+
+    def _governing_documents(self, request, chosen, routing, passages, filters, today):
+        """The top document on each side of a cross-border question.
+
+        The other jurisdiction is searched only for the identity of its leading
+        document, so the conflict can name both sides. Its passages are never
+        returned and never reach this answer's context — the two analyses stay
+        separate, which is the rule this product is built on.
+        """
+        here = passages[0].chunk.document_id if passages else None
+        others = [
+            r.jurisdiction for r in routing.routes if r.jurisdiction is not chosen.jurisdiction
+        ]
+        if not others:
+            return (here, None)
+        try:
+            found = self._retriever.retrieve(
+                request.question,
+                self._namespaces.store(others[0]),
+                filters=filters,
+                candidates=self._settings.retrieval_candidates,
+                keep=1,
+                on=today,
+            )
+        except Exception:  # noqa: BLE001 - naming the other side is a nicety, never a failure
+            return (here, None)
+        there = found.passages[0].chunk.document_id if found.passages else None
+        return (here, there)
+
+    def _retrieve_parts(self, parts, understanding, request, store, filters, today):
+        """Retrieve once per part of the question, then merge the results.
+
+        One part is the ordinary case and goes straight through, so nothing
+        changes for the great majority of questions.
+        """
+        if len(parts) <= 1:
+            text = understanding.expanded_query or request.question
+            return (
+                self._retriever.retrieve(
+                    text,
+                    store,
+                    filters=filters,
+                    candidates=self._settings.retrieval_candidates,
+                    keep=self._settings.rerank_keep,
+                    on=today,
+                ),
+                {},
+            )
+
+        results: list[tuple[Part, list[ScoredChunk]]] = []
+        last = None
+        contradictions: list[tuple[str, str]] = []
+        searched = 0
+        for part in parts:
+            expanded = understand_query(part.text).expanded_query or part.text
+            last = self._retriever.retrieve(
+                expanded,
+                store,
+                filters=filters,
+                candidates=self._settings.retrieval_candidates,
+                keep=self._settings.rerank_keep,
+                on=today,
+            )
+            results.append((part, list(last.passages)))
+            contradictions.extend(last.contradictions)
+            searched = max(searched, last.documents_searched)
+
+        passages, answered = merge_parts(results)
+        assert last is not None
+        merged = replace(
+            last,
+            passages=tuple(passages),
+            contradictions=tuple(dict.fromkeys(contradictions)),
+            documents_searched=searched,
+        )
+        return merged, answered
 
     def _analyse(
         self,
@@ -518,6 +603,7 @@ class Pipeline:
         *,
         dropped_claims: int = 0,
         refusal: Refusal | None = None,
+        governing: tuple[str | None, str | None] = (None, None),
     ) -> Analysis:
         """Run the reasoning stage over what retrieval found.
 
@@ -548,6 +634,8 @@ class Pipeline:
             provenance_pending=pending,
             other_jurisdictions=other,
             unsupported_jurisdictions=uncovered,
+            governing_here=governing[0],
+            governing_there=governing[1],
             refusal=refusal,
         )
 
@@ -690,6 +778,8 @@ class Pipeline:
         translated: bool,
         uncovered: str | None = None,
         analysis: Analysis | None = None,
+        parts: tuple[Part, ...] = (),
+        answered_parts: dict[str, str] | None = None,
     ) -> QueryOutcome:
         return QueryOutcome(
             query_id=query_id,
@@ -706,6 +796,8 @@ class Pipeline:
             confidence=scored,
             answer=answer,
             analysis=analysis,
+            parts=parts,
+            answered_parts=dict(answered_parts or {}),
             related_records=self._related_records(request, chosen.jurisdiction),
             follow_ups=self._follow_ups(request, chosen, answer, understanding),
             stages=tuple(clock.stages),

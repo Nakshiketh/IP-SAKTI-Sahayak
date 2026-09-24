@@ -1,6 +1,6 @@
 # Evaluation report
 
-Run at 2026-09-24T14:15:29+00:00.
+Run at 2026-09-24T15:02:30+00:00.
 
 Measured against corpus version kb-2026.09.22, 51 documents.
 
@@ -32,8 +32,8 @@ Measured against corpus version kb-2026.09.22, 51 documents.
 | `language_detection_accuracy` | 100.0% (25/25) |  | Script detection on the non-English cases. Devanagari cannot separate Hindi from Marathi, so either counts for either — the detector reports that ambiguity rather than guessing. |
 | `records_offered` | 0.0% (0/25) |  | Cases where records were expected beside the answer and appeared. |
 | `records_do_not_rescue` | not measured | 100% | Cases where a record was present and the corpus should decline: the system still declined. |
-| `latency_p50` | 20 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
-| `latency_p95` | 36 ms |  |  |
+| `latency_p50` | 39 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
+| `latency_p95` | 87 ms |  |  |
 | `errors` | 0 |  | Cases that raised rather than answering or declining. Should be zero. |
 | `answer_accuracy` | not measured |  | No reference answers exist. Writing them means stating what a source says, and no source has been read — see evals/gold/README.md. |
 | `citation_correctness` | not measured |  | Whether a cited passage supports its claim needs a judge, human or model. citation_groundedness below measures what can be checked mechanically. |

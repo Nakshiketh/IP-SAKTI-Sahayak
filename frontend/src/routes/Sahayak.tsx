@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 import { AnswerView } from '@/components/answer';
+import { ConflictMatrix } from '@/components/answer/ConflictMatrix';
+import { GuidanceEnds } from '@/components/answer/GuidanceEnds';
 import { AbsFlow } from '@/components/flows/AbsFlow';
 import { ClassificationFlow } from '@/components/flows/ClassificationFlow';
 import { FlowOffers, type FlowKind } from '@/components/flows/FlowOffer';
@@ -406,6 +408,20 @@ export default function Sahayak() {
                         )}
                         hideSources
                       />
+
+                      {/* Where guidance ends comes before the overlaps: a
+                          reader should know what this will not claim before
+                          they read the detail of what it did find. */}
+                      {result.answer!.analysis ? (
+                        <>
+                          <GuidanceEnds className="mt-6" analysis={result.answer!.analysis} />
+                          <ConflictMatrix
+                            className="mt-6"
+                            analysis={result.answer!.analysis}
+                            citations={result.answer!.citations}
+                          />
+                        </>
+                      ) : null}
 
                       <FlowOffers kinds={offeredFlows} onOpen={setOpenFlow} />
 

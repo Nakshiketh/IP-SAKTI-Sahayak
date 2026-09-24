@@ -2,10 +2,12 @@ import { lazy, Suspense, useId, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+import { JuryDemo } from '@/components/home/JuryDemo';
 import { PatentTimeline } from '@/components/home/PatentTimeline';
 import { QuestionBox } from '@/components/home/QuestionBox';
 import { buttonStyles, IncisedMark, TabPanel, Tabs } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
+import { FEATURES } from '@/config/features';
 import { LOCALES } from '@/i18n/languages';
 import type { Jurisdiction } from '@/types/domain';
 
@@ -80,6 +82,24 @@ export default function Home() {
           <QuestionBox className="mt-8" />
         </div>
       </section>
+
+      {/* 1c — One way into the hard case. A band rather than a card, so it
+             reads as a second door into the same product and not as a
+             feature being advertised beside it. */}
+      {FEATURES.juryDemo ? (
+        <section
+          aria-labelledby="jury-demo-heading"
+          className="border-t border-rule bg-surface-sunk"
+        >
+          <div className="mx-auto max-w-[75rem] px-5 py-10">
+            <h2 id="jury-demo-heading" className="text-xl">
+              {t('juryDemo.heading')}
+            </h2>
+            <p className="mt-3 max-w-measure text-md">{t('juryDemo.standfirst')}</p>
+            <JuryDemo className="mt-5" />
+          </div>
+        </section>
+      ) : null}
 
       {/* 1b — What this is, and the way into the product check. Prose on the
              left, the four kinds of protection as a definition list on the

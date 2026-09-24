@@ -7,7 +7,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
 
-from app.api import analyst, auth, classify, feedback, health, privacy, query, records, sources
+from app.api import (
+    analyst,
+    auth,
+    classify,
+    demo,
+    feedback,
+    health,
+    privacy,
+    query,
+    records,
+    sources,
+)
 from app.core.errors import ApiError, RequestTooLarge, api_error_handler
 from app.core.settings import get_settings
 
@@ -125,6 +136,7 @@ def create_app() -> FastAPI:
     app.include_router(records.router)
     app.include_router(feedback.router)
     app.include_router(privacy.router)
+    app.include_router(demo.router)
     return app
 
 

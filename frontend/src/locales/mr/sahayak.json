@@ -285,5 +285,92 @@
       "banner": "हे केवळ दिशा देणारे साधन आहे, नावीन्य शोध नाही. येथे काही न सापडणे म्हणजे शोध नवीन आहे असे नाही.",
       "snapshotNone": "कोई स्नैपशॉट नहीं लिया गया"
     }
+  },
+  "guidanceEnds": {
+    "heading": "Where guidance ends",
+    "stepperLabel": "How much expert review this needs",
+    "current": "this answer",
+    "canSay": "What we can say",
+    "canSayBody_one": "One issue is raised by the facts you gave, answered from official sources below.",
+    "canSayBody_other": "{{count}} issues are raised by the facts you gave, each answered from official sources below.",
+    "cannotConclude": "What we cannot conclude",
+    "cannotNovelty": "Whether your formulation is novel or patentable. Only examination, after a professional search, decides that.",
+    "cannotTkdl": "What the restricted TKDL database contains. Access is limited to patent offices under agreement, and it was not searched.",
+    "cannotUnresolved_one": "One conflict between sources that nothing here settles.",
+    "cannotUnresolved_other": "{{count}} conflicts between sources that nothing here settles.",
+    "cannotMissingFacts_one": "Anything that turns on the one fact still missing.",
+    "cannotMissingFacts_other": "Anything that turns on the {{count}} facts still missing.",
+    "whoReviews": "Who should review this",
+    "noReviewNeeded": "Nothing here needs a professional before you act on it.",
+    "wouldSettle": "Answering these would settle more of it",
+    "level": {
+      "l0": {
+        "label": "No review needed",
+        "body": "The sources answer this directly and nothing was left open."
+      },
+      "l1": {
+        "label": "Facts missing",
+        "body": "You can take this further yourself by supplying the facts listed below."
+      },
+      "l2": {
+        "label": "Expert review advised",
+        "body": "Something here is genuinely uncertain — an issue came out weak, or a conflict needs a person to look at it."
+      },
+      "l3": {
+        "label": "Expert review needed",
+        "body": "Part of this turns on applying a provision to your facts, which is a judgement this product must not make for you."
+      }
+    },
+    "specialist": {
+      "registered_patent_agent": "A registered patent agent",
+      "traditional_knowledge_expert": "A traditional-knowledge specialist",
+      "biodiversity_abs_consultant": "A biodiversity and access-and-benefit-sharing consultant",
+      "ayush_drug_regulatory_consultant": "An Ayush drug regulatory consultant",
+      "food_safety_consultant": "A food safety consultant",
+      "trade_mark_attorney": "A trade mark attorney",
+      "geographical_indication_facilitator": "A geographical indication facilitator",
+      "intellectual_property_lawyer": "An intellectual property lawyer"
+    }
+  },
+  "conflicts": {
+    "heading": "Overlaps and conflicts",
+    "standfirst": "Two obligations can both apply without contradicting each other. Where one genuinely governs the other, the rule that decides it is named.",
+    "noIssue": "Across the whole question",
+    "needsReview": "Needs a person to decide",
+    "columns": {
+      "issue": "Issue",
+      "sourceA": "One source",
+      "sourceB": "The other",
+      "relationship": "Relationship",
+      "resolution": "Resolution"
+    },
+    "resolution": {
+      "separate_obligations": "Both apply",
+      "resolved_by_authority": "Higher authority governs",
+      "resolved_by_date": "Later instrument governs",
+      "unresolved": "Unresolved"
+    },
+    "explanation": {
+      "conflictJurisdictional": "Two legal systems ask different things of the same product. Neither overrides the other.",
+      "conflictScopeOverlap": "Different legal questions about one product, which can all apply at once.",
+      "conflictAuthority": "The same point stated at different levels of authority.",
+      "conflictTemporalSuperseded": "One instrument supersedes the other.",
+      "conflictTemporalLater": "The two took effect on different dates.",
+      "conflictClassification": "More than one category is open on the facts given.",
+      "conflictMissingFact": "A fact nobody has stated decides between two readings.",
+      "conflictTrueSource": "Equal authority, same system, both in force, and still in tension."
+    }
+  },
+  "issues": {
+    "patent": "Patent",
+    "traditional_knowledge": "Traditional knowledge",
+    "biodiversity_abs": "Biodiversity and benefit sharing",
+    "drug_regulation": "Drug regulation",
+    "food_regulation": "Food regulation",
+    "trade_mark": "Trade mark",
+    "design": "Design",
+    "geographical_indication": "Geographical indication",
+    "copyright": "Copyright",
+    "trade_secret": "Trade secret"
   }
 }
