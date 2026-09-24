@@ -113,6 +113,9 @@ class AbstainReason(StrEnum):
     SOURCES_CONFLICT = "sources_conflict"
     SOURCES_OUT_OF_DATE = "sources_out_of_date"
     NEEDS_MORE_FACTS = "needs_more_facts"
+    #: The question was in a language the corpus could not be searched in, and
+    #: no translator was available to pivot it.
+    LANGUAGE_UNSUPPORTED = "language_unsupported"
 
 
 class AbstainCode(StrEnum):

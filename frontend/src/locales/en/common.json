@@ -79,7 +79,8 @@
       "abstainScope": "No sources were searched — the question is outside the corpus.",
       "abstainConflict": "{{passages}} passages considered; two of them are in tension.",
       "abstainStale": "{{passages}} passages considered; all of them outside their effective window.",
-      "abstainFacts": "{{passages}} passages considered; which of them governs depends on the product type."
+      "abstainFacts": "{{passages}} passages considered; which of them governs depends on the product type.",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

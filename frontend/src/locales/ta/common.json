@@ -80,7 +80,8 @@
       "abstainScope": "ஆதாரங்கள் எதுவும் தேடப்படவில்லை — கேள்வி எல்லைக்கு அப்பாற்பட்டது.",
       "abstainConflict": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அவற்றில் இரண்டு முரண்பாட்டில் உள்ளன.",
       "abstainStale": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அனைத்தும் அவற்றின் பயனுள்ள காலத்திற்கு வெளியே உள்ளன.",
-      "abstainFacts": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அவற்றில் எது பொருந்தும் என்பது தயாரிப்பு வகையைப் பொறுத்தது."
+      "abstainFacts": "{{passages}} பத்திகள் பரிசீலிக்கப்பட்டன; அவற்றில் எது பொருந்தும் என்பது தயாரிப்பு வகையைப் பொறுத்தது.",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

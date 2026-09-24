@@ -84,19 +84,23 @@ const CITATIONS: Citation[] = [
 
 describe('the jury demo', () => {
   it('fetches the question from the API and asks it through the ordinary route', async () => {
-    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response(JSON.stringify({ id: 'x', language: 'en', question: 'A hard question' }), {
-        status: 200,
-        headers: { 'content-type': 'application/json' },
-      }),
+    // A fresh Response per call: a body can only be read once, and the case is
+    // read on load and again on the click.
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockImplementation(() =>
+      Promise.resolve(
+        new Response(JSON.stringify({ id: 'x', language: 'en', question: 'A hard question' }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        }),
+      ),
     );
 
     render(
       <MemoryRouter>
-        <JuryDemo />
+        <JuryDemo heading="Explore a complex IP case" standfirst="A real question." />
       </MemoryRouter>,
     );
-    await userEvent.click(screen.getByRole('button', { name: /run complex case/i }));
+    await userEvent.click(await screen.findByRole('button', { name: /run complex case/i }));
 
     await waitFor(() => expect(navigate).toHaveBeenCalled());
     expect(fetchSpy).toHaveBeenCalledWith('/api/v1/demo/flagship-case');
@@ -104,16 +108,23 @@ describe('the jury demo', () => {
   });
 
   it('shows the real error rather than falling back to a stored case', async () => {
-    vi.spyOn(globalThis, 'fetch').mockResolvedValue(
-      new Response('', { status: 503, statusText: 'Service Unavailable' }),
-    );
+    // The first read offers the case; the second, on the click, fails. The
+    // reader sees the real error rather than a stored fallback.
+    vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ id: 'x', language: 'en', question: 'A hard question' }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' },
+        }),
+      )
+      .mockResolvedValue(new Response('', { status: 503, statusText: 'Service Unavailable' }));
 
     render(
       <MemoryRouter>
-        <JuryDemo />
+        <JuryDemo heading="Explore a complex IP case" standfirst="A real question." />
       </MemoryRouter>,
     );
-    await userEvent.click(screen.getByRole('button', { name: /run complex case/i }));
+    await userEvent.click(await screen.findByRole('button', { name: /run complex case/i }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('503');
     expect(navigate).not.toHaveBeenCalled();

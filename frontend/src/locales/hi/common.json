@@ -79,7 +79,8 @@
       "abstainScope": "किसी भी स्रोत में खोज नहीं की गई — प्रश्न कार्यक्षेत्र से बाहर है।",
       "abstainConflict": "{{passages}} अंशों पर विचार किया गया; उनमें से दो परस्पर विरोधी हैं।",
       "abstainStale": "{{passages}} अंशों पर विचार किया गया; वे सभी अपनी प्रभावी अवधि से बाहर हैं।",
-      "abstainFacts": "{{passages}} अंशों पर विचार किया गया; इनमें से कौन लागू होता है यह उत्पाद के प्रकार पर निर्भर करता है।"
+      "abstainFacts": "{{passages}} अंशों पर विचार किया गया; इनमें से कौन लागू होता है यह उत्पाद के प्रकार पर निर्भर करता है।",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

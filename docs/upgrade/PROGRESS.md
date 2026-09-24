@@ -102,6 +102,21 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
 
+## Why 60 answerable cases abstain
+`abstention_precision` sits at 39%: of 99 declines, 39 were right. Traced case by case rather than tuning the threshold.
+
+| Group | Abstained / answerable | What it is |
+|---|---|---|
+| multilingual | **25 of 25** | Every non-English question. Fixed — see below |
+| international | 11 of 28 | UK, EU and US national law. The corpus holds 11 international documents and none of that |
+| india | 16 of 54 | Topics outside the 51 documents: heavy-metal limits, university IP ownership, advertising reach |
+| cross-border | 5 of 14 | The same foreign law, from the other side |
+| records | 3 of 10 | Registry questions the samples do not cover |
+
+None of these is the system refusing something it holds sources for. Lowering the retrieval floor would raise the number by answering from passages that do not bear on the question, which is the trade this product exists not to make. The remaining 35 close by adding sources, not by changing a threshold.
+
+**The multilingual 25 was a real defect.** The corpus is English and a question in Devanagari or Tamil shares no words with it, so retrieval found nothing and the answer said "nothing relevant" — blaming the corpus for a translation that never happened. The pipeline now pivots the question into English before retrieval, as PHASE_06 specifies, and keeps the reader's own words for everything else. With no translator configured it abstains with `language_unsupported` and says exactly that. A new `AbstainReason` and reason key carry it, mirrored in TypeScript and the locales.
+
 ## Browser walkthrough (signed in as demo)
 Ran the site in Chrome after signing in: home, Ask Sahayak, Check My Product, Sources, How it works. Three real faults, none of which any test suite had caught, because each needed a browser and stored data.
 
@@ -110,6 +125,8 @@ Ran the site in Chrome after signing in: home, Ask Sahayak, Check My Product, So
 3. **The L0 copy contradicted the panel beside it.** "Nothing was left open" sat next to "What we cannot conclude: whether your formulation is novel or patentable". L0 now says the sources answer what was asked and that the listed limits still apply to every answer.
 
 Also confirmed working: sign-in (badge scanner and username), the streamed answer with cited claims, the "provenance pending review" badge on the TKDL sources, In short, the Simple/Expert toggle, the glossary, Where guidance ends, Prepare for expert review, and the sources and how-it-works pages. No console errors anywhere.
+
+Also fixed after the walkthrough: **the Jury Demo band never appeared**, because it was gated on `FEATURES.juryDemo` in the bundle while the backend had its own flag. Two flags for one decision can only disagree. The band now asks the API for the case and renders only if it gets one, so the backend is the single authority. (The first attempt probed with HEAD, which that route does not allow — it now fetches with GET.)
 
 **Worth knowing**: restarting the API signs everyone out, because tokens live in memory. That is risk 1 in the list below, and it bit during this walkthrough.
 

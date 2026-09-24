@@ -80,7 +80,8 @@
       "abstainScope": "कोणतेही स्रोत शोधले गेले नाहीत — प्रश्न कक्षेबाहेर आहे.",
       "abstainConflict": "{{passages}} उताऱ्यांचा विचार केला; त्यापैकी दोन परस्परविरोधी आहेत.",
       "abstainStale": "{{passages}} उताऱ्यांचा विचार केला; ते सर्व त्यांच्या प्रभावी कालावधीबाहेर आहेत.",
-      "abstainFacts": "{{passages}} उताऱ्यांचा विचार केला; यापैकी कोणते लागू होते हे उत्पादनाच्या प्रकारावर अवलंबून आहे."
+      "abstainFacts": "{{passages}} उताऱ्यांचा विचार केला; यापैकी कोणते लागू होते हे उत्पादनाच्या प्रकारावर अवलंबून आहे.",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

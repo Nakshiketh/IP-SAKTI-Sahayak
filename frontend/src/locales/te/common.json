@@ -80,7 +80,8 @@
       "abstainScope": "ఏ మూలాలూ శోధించబడలేదు — ప్రశ్న పరిధికి వెలుపల ఉంది.",
       "abstainConflict": "{{passages}} భాగాలు పరిగణించబడ్డాయి; వాటిలో రెండు పరస్పర విరుద్ధంగా ఉన్నాయి.",
       "abstainStale": "{{passages}} భాగాలు పరిగణించబడ్డాయి; అన్నీ వాటి ప్రభావవంతమైన పరిధికి వెలుపల ఉన్నాయి.",
-      "abstainFacts": "{{passages}} భాగాలు పరిగణించబడ్డాయి; వాటిలో ఏది వర్తిస్తుందనేది ఉత్పత్తి రకంపై ఆధారపడి ఉంటుంది."
+      "abstainFacts": "{{passages}} భాగాలు పరిగణించబడ్డాయి; వాటిలో ఏది వర్తిస్తుందనేది ఉత్పత్తి రకంపై ఆధారపడి ఉంటుంది.",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

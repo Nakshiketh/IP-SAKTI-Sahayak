@@ -80,7 +80,8 @@
       "abstainScope": "কোনো উৎস অনুসন্ধান করা হয়নি — প্রশ্নটি আওতার বাইরে।",
       "abstainConflict": "{{passages}} অনুচ্ছেদ বিবেচনা করা হয়েছে; তাদের দুটি পরস্পর বিরোধী।",
       "abstainStale": "{{passages}} অনুচ্ছেদ বিবেচনা করা হয়েছে; তাদের সবগুলো কার্যকর সময়সীমার বাইরে।",
-      "abstainFacts": "{{passages}} অনুচ্ছেদ বিবেচনা করা হয়েছে; কোনটি প্রযোজ্য তা পণ্যের ধরনের উপর নির্ভর করে।"
+      "abstainFacts": "{{passages}} অনুচ্ছেদ বিবেচনা করা হয়েছে; কোনটি প্রযোজ্য তা পণ্যের ধরনের উপর নির্ভর করে।",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
     }
   },
   "sourceRule": {

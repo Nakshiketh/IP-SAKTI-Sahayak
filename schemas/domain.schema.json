@@ -120,7 +120,8 @@
         "out_of_scope",
         "sources_conflict",
         "sources_out_of_date",
-        "needs_more_facts"
+        "needs_more_facts",
+        "language_unsupported"
       ]
     },
     "AbstainCode": {

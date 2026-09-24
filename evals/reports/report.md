@@ -1,6 +1,6 @@
 # Evaluation report
 
-Run at 2026-09-24T16:39:17+00:00.
+Run at 2026-09-24T17:05:47+00:00.
 
 Measured against corpus version kb-2026.09.22, 51 documents.
 
@@ -32,8 +32,8 @@ Measured against corpus version kb-2026.09.22, 51 documents.
 | `language_detection_accuracy` | 100.0% (25/25) |  | Script detection on the non-English cases. Devanagari cannot separate Hindi from Marathi, so either counts for either — the detector reports that ambiguity rather than guessing. |
 | `records_offered` | 0.0% (0/25) |  | Cases where records were expected beside the answer and appeared. |
 | `records_do_not_rescue` | not measured | 100% | Cases where a record was present and the corpus should decline: the system still declined. |
-| `latency_p50` | 20 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
-| `latency_p95` | 41 ms |  |  |
+| `latency_p50` | 19 ms |  | Wall clock through the whole pipeline, excluding any model call latency. |
+| `latency_p95` | 39 ms |  |  |
 | `errors` | 0 |  | Cases that raised rather than answering or declining. Should be zero. |
 | `answer_accuracy` | not measured |  | No reference answers exist. Writing them means stating what a source says, and no source has been read — see evals/gold/README.md. |
 | `citation_correctness` | not measured |  | Whether a cited passage supports its claim needs a judge, human or model. citation_groundedness below measures what can be checked mechanically. |
@@ -174,31 +174,31 @@ Nothing. Every metric with a target met it.
 | `intl-028` | abstain | abstain | nothing_relevant | abstain | 0 | 0 |
 | `intl-029` | answer | answer |  | moderate | 2 | 0 |
 | `intl-030` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-hi-001` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-hi-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-hi-003` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-hi-004` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-hi-005` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-mr-001` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-mr-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-mr-003` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-mr-004` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-mr-005` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-bn-001` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-bn-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-bn-003` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-bn-004` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-bn-005` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-ta-001` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-ta-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-ta-003` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-ta-004` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-ta-005` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-te-001` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-te-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-te-003` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-te-004` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
-| `ml-te-005` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
+| `ml-hi-001` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-hi-002` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-hi-003` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-hi-004` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-hi-005` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-mr-001` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-mr-002` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-mr-003` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-mr-004` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-mr-005` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-bn-001` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-bn-002` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-bn-003` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-bn-004` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-bn-005` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-ta-001` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-ta-002` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-ta-003` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-ta-004` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-ta-005` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-te-001` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-te-002` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-te-003` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-te-004` | answer | abstain | language_unsupported | abstain | 0 | 0 |
+| `ml-te-005` | answer | abstain | language_unsupported | abstain | 0 | 0 |
 | `rec-001` | answer | answer |  | moderate | 2 | 0 |
 | `rec-002` | answer | abstain | nothing_relevant | abstain | 0 | 0 |
 | `rec-003` | answer | answer |  | low | 2 | 0 |

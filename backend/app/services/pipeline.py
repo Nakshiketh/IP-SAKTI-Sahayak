@@ -64,6 +64,11 @@ from app.services.routing import Route, route
 from app.services.translation import Translator
 from app.services.understanding import Understanding, understand_query
 
+#: The language the corpus is written in. A question in any other language is
+#: translated into it before retrieval, because lexical search cannot match
+#: Devanagari against English however good the passages are.
+CORPUS_LANGUAGE = "en"
+
 #: The stages, in order, as the interface names them. `translate` runs last
 #: because a translated answer still has to carry untranslated citations.
 STAGE_IDS = (
@@ -311,7 +316,45 @@ class Pipeline:
         # A question with several numbered parts is retrieved for one part at
         # a time. Scoring a passage against all seven parts at once is what
         # made the hardest questions retrieve nothing at all.
-        parts = split_question(request.question)
+        pivot = self._pivot(request.question, language_in)
+        if pivot is None:
+            # The corpus could not be searched in this language. Saying
+            # "nothing relevant" here would blame the corpus for a translation
+            # that never happened.
+            yield RetrievedEvent(passages=0, documents=0)
+            for stage_id in ("retrieve", "rerank", "reason", "context", "generate", "map"):
+                yield StageEvent(clock.stage(stage_id))
+            empty = self._evidence(chosen.jurisdiction, [], (), today, needs_more_facts=False)
+            scored = confidence_service.ConfidenceResult(
+                level=Confidence.ABSTAIN,
+                reason_key=confidence_service.ReasonKey.ABSTAIN_LANGUAGE,
+                reason_vars={"language": language_in},
+                abstain_reason=AbstainReason.LANGUAGE_UNSUPPORTED,
+            )
+            yield StageEvent(clock.stage("translate"))
+            outcome = self._finish(
+                request,
+                chosen,
+                query_id,
+                detection,
+                understanding,
+                None,
+                empty,
+                scored,
+                None,
+                (),
+                clock,
+                0,
+                [],
+                language_in,
+                language_out,
+                translated=False,
+            )
+            self._record(outcome)
+            yield ResultEvent(outcome)
+            return
+
+        parts = split_question(pivot)
         retrieved, answered_parts = self._retrieve_parts(
             parts, understanding, request, store, filters, today
         )
@@ -545,6 +588,29 @@ class Pipeline:
         there = found.passages[0].chunk.document_id if found.passages else None
         return (here, there)
 
+    def _pivot(self, question: str, language_in: str) -> str | None:
+        """The question in the corpus's language, for retrieval only.
+
+        The corpus is written in English. A question in Devanagari or Tamil
+        script shares no words with it, so lexical retrieval finds nothing and
+        the answer comes back "nothing relevant" — which is a lie about the
+        corpus. What is actually true is that the question was never put into a
+        language the corpus could be searched in.
+
+        So the question is translated to English first and the English is used
+        to search. The reader's own words are kept for everything else, and the
+        answer is translated back. Returns None when no translator can do it,
+        and the caller says that rather than blaming the corpus.
+        """
+        if language_in == CORPUS_LANGUAGE:
+            return question
+        if not self._translator.available:
+            return None
+        result = self._translator.translate([question], source=language_in, target=CORPUS_LANGUAGE)
+        if not result.translated or not result.texts:
+            return None
+        return result.texts[0]
+
     def _retrieve_parts(self, parts, understanding, request, store, filters, today):
         """Retrieve once per part of the question, then merge the results.
 
@@ -552,7 +618,15 @@ class Pipeline:
         changes for the great majority of questions.
         """
         if len(parts) <= 1:
-            text = understanding.expanded_query or request.question
+            # The part carries the pivot, which is what the corpus can be
+            # searched in. `expanded_query` is derived from the reader's own
+            # words and only helps when those were already English.
+            pivoted = parts[0].text if parts else request.question
+            text = (
+                understanding.expanded_query
+                if understanding.expanded_query and pivoted == request.question
+                else pivoted
+            )
             return (
                 self._retriever.retrieve(
                     text,

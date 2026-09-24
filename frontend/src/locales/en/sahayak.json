@@ -130,6 +130,10 @@
       "product": "Name the product type",
       "covered": "See what's covered",
       "escalate": "Send this to a human"
+    },
+    "language_unsupported": {
+      "title": "This question could not be searched",
+      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for — not because the sources are silent."
     }
   },
   "error": {

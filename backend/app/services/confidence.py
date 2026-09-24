@@ -50,6 +50,9 @@ class ReasonKey(StrEnum):
     ABSTAIN_CONFLICT = "abstainConflict"
     ABSTAIN_STALE = "abstainStale"
     ABSTAIN_FACTS = "abstainFacts"
+    #: The question was not in the corpus's language and could not be put into
+    #: it. Distinct from "nothing relevant", which blames the corpus.
+    ABSTAIN_LANGUAGE = "abstainLanguage"
 
 
 @dataclass(frozen=True)

@@ -58,8 +58,8 @@ def pipeline_with(translator, tmp_path) -> Pipeline:
     )
 
 
-def ask(pipeline: Pipeline, question: str, language_out: str = "hi"):
-    request = QueryRequest(question=question, language_in="en", language_out=language_out)
+def ask(pipeline: Pipeline, question: str, language_out: str = "hi", language_in: str = "en"):
+    request = QueryRequest(question=question, language_in=language_in, language_out=language_out)
     for event in pipeline.run(request):
         if isinstance(event, ResultEvent):
             return event.outcome
@@ -172,3 +172,57 @@ def test_language_never_changes_the_safety_outcome(language: str, tmp_path) -> N
     other = ask(pipeline_with(FakeTranslator(lambda t: t + " ."), tmp_path), QUESTION, language)
     assert english.analysis.abstain_code == other.analysis.abstain_code
     assert english.analysis.escalation.level is other.analysis.escalation.level
+
+
+# -- the English pivot --------------------------------------------------------
+
+
+def test_a_question_in_another_language_is_translated_before_retrieval(tmp_path) -> None:
+    """The corpus is English; a Devanagari question shares no words with it.
+
+    Without a pivot the search finds nothing and the answer reports "nothing
+    relevant", which blames the corpus for a translation that never happened.
+    """
+    seen: list[str] = []
+
+    class Recording(FakeTranslator):
+        def translate(self, texts, *, source, target):
+            seen.append(f"{source}->{target}: {texts[0][:30]}")
+            return super().translate(texts, source=source, target=target)
+
+    pipeline = pipeline_with(
+        Recording(lambda text: "How do I request examination of a patent application?"),
+        tmp_path,
+    )
+    outcome = ask(pipeline, "पेटेंट परीक्षा का अनुरोध कैसे करें?", language_out="hi", language_in="hi")
+    assert any(entry.startswith("hi->en") for entry in seen), "the question is pivoted to English"
+    assert outcome.answer is not None, "and the English pivot finds the passages"
+
+
+def test_without_a_translator_it_says_so_rather_than_blaming_the_corpus(tmp_path) -> None:
+    from app.models.domain import AbstainReason, Confidence
+    from app.services.translation import PassthroughTranslator
+
+    pipeline = pipeline_with(PassthroughTranslator(), tmp_path)
+    outcome = ask(
+        pipeline,
+        "क्या हम शास्त्रीय योग का पेटेंट करा सकते हैं?",
+        language_out="hi",
+        language_in="hi",
+    )
+    assert outcome.confidence.level is Confidence.ABSTAIN
+    assert outcome.confidence.abstain_reason is AbstainReason.LANGUAGE_UNSUPPORTED
+    assert outcome.confidence.reason_key.value == "abstainLanguage"
+
+
+def test_an_english_question_is_never_pivoted(tmp_path) -> None:
+    seen: list[str] = []
+
+    class Recording(FakeTranslator):
+        def translate(self, texts, *, source, target):
+            seen.append(f"{source}->{target}")
+            return super().translate(texts, source=source, target=target)
+
+    outcome = ask(pipeline_with(Recording(lambda t: t), tmp_path), QUESTION, "en")
+    assert outcome.answer is not None
+    assert not seen, "nothing to translate, in either direction"

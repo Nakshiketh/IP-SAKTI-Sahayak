@@ -96,6 +96,8 @@ export const ABSTAIN_REASONS = [
   'sources_conflict',
   'sources_out_of_date',
   'needs_more_facts',
+  /** The question's language could not be searched against the corpus. */
+  'language_unsupported',
 ] as const;
 export type AbstainReason = (typeof ABSTAIN_REASONS)[number];
 
