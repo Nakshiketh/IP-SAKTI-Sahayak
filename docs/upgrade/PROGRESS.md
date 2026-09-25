@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 7 done (roadmap and feedback, backend and surfaces)
-- Last green gate: phase 7 — backend 551, frontend 432, typecheck, eslint, ruff, schema, locale check, evals (below_target []), build 117 kB of a 150 kB budget. `components/layout/backdrop.test.tsx` fails under memory pressure; pre-existing, proven by reverting all of frontend/src. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- Current phase: 8 part one done (voice input, telephony seam, T10). The helpline simulator is not built — see the handoff.
+- Last green gate: phase 8a — backend 570, frontend 439, typecheck, eslint, ruff, build 117.1 kB of a 150 kB budget, and voice code confirmed absent from the first-load chunk (`VoiceInput-*.js` is its own file; zero matches for `webkitSpeechRecognition` in `index-*.js`). The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
@@ -66,8 +66,8 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C23 | Compliance Roadmap | 7 | DONE | analyst/roadmap.py builds ten tasks from the issues actually raised, with real dependencies (prior art waits on classification; ABS waits on origin), sources checked against the registry, and five statuses ending at `completed_by_user`. No filed, approved or granted status, forbidden by tests on both sides. components/analyst/Roadmap.tsx renders it on /assess, grouped by when each obligation bites |
 | C24 | Ask Sahayak case-aware upgrade (evidence cards, badges) | 7 | MISSING | Ask has no case link |
 | C25 | Feedback signal | 7 | DONE | Yes / Partly / No with a closed list of aspects, stored in its own database (`data/feedback.sqlite3`) holding no session, account, query id or free text — the query id is omitted specifically so no join can re-identify a reader through the audit log. components/sahayak/AnswerFeedback.tsx asks after the answer and does not press someone who said yes |
-| C26 | Voice Sahayak | 8 | MISSING | — |
-| C27 | Helpline simulator + telephony adapter interface | 8 | MISSING | — |
+| C26 | Voice Sahayak | 8 | PARTIAL | components/sahayak/VoiceInput.tsx, lazily imported behind the `voice` flag: the transcript lands in the composer for the person to correct and is never submitted for them, no audio is recorded or kept, and a browser that cannot do speech in the active language says so and leaves typing available. Text-to-speech playback of the answer is not built |
+| C27 | Helpline simulator + telephony adapter interface | 8 | PARTIAL | services/telephony.py: the `TelephonyProvider` protocol and `NullProvider`, which refuses rather than returning a session nobody can use, plus docs/upgrade/TELEPHONY.md. The browser helpline simulator is not built |
 | C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
 | C29 | Source Health / Regulatory Change Monitor | 9 | PARTIAL | scripts/refresh.py re-fetches and reports drift; no states, queue or admin approval |
 | C30 | Prior-Art Search Builder | 3 | DONE | analyst/searches.py builds the terms and the query string, offers a search page only when its source is citable, and validates botanical names against the stored vocabulary — an unknown name is offered as written and marked unvalidated. No IPC/CPC: the official IPC publication is not in this repo, and a guessed code searches the wrong branch. The banner is on every strategy |
@@ -101,6 +101,13 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
+
+## The channel must not change the answer (T10)
+`QueryRequest.channel` records how a question arrived — text, voice or helpline — and reaches the audit row and nothing else. It is not read by retrieval, the confidence rule, the guardrails or the composer.
+
+`backend/tests/test_voice.py` runs five questions, one per eval class, through every channel and compares the whole safety shape: abstained, abstain reason, abstain code, confidence, reason key, refusal kind, escalation level, source ids and issues raised. A product whose refusals depended on the microphone would be refusing for the wrong reason, and the person least able to notice is the one who cannot read the screen well enough to type.
+
+**There is no phone service.** `NullProvider` is the default and the only implementation, and it raises rather than returning a session: a provider that silently did nothing would let an interface show a call timer for a call that is not happening. An unrecognised provider name falls back to it, so a typo in configuration cannot look like a connected line. docs/upgrade/TELEPHONY.md describes the seam, what a provider must not change, and the decisions (recording, retention, the standing notice, per-line rate limiting) that belong to whoever connects one.
 
 ## Feedback, and the join that must not be possible
 The audit log records *that* feedback was given, against a session, because the audit trail has to be complete and the rate limiter needs it. The verdict goes somewhere else entirely: `data/feedback.sqlite3`, holding verdict, aspect, jurisdiction, confidence and whether the answer abstained — and no session, account or query id.
@@ -275,6 +282,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 8, part one
+- Done: `QueryRequest.channel` and T10 — 19 backend tests proving voice, helpline and text reach identical safety outcomes; `services/telephony.py` with the provider protocol and a refusing null default; `docs/upgrade/TELEPHONY.md`; `components/sahayak/VoiceInput.tsx` behind the `voice` flag, lazily imported and confirmed out of the first-load chunk; 7 frontend tests including one that asserts no MediaRecorder is ever constructed.
+- Not done / carried over: the browser helpline simulator (call screen, timer, live transcript, end-of-call summary and its persistent "no phone service is connected" label) and text-to-speech playback of an answer. The voice flag ships false, so nothing new is visible until it is turned on.
+- Next phase should first: read PHASE_09. The simulator is the larger half of Phase 8 and is honest to leave until there is a reason to demo it — the safety guarantee it would have to respect is already built and tested.
+
 ### Phase 7, part two
 - Done: the roadmap replaces the Phase 3 seed throughout and reaches the interface; `components/analyst/Roadmap.tsx` on /assess, grouped by now / before filing / before sale, each task carrying why it is there, what it waits on, and what is holding it open. `components/sahayak/AnswerFeedback.tsx` under every answer. Two Phase 3 tests rewritten onto the new contract rather than deleted. 11 new frontend tests.
 - Not done / carried over: the twelve-panel workspace with per-panel evidence links, the Case/CaseFact/CaseRun models and their endpoints, and Ask Sahayak's case-aware follow-ups. `changed_facts` exists and is tested but nothing renders a change explanation yet — that needs CaseRun snapshots to diff between, which is the missing piece.

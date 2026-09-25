@@ -1,7 +1,8 @@
-import { forwardRef, useId, useMemo, useState } from 'react';
+import { forwardRef, lazy, Suspense, useId, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { Button, Select } from '@/components/ui';
+import { FEATURES } from '@/config/features';
 import { LOCALES, type LocaleCode } from '@/i18n/languages';
 import { detectScript } from '@/lib/detectScript';
 import { cn } from '@/lib/cn';
@@ -17,6 +18,15 @@ import { cn } from '@/lib/cn';
  * Where the script cannot decide — Devanagari carries both Hindi and Marathi —
  * it says which languages it is between instead of picking one.
  */
+/**
+ * Speaking is loaded on demand, not bundled.
+ *
+ * Almost nobody uses it, and the people who do decide to before they need it.
+ * Keeping it out of the first load means a reader on a slow connection is not
+ * paying for a microphone they will never tap.
+ */
+const VoiceInput = lazy(() => import('@/components/sahayak/VoiceInput'));
+
 interface ComposerProps {
   onSubmit: (question: string) => void;
   language: LocaleCode;
@@ -86,6 +96,21 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
           {t('composer.send')}
         </Button>
       </div>
+
+      {/* The transcript lands in the box for the person to read and correct.
+          Nothing is submitted for them: speech recognition mishears domain
+          words worst of all, and "Form 18" misheard is a different question. */}
+      {FEATURES.voice ? (
+        <Suspense fallback={null}>
+          <VoiceInput
+            className="mt-2"
+            language={language}
+            onTranscript={(said) =>
+              setQuestion((current) => (current ? `${current} ${said}` : said))
+            }
+          />
+        </Suspense>
+      ) : null}
 
       <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
         {detection.decided ? (

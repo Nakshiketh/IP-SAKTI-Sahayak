@@ -576,5 +576,23 @@
       "why_it_could_not_conclude": "Why it would not conclude",
       "the_language": "The language it used"
     }
+  },
+  "voice": {
+    "speak": "Speak your question",
+    "listening": "Listening — tap to stop",
+    "note": "What you say is turned into text here and shown for you to correct. Nothing is sent until you press Ask, and no audio is kept.",
+    "unsupported": "This browser cannot turn speech into text in {{language}}. Type your question instead."
+  },
+  "helpline": {
+    "simulated": "Simulated call in your browser. No phone service is connected.",
+    "start": "Start a practice call",
+    "end": "End call",
+    "transcript": "What was said",
+    "summaryHeading": "Call summary",
+    "questionsAsked": "Questions asked",
+    "guidanceGiven": "Guidance given",
+    "sources": "Sources used",
+    "unresolved": "Left unresolved",
+    "nextActions": "Next actions"
   }
 }

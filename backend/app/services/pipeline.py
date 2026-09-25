@@ -129,6 +129,14 @@ class QueryRequest:
     ip_rights: tuple[IPRight, ...] = ()
     regulatory_areas: tuple[RegulatoryArea, ...] = ()
     document_types: tuple[str, ...] = ()
+    #: How the question arrived: "text", "voice" or "helpline".
+    #:
+    #: Recorded on the audit row and nowhere else. It must never reach
+    #: retrieval, the confidence rule, the guardrails or the composer: a
+    #: question asked aloud is the same question, and a product whose refusals
+    #: depended on the microphone would be refusing for the wrong reason. T10
+    #: pins that.
+    channel: str = "text"
 
 
 @dataclass
@@ -160,6 +168,9 @@ class QueryOutcome:
     #: passage answered. Empty for an ordinary one-part question.
     parts: tuple[Part, ...] = ()
     answered_parts: dict[str, str] = field(default_factory=dict)
+    #: How the question arrived. Carried so the audit row can record it; it
+    #: changes nothing about the answer.
+    channel: str = "text"
     #: What the reasoning stage concluded. Present even on an abstention: the
     #: issues a question raises are worth reporting whether or not the corpus
     #: could answer them.
@@ -906,6 +917,7 @@ class Pipeline:
             evidence=evidence,
             confidence=scored,
             answer=answer,
+            channel=request.channel,
             analysis=analysis,
             parts=parts,
             answered_parts=dict(answered_parts or {}),
@@ -1060,6 +1072,7 @@ class Pipeline:
                     neutralised_spans=neutralised,
                     dropped_claims=dropped,
                     latency_ms=outcome.total_ms,
+                    detail={"channel": outcome.channel},
                 )
             )
 
