@@ -133,7 +133,9 @@ def main(argv: list[str] | None = None) -> int:
         changed += wrote
         print(f"  {code:8} {wrote:3} string(s)")
 
-    print(f"\n{len(shell)} language(s), {changed} string(s) {'written' if args.write else 'to write'}")
+    print(
+        f"\n{len(shell)} language(s), {changed} string(s) {'written' if args.write else 'to write'}"
+    )
     if problems:
         print(f"\n{len(problems)} problem(s):", file=sys.stderr)
         for problem in problems[:20]:

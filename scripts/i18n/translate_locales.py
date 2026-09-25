@@ -5,9 +5,10 @@
 
 The key comes from ANTHROPIC_API_KEY or SAHAYAK_LLM_API_KEY, in the environment
 or in a gitignored `.env` at the repo root. Without one this exits cleanly and
-changes nothing. That is the designed behaviour, not a failure: a language with no translation stays as it is and
-stays labelled, rather than being filled in by hand in a chat window where
-nobody can check it later or regenerate it when the English changes.
+changes nothing. That is the designed behaviour, not a failure: a language with
+no translation stays as it is and stays labelled, rather than being filled in by
+hand in a chat window where nobody can check it later or regenerate it when the
+English changes.
 
 What the model is held to, and why each constraint is here:
 
