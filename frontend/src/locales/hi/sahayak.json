@@ -594,5 +594,18 @@
     "sources": "Sources used",
     "unresolved": "Left unresolved",
     "nextActions": "Next actions"
+  },
+  "document": {
+    "heading": "Ask about your own document",
+    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first, because a PDF often holds something other than what you expect — and a scanned page holds no text at all.",
+    "choose": "Choose a file",
+    "limits": "PDF, .txt or .md. Up to 10 MB.",
+    "reading": "Reading the file…",
+    "failed": "That file could not be read",
+    "remove": "Remove",
+    "extracted": "{{characters}} characters read.",
+    "truncated": "Only the beginning is shown.",
+    "use": "Put this text in the question box",
+    "notStored": "Nothing is uploaded to storage. The file is read and dropped; this text stays in your browser until you close the tab."
   }
 }

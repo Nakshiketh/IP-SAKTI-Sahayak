@@ -20,11 +20,11 @@ TESTS = Path(__file__).parent
 
 #: T-number -> (file, a test function that holds it).
 #:
-#: T9 is worth reading closely. The pack states it as "uploads are never
-#: authoritative"; uploads are not built, so what is tested is the guarantee
-#: underneath it — a source from a host nobody vetted can never be cited,
-#: whatever route it arrives by. When uploads exist they inherit that, and this
-#: entry should grow a second test rather than being reinterpreted.
+#: T9 said, until uploads were built, that what was tested was the guarantee
+#: underneath the pack's wording — a source from a host nobody vetted can never
+#: be cited, whatever route it arrives by — and that when uploads existed this
+#: entry should grow a second test rather than be reinterpreted. Uploads exist,
+#: and it has: `CATALOGUE_EXTRA` holds the second.
 CATALOGUE: dict[str, tuple[str, str]] = {
     "T1": ("test_reasoning_cases.py", "test_d_and_t1_india_and_international_never_merge"),
     "T2": ("test_registry.py", "test_a_portal_page_never_outranks_a_statute"),
@@ -65,6 +65,23 @@ def test_the_named_guarantee_has_a_test_that_holds_it(number: str) -> None:
     turns out never to have been written down.
     """
     filename, function = CATALOGUE[number]
+    path = TESTS / filename
+    assert path.exists(), f"{number}: {filename} is missing"
+    assert f"def {function}(" in path.read_text("utf-8"), f"{number}: {function} is missing"
+
+
+#: Where one T-number is held by more than one test. A dict cannot hold two
+#: values for a key, and dropping either test to fit the shape would be the
+#: catalogue deciding what is true rather than recording it.
+CATALOGUE_EXTRA: dict[str, tuple[str, str]] = {
+    "T9": ("test_documents.py", "test_an_uploaded_document_is_never_a_source"),
+    "T10": ("test_voice.py", "test_the_document_channel_changes_nothing_either"),
+}
+
+
+@pytest.mark.parametrize("number", sorted(CATALOGUE_EXTRA))
+def test_a_guarantee_with_a_second_route_has_a_second_test(number: str) -> None:
+    filename, function = CATALOGUE_EXTRA[number]
     path = TESTS / filename
     assert path.exists(), f"{number}: {filename} is missing"
     assert f"def {function}(" in path.read_text("utf-8"), f"{number}: {function} is missing"

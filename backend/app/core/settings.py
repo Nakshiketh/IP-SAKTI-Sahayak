@@ -121,6 +121,9 @@ class Settings(BaseSettings):
     rate_limit_window_seconds: int = 60
     #: Largest request body the API will read, in bytes.
     max_request_bytes: int = 32_768
+    #: The ceiling for the upload routes only. A question is a sentence;
+    #: a document is megabytes, and one limit cannot serve both.
+    max_upload_bytes: int = 10 * 1024 * 1024
     #: Longest question accepted, in characters.
     max_question_chars: int = 2_000
 
@@ -145,7 +148,7 @@ class Settings(BaseSettings):
     feature_jury_demo: bool = True
     feature_voice: bool = True
     feature_helpline_sim: bool = False
-    feature_document_intel: bool = False
+    feature_document_intel: bool = True
     feature_admin_insights: bool = True
     feature_scan_badge_login: bool = True
     feature_public_ask: bool = False

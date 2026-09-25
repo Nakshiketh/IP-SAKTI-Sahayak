@@ -12,6 +12,7 @@ from app.api import (
     auth,
     classify,
     demo,
+    documents,
     feedback,
     health,
     insight,
@@ -23,6 +24,11 @@ from app.api import (
 from app.core.errors import ApiError, RequestTooLarge, api_error_handler
 from app.core.settings import get_settings
 
+#: Paths allowed a larger body. Listed here rather than inferred from a name
+#: so that adding an upload route is a deliberate edit somebody reviews, not
+#: something that happens because a path happened to contain "upload".
+UPLOAD_PATHS = ("/api/v1/documents/",)
+
 
 class RequestSizeLimitMiddleware(BaseHTTPMiddleware):
     """Refuse a body larger than the cap, before anything reads it.
@@ -31,16 +37,34 @@ class RequestSizeLimitMiddleware(BaseHTTPMiddleware):
     arrive: a client that lies about the length still has to get past the
     endpoint's own question-length check, and rejecting on the header costs
     nothing on every honest request.
+
+    The cap is small — a question is a sentence, and nothing else this API
+    takes is large. `upload_paths` names the exceptions, because a document
+    upload is measured in megabytes and a single global limit would have to be
+    either useless for questions or useless for files. The exemption raises the
+    ceiling for those paths and nothing more: `services.documents` still
+    enforces its own limit on the bytes actually received, which is the only
+    number the sender does not write.
     """
 
-    def __init__(self, app, max_bytes: int) -> None:
+    def __init__(
+        self, app, max_bytes: int, upload_bytes: int, upload_paths: tuple[str, ...]
+    ) -> None:
         super().__init__(app)
         self._max_bytes = max_bytes
+        self._upload_bytes = upload_bytes
+        self._upload_paths = upload_paths
+
+    def _limit_for(self, path: str) -> int:
+        if any(path.startswith(prefix) for prefix in self._upload_paths):
+            return self._upload_bytes
+        return self._max_bytes
 
     async def dispatch(self, request: Request, call_next) -> Response:
+        limit = self._limit_for(request.url.path)
         declared = request.headers.get("content-length")
-        if declared is not None and declared.isdigit() and int(declared) > self._max_bytes:
-            error = RequestTooLarge(self._max_bytes)
+        if declared is not None and declared.isdigit() and int(declared) > limit:
+            error = RequestTooLarge(limit)
             return JSONResponse(
                 status_code=error.status_code,
                 content={"code": error.code, "message": error.message},
@@ -118,7 +142,12 @@ def create_app() -> FastAPI:
         openapi_url="/api/openapi.json" if development else None,
     )
     app.add_middleware(SecurityHeadersMiddleware)
-    app.add_middleware(RequestSizeLimitMiddleware, max_bytes=settings.max_request_bytes)
+    app.add_middleware(
+        RequestSizeLimitMiddleware,
+        max_bytes=settings.max_request_bytes,
+        upload_bytes=settings.max_upload_bytes,
+        upload_paths=UPLOAD_PATHS,
+    )
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origin_list,
@@ -139,6 +168,7 @@ def create_app() -> FastAPI:
     app.include_router(privacy.router)
     app.include_router(demo.router)
     app.include_router(insight.router)
+    app.include_router(documents.router)
     return app
 
 

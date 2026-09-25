@@ -14,6 +14,12 @@ dependencies = [
   # The reasoning rules in data/rules/*.yaml. Present transitively through
   # uvicorn[standard] today; declared here because the rules are not optional.
   "pyyaml>=6.0",
+  # Document upload. multipart parses the form; pypdf pulls text out of a PDF.
+  # Both are required rather than optional: an upload route that 500s because a
+  # parser is missing is worse than one that is switched off, and the feature
+  # flag is the thing that decides whether uploads exist.
+  "python-multipart>=0.0.9",
+  "pypdf>=5.0",
 ]
 
 [project.optional-dependencies]

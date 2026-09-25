@@ -27,6 +27,13 @@ import { cn } from '@/lib/cn';
  */
 const VoiceInput = lazy(() => import('@/components/sahayak/VoiceInput'));
 
+/**
+ * Lazy for the same reason, and more so: this pulls in a file reader and a
+ * whole upload surface for something most questions never need. It is also the
+ * larger of the two, so keeping it out of the first load matters more.
+ */
+const DocumentUpload = lazy(() => import('@/components/sahayak/DocumentUpload'));
+
 interface ComposerProps {
   onSubmit: (question: string) => void;
   language: LocaleCode;
@@ -107,6 +114,21 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
             language={language}
             onTranscript={(said) =>
               setQuestion((current) => (current ? `${current} ${said}` : said))
+            }
+          />
+        </Suspense>
+      ) : null}
+
+      {/* The extracted text lands in the box, exactly as the transcript does,
+          and for the same reason: the person reads it and decides. Text out of
+          a file is data — it has no authority, it is never cited, and putting
+          it here rather than sending it straight on is what keeps that true
+          somewhere the reader can see. */}
+      {FEATURES.documentIntel ? (
+        <Suspense fallback={null}>
+          <DocumentUpload
+            onText={(text) =>
+              setQuestion((current) => (current ? `${current}\n\n${text}` : text))
             }
           />
         </Suspense>

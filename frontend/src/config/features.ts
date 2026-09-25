@@ -37,7 +37,7 @@ export const FEATURES: FeatureFlags = {
   juryDemo: true,
   voice: true,
   helplineSim: false,
-  documentIntel: false,
+  documentIntel: true,
   adminInsights: true,
   scanBadgeLogin: true,
   publicAsk: false,
