@@ -147,7 +147,7 @@ class Settings(BaseSettings):
 
     feature_jury_demo: bool = True
     feature_voice: bool = True
-    feature_helpline_sim: bool = False
+    feature_helpline_sim: bool = True
     feature_document_intel: bool = True
     feature_admin_insights: bool = True
     feature_scan_badge_login: bool = True

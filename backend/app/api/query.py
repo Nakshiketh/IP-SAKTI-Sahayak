@@ -163,6 +163,7 @@ def query(body: QueryBody, session_id: str = Depends(session_header)) -> Streami
         ip_rights=tuple(filters.ip_rights) if filters else (),
         regulatory_areas=tuple(filters.regulatory_areas) if filters else (),
         document_types=tuple(filters.document_types) if filters else (),
+        channel=body.channel,
     )
 
     return StreamingResponse(

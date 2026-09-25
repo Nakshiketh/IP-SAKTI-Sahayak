@@ -224,6 +224,37 @@ describe('what is sent', () => {
       product_class: 'phytopharmaceutical',
       language_out: null,
       session_id: 's-1',
+      // Defaults to text. It reaches the audit row and nothing else, so that
+      // the log can say honestly how the product is used without the channel
+      // ever being able to change an answer.
+      channel: 'text',
     });
+  });
+
+  it('sends the channel it was given, and only from a closed set', async () => {
+    respond([JSON.stringify(RESULT) + '\n']);
+    await runHttpQuery('a question', { jurisdiction: 'IN', channel: 'helpline' });
+
+    const [, init] = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0] as [
+      string,
+      RequestInit,
+    ];
+    expect(JSON.parse(init.body as string).channel).toBe('helpline');
+  });
+
+  it('never carries anything that could identify the person asking', async () => {
+    respond([JSON.stringify(RESULT) + '\n']);
+    await runHttpQuery('a question', { jurisdiction: 'IN', sessionId: 's-1' });
+
+    const [, init] = (globalThis.fetch as ReturnType<typeof vi.fn>).mock.calls[0] as [
+      string,
+      RequestInit,
+    ];
+    const body = JSON.parse(init.body as string) as Record<string, unknown>;
+    // The session id is a rotating handle, not an account. Anything below
+    // would tie a question to a person, which the audit design forbids.
+    for (const forbidden of ['username', 'email', 'account', 'name', 'token', 'user_id']) {
+      expect(body).not.toHaveProperty(forbidden);
+    }
   });
 });

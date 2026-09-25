@@ -106,6 +106,16 @@ export interface QueryOptions {
   onStage?: (stage: StageTiming) => void;
   /** Called once retrieval has counted what it found. */
   onRetrieved?: (found: { passages: number; documents: number }) => void;
+  /**
+   * How the question arrived. Reaches the audit row and nothing else.
+   *
+   * It must never change an answer — a question asked aloud is the same
+   * question, and a product whose refusals depended on the microphone would be
+   * refusing for the wrong reason. The backend pins that across all four
+   * channels; this field exists so the audit log can say honestly how the
+   * product is actually being used.
+   */
+  channel?: 'text' | 'voice' | 'helpline' | 'document';
 }
 
 /**

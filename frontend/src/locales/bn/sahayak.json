@@ -584,16 +584,26 @@
     "unsupported": "This browser cannot turn speech into text in {{language}}. Type your question instead."
   },
   "helpline": {
-    "simulated": "Simulated call in your browser. No phone service is connected.",
-    "start": "Start a practice call",
-    "end": "End call",
-    "transcript": "What was said",
-    "summaryHeading": "Call summary",
-    "questionsAsked": "Questions asked",
-    "guidanceGiven": "Guidance given",
-    "sources": "Sources used",
-    "unresolved": "Left unresolved",
-    "nextActions": "Next actions"
+    "heading": "Try the helpline",
+    "notAPhoneLine": "No phone service is connected",
+    "notAPhoneLineBody": "This is a rehearsal of the conversation a helpline would have, not a call. This product has no phone number and nothing here dials anyone. The answers come from the same pipeline as the typed interface, so what a caller would hear can be checked before anyone funds a phone line.",
+    "start": "Start the rehearsal",
+    "inProgress": "Rehearsal in progress",
+    "end": "End",
+    "muteVoice": "Mute",
+    "unmuteVoice": "Unmute",
+    "speak": "Hold to speak",
+    "typeInstead": "Or type what the caller would say",
+    "transcript": "Transcript",
+    "caller": "Caller",
+    "sahayak": "Sahayak",
+    "thinking": "Looking through the sources…",
+    "greeting": "IP-SAKTI Sahayak. Ask about protecting or registering an Ayurvedic product, and I will answer from official sources. I cannot give medical or dosage advice.",
+    "nothing": "I could not find anything in the sources on that.",
+    "failed": "Something went wrong reaching the sources. Nothing was answered.",
+    "summary": "After the call",
+    "summaryBody": "{{count}} question(s) asked over {{duration}}.",
+    "summaryNotKept": "Nothing from this rehearsal is stored. No audio existed at any point, and the transcript is gone when you leave the page."
   },
   "document": {
     "heading": "Ask about your own document",
@@ -607,5 +617,13 @@
     "truncated": "Only the beginning is shown.",
     "use": "Put this text in the question box",
     "notStored": "Nothing is uploaded to storage. The file is read and dropped; this text stays in your browser until you close the tab."
+  },
+  "thread": {
+    "heading": "This conversation",
+    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — this is a record of what you asked, not a memory.",
+    "answered": "Answered, {{confidence}} confidence, {{count}} source(s)",
+    "declined": "Declined — the sources did not carry it",
+    "failed": "Could not be answered — something went wrong",
+    "carried": "Asked together with the question before it."
   }
 }

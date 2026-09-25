@@ -36,7 +36,7 @@ export interface FeatureFlags {
 export const FEATURES: FeatureFlags = {
   juryDemo: true,
   voice: true,
-  helplineSim: false,
+  helplineSim: true,
   documentIntel: true,
   adminInsights: true,
   scanBadgeLogin: true,

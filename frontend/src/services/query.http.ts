@@ -132,6 +132,7 @@ export async function runHttpQuery(question: string, options: QueryOptions): Pro
           body: JSON.stringify({
             text: question,
             jurisdiction: options.jurisdiction,
+            channel: options.channel ?? 'text',
             product_class: options.productClass ?? 'undetermined',
             language_out: options.languageOut ?? null,
             session_id: options.sessionId ?? 'anonymous',

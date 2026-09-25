@@ -34,6 +34,9 @@ const VoiceInput = lazy(() => import('@/components/sahayak/VoiceInput'));
  */
 const DocumentUpload = lazy(() => import('@/components/sahayak/DocumentUpload'));
 
+/** The call rehearsal. Lazy for the same reason as the other two. */
+const HelplineSimulator = lazy(() => import('@/components/sahayak/HelplineSimulator'));
+
 interface ComposerProps {
   onSubmit: (question: string) => void;
   language: LocaleCode;
@@ -131,6 +134,12 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
               setQuestion((current) => (current ? `${current}\n\n${text}` : text))
             }
           />
+        </Suspense>
+      ) : null}
+
+      {FEATURES.helplineSim ? (
+        <Suspense fallback={null}>
+          <HelplineSimulator language={language} />
         </Suspense>
       ) : null}
 

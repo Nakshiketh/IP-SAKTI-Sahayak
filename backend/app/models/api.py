@@ -15,6 +15,8 @@ cheaper way to hold that than a renaming layer in TypeScript.
 
 from __future__ import annotations
 
+from typing import Literal
+
 from pydantic import BaseModel, ConfigDict, Field
 
 from app.models.domain import (
@@ -57,6 +59,13 @@ class QueryBody(Wire):
     product_class: ProductClass = ProductClass.UNDETERMINED
     filters: QueryFilters | None = None
     session_id: str = "anonymous"
+    #: How the question arrived. A closed list, because it reaches the audit row
+    #: and an open string would let a caller write anything into it.
+    #:
+    #: It changes nothing about the answer — T10 pins that across all four —
+    #: and it is validated here rather than trusted, because "recorded and
+    #: never acted on" is only safe if what gets recorded is bounded.
+    channel: Literal["text", "voice", "helpline", "document"] = "text"
 
 
 class WirePassage(Wire):

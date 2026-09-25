@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { AnswerView } from '@/components/answer';
 import { AnswerReceipt } from '@/components/answer/AnswerReceipt';
+import { ConversationThread, type Turn } from '@/components/sahayak/ConversationThread';
 import { DetailToggle } from '@/components/answer/DetailToggle';
 import { InShort } from '@/components/answer/InShort';
 import { CaseBrief } from '@/components/answer/CaseBrief';
@@ -114,6 +115,13 @@ export default function Sahayak() {
     flowFromParam(params.get('flow')),
   );
   const [copied, setCopied] = useState<'answer' | 'link' | null>(null);
+  /**
+   * The conversation so far. Held here rather than on the server, because
+   * there is no server-side conversation: each question is answered on its own
+   * evidence, and this is a record of what was asked, not a memory that
+   * changes what comes back.
+   */
+  const [turns, setTurns] = useState<Turn[]>([]);
 
   const composerRef = useRef<HTMLTextAreaElement>(null);
   const isDesktop = useMediaQuery(DESKTOP_QUERY);
@@ -142,9 +150,15 @@ export default function Sahayak() {
   }, [result, productClass]);
 
   const ask = useCallback(
-    (text: string) => {
-      setQuestion(text);
-      setParams({ q: text }, { replace: true });
+    (text: string, follows?: string) => {
+      // A follow-up carries the question it follows, and the combined text is
+      // what goes in the box and in the address. Nothing is appended behind the
+      // reader's back: they can see, edit or delete the carried part, because
+      // an invisible prefix is a thing they would be answered on without
+      // knowing it was asked.
+      const sent = follows ? `${follows} ${text}` : text;
+      setQuestion(sent);
+      setParams({ q: sent }, { replace: true });
       setStartersOpen(false);
       setAttempt((n) => n + 1);
     },
@@ -196,11 +210,36 @@ export default function Sahayak() {
       .then((next) => {
         setResult(next);
         setPhase('done');
+        // Recorded with its outcome, including the ones that declined. A
+        // thread with the refusals quietly dropped would read as a product
+        // that always answers.
+        setTurns((all) => [
+          ...all.filter((turn) => turn.sent !== question),
+          {
+            id: Date.now(),
+            question,
+            sent: question,
+            outcome: next.answer ? 'answered' : 'declined',
+            confidence: next.confidence.level,
+            sources: next.answer?.citations.length ?? 0,
+          },
+        ]);
       })
       .catch((error: unknown) => {
         if (error instanceof DOMException && error.name === 'AbortError') return;
         setFailure(error instanceof QueryError ? error.code : 'unknown');
         setPhase('done');
+        setTurns((all) => [
+          ...all.filter((turn) => turn.sent !== question),
+          {
+            id: Date.now(),
+            question,
+            sent: question,
+            outcome: 'failed',
+            confidence: null,
+            sources: 0,
+          },
+        ]);
       });
 
     return () => controller.abort();
@@ -504,13 +543,22 @@ export default function Sahayak() {
 
                       <FlowOffers kinds={offeredFlows} onOpen={setOpenFlow} />
 
+                      <ConversationThread
+                        turns={turns}
+                        currentId={turns[turns.length - 1]?.id ?? null}
+                        onRevisit={(turn) => ask(turn.sent)}
+                      />
+
                       {result.followUps.length > 0 ? (
                         <div className="mt-6">
                           <p className="text-xs text-muted">{t('followUps.heading')}</p>
                           <ul className="m-0 mt-2 flex list-none flex-wrap gap-2 p-0">
                             {result.followUps.map((key) => (
                               <li key={key}>
-                                <Chip onClick={() => ask(t(`followUps.${key}`))}>
+                                {/* A follow-up carries the question it follows,
+                                    and `ask` puts the combined text in the box
+                                    so the reader sees exactly what was sent. */}
+                                <Chip onClick={() => ask(t(`followUps.${key}`), question)}>
                                   {t(`followUps.${key}`)}
                                 </Chip>
                               </li>
