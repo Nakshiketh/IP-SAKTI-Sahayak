@@ -20,6 +20,7 @@ import { AnswerPanel } from '@/components/sahayak/AnswerPanel';
 import { Composer } from '@/components/sahayak/Composer';
 import { ContextLine } from '@/components/sahayak/ContextLine';
 import { EscalationForm } from '@/components/sahayak/EscalationForm';
+import { AnswerFeedback } from '@/components/sahayak/AnswerFeedback';
 import { FirstVisitHint } from '@/components/sahayak/FirstVisitHint';
 import { QueryFailure } from '@/components/sahayak/QueryFailure';
 import {
@@ -496,6 +497,8 @@ export default function Sahayak() {
                               {t('brief.open')}
                             </button>
                           </div>
+
+                          <AnswerFeedback className="mt-8" result={result} />
                         </>
                       ) : null}
 

@@ -319,11 +319,24 @@ class ProtectionView(BaseModel):
 
 
 class RoadmapTaskView(BaseModel):
+    """One task on the roadmap, as the interface renders it.
+
+    `status` can never be "filed", "approved" or "granted". This product cannot
+    observe any of those, and a checklist that let someone tick one would record
+    a belief as a fact. See analyst/roadmap.py.
+    """
+
     task_id: str
+    #: A reason key, rendered in the reader's language.
+    why_key: str
+    status: str
     when: str
     issue: str | None = None
     source_ids: list[str] = Field(default_factory=list)
-    resolves_missing_fact: bool = False
+    #: Tasks that must be finished first, and are not.
+    depends_on: list[str] = Field(default_factory=list)
+    #: What is holding this at "needs information".
+    needs_facts: list[MissingFact] = Field(default_factory=list)
 
 
 class Intelligence(BaseModel):

@@ -1,5 +1,5 @@
 {
-  "run_at": "2026-09-24",
+  "run_at": "2026-09-25",
   "metrics": {
     "jurisdiction_purity": "100.0% (71/71)",
     "authority_purity": "100.0% (71/71)",
@@ -14,8 +14,8 @@
     "language_detection_accuracy": "100.0% (25/25)",
     "records_offered": "0.0% (0/25)",
     "records_do_not_rescue": "not measured",
-    "latency_p50": "18 ms",
-    "latency_p95": "35 ms",
+    "latency_p50": "27 ms",
+    "latency_p95": "102 ms",
     "errors": "0",
     "answer_accuracy": "not measured",
     "citation_correctness": "not measured",

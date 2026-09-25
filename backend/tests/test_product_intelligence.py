@@ -281,17 +281,31 @@ def test_every_entry_carries_why_and_a_source_or_a_question() -> None:
 # -- the roadmap seed ---------------------------------------------------------
 
 
-def test_the_roadmap_starts_with_the_questions_that_are_open(vocabulary) -> None:
+def test_the_roadmap_starts_with_settling_what_the_product_is(vocabulary) -> None:
+    # Everything downstream depends on the category, so it comes first and the
+    # rest wait on it.
     result = build(product(), vocabulary, corpus_document_ids=BACKED)
     first = result.roadmap[0]
+    assert first.task_id == "confirm-classification"
     assert first.when == "now"
-    assert first.resolves_missing_fact is True
+    assert first.why_key
 
 
 def test_abs_lands_before_filing_not_after(vocabulary) -> None:
     result = build(product(), vocabulary, corpus_document_ids=BACKED)
-    abs_task = next(t for t in result.roadmap if t.task_id == "check-abs-position")
+    abs_task = next(t for t in result.roadmap if t.task_id == "determine-abs-applicability")
     assert abs_task.when == "before_filing"
+    # It cannot be done until the origin of the material is written down.
+    assert "document-resource-origin" in abs_task.depends_on
+
+
+def test_no_roadmap_task_can_claim_a_filing_or_an_approval(vocabulary) -> None:
+    from app.analyst.roadmap import FORBIDDEN_STATUSES
+
+    result = build(product(), vocabulary, corpus_document_ids=BACKED)
+    assert result.roadmap
+    for task in result.roadmap:
+        assert task.status not in FORBIDDEN_STATUSES
 
 
 def test_the_whole_result_serialises_for_the_api(vocabulary) -> None:

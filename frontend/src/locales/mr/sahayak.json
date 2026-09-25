@@ -558,5 +558,23 @@
       "title": "Every sentence has a source",
       "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
     }
+  },
+  "feedback": {
+    "question": "Did this answer help?",
+    "whichPart": "Which part needs work?",
+    "thanks": "Recorded, with nothing identifying you.",
+    "skip": "Rather not say",
+    "verdict": {
+      "yes": "Yes",
+      "partly": "Partly",
+      "no": "No"
+    },
+    "aspect": {
+      "the_answer": "The answer itself",
+      "the_sources": "The sources",
+      "what_to_do_next": "What to do next",
+      "why_it_could_not_conclude": "Why it would not conclude",
+      "the_language": "The language it used"
+    }
   }
 }

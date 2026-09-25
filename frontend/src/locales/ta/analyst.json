@@ -368,5 +368,47 @@
     "patents": "Patent records",
     "patentsValue": "{{count}} of {{records}} related",
     "patentsNone": "Not searched"
+  },
+  "roadmap": {
+    "heading": "Your regulatory and IP roadmap",
+    "standfirst": "Built from what this case actually raises. A task says why it is here and what it waits on. Nothing here records a filing or an approval — this product cannot see either.",
+    "waitsOn": "Waits on: {{tasks}}",
+    "reads": "Read: {{sources}}",
+    "when": {
+      "now": "Now",
+      "before_filing": "Before you file anything",
+      "before_sale": "Before you sell"
+    },
+    "status": {
+      "not_started": "Not started",
+      "needs_information": "Needs information",
+      "ready": "Ready to do",
+      "requires_expert_review": "Needs expert review",
+      "completed_by_user": "Done — your record"
+    },
+    "task": {
+      "confirm-classification": "Confirm what your product is, regulatorily",
+      "verify-formulation-references": "Check which classical texts your formulation comes from",
+      "document-resource-origin": "Write down where the biological material came from",
+      "determine-abs-applicability": "Establish your access and benefit sharing position",
+      "structured-prior-art-search": "Run a structured prior-art search",
+      "review-patent-exclusions": "Review the patent exclusions against your invention",
+      "decide-protection-mix": "Decide which kinds of protection to pursue",
+      "prepare-regulatory-documents": "Prepare the documents your licence needs",
+      "check-target-markets": "Check what each target market requires",
+      "seek-professional-review": "Take the open points to a professional"
+    },
+    "why": {
+      "roadmapWhyClassification": "Everything else follows from the category: the regulator, the evidence you need, and the route to market.",
+      "roadmapWhyFormulationReferences": "A formulation documented in a classical text is prior art, whether or not you can see its record.",
+      "roadmapWhyResourceOrigin": "Where the material came from decides whether the biodiversity rules reach you at all.",
+      "roadmapWhyAbsApplicability": "An application based on an Indian biological resource involves the National Biodiversity Authority before grant.",
+      "roadmapWhyPriorArt": "Novelty is tested against what is already public, including documented traditional knowledge.",
+      "roadmapWhyExclusions": "Traditional knowledge and mere admixtures are excluded, and those exclusions decide most Ayurvedic applications.",
+      "roadmapWhyProtectionMix": "The six kinds of protection cover different things, and some are lost by disclosing too early.",
+      "roadmapWhyRegulatoryDocuments": "A manufacturing licence turns on the evidence you can show for your category.",
+      "roadmapWhyTargetMarkets": "Each country decides for itself. An Indian position carries no weight abroad on its own.",
+      "roadmapWhyProfessionalReview": "Something here turns on applying a provision to your facts, which is a judgement this product must not make for you."
+    }
   }
 }

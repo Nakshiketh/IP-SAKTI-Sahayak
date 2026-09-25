@@ -14,6 +14,7 @@ that is about what to do rather than what is true.
 from __future__ import annotations
 
 from app.analyst import abs as abs_module
+from app.analyst import roadmap as roadmap_module
 from app.analyst.facts_bridge import facts_of, missing_from_declines
 from app.analyst.models import (
     AbsView,
@@ -26,10 +27,10 @@ from app.analyst.models import (
     SearchStrategyView,
     SearchTermView,
 )
-from app.analyst.protection import ProtectionEntry, RoadmapTask, protection_map, roadmap_seed
+from app.analyst.protection import ProtectionEntry, protection_map
 from app.analyst.searches import SearchStrategy, build_strategy
 from app.analyst.vocabulary import Vocabulary
-from app.models.domain import Jurisdiction
+from app.models.domain import IssueType, Jurisdiction, ProductClass
 from app.reasoning import analyse
 from app.registry.store import SourceRegistry
 
@@ -53,6 +54,8 @@ def build(
     vocabulary: Vocabulary,
     *,
     declined: list[str] | None = None,
+    #: Tasks the person has ticked off. Their assertion, kept as theirs.
+    completed: set[str] | None = None,
     corpus_document_ids: frozenset[str] = frozenset(),
     registry: SourceRegistry | None = None,
 ) -> Intelligence:
@@ -78,7 +81,20 @@ def build(
     abs_finding = abs_module.assess_abs(_abs_facts(invention, stated), registry=registry)
     strategy: SearchStrategy = build_strategy(invention, vocabulary, registry)
     entries: list[ProtectionEntry] = protection_map(invention, facts, registry)
-    tasks: list[RoadmapTask] = roadmap_seed(entries, missing, abs_finding.relevance, registry)
+    tasks = roadmap_module.build(
+        issues_indicated={
+            IssueType(finding.issue.value)
+            for finding in analysis.issues
+            if finding.status.value == "indicated"
+        },
+        missing_facts=missing,
+        classification_settled=analysis.product_class is not ProductClass.UNDETERMINED,
+        needs_expert_review=bool(
+            analysis.escalation and analysis.escalation.level.value in {"l2", "l3"}
+        ),
+        completed=completed,
+        registry=registry,
+    )
 
     return Intelligence(
         facts=list(facts.stated),
@@ -126,10 +142,13 @@ def build(
         roadmap=[
             RoadmapTaskView(
                 task_id=task.task_id,
+                why_key=task.why_key,
+                status=task.status,
                 when=task.when,
                 issue=task.issue.value if task.issue else None,
                 source_ids=list(task.source_ids),
-                resolves_missing_fact=task.resolves_missing_fact,
+                depends_on=list(task.depends_on),
+                needs_facts=list(task.needs_facts),
             )
             for task in tasks
         ],

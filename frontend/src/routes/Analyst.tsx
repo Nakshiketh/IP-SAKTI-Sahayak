@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import { Findings } from '@/components/analyst/Findings';
+import { Roadmap } from '@/components/analyst/Roadmap';
 import { ProtectionMap } from '@/components/answer/ProtectionMap';
 import { Journey, type StageState } from '@/components/analyst/Journey';
 import { Badge, Button, Chip, LiveRegion } from '@/components/ui';
@@ -422,6 +423,10 @@ export default function Analyst() {
         {/* Added below the existing findings rather than inside them: the
             protection map answers a different question — what you could hold —
             and the sections above answer what was found. */}
+        {conversation?.analysis?.intelligence?.roadmap?.length ? (
+          <Roadmap className="mt-8" tasks={conversation.analysis.intelligence.roadmap} />
+        ) : null}
+
         {conversation?.analysis?.intelligence?.protection?.length ? (
           <ProtectionMap className="mt-8" entries={conversation.analysis.intelligence.protection} />
         ) : null}

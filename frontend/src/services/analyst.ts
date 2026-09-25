@@ -206,8 +206,28 @@ export interface IpOption {
  * the parts the interface reads are declared; the rest arrives and is ignored
  * rather than being mirrored here for its own sake.
  */
+/**
+ * One task on the regulatory and IP roadmap.
+ *
+ * `status` is one of not_started, needs_information, ready,
+ * requires_expert_review, completed_by_user. It is never "filed" or
+ * "approved" — this product cannot observe either. See backend
+ * app/analyst/roadmap.py.
+ */
+export interface RoadmapTask {
+  task_id: string;
+  why_key: string;
+  status: string;
+  when: string;
+  issue: string | null;
+  source_ids: string[];
+  depends_on: string[];
+  needs_facts: { key: string; question: string }[];
+}
+
 export interface Intelligence {
   protection: ProtectionEntry[];
+  roadmap?: RoadmapTask[];
 }
 
 export interface Analysis {

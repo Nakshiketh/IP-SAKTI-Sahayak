@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 7 part one done (roadmap with honest statuses, change explanation, feedback that carries nobody with it)
-- Last green gate: phase 7a — backend 550, frontend 421, typecheck, eslint, ruff, schema, evals (below_target []), build 116.9 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- Current phase: 7 done (roadmap and feedback, backend and surfaces)
+- Last green gate: phase 7 — backend 551, frontend 432, typecheck, eslint, ruff, schema, locale check, evals (below_target []), build 117 kB of a 150 kB budget. `components/layout/backdrop.test.tsx` fails under memory pressure; pre-existing, proven by reverting all of frontend/src. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
@@ -63,9 +63,9 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C20 | i18n: Indian languages | 6 | PARTIAL | 6 locales; hi 61%, te/ta/bn/mr 44%. frontend/src/i18n/locales.meta.json now records tier, script, direction and measured coverage, and the switcher states the percentage beside a partly translated language. scripts/i18n/translate_locales.py drafts the rest once a key exists; without one it changes nothing |
 | C21 | i18n: international languages + RTL | 6 | PARTIAL | `dir` is carried per locale and written onto <html> by Shell.tsx, so a right-to-left locale needs its files rather than a layout change. No international locale files exist yet: the translation script cannot run without a key |
 | C22 | Case Workspace (save, resume, update, re-run, archive, delete, change reasons) | 7 | PARTIAL | analyst conversations save/resume/delete per account (analyst/store.py, data/analyses.sqlite3); no archive, roadmap or change reasons |
-| C23 | Compliance Roadmap | 7 | PARTIAL | analyst/roadmap.py builds the ten tasks from the issues actually raised, with real dependencies (prior art waits on classification; ABS waits on origin), sources checked against the registry, and five statuses ending at `completed_by_user`. There is no filed, approved or granted status and a test forbids them. The workspace UI is part two |
+| C23 | Compliance Roadmap | 7 | DONE | analyst/roadmap.py builds ten tasks from the issues actually raised, with real dependencies (prior art waits on classification; ABS waits on origin), sources checked against the registry, and five statuses ending at `completed_by_user`. No filed, approved or granted status, forbidden by tests on both sides. components/analyst/Roadmap.tsx renders it on /assess, grouped by when each obligation bites |
 | C24 | Ask Sahayak case-aware upgrade (evidence cards, badges) | 7 | MISSING | Ask has no case link |
-| C25 | Feedback signal | 7 | PARTIAL | Yes / Partly / No with a closed list of aspects, stored in its own database (`data/feedback.sqlite3`) holding no session, account, query id or free text — the query id is omitted specifically so no join can re-identify a reader through the audit log. The UI is part two |
+| C25 | Feedback signal | 7 | DONE | Yes / Partly / No with a closed list of aspects, stored in its own database (`data/feedback.sqlite3`) holding no session, account, query id or free text — the query id is omitted specifically so no join can re-identify a reader through the audit log. components/sahayak/AnswerFeedback.tsx asks after the answer and does not press someone who said yes |
 | C26 | Voice Sahayak | 8 | MISSING | — |
 | C27 | Helpline simulator + telephony adapter interface | 8 | MISSING | — |
 | C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
@@ -275,6 +275,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 7, part two
+- Done: the roadmap replaces the Phase 3 seed throughout and reaches the interface; `components/analyst/Roadmap.tsx` on /assess, grouped by now / before filing / before sale, each task carrying why it is there, what it waits on, and what is holding it open. `components/sahayak/AnswerFeedback.tsx` under every answer. Two Phase 3 tests rewritten onto the new contract rather than deleted. 11 new frontend tests.
+- Not done / carried over: the twelve-panel workspace with per-panel evidence links, the Case/CaseFact/CaseRun models and their endpoints, and Ask Sahayak's case-aware follow-ups. `changed_facts` exists and is tested but nothing renders a change explanation yet — that needs CaseRun snapshots to diff between, which is the missing piece.
+- Next phase should first: read PHASE_08, or build CaseRun so the change explanation has two runs to compare. Everything else in Phase 7 is surfaced.
+
 ### Phase 7, part one
 - Done: `analyst/roadmap.py` — ten tasks generated from the issues a case actually raises, with dependencies that hold a task at "needs information" until what it rests on is done, sources filtered through the registry, and a status vocabulary that stops at `completed_by_user`. `changed_facts` diffs two runs and treats learning a fact as a change, which is the commonest reason an assessment moves. Feedback split from identity, with its own database, ignored by git. 22 new tests including T17.
 - Not done / carried over: the workspace UI (tabs, evidence links, the twelve panels), the Case/CaseFact/CaseRun models and their endpoints, the roadmap and feedback surfaces, and Ask Sahayak's case-aware follow-ups. The analyst already stores cases per account and the roadmap and diff are ready for a surface to render them.
