@@ -54,7 +54,10 @@ export function DocumentUpload({ onText }: { onText: (text: string) => void }) {
 
   return (
     <section className="mt-6 border-t border-rule pt-5">
-      <h3 className="text-base">{t('document.heading')}</h3>
+      {/* h2, not h3. The page's only other heading is the h1 above the
+          composer, and a screen-reader user navigating by heading meets a
+          skipped level as a missing section rather than a style choice. */}
+      <h2 className="text-base">{t('document.heading')}</h2>
       <p className="mt-2 max-w-measure text-base text-muted">{t('document.standfirst')}</p>
 
       <label
