@@ -33,6 +33,7 @@ from pathlib import Path
 from urllib.parse import unquote, urlparse
 
 from app.corpus.types import AccessMode, DocumentEntry, Outcome, StageOutcome
+from app.registry.hosts import is_allowlisted
 
 USER_AGENT = "IP-SAKTI-Sahayak-ingest/0.1 (+corpus pipeline; contact via repository)"
 TIMEOUT_SECONDS = 60
@@ -184,6 +185,19 @@ def _read_local(url: str, bases: tuple[Path, ...]) -> tuple[bytes, str | None]:
 
 
 def _read_http(url: str) -> tuple[bytes, str | None]:
+    """Fetch one document, from an official host or not at all.
+
+    The URLs here come from `corpus/manifest.json`, which is in this
+    repository, so nothing untrusted reaches this today. The check is here
+    because that is a property of the current manifest rather than of this
+    function, and a fetcher that will retrieve any URL it is handed is one
+    edit away from being a way to make the server request an internal address.
+    """
+    if not is_allowlisted(url):
+        raise ValueError(
+            f"Refusing to fetch {url}: its host is not on the official allowlist. "
+            "Add it deliberately in app/registry/hosts.py, or drop the source."
+        )
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(request, timeout=TIMEOUT_SECONDS) as response:  # noqa: S310
         return response.read(), response.headers.get("Content-Type")

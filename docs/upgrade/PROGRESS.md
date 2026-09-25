@@ -3,12 +3,14 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 9 part one done (source health, insight aggregates, knowledge gaps, T18). Document intelligence and the admin route are not built — see the handoff.
-- Last green gate: phase 9a — backend 586, frontend 439, typecheck, eslint, ruff, schema, evals (below_target []), build 117.1 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- **Current phase: 10 — complete.** The ten-phase upgrade is finished. `docs/upgrade/FINAL_REPORT.md` is the account of it; read that before this file.
+- Last green gate: phase 10 — backend **613**, frontend **245 + 194 = 439** (two batches), typecheck, eslint, ruff + format, schema current, locale check clean, evals below_target [] with 0 errors, build **117.1 kB** of a 150 kB budget.
+- T1–T18 all exist and pass, indexed in `backend/tests/test_hardening.py` so the catalogue cannot rot into numbers with nothing behind them.
+- Phase 10 found and closed two real gaps nothing else covered: `corpus/fetch.py` fetched without the host allowlist (SSRF), and `SourceCard.tsx` rendered a citation URL as an `href` with no scheme check.
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
-- Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
-- Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
-- Blockers / waiting on user: the three decisions in "Manual steps for the team", plus confirmation of the six hosts added to the allowlist (item 7)
+- Note on running the frontend suite: all 32 files pass, but one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`. `components/layout/backdrop.test.tsx` is a pre-existing flake under memory pressure (proven by reverting all of `frontend/src`).
+- Blockers / waiting on user: the six manual steps in FINAL_REPORT.md §15 — chiefly that **no source has been human-reviewed yet** (43 are fetched and hashed), plus the demo account, the competition names, and confirmation of the six added allowlist hosts.
+- Remaining work, recorded not blocked: the helpline simulator and TTS (Phase 8), Document Intelligence and the admin insight route (Phase 9), the twelve-panel workspace with CaseRun snapshots and case-aware follow-ups (Phase 7), the guided-intake stepper (Phase 5), and the browser screenshot sets for Phases 4, 5, 6 and 10.
 
 ## Repo map (filled in Phase 0)
 | Area | Path(s) | Notes |
@@ -294,6 +296,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 10 — the end of the pack
+- Done: the T1–T18 catalogue made machine-checkable in `backend/tests/test_hardening.py` (27 tests), plus the hardening it did not cover — the SSRF fix in `corpus/fetch.py`, the https-only citation link in `SourceCard.tsx`, and tests asserting no raw HTML anywhere in the interface, no committed credential, and a salted PBKDF2 demo password. `docs/upgrade/FINAL_REPORT.md` written with all fifteen sections.
+- Not done: step 5, the manual three-minute demo run with screenshots to `docs/upgrade/screens/final/`. The dev servers were stopped repeatedly by the OS for low memory and the owner asked that they not be restarted unprompted. It is owed with the Phase 4, 5 and 6 sets.
+- Next: there is no next phase. The two things worth doing before showing this to anyone are the source review (FINAL_REPORT §15 item 1) and the screenshots.
+
 ### Phase 9, part one
 - Done: `app/registry/health.py` and `scripts/source_health_check.py` (six states, queue, never auto-applies); `app/services/insight.py` (aggregates, small-bucket suppression, knowledge gaps); 16 tests including T18.
 - Not done / carried over: the admin route that renders the insight (flag `adminInsights`, role-protected, lazy), and Document Intelligence in full — upload, MIME and size validation, path-trick handling, extraction, and T9 re-run over that flow. The phase makes document intelligence conditional on the gate being green, and the gate is green, so it is an honest piece of remaining work rather than a blocked one; it was left because it is the largest and riskiest part and the machine has been short of memory.

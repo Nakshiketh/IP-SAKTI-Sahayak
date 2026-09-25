@@ -38,9 +38,23 @@ interface SourceCardProps {
 }
 
 /** The site a source lives on, so a reader can see it is the official one. */
+/**
+ * The host, but only for a link this product will actually offer.
+ *
+ * Citation URLs come from the verified corpus, which is in the repository, so
+ * nothing hostile reaches here today. The check is here because that is a
+ * property of the current corpus rather than of this component: a `javascript:`
+ * URL rendered into an href is an XSS, and "the data is trusted" is the
+ * assumption every such bug was built on.
+ *
+ * Returns null for anything that is not plain https, which also means the link
+ * is not rendered at all.
+ */
 function sourceHost(url: string): string | null {
   try {
-    return new URL(url).hostname.replace(/^www\./, '');
+    const parsed = new URL(url);
+    if (parsed.protocol !== 'https:') return null;
+    return parsed.hostname.replace(/^www\./, '');
   } catch {
     return null;
   }
@@ -108,7 +122,7 @@ export function SourceCard({
             {showPassage ? t('answer.hidePassage') : t('answer.showPassage')}
           </Button>
         ) : null}
-        {citation.url ? (
+        {citation.url && sourceHost(citation.url) ? (
           <a
             href={citation.url}
             className="rounded-data text-xs text-stamp underline underline-offset-4"
