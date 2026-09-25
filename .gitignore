@@ -41,3 +41,6 @@ corpus/**/tags-review.jsonl
 # OS
 .DS_Store
 Thumbs.db
+
+# Vite writes these while resolving its config, and sometimes leaves one.
+frontend/vite.config.ts.timestamp-*.mjs
