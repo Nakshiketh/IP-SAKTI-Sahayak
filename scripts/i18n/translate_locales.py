@@ -3,8 +3,9 @@
     python scripts/i18n/translate_locales.py --locale hi
     python scripts/i18n/translate_locales.py --all --dry-run
 
-Without an API key this exits cleanly and changes nothing. That is the designed
-behaviour, not a failure: a language with no translation stays as it is and
+The key comes from ANTHROPIC_API_KEY or SAHAYAK_LLM_API_KEY, in the environment
+or in a gitignored `.env` at the repo root. Without one this exits cleanly and
+changes nothing. That is the designed behaviour, not a failure: a language with no translation stays as it is and
 stays labelled, rather than being filled in by hand in a chat window where
 nobody can check it later or regenerate it when the English changes.
 
@@ -76,7 +77,34 @@ Rules, in order of importance:
 Return only a JSON object mapping each key to its translated string."""
 
 
+def load_dotenv() -> None:
+    """Read `.env` at the repo root into the environment, if it exists.
+
+    Without this the key has to be exported in the same shell that runs the
+    script, which rules out anything driving it from another process. `.env` is
+    gitignored, so the key stays out of the history and out of every transcript
+    and log that quotes a command line.
+
+    Deliberately tiny and dependency-free: KEY=value, one per line, `#` starts a
+    comment, surrounding quotes are stripped. Anything already in the
+    environment wins, so an explicit export still overrides the file.
+    """
+    path = REPO_ROOT / ".env"
+    if not path.exists():
+        return
+    for line in path.read_text("utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        name, _, value = line.partition("=")
+        name = name.strip()
+        value = value.strip().strip('"').strip("'")
+        if name and value and name not in os.environ:
+            os.environ[name] = value
+
+
 def api_key() -> str | None:
+    load_dotenv()
     for name in API_KEY_VARS:
         value = os.environ.get(name)
         if value:
