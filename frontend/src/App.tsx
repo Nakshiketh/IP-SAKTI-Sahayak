@@ -45,11 +45,22 @@ import NotFound from '@/routes/NotFound';
  * — which matters, because there is no backend to fetch a missing one and the
  * failure would show as dotted keys on screen.
  */
-function route<P>(load: () => Promise<{ default: ComponentType<P> }>, namespace?: string) {
+/**
+ * More than one namespace, because a route can render a component that belongs
+ * to another page. /assess is the case that proved it: the IP protection map
+ * lives in `sahayak`, is rendered on the analyst route, and showed its raw
+ * dotted keys on screen because only `analyst` had been fetched. A component
+ * cannot declare this for itself — there is no backend to fetch a missing
+ * namespace on demand, so it has to be in place before anything renders.
+ */
+function route<P>(
+  load: () => Promise<{ default: ComponentType<P> }>,
+  ...namespaces: string[]
+) {
   return lazy<ComponentType<P>>(async () => {
     const [module] = await Promise.all([
       load(),
-      namespace ? ensureNamespace(namespace, i18n.language) : Promise.resolve(),
+      ...namespaces.map((namespace) => ensureNamespace(namespace, i18n.language)),
     ]);
     return module;
   });
@@ -58,7 +69,8 @@ function route<P>(load: () => Promise<{ default: ComponentType<P> }>, namespace?
 const Login = route(() => import('@/routes/Login'));
 const Sahayak = route(() => import('@/routes/Sahayak'), 'sahayak');
 const Assessment = route(() => import('@/routes/Assessment'), 'assessment');
-const Analyst = route(() => import('@/routes/Analyst'), 'analyst');
+// `sahayak` too: the protection map and the roadmap are rendered here.
+const Analyst = route(() => import('@/routes/Analyst'), 'analyst', 'sahayak');
 const WhatIsCovered = route(() => import('@/routes/WhatIsCovered'), 'covered');
 const HowItWorks = route(() => import('@/routes/HowItWorks'), 'howitworks');
 const Sources = route(() => import('@/routes/Sources'), 'sources');
