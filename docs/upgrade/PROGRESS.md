@@ -3,8 +3,8 @@
 Agent: read this first in every phase and update it last. Keep it under about 200 lines. Summarise; don't log.
 
 ## Status
-- Current phase: 8 part one done (voice input, telephony seam, T10). The helpline simulator is not built — see the handoff.
-- Last green gate: phase 8a — backend 570, frontend 439, typecheck, eslint, ruff, build 117.1 kB of a 150 kB budget, and voice code confirmed absent from the first-load chunk (`VoiceInput-*.js` is its own file; zero matches for `webkitSpeechRecognition` in `index-*.js`). The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
+- Current phase: 9 part one done (source health, insight aggregates, knowledge gaps, T18). Document intelligence and the admin route are not built — see the handoff.
+- Last green gate: phase 9a — backend 586, frontend 439, typecheck, eslint, ruff, schema, evals (below_target []), build 117.1 kB of a 150 kB budget. The old locale and prettier checks still fail at baseline; the new `scripts/i18n/check_locales.py` passes except for one real finding (below).
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.
 - Bundle: part one ended at 149 kB with 1 kB to spare. Splitting the English locale files (below) took it to 116 kB, and the four new surfaces added none of it back.
 - Note on running the frontend suite: all 26 files pass, but running them in one parallel batch on a loaded machine produces route-render timeouts that look like failures. Run `src/routes`, then the rest, then `src/i18n` and `src/App.test.tsx`, if the machine is busy.
@@ -68,8 +68,8 @@ Status: DONE, PARTIAL, MISSING or REMOVED. "Phase" is where it gets built or fin
 | C25 | Feedback signal | 7 | DONE | Yes / Partly / No with a closed list of aspects, stored in its own database (`data/feedback.sqlite3`) holding no session, account, query id or free text — the query id is omitted specifically so no join can re-identify a reader through the audit log. components/sahayak/AnswerFeedback.tsx asks after the answer and does not press someone who said yes |
 | C26 | Voice Sahayak | 8 | PARTIAL | components/sahayak/VoiceInput.tsx, lazily imported behind the `voice` flag: the transcript lands in the composer for the person to correct and is never submitted for them, no audio is recorded or kept, and a browser that cannot do speech in the active language says so and leaves typing available. Text-to-speech playback of the answer is not built |
 | C27 | Helpline simulator + telephony adapter interface | 8 | PARTIAL | services/telephony.py: the `TelephonyProvider` protocol and `NullProvider`, which refuses rather than returning a session nobody can use, plus docs/upgrade/TELEPHONY.md. The browser helpline simulator is not built |
-| C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | MISSING | Dev-only /audit viewer (routes/AuditLog.tsx, api/privacy.py) |
-| C29 | Source Health / Regulatory Change Monitor | 9 | PARTIAL | scripts/refresh.py re-fetches and reports drift; no states, queue or admin approval |
+| C28 | Admin Insight Dashboard + Knowledge Gap Monitor | 9 | PARTIAL | services/insight.py aggregates from audit rows only — counts by jurisdiction, language, abstention reason and most-used source, plus abstention and refusal rates and latency percentiles. Buckets under five are withheld and the suppression is reported rather than silent. Knowledge gaps are named by the reason the product gave, never by guessing a topic. The admin route that renders it is not built |
+| C29 | Source Health / Regulatory Change Monitor | 9 | DONE | app/registry/health.py with six states (current, review due, changed, unavailable, superseded, needs human review), driven by scripts/source_health_check.py. Allowlisted hosts only, no user-supplied URLs. A changed source is queued and marked NEEDS_REVIEW so its citations read as provenance-pending — its text is never replaced. Verified against the live registry: six sources re-fetched, hashes unchanged |
 | C30 | Prior-Art Search Builder | 3 | DONE | analyst/searches.py builds the terms and the query string, offers a search page only when its source is citable, and validates botanical names against the stored vocabulary — an unknown name is offered as written and marked unvalidated. No IPC/CPC: the official IPC publication is not in this repo, and a guessed code searches the wrong branch. The banner is on every strategy |
 | C31 | IP Protection Map | 3, 4 | DONE | analyst/protection.py plus components/answer/ProtectionMap.tsx, rendered below the existing findings on /assess where its data comes from. Six branches with status chips; opening one shows why, the facts that would settle it, sources and one next step |
 | C32 | Document Intelligence | 9 | MISSING | No upload path anywhere |
@@ -101,6 +101,18 @@ Input: `data/demo/flagship_case.json`, through the real pipeline on 2026-09-24. 
 - **Escalation**: L3 on both sides. Reasons escalationMissingFacts / escalationLowConfidenceIssue / escalationProfessionalRequired; specialists registered_patent_agent, traditional_knowledge_expert, plus biodiversity_abs_consultant internationally.
 - **Sources used: none.** The answer-level rule abstains on this input — seven sub-questions in one, and nothing clears the rerank floor for it. The reasoning above is still produced and reported. Answering it section by section is Phase 4 work, and is the main open risk for the jury demo.
 - Conflict examples 2, 5 and 6 from FLAGSHIP_CASE.md (BD Act before/after 2023, WIPO GRATK status, Rule 170) did not appear: the corpus records no supersession or `conflicts_with` pair for them, and this engine will not infer one from wording. They need ingestion to record the relationship first.
+
+## What the dashboard may show, and what it may not (T18)
+A question in this domain *is* the sensitive thing: "can we patent our ashwagandha and shilajit extract" describes an unpublished product belonging to a named company. The audit log was built for that — it holds a hash of the question and never the words — and `tests/test_insight.py` scans every stored row and every audit column to prove it.
+
+Buckets under five are withheld, and the suppression is counted and reported rather than silently dropped. Four questions about export classification for a Siddha preparation is not a statistic, it is four people. An empty deployment reports nothing rather than a 0% abstention rate, and every figure carries "Local / demo data" so a demo number is never read as a national one.
+
+Knowledge gaps are named by the reason the product gave — "eleven questions reached a legal system this corpus does not cover" — not by guessing at what those questions were about.
+
+## A monitor that cannot rewrite the law
+`app/registry/health.py` re-fetches each registered source and compares the bytes against the hash the registry holds. A source whose bytes changed is marked `changed`, moved to NEEDS_REVIEW with `legacy_allowed`, and queued for a person. It is **never** applied: the reader keeps seeing the same words with an honest provenance-pending warning, rather than different words nobody approved. A test asserts the module never opens the knowledge base.
+
+Unreachable is kept distinct from changed — a host this machine cannot reach says nothing about the source — and only allowlisted hosts are fetched, with every URL read from the registry rather than from a user.
 
 ## The channel must not change the answer (T10)
 `QueryRequest.channel` records how a question arrived — text, voice or helpline — and reaches the audit row and nothing else. It is not read by retrieval, the confidence rule, the guardrails or the composer.
@@ -282,6 +294,11 @@ The rule to keep: nothing may render before its namespace is present, because th
 5. **Corpus freshness.** The 51 verified sources are pinned to a review date; an amendment (or an IP India URL change) silently makes an answer stale until someone re-checks. Phase 9's source health monitor is the mitigation.
 
 ## Handoff to next phase
+### Phase 9, part one
+- Done: `app/registry/health.py` and `scripts/source_health_check.py` (six states, queue, never auto-applies); `app/services/insight.py` (aggregates, small-bucket suppression, knowledge gaps); 16 tests including T18.
+- Not done / carried over: the admin route that renders the insight (flag `adminInsights`, role-protected, lazy), and Document Intelligence in full — upload, MIME and size validation, path-trick handling, extraction, and T9 re-run over that flow. The phase makes document intelligence conditional on the gate being green, and the gate is green, so it is an honest piece of remaining work rather than a blocked one; it was left because it is the largest and riskiest part and the machine has been short of memory.
+- Next phase should first: read PHASE_10, which is hardening and the final report — or build the admin route, which is small now that the aggregates exist and are tested.
+
 ### Phase 8, part one
 - Done: `QueryRequest.channel` and T10 — 19 backend tests proving voice, helpline and text reach identical safety outcomes; `services/telephony.py` with the provider protocol and a refusing null default; `docs/upgrade/TELEPHONY.md`; `components/sahayak/VoiceInput.tsx` behind the `voice` flag, lazily imported and confirmed out of the first-load chunk; 7 frontend tests including one that asserts no MediaRecorder is ever constructed.
 - Not done / carried over: the browser helpline simulator (call screen, timer, live transcript, end-of-call summary and its persistent "no phone service is connected" label) and text-to-speech playback of an answer. The voice flag ships false, so nothing new is visible until it is turned on.

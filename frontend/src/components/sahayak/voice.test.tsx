@@ -44,15 +44,13 @@ beforeEach(() => {
   FakeRecognition.started = 0;
   FakeRecognition.stopped = 0;
   latest = null;
-  vi.stubGlobal(
-    'SpeechRecognition',
-    class extends FakeRecognition {
-      constructor() {
-        super();
-        latest = this;
-      }
-    },
-  );
+  // A factory rather than a subclass: the point is only to keep hold of the
+  // instance the component made, so a test can make it "hear" something.
+  vi.stubGlobal('SpeechRecognition', function SpeechRecognitionStub(this: unknown) {
+    const instance = new FakeRecognition();
+    latest = instance;
+    return instance;
+  });
 });
 
 afterEach(() => vi.unstubAllGlobals());
