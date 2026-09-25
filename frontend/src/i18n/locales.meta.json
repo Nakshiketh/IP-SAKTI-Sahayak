@@ -20,7 +20,7 @@
       "script": "Deva",
       "tier": 1,
       "reviewed_by": null,
-      "coverage": 0.61
+      "coverage": 0.59
     },
     {
       "code": "te",
@@ -30,7 +30,7 @@
       "script": "Telu",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.44
+      "coverage": 0.43
     },
     {
       "code": "ta",
@@ -40,7 +40,7 @@
       "script": "Taml",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.44
+      "coverage": 0.43
     },
     {
       "code": "bn",
@@ -50,7 +50,7 @@
       "script": "Beng",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.44
+      "coverage": 0.43
     },
     {
       "code": "mr",
@@ -60,7 +60,7 @@
       "script": "Deva",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.44
+      "coverage": 0.43
     }
   ]
 }
