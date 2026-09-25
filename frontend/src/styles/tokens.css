@@ -100,6 +100,63 @@
   --font-body: 'IBM Plex Sans', 'Noto Sans Bengali', 'Nirmala UI', system-ui, sans-serif;
 }
 
+/*
+ * The international nine.
+ *
+ * French, Spanish, German and Portuguese need nothing new: IBM Plex Sans
+ * latin-ext is already imported and covers their diacritics. Russian gets the
+ * Cyrillic cut of the same family, which was already in the installed package
+ * and costs two small subset files.
+ *
+ * Arabic and the three CJK scripts are deliberately served by system faces
+ * rather than webfonts. A CJK webfont is thousands of glyphs — @fontsource
+ * ships Noto Sans SC as roughly a hundred subset files, and declaring them adds
+ * the @font-face rules to the critical stylesheet whether or not a reader ever
+ * views Chinese. The initial load is 117 kB of a 150 kB budget, and spending
+ * that on four scripts which every current OS already has a good face for would
+ * be the wrong trade: Windows ships Segoe UI Arabic, Microsoft YaHei, Yu Gothic
+ * and Malgun Gothic; macOS and iOS ship SF Arabic, PingFang, Hiragino and Apple
+ * SD Gothic Neo; Android ships the Noto family itself.
+ *
+ * The named faces are listed most-preferred first so the result is a designed
+ * face rather than whatever the browser's last resort is. If these languages
+ * are ever reviewed and promoted out of Beta, self-hosting them becomes worth
+ * the bytes and the stacks below become the fallback rather than the whole
+ * answer.
+ */
+:lang(fr),
+:lang(es),
+:lang(de),
+:lang(pt) {
+  --font-display: 'Tiro Devanagari Hindi', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:lang(ru) {
+  --font-display: 'IBM Plex Sans', 'Iowan Old Style', Georgia, serif;
+  --font-body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:lang(ar) {
+  --font-display: 'SF Arabic', 'Segoe UI Arabic', 'Noto Naskh Arabic', 'Geeza Pro', serif;
+  --font-body: 'SF Arabic', 'Segoe UI Arabic', 'Noto Sans Arabic', 'Geeza Pro', system-ui, sans-serif; /* stylelint-disable-line */
+}
+
+:lang(zh) {
+  --font-display: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', sans-serif; /* stylelint-disable-line */
+  --font-body: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC', system-ui, sans-serif; /* stylelint-disable-line */
+}
+
+:lang(ja) {
+  --font-display: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', sans-serif;
+  --font-body: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', 'Meiryo', system-ui, sans-serif;
+}
+
+:lang(ko) {
+  --font-display: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+  --font-body: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', system-ui, sans-serif;
+}
+
 /* -- Base ------------------------------------------------------------------- */
 
 @layer base {

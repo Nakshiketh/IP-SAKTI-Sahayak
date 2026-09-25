@@ -2,9 +2,14 @@
  * Feature flags for the upgrade phases.
  *
  * Declared in Phase 0 so later phases can hide work in progress behind a flag
- * rather than deleting reusable code. Nothing reads these yet: Phase 0 changes
- * no behaviour. A phase that starts using a flag must also state, in
- * docs/upgrade/PROGRESS.md, what changes when it is turned on.
+ * rather than deleting reusable code. A phase that starts using a flag must
+ * also state, in docs/upgrade/PROGRESS.md, what changes when it is turned on.
+ *
+ * `juryDemo` and `voice` are true: both are finished and tested, and a finished
+ * feature left switched off is indistinguishable from one that was never built.
+ * The three that remain false have no interface yet — turning them on would
+ * change nothing a reader could see, which is worse than leaving them off,
+ * because it suggests there is something to look for.
  *
  * `scanBadgeLogin` is true, which departs from Phase 5's suggested default.
  * The badge scanner is the sign-in the owner uses, and the instruction for this
@@ -29,8 +34,8 @@ export interface FeatureFlags {
 }
 
 export const FEATURES: FeatureFlags = {
-  juryDemo: false,
-  voice: false,
+  juryDemo: true,
+  voice: true,
   helplineSim: false,
   documentIntel: false,
   adminInsights: false,

@@ -1,0 +1,309 @@
+{
+  "__untranslated": true,
+  "meta": {
+    "title": "IP-SAKTI Sahayak",
+    "description": "Source-cited guidance on intellectual property and regulation for Ayurvedic products."
+  },
+  "hero": {
+    "line1": "Ancient knowledge.",
+    "line2": "Protected innovation.",
+    "line3": "Grounded guidance.",
+    "standfirst": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product, and get an answer built from published sources — with every claim cited, and the Indian and international positions kept separate.",
+    "questionLabel": "Your question",
+    "questionPlaceholder": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product…",
+    "submit": "Ask",
+    "visualAlt": "A palm-leaf manuscript page whose incised writing lines resolve into a graph of linked sources."
+  },
+  "intro": {
+    "cta": "Check my product",
+    "ctaNote": "Six short steps. Your answers stay in this browser tab; only a few search words are sent when you run the check.",
+    "heading": "What IP-SAKTI Sahayak does",
+    "what": "IP-SAKTI Sahayak is a guidance portal for people developing Ayurvedic products. It helps you work out which intellectual property could protect your product, whether something similar is already on record or documented, and what to do next — with every statement about law pointing at the instrument it comes from.",
+    "whyHeading": "Why protection matters",
+    "why": "A formulation, a name or a label can be copied the day it goes on sale. Intellectual property decides whether you can stop that, and what you must do before launch to keep the option open. Some of it is lost for good by publishing too early.",
+    "typesHeading": "Four kinds of protection, often used together",
+    "types": {
+      "patent": {
+        "name": "Patent",
+        "covers": "A new invention — a formulation with an effect you can show, a process, an extract. Granted for a limited term, in return for publishing it."
+      },
+      "trademark": {
+        "name": "Trade mark",
+        "covers": "The name, logo or other sign you sell under. Registered by class of goods, and renewable."
+      },
+      "copyright": {
+        "name": "Copyright",
+        "covers": "Original creative work — label artwork, packaging design, written content, software. Arises when the work is created."
+      },
+      "tradeSecret": {
+        "name": "Trade secret",
+        "covers": "Confidential formulations, processes and know-how. Lasts as long as the secret is kept, with no registration."
+      }
+    },
+    "helpsHeading": "How the check works",
+    "helps": {
+      "category": "Choose the product category",
+      "details": "Describe the product",
+      "ingredients": "List its ingredients and what is new",
+      "protection": "Answer a few questions on brand, creative work and confidentiality",
+      "result": "See what may already exist, for each kind of protection",
+      "guidance": "Get the recommended protection and the steps to take"
+    },
+    "needHeading": "What to have ready",
+    "need": {
+      "name": "The product or brand name",
+      "purpose": "What it does, and who it is for",
+      "ingredients": "The ingredients, and anything new in how it is made",
+      "materials": "Whether you have packaging, artwork or software"
+    },
+    "getHeading": "What you get at the end",
+    "get": "For each kind of protection: whether anything similar was identified, what may overlap, whether it looks worth pursuing, and the steps to take through the Indian system — marked as guidance, not legal advice."
+  },
+  "coupling": {
+    "heading": "What a formulation is decides what you can protect",
+    "standfirst": "The same polyherbal preparation for joint pain can be three different products, and each one opens and closes different doors. This is why the assistant works out the regulatory classification before it answers anything else.",
+    "illustrative": "General guide",
+    "columnProduct": "If the product is",
+    "columnIp": "Intellectual property realistically available",
+    "columnRegulatory": "Regulatory route",
+    "columnAbs": "Access and benefit sharing",
+    "rows": {
+      "classical": {
+        "product": "A classical formulation, taken unchanged from an authoritative text",
+        "ip": "Not the composition — it is documented traditional knowledge. The brand name, the packaging and the artwork can still be yours.",
+        "regulatory": "The classical route, resting on the authoritative texts.",
+        "abs": "Using a biological resource can still carry duties, whatever the formulation's status."
+      },
+      "proprietary": {
+        "product": "A proprietary medicine, with ingredients or dosage form changed",
+        "ip": "Arguable on what you actually changed, but the classical formulation stands as prior art against the rest.",
+        "regulatory": "The patent-or-proprietary route, with its own licensing conditions.",
+        "abs": "Same duties, and they now interact with anything you file."
+      },
+      "newDrug": {
+        "product": "A new non-classical drug, or a standardised extract",
+        "ip": "The most room — a purified fraction or a novel process can be claimed on its own merits.",
+        "regulatory": "The new-drug route, which asks for evidence rather than textual authority.",
+        "abs": "Duties apply, and disclosure of the biological source becomes part of the filing."
+      }
+    },
+    "note": "A general guide. Which category a product falls in, and what follows, depends on its exact composition and claims — ask Sahayak for the cited detail on your own product."
+  },
+  "covers": {
+    "heading": "Two questions, asked of the same product",
+    "ipHeading": "Intellectual property",
+    "ipQuestion": "How do I secure or understand rights in this?",
+    "ipItems": {
+      "patents": "Patents",
+      "trademarks": "Trademarks",
+      "gi": "Geographical indications",
+      "copyright": "Copyright",
+      "designs": "Designs",
+      "plantVariety": "Plant variety rights",
+      "tradeSecrets": "Trade secrets",
+      "tk": "Traditional knowledge"
+    },
+    "regHeading": "Regulation",
+    "regQuestion": "What am I required to do before I can sell this?",
+    "regItems": {
+      "classification": "Product classification",
+      "licensing": "Licensing",
+      "gmp": "Manufacturing and GMP",
+      "quality": "Quality standards",
+      "labelling": "Labelling",
+      "advertising": "Advertising",
+      "foodCosmetic": "Food and cosmetic routes",
+      "abs": "Access and benefit sharing"
+    },
+    "band": "Across borders, the Indian answer and the export answer are produced separately, from different sources, and are never merged into one paragraph."
+  },
+  "answer": {
+    "heading": "What an answer looks like",
+    "standfirst": "Every claim points at the passage behind it. Sentences that rest on no source are marked as such. Switching jurisdiction swaps the answer rather than widening it.",
+    "question": "We have developed a new polyherbal Ayurvedic formulation. How do we patent it in India, and how do we protect it abroad?",
+    "questionLabel": "The question",
+    "tabsLabel": "Jurisdiction",
+    "tabIndia": "India",
+    "tabUk": "International",
+    "tryIt": "Ask your own question"
+  },
+  "languages": {
+    "heading": "Ask in the language you work in",
+    "standfirst": "The language is detected from what you type; you can correct it. Answers come back in the same language, and the source documents stay in the language they were published in, so you can check them.",
+    "autoDetect": "Detected automatically",
+    "note": "The translation layer sits behind an interface, so it can be served by national language infrastructure such as Bhashini. Source passages are never translated — a translated citation is no longer a citation.",
+    "samples": {
+      "en": "Can we register our brand name if it contains a classical formulation name?",
+      "hi": "हमारे ब्रांड नाम को कैसे सुरक्षित कर सकते हैं?",
+      "te": "మా ఆయుర్వేద ఉత్పత్తులను ఎగుమతి చేయాలంటే ఏమి కావాలి?",
+      "ta": "எங்கள் மூலிகைப் பொருளுக்கு உரிமம் தேவையா?",
+      "bn": "আমাদের পণ্যের লেবেলে কী লেখা যাবে?",
+      "mr": "आमचे उत्पादन औषध आहे की अन्न?",
+      "ar": "هل يمكننا تصدير منتجنا الأيورفيدي وتسجيل علامته التجارية؟",
+      "fr": "Notre formulation traditionnelle peut-elle être brevetée en Europe ?",
+      "es": "¿Qué necesitamos para exportar nuestro producto a la Unión Europea?",
+      "de": "Welche Unterlagen brauchen wir für eine internationale Patentanmeldung?",
+      "pt": "Como registamos a nossa marca em vários países?",
+      "ru": "Как защитить название нашего продукта за рубежом?",
+      "zh": "我们的传统配方可以在国外申请专利吗？",
+      "ja": "海外で商標を登録するには何が必要ですか？",
+      "ko": "해외에서 상표를 등록하려면 무엇이 필요합니까?"
+    }
+  },
+  "closing": {
+    "heading": "What this will not do",
+    "body": "It will not tell you whether an application will succeed, draft one for you, or give clinical advice. It answers from a fixed set of published sources, so a question outside them gets no answer rather than a plausible one. Where the sources are thin, it says so and offers to hand the question to someone qualified.",
+    "cta": "Ask a question"
+  },
+  "patentSteps": {
+    "heading": "Steps to get a patent in India",
+    "standfirst": "The route an application takes, in the order it happens: what to do at each step, where to do it, the forms involved and the official source to check. Open a step for the legal provision and the official links.",
+    "aria": "Steps to get a patent, in order",
+    "stepOf": "Step {{number}} of {{total}}",
+    "expand": "Show the source for this step",
+    "collapse": "Hide the source for this step",
+    "sourceLabel": "Where this is set out",
+    "formsLabel": "Forms",
+    "notRetrieved": "Summarised from the official sources above. Deadlines run from your own filing or priority date — ask Sahayak for the cited detail on your case.",
+    "cta": "Ask about your own case",
+    "sahayakLabel": "What Sahayak does here",
+    "phases": {
+      "before": "Before filing",
+      "filing": "Filing and publication",
+      "examination": "Examination",
+      "after": "Grant and after"
+    },
+    "handoff": {
+      "priorArt": "Turns a description of your formulation into search terms, lists the patent registries to search, and explains who can search the TKDL. It never tells you something is new.",
+      "classify": "Works out what your product is, regulatorily, in a few yes-or-no questions. That decides how much of the formulation can realistically be claimed.",
+      "ask": "Sends this step's question to Sahayak. You get an answer with every claim cited, or the reason it cannot answer from its sources."
+    },
+    "actions": {
+      "priorArt": "Build prior-art search terms",
+      "classify": "Work out your product type",
+      "ask": "Ask Sahayak about this step"
+    },
+    "questions": {
+      "disclosure": "What must I do before filing a patent so the invention stays new?",
+      "search": "How do I check whether something is already patented?",
+      "patentability": "Can a traditional knowledge formulation be patented?",
+      "drafting": "What is the difference between a provisional and a complete patent specification?",
+      "biodiversity": "Do I need NBA approval to patent an invention using Indian medicinal plants?",
+      "filing": "What documents are required for a patent application?",
+      "complete": "When must a complete specification be filed after a provisional patent application?",
+      "publication": "When is a patent application published, and can it be published early?",
+      "examination": "How do I request examination of a patent application?",
+      "fer": "How do I respond to a first examination report on a patent application?",
+      "hearing": "What happens at a patent hearing before the Controller?",
+      "grant": "When is a patent granted, and where is the grant published?",
+      "opposition": "What is the difference between pre-grant and post-grant patent opposition?",
+      "renewal": "How long does a patent last in India, and when are renewal fees due?",
+      "working": "What do I have to file after my patent is granted?"
+    },
+    "forms": {
+      "form1": "Form 1 — application for grant",
+      "form2": "Form 2 — provisional or complete specification",
+      "form3": "Form 3 — statement and undertaking on foreign applications",
+      "form4": "Form 4 — extension of time",
+      "form5": "Form 5 — declaration as to inventorship",
+      "form9": "Form 9 — request for early publication",
+      "form18": "Form 18 — request for examination",
+      "form18a": "Form 18A — expedited examination",
+      "form25": "Form 25 — permission to file outside India",
+      "form26": "Form 26 — authorisation of a patent agent",
+      "form27": "Form 27 — statement of working",
+      "form28": "Form 28 — startup, small entity or educational institution",
+      "nbaForm7": "NBA Form 7 — prior approval before grant (section 3(2) persons)",
+      "nbaForm8": "NBA Form 8 — registration before grant (Indian applicants)",
+      "nbaForm9": "NBA Form 9 — approval at commercialisation"
+    },
+    "steps": {
+      "disclosure": {
+        "title": "Record the invention and keep it confidential",
+        "body": "Write down what the formulation or process is, exactly what is new about it, and the data showing its effect. Do not publish, present, advertise or sell it before you file: an invention disclosed anywhere before the filing date is no longer new.",
+        "where": "Your own records — nothing is filed yet. Use confidentiality agreements with anyone you share it with."
+      },
+      "search": {
+        "title": "Search the prior art, including traditional knowledge",
+        "body": "Search Indian patent records, international patent records and traditional-knowledge sources. The Patent Office examines Ayush inventions against the Traditional Knowledge Digital Library, and a formulation documented in the classical texts counts as prior art.",
+        "where": "IP India public search (InPASS), WIPO PATENTSCOPE, the TKDL and the Ayush Research Portal."
+      },
+      "patentability": {
+        "title": "Test novelty, inventive step and industrial application",
+        "body": "An invention must be new, involve an inventive step and be capable of industrial application. Section 3 excludes traditional knowledge and aggregations of known properties (3(p)), mere admixtures (3(e)) and new forms or uses of known substances without enhanced efficacy (3(d)). For a polyherbal composition, plan experiments that show a synergistic effect — without it, known ingredients combined for the same use are treated as obvious.",
+        "where": "Assess it yourself or with a registered patent agent, against IP India's Guidelines for Examination of Ayush Related Inventions."
+      },
+      "drafting": {
+        "title": "Prepare the specification — provisional or complete",
+        "body": "A provisional specification secures a filing date while work continues. The complete specification must describe the invention fully with the best method of performing it, end with claims, and disclose the source and geographical origin of any biological material used.",
+        "where": "Form 2, filed through IP India's patent e-filing portal."
+      },
+      "biodiversity": {
+        "title": "Check the National Biodiversity Authority requirement",
+        "body": "If the invention is based on a biological resource accessed from India, or traditional knowledge associated with it, the NBA must be involved before grant: Indian applicants register on Form 8 and seek approval on Form 9 when they commercialise; foreign persons and foreign-controlled entities need prior approval on Form 7.",
+        "where": "National Biodiversity Authority, through its ABS e-filing portal (absefiling.nbaindia.in)."
+      },
+      "filing": {
+        "title": "File the application",
+        "body": "File Form 1 with the specification on Form 2, Form 3 on corresponding applications abroad, Form 5 declaring the inventors, Form 26 if a patent agent acts for you, and Form 28 to claim startup, small-entity or educational-institution fees.",
+        "where": "IP India patent e-filing portal. The office — Kolkata, Delhi, Mumbai or Chennai — follows where the applicant lives or does business, or where the invention originated."
+      },
+      "complete": {
+        "title": "File the complete specification within 12 months",
+        "body": "If you filed a provisional, file the complete specification within twelve months of the filing date, or the application is deemed abandoned. The same twelve months is the window to claim this filing's priority in other Paris Convention countries. A resident of India must file in India at least six weeks before filing abroad, or get permission on Form 25.",
+        "where": "IP India e-filing portal; abroad, each national office or one PCT application through WIPO."
+      },
+      "publication": {
+        "title": "Publication at 18 months",
+        "body": "The application is published 18 months from the filing or priority date, whichever is earlier. Ask for early publication on Form 9 and it is ordinarily published within a month. Once published, anyone may file a pre-grant opposition.",
+        "where": "Official Journal of the Patent Office, on IP India's journal portal."
+      },
+      "examination": {
+        "title": "Request examination on Form 18 within 31 months",
+        "body": "Examination is not automatic. File Form 18 within 31 months from the priority or filing date, whichever is earlier (48 months for applications filed before 15 March 2024), or the application is treated as withdrawn. Startups, small entities, female applicants and some others may ask for expedited examination on Form 18A.",
+        "where": "IP India patent e-filing portal."
+      },
+      "fer": {
+        "title": "Answer the First Examination Report within 6 months",
+        "body": "The Controller sends the First Examination Report with the examiner's objections. Reply to every objection and amend the application to put it in order for grant within six months of the report; one three-month extension is available on Form 4 if requested before the six months end. Miss the deadline and the application is deemed abandoned.",
+        "where": "Reply online through the IP India e-filing portal, yourself or through a registered patent agent."
+      },
+      "hearing": {
+        "title": "Attend the hearing, if objections remain",
+        "body": "If objections remain after your reply, the Controller offers a hearing, which may be held by video-conference. File written submissions within fifteen days of the hearing. The Controller then allows amendments and grants the patent, or refuses it; a refusal can be appealed to the High Court.",
+        "where": "Before the Controller at the appropriate patent office; hearing notices appear on IP India's cause list."
+      },
+      "grant": {
+        "title": "Grant",
+        "body": "Once the application is in order, the patent is granted, entered in the register, and the grant is published in the Official Journal. Any NBA approval or registration needed must be in place before grant.",
+        "where": "Track the status on IP India's application-status search."
+      },
+      "opposition": {
+        "title": "Watch for opposition",
+        "body": "Before grant, anyone may oppose a published application. After grant, any interested person may oppose within one year of the grant being published. Grounds include prior publication and anticipation by the traditional knowledge of a local or indigenous community.",
+        "where": "Filed with the Controller at the appropriate patent office."
+      },
+      "renewal": {
+        "title": "Pay renewal fees — the term is 20 years",
+        "body": "A patent lasts twenty years from the filing date. Renewal fees fall due from the end of the second year and must be paid before each year ends, with up to six months' extension on Form 4. Paying at least four years in advance electronically earns a 10% reduction. An unpaid patent ceases to have effect.",
+        "where": "IP India e-filing portal (renewal fee payment)."
+      },
+      "working": {
+        "title": "File the statement of working (Form 27)",
+        "body": "The patentee and every licensee must file Form 27 on commercial working of the patent in India once for every three financial years, starting with the year after grant, within six months after each period ends.",
+        "where": "IP India e-filing portal."
+      }
+    },
+    "whereLabel": "Where",
+    "officialLabel": "Official sources"
+  },
+  "juryDemo": {
+    "heading": "Explore a complex IP case",
+    "standfirst": "A real Ayurveda startup question that touches patents, traditional knowledge, biodiversity and two legal systems at once. It runs live against the official sources, here, now.",
+    "run": "Run complex case",
+    "running": "Starting…",
+    "clear": "Clear and ask my own question",
+    "note": "This runs the same pipeline as any other question. Nothing is pre-recorded, and if a source is missing you will see the gap rather than a filled-in answer.",
+    "failed": "The case could not be started: {{error}}"
+  }
+}

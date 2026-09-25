@@ -25,7 +25,9 @@
   "language": {
     "label": "ভাষা",
     "changed": "ভাষা পরিবর্তন করে {{language}} করা হয়েছে",
-    "partial": "{{percent}}% অনূদিত"
+    "partial": "{{percent}}% অনূদিত",
+    "groupIndian": "ভারতীয় ভাষা",
+    "groupInternational": "আন্তর্জাতিক ভাষা"
   },
   "skipToContent": "সরাসরি মূল বিষয়ে যান",
   "footer": {

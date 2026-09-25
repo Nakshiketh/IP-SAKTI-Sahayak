@@ -3,7 +3,13 @@ import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { changeLanguage } from '@/i18n';
-import { findLocale, isFullyTranslated, LOCALE_STATUS, LOCALES } from '@/i18n/languages';
+import {
+  findLocale,
+  INDIAN_LOCALES,
+  INTERNATIONAL_LOCALES,
+  isFullyTranslated,
+  LOCALE_STATUS,
+} from '@/i18n/languages';
 import { cn } from '@/lib/cn';
 
 /**
@@ -38,11 +44,25 @@ export function LanguageSelector({ className }: { className?: string }) {
           'transition-colors duration-quick ease-incise hover:border-rule-strong',
         )}
       >
-        {LOCALES.map((locale) => (
-          <option key={locale.code} value={locale.code} lang={locale.code}>
-            {locale.nativeName}
-          </option>
-        ))}
+        {/* Grouped once there were fifteen. A flat list put Korean four rows
+            below Marathi with nothing to say why, and buried the Indian
+            languages — the ones this product is first of all for — in a list
+            mostly of export markets. The group labels are in the reader's own
+            language; the options stay in theirs. */}
+        <optgroup label={t('language.groupIndian')}>
+          {INDIAN_LOCALES.map((locale) => (
+            <option key={locale.code} value={locale.code} lang={locale.code}>
+              {locale.nativeName}
+            </option>
+          ))}
+        </optgroup>
+        <optgroup label={t('language.groupInternational')}>
+          {INTERNATIONAL_LOCALES.map((locale) => (
+            <option key={locale.code} value={locale.code} lang={locale.code}>
+              {locale.nativeName}
+            </option>
+          ))}
+        </optgroup>
       </select>
 
       {/* How far the language a reader is actually in has been translated,

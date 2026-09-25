@@ -130,16 +130,20 @@ class Settings(BaseSettings):
 
     # -- feature flags -----------------------------------------------------
     # Declared in Phase 0 of the upgrade so later phases can hide work behind a
-    # flag rather than deleting reusable code. Nothing reads them yet, and
-    # Phase 0 changes no behaviour. The frontend half is
+    # flag rather than deleting reusable code. The frontend half is
     # `frontend/src/config/features.ts`; keep the two in step.
     #
     # `feature_scan_badge_login` is on, which departs from the phase pack's
     # suggested default: badge scanning is the sign-in in use and the login
     # page is not to be disturbed. See docs/upgrade/PROGRESS.md.
+    #
+    # `feature_jury_demo` and `feature_voice` are on because the work behind
+    # them is finished and tested, and a finished feature left switched off is
+    # indistinguishable from one that was never built. The three still false
+    # have no interface yet: turning them on would show nothing.
 
-    feature_jury_demo: bool = False
-    feature_voice: bool = False
+    feature_jury_demo: bool = True
+    feature_voice: bool = True
     feature_helpline_sim: bool = False
     feature_document_intel: bool = False
     feature_admin_insights: bool = False

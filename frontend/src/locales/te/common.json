@@ -25,7 +25,9 @@
   "language": {
     "label": "భాష",
     "changed": "భాష {{language}} కు మార్చబడింది",
-    "partial": "{{percent}}% అనువదించబడింది"
+    "partial": "{{percent}}% అనువదించబడింది",
+    "groupIndian": "భారతీయ భాషలు",
+    "groupInternational": "అంతర్జాతీయ భాషలు"
   },
   "skipToContent": "కంటెంట్‌కు వెళ్లండి",
   "footer": {

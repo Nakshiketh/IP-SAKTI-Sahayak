@@ -30,7 +30,7 @@
       "script": "Telu",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.43
+      "coverage": 0.42
     },
     {
       "code": "ta",
@@ -40,7 +40,7 @@
       "script": "Taml",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.43
+      "coverage": 0.42
     },
     {
       "code": "bn",
@@ -50,7 +50,7 @@
       "script": "Beng",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.43
+      "coverage": 0.42
     },
     {
       "code": "mr",
@@ -60,7 +60,97 @@
       "script": "Deva",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.43
+      "coverage": 0.42
+    },
+    {
+      "code": "ar",
+      "native_name": "العربية",
+      "english_name": "Arabic",
+      "dir": "rtl",
+      "script": "Arab",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "fr",
+      "native_name": "Français",
+      "english_name": "French",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "es",
+      "native_name": "Español",
+      "english_name": "Spanish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "de",
+      "native_name": "Deutsch",
+      "english_name": "German",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "pt",
+      "native_name": "Português",
+      "english_name": "Portuguese",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ru",
+      "native_name": "Русский",
+      "english_name": "Russian",
+      "dir": "ltr",
+      "script": "Cyrl",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "zh",
+      "native_name": "中文",
+      "english_name": "Chinese",
+      "dir": "ltr",
+      "script": "Hans",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ja",
+      "native_name": "日本語",
+      "english_name": "Japanese",
+      "dir": "ltr",
+      "script": "Jpan",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ko",
+      "native_name": "한국어",
+      "english_name": "Korean",
+      "dir": "ltr",
+      "script": "Kore",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
     }
   ]
 }

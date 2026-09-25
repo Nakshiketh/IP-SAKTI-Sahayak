@@ -25,7 +25,9 @@
   "language": {
     "label": "भाषा",
     "changed": "भाषा बदलून {{language}} केली",
-    "partial": "{{percent}}% भाषांतरित"
+    "partial": "{{percent}}% भाषांतरित",
+    "groupIndian": "भारतीय भाषा",
+    "groupInternational": "आंतरराष्ट्रीय भाषा"
   },
   "skipToContent": "थेट मजकुरावर जा",
   "footer": {

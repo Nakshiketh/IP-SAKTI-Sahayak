@@ -187,10 +187,25 @@ def test_the_seeded_case_holds_no_answer(case: dict) -> None:
     assert "answer" not in case
 
 
-def test_the_demo_endpoint_is_off_unless_the_flag_is_on() -> None:
+def test_the_demo_endpoint_is_off_unless_the_flag_is_on(monkeypatch) -> None:
+    # The flag now ships on, so this sets it false rather than relying on the
+    # default. The guarantee under test is the one that matters either way: the
+    # flag genuinely gates the route, so turning it off removes the endpoint
+    # rather than merely hiding the button that calls it.
+    monkeypatch.setenv("SAHAYAK_FEATURE_JURY_DEMO", "false")
     get_settings.cache_clear()
     try:
         assert TestClient(app).get("/api/v1/demo/flagship-case").status_code == 404
+    finally:
+        get_settings.cache_clear()
+
+
+def test_the_demo_endpoint_is_on_by_default() -> None:
+    # And the default is now on, which is the other half: a finished feature
+    # left switched off is indistinguishable from one that was never built.
+    get_settings.cache_clear()
+    try:
+        assert TestClient(app).get("/api/v1/demo/flagship-case").status_code == 200
     finally:
         get_settings.cache_clear()
 

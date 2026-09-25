@@ -230,7 +230,25 @@ describe('language', () => {
     expect(document.documentElement.dir).toBe('ltr');
   });
 
-  it('lists every language in its own script', async () => {
+  it('turns the whole interface round for Arabic, and back again', async () => {
+    // The first right-to-left language in the product. `dir` was carried per
+    // locale from the beginning for exactly this moment, so what matters is
+    // that it reaches <html> — and, just as much, that leaving Arabic puts it
+    // back. A direction that sticks would mirror every later page silently.
+    const user = userEvent.setup();
+    await renderAt('/');
+    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
+
+    await user.selectOptions(selector, 'ar');
+    await waitFor(() => expect(document.documentElement.lang).toBe('ar'));
+    expect(document.documentElement.dir).toBe('rtl');
+
+    await user.selectOptions(selector, 'hi');
+    await waitFor(() => expect(document.documentElement.lang).toBe('hi'));
+    expect(document.documentElement.dir).toBe('ltr');
+  });
+
+  it('lists every language in its own script, Indian ones first', async () => {
     await renderAt('/');
     const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
     const options = within(selector).getAllByRole('option');
@@ -241,7 +259,25 @@ describe('language', () => {
       'தமிழ்',
       'বাংলা',
       'मराठी',
+      'العربية',
+      'Français',
+      'Español',
+      'Deutsch',
+      'Português',
+      'Русский',
+      '中文',
+      '日本語',
+      '한국어',
     ]);
+  });
+
+  it('separates the Indian languages from the international ones', async () => {
+    await renderAt('/');
+    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
+    const groups = within(selector)
+      .getAllByRole('group')
+      .map((group) => group.getAttribute('label'));
+    expect(groups).toEqual(['Indian languages', 'International']);
   });
 });
 

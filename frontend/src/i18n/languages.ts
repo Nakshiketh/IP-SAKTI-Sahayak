@@ -1,20 +1,60 @@
 import meta from './locales.meta.json';
 
 /**
- * The languages this product answers in.
+ * The languages this product answers in: six Indian, nine international.
  *
- * `dir` is carried per locale even though all six are left-to-right today. The
- * cost is one field; the cost of discovering the assumption later, when a
- * right-to-left locale is added, is every layout at once.
+ * The Indian languages come first and are the reason the feature exists — a
+ * vaidya in Nashik is the reader this product was built for. The international
+ * nine were added because an Ayurvedic exporter's questions are answered by
+ * WIPO, the EPO and foreign registries, and the people they deal with there do
+ * not read Devanagari.
+ *
+ * `dir` was carried per locale from the start, when all six were
+ * left-to-right, on the reasoning that the cost is one field and the cost of
+ * discovering the assumption later is every layout at once. Arabic is that
+ * later, and the bet paid: `Shell.tsx` already set `documentElement.dir` from
+ * this field, so the whole interface mirrored without a layout change.
+ *
+ * `script` is new and earns its place differently. A page that renders Chinese
+ * in a font with no CJK coverage shows boxes, and the reader cannot tell a
+ * missing font from a broken product. See `scriptOf` and fonts.css.
  */
 /**
- * The six codes, as a union rather than `string`.
+ * The codes, as a union rather than `string`.
  *
  * This is what lets `t(`languages.samples.${locale.code}`)` typecheck: with a
  * bare `string` the key is unknowable, and a locale added here without a
  * matching sample key would only be discovered by a reader seeing a raw key.
  */
-export type LocaleCode = 'en' | 'hi' | 'te' | 'ta' | 'bn' | 'mr';
+export type LocaleCode =
+  | 'en'
+  | 'hi'
+  | 'te'
+  | 'ta'
+  | 'bn'
+  | 'mr'
+  | 'ar'
+  | 'fr'
+  | 'es'
+  | 'de'
+  | 'pt'
+  | 'ru'
+  | 'zh'
+  | 'ja'
+  | 'ko';
+
+/** ISO 15924, and only the ones present. Drives font loading, nothing else. */
+export type ScriptCode =
+  | 'Latn'
+  | 'Deva'
+  | 'Telu'
+  | 'Taml'
+  | 'Beng'
+  | 'Arab'
+  | 'Cyrl'
+  | 'Hans'
+  | 'Jpan'
+  | 'Kore';
 
 export interface LocaleDefinition {
   code: LocaleCode;
@@ -23,16 +63,41 @@ export interface LocaleDefinition {
   /** For places that must name the language in English, such as a test. */
   englishName: string;
   dir: 'ltr' | 'rtl';
+  script: ScriptCode;
+  /** India's official languages, which this product is first of all for. */
+  indian: boolean;
 }
 
 export const LOCALES: readonly LocaleDefinition[] = [
-  { code: 'en', nativeName: 'English', englishName: 'English', dir: 'ltr' },
-  { code: 'hi', nativeName: 'हिंदी', englishName: 'Hindi', dir: 'ltr' },
-  { code: 'te', nativeName: 'తెలుగు', englishName: 'Telugu', dir: 'ltr' },
-  { code: 'ta', nativeName: 'தமிழ்', englishName: 'Tamil', dir: 'ltr' },
-  { code: 'bn', nativeName: 'বাংলা', englishName: 'Bengali', dir: 'ltr' },
-  { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', dir: 'ltr' },
+  { code: 'en', nativeName: 'English', englishName: 'English', dir: 'ltr', script: 'Latn', indian: true }, // prettier-ignore
+  { code: 'hi', nativeName: 'हिंदी', englishName: 'Hindi', dir: 'ltr', script: 'Deva', indian: true },
+  { code: 'te', nativeName: 'తెలుగు', englishName: 'Telugu', dir: 'ltr', script: 'Telu', indian: true }, // prettier-ignore
+  { code: 'ta', nativeName: 'தமிழ்', englishName: 'Tamil', dir: 'ltr', script: 'Taml', indian: true },
+  { code: 'bn', nativeName: 'বাংলা', englishName: 'Bengali', dir: 'ltr', script: 'Beng', indian: true }, // prettier-ignore
+  { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', dir: 'ltr', script: 'Deva', indian: true },
+  { code: 'ar', nativeName: 'العربية', englishName: 'Arabic', dir: 'rtl', script: 'Arab', indian: false }, // prettier-ignore
+  { code: 'fr', nativeName: 'Français', englishName: 'French', dir: 'ltr', script: 'Latn', indian: false }, // prettier-ignore
+  { code: 'es', nativeName: 'Español', englishName: 'Spanish', dir: 'ltr', script: 'Latn', indian: false }, // prettier-ignore
+  { code: 'de', nativeName: 'Deutsch', englishName: 'German', dir: 'ltr', script: 'Latn', indian: false }, // prettier-ignore
+  { code: 'pt', nativeName: 'Português', englishName: 'Portuguese', dir: 'ltr', script: 'Latn', indian: false }, // prettier-ignore
+  { code: 'ru', nativeName: 'Русский', englishName: 'Russian', dir: 'ltr', script: 'Cyrl', indian: false }, // prettier-ignore
+  { code: 'zh', nativeName: '中文', englishName: 'Chinese', dir: 'ltr', script: 'Hans', indian: false },
+  { code: 'ja', nativeName: '日本語', englishName: 'Japanese', dir: 'ltr', script: 'Jpan', indian: false }, // prettier-ignore
+  { code: 'ko', nativeName: '한국어', englishName: 'Korean', dir: 'ltr', script: 'Kore', indian: false },
 ] as const;
+
+/** The scripts in use, for a caller that needs to load a font per script. */
+export function scriptOf(code: LocaleCode): ScriptCode {
+  return LOCALES.find((locale) => locale.code === code)?.script ?? 'Latn';
+}
+
+export const INDIAN_LOCALES: readonly LocaleDefinition[] = LOCALES.filter(
+  (locale) => locale.indian,
+);
+
+export const INTERNATIONAL_LOCALES: readonly LocaleDefinition[] = LOCALES.filter(
+  (locale) => !locale.indian,
+);
 
 export const LOCALE_CODES: readonly LocaleCode[] = LOCALES.map((locale) => locale.code);
 
