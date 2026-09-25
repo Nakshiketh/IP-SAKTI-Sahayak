@@ -133,8 +133,8 @@
       "escalate": "इसे किसी विशेषज्ञ को भेजें"
     },
     "language_unsupported": {
-      "title": "This question could not be searched",
-      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for — not because the sources are silent."
+      "title": "इस प्रश्न को खोजा नहीं जा सका",
+      "body": "स्रोत अंग्रेज़ी में हैं और कोई अनुवाद सेवा कॉन्फ़िगर नहीं है, इसलिए इस प्रश्न को कभी उस भाषा में रखा ही नहीं गया जिसमें स्रोत खोजे जा सकें। कुछ नहीं मिला क्योंकि कुछ खोजा ही नहीं गया — इसलिए नहीं कि स्रोत मौन हैं।"
     }
   },
   "error": {
@@ -147,8 +147,8 @@
     "request_too_large": "वह प्रश्न भेजने के लिए बहुत बड़ा था। इसे छोटा करें और पुनः प्रयास करें।",
     "question_too_long": "वह प्रश्न स्वीकार्य सीमा से अधिक लंबा है। इसे छोटा करें और पुनः प्रयास करें।",
     "unknown": "उत्तर के रास्ते में कुछ गलत हो गया।",
-    "timeout": "The search took too long and was stopped. Nothing has been answered. A shorter question usually finishes.",
-    "shorter": "Ask a shorter question"
+    "timeout": "खोज में बहुत समय लगा और उसे रोक दिया गया। कोई उत्तर नहीं दिया गया है। छोटा प्रश्न आमतौर पर पूरा हो जाता है।",
+    "shorter": "छोटा प्रश्न पूछें"
   },
   "records": {
     "tab": "संबंधित रिकॉर्ड",
@@ -293,337 +293,337 @@
     }
   },
   "guidanceEnds": {
-    "heading": "Where guidance ends",
-    "stepperLabel": "How much expert review this needs",
-    "current": "this answer",
-    "canSay": "What we can say",
-    "canSayBody_one": "One issue is raised by the facts you gave, answered from official sources below.",
-    "canSayBody_other": "{{count}} issues are raised by the facts you gave, each answered from official sources below.",
-    "cannotConclude": "What we cannot conclude",
-    "cannotNovelty": "Whether your formulation is novel or patentable. Only examination, after a professional search, decides that.",
-    "cannotTkdl": "What the restricted TKDL database contains. Access is limited to patent offices under agreement, and it was not searched.",
-    "cannotUnresolved_one": "One conflict between sources that nothing here settles.",
-    "cannotUnresolved_other": "{{count}} conflicts between sources that nothing here settles.",
-    "cannotMissingFacts_one": "Anything that turns on the one fact still missing.",
-    "cannotMissingFacts_other": "Anything that turns on the {{count}} facts still missing.",
-    "whoReviews": "Who should review this",
-    "noReviewNeeded": "Nothing here needs a professional before you act on it.",
-    "wouldSettle": "Answering these would settle more of it",
+    "heading": "मार्गदर्शन कहाँ समाप्त होता है",
+    "stepperLabel": "इसके लिए कितनी विशेषज्ञ समीक्षा चाहिए",
+    "current": "यह उत्तर",
+    "canSay": "हम क्या कह सकते हैं",
+    "canSayBody_one": "आपके दिए तथ्यों से एक मुद्दा उठता है, जिसका उत्तर नीचे आधिकारिक स्रोतों से दिया गया है।",
+    "canSayBody_other": "आपके दिए तथ्यों से {{count}} मुद्दे उठते हैं, हर एक का उत्तर नीचे आधिकारिक स्रोतों से दिया गया है।",
+    "cannotConclude": "हम किस निष्कर्ष पर नहीं पहुँच सकते",
+    "cannotNovelty": "आपका सूत्रीकरण नया है या पेटेंट योग्य है या नहीं। यह केवल पेशेवर खोज के बाद परीक्षण ही तय करता है।",
+    "cannotTkdl": "प्रतिबंधित TKDL डेटाबेस में क्या है। इसकी पहुँच समझौते के अंतर्गत पेटेंट कार्यालयों तक सीमित है, और इसे खोजा नहीं गया।",
+    "cannotUnresolved_one": "स्रोतों के बीच एक टकराव, जिसे यहाँ कुछ भी हल नहीं करता।",
+    "cannotUnresolved_other": "स्रोतों के बीच {{count}} टकराव, जिन्हें यहाँ कुछ भी हल नहीं करता।",
+    "cannotMissingFacts_one": "वह सब जो अब भी अनुपलब्ध एक तथ्य पर निर्भर करता है।",
+    "cannotMissingFacts_other": "वह सब जो अब भी अनुपलब्ध {{count}} तथ्यों पर निर्भर करता है।",
+    "whoReviews": "इसकी समीक्षा किसे करनी चाहिए",
+    "noReviewNeeded": "इस पर कार्य करने से पहले यहाँ किसी पेशेवर की आवश्यकता नहीं है।",
+    "wouldSettle": "इनका उत्तर देने से इसका और भाग तय हो जाएगा",
     "level": {
       "l0": {
-        "label": "No review needed",
-        "body": "The sources answer what you asked. The limits listed here still apply to every answer."
+        "label": "समीक्षा की आवश्यकता नहीं",
+        "body": "स्रोत आपके प्रश्न का उत्तर देते हैं। यहाँ सूचीबद्ध सीमाएँ फिर भी हर उत्तर पर लागू होती हैं।"
       },
       "l1": {
-        "label": "Facts missing",
-        "body": "You can take this further yourself by supplying the facts listed below."
+        "label": "तथ्य अनुपलब्ध",
+        "body": "नीचे सूचीबद्ध तथ्य देकर आप इसे स्वयं आगे बढ़ा सकते हैं।"
       },
       "l2": {
-        "label": "Expert review advised",
-        "body": "Something here is genuinely uncertain — an issue came out weak, or a conflict needs a person to look at it."
+        "label": "विशेषज्ञ समीक्षा उचित है",
+        "body": "यहाँ कुछ वास्तव में अनिश्चित है — कोई मुद्दा कमज़ोर निकला, या किसी टकराव को देखने के लिए व्यक्ति चाहिए।"
       },
       "l3": {
-        "label": "Expert review needed",
-        "body": "Part of this turns on applying a provision to your facts, which is a judgement this product must not make for you."
+        "label": "विशेषज्ञ समीक्षा आवश्यक है",
+        "body": "इसका कुछ भाग आपके तथ्यों पर किसी प्रावधान को लागू करने पर निर्भर है, और यह निर्णय यह उत्पाद आपके लिए नहीं ले सकता।"
       }
     },
     "specialist": {
-      "registered_patent_agent": "A registered patent agent",
-      "traditional_knowledge_expert": "A traditional-knowledge specialist",
-      "biodiversity_abs_consultant": "A biodiversity and access-and-benefit-sharing consultant",
-      "ayush_drug_regulatory_consultant": "An Ayush drug regulatory consultant",
-      "food_safety_consultant": "A food safety consultant",
-      "trade_mark_attorney": "A trade mark attorney",
-      "geographical_indication_facilitator": "A geographical indication facilitator",
-      "intellectual_property_lawyer": "An intellectual property lawyer"
+      "registered_patent_agent": "एक पंजीकृत पेटेंट एजेंट",
+      "traditional_knowledge_expert": "पारंपरिक ज्ञान का विशेषज्ञ",
+      "biodiversity_abs_consultant": "जैव विविधता तथा पहुँच और लाभ-साझाकरण सलाहकार",
+      "ayush_drug_regulatory_consultant": "आयुष औषधि नियामक सलाहकार",
+      "food_safety_consultant": "खाद्य सुरक्षा सलाहकार",
+      "trade_mark_attorney": "ट्रेड मार्क अधिवक्ता",
+      "geographical_indication_facilitator": "भौगोलिक संकेत सुविधाप्रदाता",
+      "intellectual_property_lawyer": "बौद्धिक संपदा वकील"
     }
   },
   "conflicts": {
-    "heading": "Overlaps and conflicts",
-    "standfirst": "Two obligations can both apply without contradicting each other. Where one genuinely governs the other, the rule that decides it is named.",
-    "noIssue": "Across the whole question",
-    "needsReview": "Needs a person to decide",
+    "heading": "अतिव्यापन और टकराव",
+    "standfirst": "दो दायित्व एक साथ लागू हो सकते हैं बिना एक-दूसरे का खंडन किए। जहाँ वास्तव में एक दूसरे पर शासन करता है, वहाँ उसे तय करने वाला नियम बताया गया है।",
+    "noIssue": "पूरे प्रश्न पर",
+    "needsReview": "निर्णय के लिए व्यक्ति चाहिए",
     "columns": {
-      "issue": "Issue",
-      "sourceA": "One source",
-      "sourceB": "The other",
-      "relationship": "Relationship",
-      "resolution": "Resolution"
+      "issue": "मुद्दा",
+      "sourceA": "एक स्रोत",
+      "sourceB": "दूसरा",
+      "relationship": "संबंध",
+      "resolution": "समाधान"
     },
     "resolution": {
-      "separate_obligations": "Both apply",
-      "resolved_by_authority": "Higher authority governs",
-      "resolved_by_date": "Later instrument governs",
-      "unresolved": "Unresolved"
+      "separate_obligations": "दोनों लागू",
+      "resolved_by_authority": "उच्चतर प्राधिकार शासित करता है",
+      "resolved_by_date": "बाद का दस्तावेज़ शासित करता है",
+      "unresolved": "अनसुलझा"
     },
     "explanation": {
-      "conflictJurisdictional": "Two legal systems ask different things of the same product. Neither overrides the other.",
-      "conflictScopeOverlap": "Different legal questions about one product, which can all apply at once.",
-      "conflictAuthority": "The same point stated at different levels of authority.",
-      "conflictTemporalSuperseded": "One instrument supersedes the other.",
-      "conflictTemporalLater": "The two took effect on different dates.",
-      "conflictClassification": "More than one category is open on the facts given.",
-      "conflictMissingFact": "A fact nobody has stated decides between two readings.",
-      "conflictTrueSource": "Equal authority, same system, both in force, and still in tension."
+      "conflictJurisdictional": "दो विधि प्रणालियाँ एक ही उत्पाद से अलग-अलग अपेक्षाएँ रखती हैं। कोई भी दूसरे को निरस्त नहीं करती।",
+      "conflictScopeOverlap": "एक ही उत्पाद पर अलग-अलग विधिक प्रश्न, जो सभी एक साथ लागू हो सकते हैं।",
+      "conflictAuthority": "वही बात प्राधिकार के अलग-अलग स्तरों पर कही गई है।",
+      "conflictTemporalSuperseded": "एक दस्तावेज़ दूसरे का स्थान ले लेता है।",
+      "conflictTemporalLater": "दोनों अलग-अलग तिथियों से प्रभावी हुए।",
+      "conflictClassification": "दिए गए तथ्यों पर एक से अधिक श्रेणी खुली है।",
+      "conflictMissingFact": "एक तथ्य जो किसी ने नहीं बताया, दो व्याख्याओं के बीच निर्णय करता है।",
+      "conflictTrueSource": "समान प्राधिकार, वही प्रणाली, दोनों प्रवर्तन में, और फिर भी तनाव में।"
     }
   },
   "issues": {
-    "patent": "Patent",
-    "traditional_knowledge": "Traditional knowledge",
-    "biodiversity_abs": "Biodiversity and benefit sharing",
-    "drug_regulation": "Drug regulation",
-    "food_regulation": "Food regulation",
-    "trade_mark": "Trade mark",
-    "design": "Design",
-    "geographical_indication": "Geographical indication",
-    "copyright": "Copyright",
-    "trade_secret": "Trade secret"
+    "patent": "पेटेंट",
+    "traditional_knowledge": "पारंपरिक ज्ञान",
+    "biodiversity_abs": "जैव विविधता और लाभ साझाकरण",
+    "drug_regulation": "औषधि विनियमन",
+    "food_regulation": "खाद्य विनियमन",
+    "trade_mark": "ट्रेड मार्क",
+    "design": "डिज़ाइन",
+    "geographical_indication": "भौगोलिक संकेत",
+    "copyright": "कॉपीराइट",
+    "trade_secret": "व्यापार गोपनीयता"
   },
   "provenance": {
-    "heading": "Why am I seeing this?",
-    "document": "Document",
-    "authority": "Published by",
-    "section": "Section",
-    "jurisdiction": "Legal system",
-    "verification": "Checked",
-    "reviewedAt": "Last confirmed",
-    "asOf": "Read on",
-    "applies": "Applies to you",
-    "needsFacts": "would need to know: {{facts}}",
-    "ranking": "Ranking signal",
-    "rankingNote": "how well this passage matched your words — not how confident the answer is",
-    "openOfficial": "Open the official source",
+    "heading": "मुझे यह क्यों दिख रहा है?",
+    "document": "दस्तावेज़",
+    "authority": "प्रकाशक",
+    "section": "धारा",
+    "jurisdiction": "विधि प्रणाली",
+    "verification": "जाँचा गया",
+    "reviewedAt": "अंतिम पुष्टि",
+    "asOf": "पढ़ा गया",
+    "applies": "आप पर लागू",
+    "needsFacts": "जानना होगा: {{facts}}",
+    "ranking": "रैंकिंग संकेत",
+    "rankingNote": "यह अंश आपके शब्दों से कितना मेल खाता है — यह नहीं कि उत्तर कितना आश्वस्त है",
+    "openOfficial": "आधिकारिक स्रोत खोलें",
     "reviewState": {
-      "verified_official": "Fetched from the official host and hashed",
-      "human_reviewed": "Read against the official original by a person",
-      "needs_review": "Awaiting review",
-      "unverified": "Not verified",
-      "superseded": "Superseded",
-      "unavailable": "Unavailable"
+      "verified_official": "आधिकारिक होस्ट से प्राप्त और हैश किया गया",
+      "human_reviewed": "किसी व्यक्ति ने आधिकारिक मूल से मिलाकर पढ़ा",
+      "needs_review": "समीक्षा प्रतीक्षित",
+      "unverified": "असत्यापित",
+      "superseded": "अधिक्रमित",
+      "unavailable": "अनुपलब्ध"
     },
     "applicability": {
-      "applies": "Applies",
-      "may_apply": "May apply",
-      "not_indicated": "Not indicated by your facts"
+      "applies": "लागू है",
+      "may_apply": "लागू हो सकता है",
+      "not_indicated": "आपके तथ्यों से संकेतित नहीं"
     }
   },
   "receipt": {
-    "heading": "Answer receipt",
-    "caseId": "Answer ID",
-    "queryId": "Query ID",
-    "asOf": "Sources read on",
-    "corpusVersion": "Corpus version",
-    "jurisdiction": "Legal system",
-    "language": "Language",
-    "sources": "Source documents",
-    "verification": "Verification",
-    "verificationValue": "{{verified}} of {{total}} citations from verified sources",
-    "reviewDates": "Source review dates",
-    "noReviewYet": "No source has been confirmed by a person yet",
-    "confidenceByIssue": "Confidence by issue",
-    "overallOnly": "Whole answer: {{level}}",
-    "claimsRemoved": "Claims removed",
-    "safetyFlags": "Safety flags",
-    "noFlags": "None"
+    "heading": "उत्तर रसीद",
+    "caseId": "उत्तर आईडी",
+    "queryId": "प्रश्न आईडी",
+    "asOf": "स्रोत पढ़े गए",
+    "corpusVersion": "संग्रह संस्करण",
+    "jurisdiction": "विधि प्रणाली",
+    "language": "भाषा",
+    "sources": "स्रोत दस्तावेज़",
+    "verification": "सत्यापन",
+    "verificationValue": "{{total}} में से {{verified}} उद्धरण सत्यापित स्रोतों से",
+    "reviewDates": "स्रोत समीक्षा तिथियाँ",
+    "noReviewYet": "अभी तक किसी स्रोत की पुष्टि किसी व्यक्ति ने नहीं की है",
+    "confidenceByIssue": "मुद्देवार विश्वास",
+    "overallOnly": "पूरा उत्तर: {{level}}",
+    "claimsRemoved": "हटाए गए दावे",
+    "safetyFlags": "सुरक्षा चिह्न",
+    "noFlags": "कोई नहीं"
   },
   "abstainCode": {
-    "insufficient_authoritative_evidence": "No usable source was found for this",
-    "missing_material_facts": "A fact that decides the answer is missing",
-    "unsupported_jurisdiction": "This legal system is not covered",
-    "conflicting_authoritative_sources": "Two sources of equal standing disagree",
-    "source_status_uncertain": "A governing source may have changed",
-    "professional_interpretation_required": "This needs a provision applied to your facts",
-    "request_for_legal_verdict": "This asked for a verdict this product must not give",
-    "out_of_scope_clinical_query": "This is a clinical question",
-    "out_of_scope_non_ip": "This is outside intellectual property and these products"
+    "insufficient_authoritative_evidence": "इसके लिए कोई उपयोगी स्रोत नहीं मिला",
+    "missing_material_facts": "उत्तर तय करने वाला एक तथ्य अनुपलब्ध है",
+    "unsupported_jurisdiction": "यह विधि प्रणाली कवर नहीं है",
+    "conflicting_authoritative_sources": "समान स्तर के दो स्रोत असहमत हैं",
+    "source_status_uncertain": "कोई शासित स्रोत बदल गया हो सकता है",
+    "professional_interpretation_required": "इसके लिए आपके तथ्यों पर प्रावधान लागू करना होगा",
+    "request_for_legal_verdict": "इसमें ऐसा निर्णय माँगा गया जो यह उत्पाद नहीं दे सकता",
+    "out_of_scope_clinical_query": "यह एक नैदानिक प्रश्न है",
+    "out_of_scope_non_ip": "यह बौद्धिक संपदा और इन उत्पादों के बाहर है"
   },
   "protection": {
-    "heading": "What you could protect",
-    "standfirst": "Six kinds of protection, and where each stands on the facts you have given. “Needs more information” is not the same as “not available”.",
+    "heading": "आप क्या सुरक्षित कर सकते हैं",
+    "standfirst": "छह प्रकार की सुरक्षा, और आपके दिए तथ्यों पर हर एक की स्थिति। “अधिक जानकारी चाहिए” का अर्थ “उपलब्ध नहीं” नहीं है।",
     "right": {
-      "patent": "Patent",
-      "trademark": "Trade mark",
-      "design": "Design",
-      "copyright": "Copyright",
-      "geographical_indication": "Geographical indication",
-      "trade_secret": "Trade secret"
+      "patent": "पेटेंट",
+      "trademark": "ट्रेड मार्क",
+      "design": "डिज़ाइन",
+      "copyright": "कॉपीराइट",
+      "geographical_indication": "भौगोलिक संकेत",
+      "trade_secret": "व्यापार गोपनीयता"
     },
     "relevance": {
-      "relevant": "Relevant",
-      "possibly_relevant": "Possibly relevant",
-      "needs_more_information": "Needs more information",
-      "not_indicated": "Not indicated"
+      "relevant": "प्रासंगिक",
+      "possibly_relevant": "संभवतः प्रासंगिक",
+      "needs_more_information": "अधिक जानकारी चाहिए",
+      "not_indicated": "संकेतित नहीं"
     },
-    "whyHeading": "Why",
-    "factsHeading": "What would settle it",
-    "sourcesHeading": "Read",
-    "nextHeading": "Next step",
+    "whyHeading": "क्यों",
+    "factsHeading": "इसे क्या तय करेगा",
+    "sourcesHeading": "पढ़ें",
+    "nextHeading": "अगला कदम",
     "reason": {
-      "protectionProcessDescribed": "You described a process or a distinctive feature.",
-      "protectionNeedProcess": "Nothing yet says whether there is a new process or technique.",
-      "protectionPatentGeneral": "A patent may be available for a new technical contribution.",
-      "protectionBrandGiven": "You gave a brand name.",
-      "protectionNeedBrand": "Nothing yet says whether a name or logo is involved.",
-      "protectionNoBrand": "No name or logo was mentioned.",
-      "protectionPackagingMentioned": "You mentioned packaging or appearance.",
-      "protectionNeedAppearance": "Nothing yet describes the product's appearance or packaging.",
-      "protectionLabelAndText": "Label artwork, text and photographs are original work.",
-      "protectionRegionMentioned": "You mentioned a place of origin.",
-      "protectionNoOriginClaim": "No claim was made linking the product to a place.",
-      "protectionKeptConfidential": "You said it has been kept confidential.",
-      "protectionAlreadyPublic": "It has already been made public.",
-      "protectionNeedDisclosure": "Nothing yet says whether it has been kept confidential."
+      "protectionProcessDescribed": "आपने कोई प्रक्रिया या विशिष्ट विशेषता बताई।",
+      "protectionNeedProcess": "अभी तक यह नहीं बताया गया कि कोई नई प्रक्रिया या तकनीक है या नहीं।",
+      "protectionPatentGeneral": "किसी नए तकनीकी योगदान के लिए पेटेंट उपलब्ध हो सकता है।",
+      "protectionBrandGiven": "आपने एक ब्रांड नाम दिया।",
+      "protectionNeedBrand": "अभी तक यह नहीं बताया गया कि कोई नाम या लोगो शामिल है या नहीं।",
+      "protectionNoBrand": "किसी नाम या लोगो का उल्लेख नहीं किया गया।",
+      "protectionPackagingMentioned": "आपने पैकेजिंग या रूप-रंग का उल्लेख किया।",
+      "protectionNeedAppearance": "अभी तक उत्पाद के रूप-रंग या पैकेजिंग का वर्णन नहीं है।",
+      "protectionLabelAndText": "लेबल की कलाकृति, पाठ और तस्वीरें मौलिक कार्य हैं।",
+      "protectionRegionMentioned": "आपने उत्पत्ति के स्थान का उल्लेख किया।",
+      "protectionNoOriginClaim": "उत्पाद को किसी स्थान से जोड़ने का कोई दावा नहीं किया गया।",
+      "protectionKeptConfidential": "आपने कहा कि इसे गोपनीय रखा गया है।",
+      "protectionAlreadyPublic": "इसे पहले ही सार्वजनिक किया जा चुका है।",
+      "protectionNeedDisclosure": "अभी तक यह नहीं बताया गया कि इसे गोपनीय रखा गया है या नहीं।"
     },
     "step": {
-      "protectionStepPriorArtSearch": "Run a prior-art search before filing anything.",
-      "protectionStepSearchRegister": "Search the trade marks register for the name.",
-      "protectionStepDecideName": "Decide whether you will sell under a name of your own.",
-      "protectionStepDesignNovelty": "Check whether the appearance is new before you publish it.",
-      "protectionStepDescribeAppearance": "Describe the shape, surface or packaging.",
-      "protectionStepKeepRecords": "Keep dated records of who made the artwork and text.",
-      "protectionStepCheckGiRegister": "Check whether a geographical indication already covers this.",
-      "protectionStepWriteItDown": "Write down what is confidential and who has access.",
-      "protectionStepDecideDisclosure": "Decide what has already been shown outside the company."
+      "protectionStepPriorArtSearch": "कुछ भी दाखिल करने से पहले पूर्व-कला खोज कराएँ।",
+      "protectionStepSearchRegister": "इस नाम के लिए ट्रेड मार्क रजिस्टर खोजें।",
+      "protectionStepDecideName": "तय करें कि आप अपने ही नाम से बेचेंगे या नहीं।",
+      "protectionStepDesignNovelty": "प्रकाशित करने से पहले जाँचें कि रूप-रंग नया है या नहीं।",
+      "protectionStepDescribeAppearance": "आकार, सतह या पैकेजिंग का वर्णन करें।",
+      "protectionStepKeepRecords": "कलाकृति और पाठ किसने बनाया, इसका तिथि-सहित रिकॉर्ड रखें।",
+      "protectionStepCheckGiRegister": "जाँचें कि कोई भौगोलिक संकेत पहले से इसे कवर तो नहीं करता।",
+      "protectionStepWriteItDown": "लिख लें कि क्या गोपनीय है और किसकी पहुँच है।",
+      "protectionStepDecideDisclosure": "तय करें कि कंपनी के बाहर पहले ही क्या दिखाया जा चुका है।"
     }
   },
   "sourceMatrix": {
-    "heading": "The sources this rests on",
-    "standfirst": "Every document behind this answer, with how far each has been checked.",
+    "heading": "यह उत्तर जिन स्रोतों पर टिका है",
+    "standfirst": "इस उत्तर के पीछे का हर दस्तावेज़, और हर एक कहाँ तक जाँचा गया है।",
     "columns": {
-      "document": "Document",
-      "authority": "Published by",
-      "jurisdiction": "Legal system",
-      "section": "Provision",
-      "status": "Checked",
-      "reviewed": "Last confirmed"
+      "document": "दस्तावेज़",
+      "authority": "प्रकाशक",
+      "jurisdiction": "विधि प्रणाली",
+      "section": "प्रावधान",
+      "status": "जाँचा गया",
+      "reviewed": "अंतिम पुष्टि"
     },
-    "notReviewed": "Not yet"
+    "notReviewed": "अभी नहीं"
   },
   "brief": {
-    "open": "Prepare for expert review",
-    "heading": "Case brief",
-    "standfirst": "Everything a professional would need to pick this up, on one page.",
-    "printed": "Prepared on {{date}} by IP-SAKTI Sahayak. Information, not legal advice.",
-    "copy": "Copy summary",
-    "copied": "Copied",
-    "exportJson": "Export JSON",
-    "print": "Print",
+    "open": "विशेषज्ञ समीक्षा के लिए तैयार करें",
+    "heading": "केस सारांश",
+    "standfirst": "एक पेशेवर को इसे आगे बढ़ाने के लिए जो कुछ चाहिए, सब एक पृष्ठ पर।",
+    "printed": "{{date}} को IP-SAKTI Sahayak द्वारा तैयार। जानकारी, विधिक सलाह नहीं।",
+    "copy": "सारांश कॉपी करें",
+    "copied": "कॉपी हो गया",
+    "exportJson": "JSON निर्यात करें",
+    "print": "प्रिंट करें",
     "sections": {
-      "question": "The question asked",
-      "facts": "Facts stated",
-      "missing": "Facts still missing",
-      "classification": "Classification",
-      "issues": "Issues and confidence",
-      "conflicts": "Overlaps and conflicts",
-      "sources": "Sources and excerpts",
-      "unresolved": "Unresolved questions",
-      "specialists": "Suggested specialists",
-      "audit": "Audit information"
+      "question": "पूछा गया प्रश्न",
+      "facts": "बताए गए तथ्य",
+      "missing": "अब भी अनुपलब्ध तथ्य",
+      "classification": "वर्गीकरण",
+      "issues": "मुद्दे और विश्वास",
+      "conflicts": "अतिव्यापन और टकराव",
+      "sources": "स्रोत और अंश",
+      "unresolved": "अनसुलझे प्रश्न",
+      "specialists": "सुझाए गए विशेषज्ञ",
+      "audit": "ऑडिट जानकारी"
     },
-    "noFacts": "No facts were stated in the question.",
-    "noneMissing": "Nothing material is missing.",
-    "noConflicts": "No overlap or conflict was found.",
-    "candidates": "Still open: {{classes}}"
+    "noFacts": "प्रश्न में कोई तथ्य नहीं बताया गया।",
+    "noneMissing": "कोई महत्वपूर्ण तथ्य अनुपलब्ध नहीं है।",
+    "noConflicts": "कोई अतिव्यापन या टकराव नहीं मिला।",
+    "candidates": "अब भी खुला: {{classes}}"
   },
   "inShort": {
-    "heading": "In short",
-    "meansForYou": "What this means for you"
+    "heading": "संक्षेप में",
+    "meansForYou": "आपके लिए इसका क्या अर्थ है"
   },
   "view": {
-    "label": "How much detail",
-    "simple": "Simple",
-    "expert": "Expert",
-    "showEvidence": "Show the evidence",
-    "hideEvidence": "Hide the evidence",
-    "simpleNote": "The answer, what it means for you, and how much expert review it needs."
+    "label": "कितना विवरण",
+    "simple": "सरल",
+    "expert": "विशेषज्ञ",
+    "showEvidence": "साक्ष्य दिखाएँ",
+    "hideEvidence": "साक्ष्य छिपाएँ",
+    "simpleNote": "उत्तर, आपके लिए उसका अर्थ, और उसे कितनी विशेषज्ञ समीक्षा चाहिए।"
   },
   "glossary": {
-    "explainer": "Plain-language explainer",
-    "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
-    "openSource": "Read the source",
-    "heading_one": "One term explained",
-    "heading_other": "{{count}} terms explained"
+    "explainer": "सरल भाषा में व्याख्या",
+    "explainerNote": "यह पढ़ने के लिए लिखा गया है, भरोसा करने के लिए नहीं। जो शब्द मायने रखते हैं उनके लिए स्रोत देखें।",
+    "openSource": "स्रोत पढ़ें",
+    "heading_one": "एक शब्द की व्याख्या",
+    "heading_other": "{{count}} शब्दों की व्याख्या"
   },
   "hints": {
-    "dismiss": "Got it",
+    "dismiss": "समझ गया",
     "start": {
-      "title": "Start by asking",
-      "body": "Type a question in your own words. You do not need the legal term for it."
+      "title": "पूछकर शुरू करें",
+      "body": "अपने शब्दों में प्रश्न लिखें। इसके लिए विधिक शब्दावली की आवश्यकता नहीं है।"
     },
     "escalation": {
-      "title": "Where guidance ends",
-      "body": "Every answer says what it will not conclude, and who should look at the rest."
+      "title": "मार्गदर्शन कहाँ समाप्त होता है",
+      "body": "हर उत्तर बताता है कि वह किस निष्कर्ष पर नहीं पहुँचेगा, और बाकी को किसे देखना चाहिए।"
     },
     "sources": {
-      "title": "Every sentence has a source",
-      "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
+      "title": "हर वाक्य का एक स्रोत है",
+      "body": "किसी क्रमांकित चिह्न पर टैप करके वह अंश देखें जिससे वह आया और वह कहाँ तक जाँचा गया है।"
     }
   },
   "feedback": {
-    "question": "Did this answer help?",
-    "whichPart": "Which part needs work?",
-    "thanks": "Recorded, with nothing identifying you.",
-    "skip": "Rather not say",
+    "question": "क्या इस उत्तर से मदद मिली?",
+    "whichPart": "किस भाग में सुधार चाहिए?",
+    "thanks": "दर्ज कर लिया गया, आपकी पहचान बताए बिना।",
+    "skip": "नहीं बताना चाहेंगे",
     "verdict": {
-      "yes": "Yes",
-      "partly": "Partly",
-      "no": "No"
+      "yes": "हाँ",
+      "partly": "आंशिक रूप से",
+      "no": "नहीं"
     },
     "aspect": {
-      "the_answer": "The answer itself",
-      "the_sources": "The sources",
-      "what_to_do_next": "What to do next",
-      "why_it_could_not_conclude": "Why it would not conclude",
-      "the_language": "The language it used"
+      "the_answer": "उत्तर स्वयं",
+      "the_sources": "स्रोत",
+      "what_to_do_next": "आगे क्या करना है",
+      "why_it_could_not_conclude": "यह निष्कर्ष पर क्यों नहीं पहुँचा",
+      "the_language": "इसकी भाषा"
     }
   },
   "voice": {
-    "speak": "Speak your question",
-    "listening": "Listening — tap to stop",
-    "note": "What you say is turned into text here and shown for you to correct. Nothing is sent until you press Ask, and no audio is kept.",
-    "unsupported": "This browser cannot turn speech into text in {{language}}. Type your question instead."
+    "speak": "अपना प्रश्न बोलें",
+    "listening": "सुन रहा है — रोकने के लिए टैप करें",
+    "note": "आप जो बोलते हैं वह यहाँ पाठ में बदलकर दिखाया जाता है ताकि आप उसे ठीक कर सकें। जब तक आप पूछें नहीं दबाते, कुछ नहीं भेजा जाता, और कोई ऑडियो नहीं रखा जाता।",
+    "unsupported": "यह ब्राउज़र {{language}} में बोली को पाठ में नहीं बदल सकता। इसके बजाय अपना प्रश्न लिखें।"
   },
   "helpline": {
-    "heading": "Try the helpline",
-    "notAPhoneLine": "No phone service is connected",
-    "notAPhoneLineBody": "This is a rehearsal of the conversation a helpline would have, not a call. This product has no phone number and nothing here dials anyone. The answers come from the same pipeline as the typed interface, so what a caller would hear can be checked before anyone funds a phone line.",
-    "start": "Start the rehearsal",
-    "inProgress": "Rehearsal in progress",
-    "end": "End",
-    "muteVoice": "Mute",
-    "unmuteVoice": "Unmute",
-    "speak": "Hold to speak",
-    "typeInstead": "Or type what the caller would say",
-    "transcript": "Transcript",
-    "caller": "Caller",
-    "sahayak": "Sahayak",
-    "thinking": "Looking through the sources…",
-    "greeting": "IP-SAKTI Sahayak. Ask about protecting or registering an Ayurvedic product, and I will answer from official sources. I cannot give medical or dosage advice.",
-    "nothing": "I could not find anything in the sources on that.",
-    "failed": "Something went wrong reaching the sources. Nothing was answered.",
-    "summary": "After the call",
-    "summaryBody": "{{count}} question(s) asked over {{duration}}.",
-    "summaryNotKept": "Nothing from this rehearsal is stored. No audio existed at any point, and the transcript is gone when you leave the page."
+    "heading": "हेल्पलाइन आज़माएँ",
+    "notAPhoneLine": "कोई फ़ोन सेवा जुड़ी नहीं है",
+    "notAPhoneLineBody": "यह उस बातचीत का पूर्वाभ्यास है जो कोई हेल्पलाइन करती, कॉल नहीं। इस उत्पाद का कोई फ़ोन नंबर नहीं है और यहाँ कुछ भी किसी को डायल नहीं करता। उत्तर उसी पाइपलाइन से आते हैं जिससे लिखित इंटरफ़ेस के, ताकि फ़ोन लाइन पर खर्च करने से पहले जाँचा जा सके कि कॉल करने वाला क्या सुनेगा।",
+    "start": "पूर्वाभ्यास शुरू करें",
+    "inProgress": "पूर्वाभ्यास चल रहा है",
+    "end": "समाप्त करें",
+    "muteVoice": "मौन करें",
+    "unmuteVoice": "ध्वनि चालू करें",
+    "speak": "बोलने के लिए दबाए रखें",
+    "typeInstead": "या लिखें कि कॉल करने वाला क्या कहता",
+    "transcript": "प्रतिलेख",
+    "caller": "कॉल करने वाला",
+    "sahayak": "सहायक",
+    "thinking": "स्रोतों में देखा जा रहा है…",
+    "greeting": "IP-SAKTI Sahayak। किसी आयुर्वेदिक उत्पाद की सुरक्षा या पंजीकरण के बारे में पूछें, और मैं आधिकारिक स्रोतों से उत्तर दूँगा। मैं चिकित्सा या खुराक संबंधी सलाह नहीं दे सकता।",
+    "nothing": "मुझे इस पर स्रोतों में कुछ नहीं मिला।",
+    "failed": "स्रोतों तक पहुँचने में कुछ गड़बड़ हुई। कोई उत्तर नहीं दिया गया।",
+    "summary": "कॉल के बाद",
+    "summaryBody": "{{duration}} में {{count}} प्रश्न पूछे गए।",
+    "summaryNotKept": "इस पूर्वाभ्यास से कुछ भी संग्रहीत नहीं होता। किसी भी क्षण कोई ऑडियो मौजूद नहीं था, और पृष्ठ छोड़ते ही प्रतिलेख समाप्त हो जाता है।"
   },
   "document": {
-    "heading": "Ask about your own document",
-    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first, because a PDF often holds something other than what you expect — and a scanned page holds no text at all.",
-    "choose": "Choose a file",
-    "limits": "PDF, .txt or .md. Up to 10 MB.",
-    "reading": "Reading the file…",
-    "failed": "That file could not be read",
-    "remove": "Remove",
-    "extracted": "{{characters}} characters read.",
-    "truncated": "Only the beginning is shown.",
-    "use": "Put this text in the question box",
-    "notStored": "Nothing is uploaded to storage. The file is read and dropped; this text stays in your browser until you close the tab."
+    "heading": "अपने दस्तावेज़ के बारे में पूछें",
+    "standfirst": "कोई PDF या पाठ फ़ाइल पढ़ें और उसमें जो लिखा है उसे प्रश्न बॉक्स में रखें। पाठ पहले दिखाया जाता है, क्योंकि किसी PDF में अक्सर वह नहीं होता जिसकी आप अपेक्षा करते हैं — और स्कैन किए पृष्ठ में कोई पाठ होता ही नहीं।",
+    "choose": "फ़ाइल चुनें",
+    "limits": "PDF, .txt या .md। अधिकतम 10 MB।",
+    "reading": "फ़ाइल पढ़ी जा रही है…",
+    "failed": "वह फ़ाइल पढ़ी नहीं जा सकी",
+    "remove": "हटाएँ",
+    "extracted": "{{characters}} अक्षर पढ़े गए।",
+    "truncated": "केवल आरंभ दिखाया गया है।",
+    "use": "यह पाठ प्रश्न बॉक्स में रखें",
+    "notStored": "कुछ भी भंडारण में अपलोड नहीं होता। फ़ाइल पढ़कर छोड़ दी जाती है; यह पाठ टैब बंद करने तक आपके ब्राउज़र में ही रहता है।"
   },
   "thread": {
-    "heading": "This conversation",
-    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — this is a record of what you asked, not a memory.",
-    "answered": "Answered, {{confidence}} confidence, {{count}} source(s)",
-    "declined": "Declined — the sources did not carry it",
-    "failed": "Could not be answered — something went wrong",
-    "carried": "Asked together with the question before it."
+    "heading": "यह बातचीत",
+    "note": "हर प्रश्न का उत्तर उसके अपने साक्ष्य से दिया जाता है। आपने पहले जो पूछा उससे यह नहीं बदलता कि स्रोत अब क्या लौटाते हैं, और सर्वर पर कुछ भी याद नहीं रखा जाता — यह आपके पूछे गए प्रश्नों का रिकॉर्ड है, स्मृति नहीं।",
+    "answered": "उत्तर दिया गया, {{confidence}} विश्वास, {{count}} स्रोत",
+    "declined": "मना किया — स्रोतों में यह नहीं था",
+    "failed": "उत्तर नहीं दिया जा सका — कुछ गड़बड़ हुई",
+    "carried": "इससे पहले वाले प्रश्न के साथ मिलाकर पूछा गया।"
   }
 }

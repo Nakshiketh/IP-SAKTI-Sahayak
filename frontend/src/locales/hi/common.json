@@ -86,7 +86,7 @@
       "abstainConflict": "{{passages}} अंशों पर विचार किया गया; उनमें से दो परस्पर विरोधी हैं।",
       "abstainStale": "{{passages}} अंशों पर विचार किया गया; वे सभी अपनी प्रभावी अवधि से बाहर हैं।",
       "abstainFacts": "{{passages}} अंशों पर विचार किया गया; इनमें से कौन लागू होता है यह उत्पाद के प्रकार पर निर्भर करता है।",
-      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
+      "abstainLanguage": "प्रश्न अंग्रेज़ी में नहीं था, और कोई अनुवाद सेवा कॉन्फ़िगर नहीं है, इसलिए स्रोतों में खोज नहीं की जा सकी। अंग्रेज़ी में पूछें, या व्यवस्थापक से अनुवाद कॉन्फ़िगर करने के लिए कहें।"
     }
   },
   "sourceRule": {
@@ -211,57 +211,57 @@
     "cameraFallback": "आप इसके बजाय बैज की फ़ोटो अपलोड कर सकते हैं।"
   },
   "states": {
-    "timeout": "The search took too long.",
-    "timeoutRetry": "Try again",
-    "timeoutShorter": "Ask a shorter question",
-    "partial": "Part of this finished. What is shown below did work."
+    "timeout": "खोज में बहुत अधिक समय लगा।",
+    "timeoutRetry": "फिर से प्रयास करें",
+    "timeoutShorter": "छोटा प्रश्न पूछें",
+    "partial": "इसका कुछ भाग पूरा हुआ। नीचे जो दिख रहा है वह काम कर गया।"
   },
   "insights": {
     "meta": {
-      "title": "Insights",
-      "description": "Where this deployment is used, where it works, and where it does not."
+      "title": "अंतर्दृष्टि",
+      "description": "यह परिनियोजन कहाँ उपयोग होता है, कहाँ काम करता है और कहाँ नहीं।"
     },
-    "heading": "Insights",
-    "standfirst": "Usage for whoever runs this deployment. Built from the audit log, which holds a hash of each question and never the words — so nothing here can show what anyone asked.",
-    "loading": "Reading the audit log…",
-    "retry": "Try again",
-    "noBuckets": "Nothing above the reporting threshold.",
+    "heading": "अंतर्दृष्टि",
+    "standfirst": "इस परिनियोजन को चलाने वालों के लिए उपयोग के आँकड़े। ये ऑडिट लॉग से बने हैं, जिसमें हर प्रश्न का केवल हैश रहता है, शब्द कभी नहीं — इसलिए यहाँ यह नहीं दिखाया जा सकता कि किसने क्या पूछा।",
+    "loading": "ऑडिट लॉग पढ़ा जा रहा है…",
+    "retry": "फिर से प्रयास करें",
+    "noBuckets": "रिपोर्टिंग सीमा से ऊपर कुछ नहीं है।",
     "disabled": {
-      "heading": "Insights are switched off here",
-      "body": "This deployment has feature_admin_insights set to false, so the endpoint does not exist rather than refusing. Turn it on with SAHAYAK_FEATURE_ADMIN_INSIGHTS=true."
+      "heading": "यहाँ अंतर्दृष्टि बंद है",
+      "body": "इस परिनियोजन में feature_admin_insights को false रखा गया है, इसलिए यह एंडपॉइंट मना करने के बजाय मौजूद ही नहीं है। इसे SAHAYAK_FEATURE_ADMIN_INSIGHTS=true से चालू करें।"
     },
     "forbidden": {
-      "heading": "This account is not an administrator",
-      "body": "Signing in is not enough to read usage for a deployment. Administrators are named in SAHAYAK_ADMIN_USERNAMES, which is empty by default, because an administrator should be something a deployment grants rather than something that exists by accident."
+      "heading": "यह खाता व्यवस्थापक नहीं है",
+      "body": "किसी परिनियोजन के उपयोग के आँकड़े पढ़ने के लिए केवल साइन इन होना पर्याप्त नहीं है। व्यवस्थापकों के नाम SAHAYAK_ADMIN_USERNAMES में दिए जाते हैं, जो डिफ़ॉल्ट रूप से खाली है — क्योंकि व्यवस्थापक होना वह अधिकार है जो परिनियोजन देता है, न कि जो संयोग से बन जाए।"
     },
     "unreachable": {
-      "heading": "Could not reach the server",
-      "body": "The figures could not be read. Nothing is shown rather than a stale or partial number."
+      "heading": "सर्वर तक नहीं पहुँचा जा सका",
+      "body": "आँकड़े पढ़े नहीं जा सके। पुराना या अधूरा आँकड़ा दिखाने के बजाय कुछ भी नहीं दिखाया गया है।"
     },
     "empty": {
-      "heading": "Nobody has asked anything yet",
-      "body": "That is a fact worth showing, and it is not the same as a 0% abstention rate. Rates appear once there are rows behind them."
+      "heading": "अभी तक किसी ने कुछ नहीं पूछा",
+      "body": "यह अपने आप में एक तथ्य है और इसे दिखाना उचित है — यह 0% परहेज़ दर के समान नहीं है। दरें तभी दिखेंगी जब उनके पीछे पंक्तियाँ होंगी।"
     },
     "figures": {
-      "total": "Questions",
-      "abstention": "Abstained",
-      "escalation": "Escalated",
-      "refusal": "Refused",
-      "p50": "Median response",
-      "p95": "95th percentile"
+      "total": "प्रश्न",
+      "abstention": "परहेज़ किया",
+      "escalation": "आगे भेजा गया",
+      "refusal": "अस्वीकार किया",
+      "p50": "औसत प्रतिक्रिया",
+      "p95": "95वाँ प्रतिशतक"
     },
     "suppressed": {
-      "heading": "Some counts are withheld",
-      "body": "A category with fewer than {{minimum}} questions is not shown: in a domain this specific, four questions is four people, not a statistic. {{count}} categor(y/ies) were withheld on this page, so the columns below will not add up to the total — which is the point."
+      "heading": "कुछ गणनाएँ रोकी गई हैं",
+      "body": "जिस श्रेणी में {{minimum}} से कम प्रश्न हैं, उसे नहीं दिखाया जाता: इतने विशिष्ट क्षेत्र में चार प्रश्न चार लोग होते हैं, आँकड़ा नहीं। इस पृष्ठ पर {{count}} श्रेणी(याँ) रोकी गईं, इसलिए नीचे के स्तंभ कुल से मेल नहीं खाएँगे — और यही इसका उद्देश्य है।"
     },
-    "byJurisdiction": "By jurisdiction",
-    "byLanguage": "By language",
-    "bySource": "Most used sources",
+    "byJurisdiction": "क्षेत्राधिकार के अनुसार",
+    "byLanguage": "भाषा के अनुसार",
+    "bySource": "सर्वाधिक उपयोग किए गए स्रोत",
     "gaps": {
-      "heading": "Where the corpus fell short",
-      "standfirst": "Grouped by the reason the product gave for declining, never by guessing what the question was about.",
-      "none": "No group of abstentions is large enough to report.",
-      "row": "questions reached: {{reason}}"
+      "heading": "जहाँ संग्रह अपर्याप्त रहा",
+      "standfirst": "इन्हें उस कारण से समूहित किया गया है जो उत्पाद ने मना करते समय बताया — कभी यह अनुमान लगाकर नहीं कि प्रश्न किस विषय पर था।",
+      "none": "परहेज़ का कोई समूह इतना बड़ा नहीं है कि रिपोर्ट किया जाए।",
+      "row": "प्रश्न यहाँ पहुँचे: {{reason}}"
     }
   }
 }
