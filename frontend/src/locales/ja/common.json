@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "アーユルヴェーダ、知的財産、規制"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "メイン",
+    "home": "ホーム",
+    "sahayak": "Sahayak に質問",
+    "covered": "対象範囲",
+    "howItWorks": "仕組み",
+    "sources": "出典",
+    "about": "概要"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "Sahayak に質問",
+    "check": "製品を確認する"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "メニュー",
+    "close": "メニューを閉じる",
+    "title": "メニュー"
   },
   "language": {
-    "label": "Language",
+    "label": "言語",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "{{percent}}% 翻訳済み",
+    "groupIndian": "インドの言語",
+    "groupInternational": "国際",
+    "selectTitle": "言語を選択",
+    "searchPlaceholder": "言語を検索",
+    "clearSearch": "検索をクリア",
+    "noResults": "言語が見つかりません"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "コンテンツへスキップ",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "この製品が保存する情報"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "閉じる",
+    "remove": "削除"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,8 +117,8 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "インド",
+    "INTL": "国際"
   },
   "productClass": {
     "classical_generic": "Classical formulation",

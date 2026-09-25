@@ -20,7 +20,7 @@
       "script": "Deva",
       "tier": 1,
       "reviewed_by": null,
-      "coverage": 0.59
+      "coverage": 0.56
     },
     {
       "code": "te",
@@ -30,7 +30,7 @@
       "script": "Telu",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.42
+      "coverage": 0.4
     },
     {
       "code": "ta",
@@ -40,17 +40,17 @@
       "script": "Taml",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.42
+      "coverage": 0.4
     },
     {
       "code": "bn",
       "native_name": "বাংলা",
-      "english_name": "Bengali",
+      "english_name": "Bangla",
       "dir": "ltr",
       "script": "Beng",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.42
+      "coverage": 0.4
     },
     {
       "code": "mr",
@@ -60,7 +60,77 @@
       "script": "Deva",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.42
+      "coverage": 0.4
+    },
+    {
+      "code": "gu",
+      "native_name": "ગુજરાતી",
+      "english_name": "Gujarati",
+      "dir": "ltr",
+      "script": "Gujr",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "kn",
+      "native_name": "ಕನ್ನಡ",
+      "english_name": "Kannada",
+      "dir": "ltr",
+      "script": "Knda",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "ml",
+      "native_name": "മലയാളം",
+      "english_name": "Malayalam",
+      "dir": "ltr",
+      "script": "Mlym",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "pa",
+      "native_name": "ਪੰਜਾਬੀ",
+      "english_name": "Punjabi",
+      "dir": "ltr",
+      "script": "Guru",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "ur",
+      "native_name": "اردو",
+      "english_name": "Urdu",
+      "dir": "rtl",
+      "script": "Arab",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "sq",
+      "native_name": "Shqip",
+      "english_name": "Albanian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "am",
+      "native_name": "አማርኛ",
+      "english_name": "Amharic",
+      "dir": "ltr",
+      "script": "Ethi",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
     },
     {
       "code": "ar",
@@ -70,12 +140,22 @@
       "script": "Arab",
       "tier": 2,
       "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "hy",
+      "native_name": "Հայերեն",
+      "english_name": "Armenian",
+      "dir": "ltr",
+      "script": "Armn",
+      "tier": 2,
+      "reviewed_by": null,
       "coverage": 0.0
     },
     {
-      "code": "fr",
-      "native_name": "Français",
-      "english_name": "French",
+      "code": "bs",
+      "native_name": "bosanski",
+      "english_name": "Bosnian",
       "dir": "ltr",
       "script": "Latn",
       "tier": 2,
@@ -83,11 +163,131 @@
       "coverage": 0.0
     },
     {
-      "code": "es",
-      "native_name": "Español",
-      "english_name": "Spanish",
+      "code": "bg",
+      "native_name": "български",
+      "english_name": "Bulgarian",
+      "dir": "ltr",
+      "script": "Cyrl",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "my",
+      "native_name": "ဗမာ",
+      "english_name": "Burmese",
+      "dir": "ltr",
+      "script": "Mymr",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ca",
+      "native_name": "català",
+      "english_name": "Catalan",
       "dir": "ltr",
       "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "hr",
+      "native_name": "hrvatski",
+      "english_name": "Croatian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "cs",
+      "native_name": "čeština",
+      "english_name": "Czech",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "da",
+      "native_name": "dansk",
+      "english_name": "Danish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "nl",
+      "native_name": "Nederlands",
+      "english_name": "Dutch",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "et",
+      "native_name": "eesti",
+      "english_name": "Estonian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "fil",
+      "native_name": "Filipino",
+      "english_name": "Filipino",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "fi",
+      "native_name": "suomi",
+      "english_name": "Finnish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "fr",
+      "native_name": "Français",
+      "english_name": "French (France)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "fr-CA",
+      "native_name": "Français (Canada)",
+      "english_name": "French (Canada)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ka",
+      "native_name": "ქართული",
+      "english_name": "Georgian",
+      "dir": "ltr",
+      "script": "Geor",
       "tier": 2,
       "reviewed_by": null,
       "coverage": 0.0
@@ -100,12 +300,222 @@
       "script": "Latn",
       "tier": 2,
       "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "el",
+      "native_name": "Ελληνικά",
+      "english_name": "Greek",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
       "coverage": 0.0
     },
     {
+      "code": "hu",
+      "native_name": "magyar",
+      "english_name": "Hungarian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "is",
+      "native_name": "íslenska",
+      "english_name": "Icelandic",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "id",
+      "native_name": "Indonesia",
+      "english_name": "Indonesian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "ga",
+      "native_name": "Gaeilge",
+      "english_name": "Irish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "it",
+      "native_name": "italiano",
+      "english_name": "Italian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "ja",
+      "native_name": "日本語",
+      "english_name": "Japanese",
+      "dir": "ltr",
+      "script": "Jpan",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "jv",
+      "native_name": "Jawa",
+      "english_name": "Javanese",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "kk",
+      "native_name": "қазақ тілі",
+      "english_name": "Kazakh",
+      "dir": "ltr",
+      "script": "Cyrl",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ko",
+      "native_name": "한국어",
+      "english_name": "Korean",
+      "dir": "ltr",
+      "script": "Kore",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "lv",
+      "native_name": "latviešu",
+      "english_name": "Latvian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "lt",
+      "native_name": "lietuvių",
+      "english_name": "Lithuanian",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "mk",
+      "native_name": "македонски",
+      "english_name": "Macedonian",
+      "dir": "ltr",
+      "script": "Cyrl",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ms",
+      "native_name": "Melayu",
+      "english_name": "Malay",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "mt",
+      "native_name": "Malti",
+      "english_name": "Maltese",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "mn",
+      "native_name": "Монгол",
+      "english_name": "Mongolian",
+      "dir": "ltr",
+      "script": "Mong",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "nb",
+      "native_name": "norsk bokmål",
+      "english_name": "Norwegian Bokmål",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "fa",
+      "native_name": "فارسی",
+      "english_name": "Persian",
+      "dir": "rtl",
+      "script": "Arab",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "pl",
+      "native_name": "polski",
+      "english_name": "Polish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
       "code": "pt",
-      "native_name": "Português",
-      "english_name": "Portuguese",
+      "native_name": "Português (Portugal)",
+      "english_name": "Portuguese (Portugal)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "pt-BR",
+      "native_name": "Português (Brasil)",
+      "english_name": "Portuguese (Brazil)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "ro",
+      "native_name": "română",
+      "english_name": "Romanian",
       "dir": "ltr",
       "script": "Latn",
       "tier": 2,
@@ -120,37 +530,147 @@
       "script": "Cyrl",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.0
+      "coverage": 0.01
     },
     {
       "code": "zh",
-      "native_name": "中文",
-      "english_name": "Chinese",
+      "native_name": "简体中文",
+      "english_name": "Simplified Chinese",
       "dir": "ltr",
       "script": "Hans",
       "tier": 2,
       "reviewed_by": null,
-      "coverage": 0.0
+      "coverage": 0.01
     },
     {
-      "code": "ja",
-      "native_name": "日本語",
-      "english_name": "Japanese",
+      "code": "sk",
+      "native_name": "slovenčina",
+      "english_name": "Slovak",
       "dir": "ltr",
-      "script": "Jpan",
+      "script": "Latn",
       "tier": 2,
       "reviewed_by": null,
       "coverage": 0.0
     },
     {
-      "code": "ko",
-      "native_name": "한국어",
-      "english_name": "Korean",
+      "code": "sl",
+      "native_name": "slovenščina",
+      "english_name": "Slovenian",
       "dir": "ltr",
-      "script": "Kore",
+      "script": "Latn",
       "tier": 2,
       "reviewed_by": null,
       "coverage": 0.0
+    },
+    {
+      "code": "so",
+      "native_name": "Soomaali",
+      "english_name": "Somali",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "es",
+      "native_name": "Español (España)",
+      "english_name": "Spanish (Spain)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "es-419",
+      "native_name": "Español (Latinoamérica)",
+      "english_name": "Spanish (Latin America)",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "sw",
+      "native_name": "Kiswahili",
+      "english_name": "Swahili",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "sv",
+      "native_name": "svenska",
+      "english_name": "Swedish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "th",
+      "native_name": "ไทย",
+      "english_name": "Thai",
+      "dir": "ltr",
+      "script": "Thai",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "zh-Hant",
+      "native_name": "繁體中文",
+      "english_name": "Traditional Chinese",
+      "dir": "ltr",
+      "script": "Hant",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "zh-HK",
+      "native_name": "繁體中文 (香港)",
+      "english_name": "Traditional Chinese (Hong Kong)",
+      "dir": "ltr",
+      "script": "Hant",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.0
+    },
+    {
+      "code": "tr",
+      "native_name": "Türkçe",
+      "english_name": "Turkish",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "uk",
+      "native_name": "українська",
+      "english_name": "Ukrainian",
+      "dir": "ltr",
+      "script": "Cyrl",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
+    },
+    {
+      "code": "vi",
+      "native_name": "Tiếng Việt",
+      "english_name": "Vietnamese",
+      "dir": "ltr",
+      "script": "Latn",
+      "tier": 2,
+      "reviewed_by": null,
+      "coverage": 0.01
     }
   ]
 }

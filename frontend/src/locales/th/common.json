@@ -1,0 +1,268 @@
+{
+  "__untranslated": true,
+  "brand": {
+    "name": "IP-SAKTI Sahayak",
+    "descriptor": "อายุรเวท ทรัพย์สินทางปัญญา และการกำกับดูแล"
+  },
+  "nav": {
+    "label": "หลัก",
+    "home": "หน้าแรก",
+    "sahayak": "ถาม Sahayak",
+    "covered": "ครอบคลุมอะไรบ้าง",
+    "howItWorks": "ทำงานอย่างไร",
+    "sources": "แหล่งข้อมูล",
+    "about": "เกี่ยวกับ"
+  },
+  "cta": {
+    "ask": "ถาม Sahayak",
+    "check": "ตรวจสอบผลิตภัณฑ์ของฉัน"
+  },
+  "menu": {
+    "open": "เมนู",
+    "close": "ปิดเมนู",
+    "title": "เมนู"
+  },
+  "language": {
+    "label": "ภาษา",
+    "changed": "Language changed to {{language}}",
+    "partial": "แปลแล้ว {{percent}}%",
+    "groupIndian": "ภาษาอินเดีย",
+    "groupInternational": "นานาชาติ",
+    "selectTitle": "เลือกภาษา",
+    "searchPlaceholder": "ค้นหาภาษา",
+    "clearSearch": "ล้างการค้นหา",
+    "noResults": "ไม่พบภาษา"
+  },
+  "skipToContent": "ข้ามไปยังเนื้อหา",
+  "footer": {
+    "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
+    "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
+    "sourceMetaEmpty": "v{{version}}",
+    "sourceMetaUnavailable": "Source information is unavailable right now.",
+    "privacy": "ผลิตภัณฑ์นี้จัดเก็บอะไรบ้าง"
+  },
+  "notFound": {
+    "title": "There is no page here",
+    "body": "The address may be mistyped, or the page may have been renamed.",
+    "action": "Go to the homepage"
+  },
+  "boundary": {
+    "title": "This page stopped working",
+    "body": "Something in the interface failed while drawing this page. What went wrong is in the browser console; nothing has been sent anywhere.",
+    "notAnAbstention": "This is the interface breaking, not the product declining to answer. No question was searched and no answer was withheld.",
+    "retry": "Try this page again"
+  },
+  "offline": {
+    "title": "This device is not connected",
+    "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
+  },
+  "actions": {
+    "close": "ปิด",
+    "remove": "นำออก"
+  },
+  "record": {
+    "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
+    "recordType": "Record type",
+    "applicant": "Applicant",
+    "status": "Status"
+  },
+  "confidence": {
+    "high": "High confidence",
+    "moderate": "Moderate confidence",
+    "low": "Low confidence",
+    "abstain": "Not answered",
+    "meter": "{{label}}: {{filled}} of {{total}}",
+    "demoReason_one": "Based on {{count}} illustrative passage.",
+    "demoReason_other": "Based on {{count}} illustrative passages.",
+    "reasons": {
+      "high": "Based on {{passages}} passages from {{documents}} current sources.",
+      "moderateSingleDocument": "Based on {{passages}} passages, all from one source.",
+      "moderateOutOfWindow": "Based on {{passages}} passages, one of which sits outside its effective window.",
+      "moderateThin": "Based on {{passages}} passages from {{documents}} sources — fewer than a confident answer needs.",
+      "moderateProvenancePending": "Based on {{passages}} passages; at least one source is awaiting provenance review.",
+      "lowWeak": "The {{passages}} passages found are weak matches for this question.",
+      "lowContradiction": "The passages found disagree with each other.",
+      "abstainNothing": "{{passages}} passages considered; none cleared the threshold.",
+      "abstainScope": "No sources were searched — the question is outside the corpus.",
+      "abstainConflict": "{{passages}} passages considered; two of them are in tension.",
+      "abstainStale": "{{passages}} passages considered; all of them outside their effective window.",
+      "abstainFacts": "{{passages}} passages considered; which of them governs depends on the product type.",
+      "abstainLanguage": "The question was not in English, and no translation service is configured, so the sources could not be searched. Ask in English, or ask an administrator to configure translation."
+    }
+  },
+  "sourceRule": {
+    "unsourcedTooltip": "General explanation, not from a specific source."
+  },
+  "answer": {
+    "blocks": {
+      "answer": "Answer",
+      "why": "Why this matters",
+      "what_to_check": "What to check",
+      "caveat": "Caveats"
+    },
+    "noSourceDate": "—",
+    "asOf": "Sources as of {{date}}",
+    "citationMarker": "Source {{number}}: {{title}}",
+    "uncited": "General explanation, not from a specific source.",
+    "sourcesHeading": "Sources",
+    "sourceCount_one": "{{count}} source",
+    "sourceCount_other": "{{count}} sources",
+    "showPassage": "Show the passage",
+    "hidePassage": "Hide the passage",
+    "openSource": "Open the official source",
+    "openSourceUnavailable": "Link not available",
+    "sourceNumber": "Source {{number}}",
+    "verifiedBadge": "verified",
+    "sourceNote": "Every source links to the official document or portal it comes from. Check the official text before you rely on an answer.",
+    "provenancePending": "provenance pending review"
+  },
+  "jurisdiction": {
+    "IN": "อินเดีย",
+    "INTL": "นานาชาติ"
+  },
+  "productClass": {
+    "classical_generic": "Classical formulation",
+    "patent_proprietary": "Patent or proprietary medicine",
+    "new_non_classical_drug": "New non-classical drug",
+    "phytopharmaceutical": "Phytopharmaceutical",
+    "ayurveda_aahar": "Ayurveda-Aahar",
+    "cosmetic": "Cosmetic",
+    "undetermined": "Product type not yet identified"
+  },
+  "buildState": {
+    "live": "running",
+    "planned": "designed, not built"
+  },
+  "recordType": {
+    "patent_application": "Patent application",
+    "patent_grant": "Granted patent",
+    "gi_registration": "GI registration",
+    "trademark": "Trade mark",
+    "design": "Design",
+    "plant_variety": "Plant variety",
+    "abs_approval": "ABS approval",
+    "aggregate_statistic": "Aggregate statistic"
+  },
+  "auth": {
+    "heroTitle": "Ancient knowledge. Protected innovation.",
+    "heroBody": "Sign in to ask about intellectual property and regulation for Ayurvedic products.",
+    "signInTitle": "Sign in",
+    "signInBody": "Scan your badge, or use your username.",
+    "registerTitle": "Create an account",
+    "registerBody": "A few details and you are in.",
+    "scanBadge": "Scan badge",
+    "or": "or",
+    "username": "Username",
+    "password": "Password",
+    "name": "Full name",
+    "email": "Email",
+    "confirmPassword": "Confirm password",
+    "forgot": "Forgot password?",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "createSubmit": "Create account",
+    "creating": "Creating account…",
+    "noAccount": "No account yet?",
+    "createOne": "Create one",
+    "haveAccount": "Already registered?",
+    "goSignIn": "Sign in",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "scanTitle": "Scan your badge",
+    "scanBody": "Show the authorised IP-SAKTI Sahayak QR code inside the frame.",
+    "scanClose": "Close the scanner",
+    "scanStarting": "Starting the camera…",
+    "scanReady": "Looking for the badge",
+    "scanChecking": "Checking the photo",
+    "cameraBlockedTitle": "Camera unavailable",
+    "cameraStep1": "Select the site settings icon beside the address bar.",
+    "cameraStep2": "Set Camera to Allow.",
+    "cameraStep3": "Select Retry camera below.",
+    "cameraRetry": "Retry camera",
+    "cameraDenied": "Camera access was denied for this site.",
+    "cameraNone": "No camera was found on this device.",
+    "cameraBusy": "The camera is in use by another app. Close it and try again.",
+    "cameraInsecure": "The camera needs a secure connection. Open this page over https or on localhost.",
+    "cameraFailed": "The camera could not be started.",
+    "unmute": "Unmute background video",
+    "mute": "Mute background video",
+    "volume": "Volume",
+    "errName": "Enter your name.",
+    "errEmail": "Enter a valid email address.",
+    "errUsername": "Enter your username.",
+    "errUsernameShort": "Use at least 3 characters.",
+    "errPassword": "Enter your password.",
+    "errPasswordShort": "Use at least 8 characters.",
+    "errConfirm": "Type the password again.",
+    "errMismatch": "The two passwords do not match.",
+    "errGeneric": "Something went wrong. Try again.",
+    "demoHint": "New here? Create an account to get started, or scan your IP-SAKTI Sahayak badge.",
+    "signedInAs": "Signed in as",
+    "signOut": "Sign out",
+    "account": "Account",
+    "checking": "Checking your session…",
+    "usernameExample": "your username",
+    "scanVerified": "QR verified – access granted. Opening the portal…",
+    "scanMismatch": "Invalid QR Code – Access Denied",
+    "scanOffline": "The badge check could not be reached. Retrying…",
+    "scanUpload": "Upload a photo",
+    "scanUploadNone": "No QR code was found in that photo. Try a closer, sharper shot.",
+    "scanSwitch": "Switch camera",
+    "scanPrivacy": "Frames are checked on this instance and never stored.",
+    "cameraFallback": "You can upload a photo of the badge instead."
+  },
+  "states": {
+    "timeout": "The search took too long.",
+    "timeoutRetry": "Try again",
+    "timeoutShorter": "Ask a shorter question",
+    "partial": "Part of this finished. What is shown below did work."
+  },
+  "insights": {
+    "meta": {
+      "title": "Insights",
+      "description": "Where this deployment is used, where it works, and where it does not."
+    },
+    "heading": "Insights",
+    "standfirst": "Usage for whoever runs this deployment. Built from the audit log, which holds a hash of each question and never the words — so nothing here can show what anyone asked.",
+    "loading": "Reading the audit log…",
+    "retry": "Try again",
+    "noBuckets": "Nothing above the reporting threshold.",
+    "disabled": {
+      "heading": "Insights are switched off here",
+      "body": "This deployment has feature_admin_insights set to false, so the endpoint does not exist rather than refusing. Turn it on with SAHAYAK_FEATURE_ADMIN_INSIGHTS=true."
+    },
+    "forbidden": {
+      "heading": "This account is not an administrator",
+      "body": "Signing in is not enough to read usage for a deployment. Administrators are named in SAHAYAK_ADMIN_USERNAMES, which is empty by default, because an administrator should be something a deployment grants rather than something that exists by accident."
+    },
+    "unreachable": {
+      "heading": "Could not reach the server",
+      "body": "The figures could not be read. Nothing is shown rather than a stale or partial number."
+    },
+    "empty": {
+      "heading": "Nobody has asked anything yet",
+      "body": "That is a fact worth showing, and it is not the same as a 0% abstention rate. Rates appear once there are rows behind them."
+    },
+    "figures": {
+      "total": "Questions",
+      "abstention": "Abstained",
+      "escalation": "Escalated",
+      "refusal": "Refused",
+      "p50": "Median response",
+      "p95": "95th percentile"
+    },
+    "suppressed": {
+      "heading": "Some counts are withheld",
+      "body": "A category with fewer than {{minimum}} questions is not shown: in a domain this specific, four questions is four people, not a statistic. {{count}} categor(y/ies) were withheld on this page, so the columns below will not add up to the total — which is the point."
+    },
+    "byJurisdiction": "By jurisdiction",
+    "byLanguage": "By language",
+    "bySource": "Most used sources",
+    "gaps": {
+      "heading": "Where the corpus fell short",
+      "standfirst": "Grouped by the reason the product gave for declining, never by guessing what the question was about.",
+      "none": "No group of abstentions is large enough to report.",
+      "row": "questions reached: {{reason}}"
+    }
+  }
+}

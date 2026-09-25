@@ -7,6 +7,26 @@ import App from '@/App';
 import { signInForTest } from '@/test/signedIn';
 import { i18n } from '@/i18n';
 
+/**
+ * Open the language selector and pick a language by its code.
+ *
+ * The selector is now a custom dropdown rather than a native <select>, so
+ * we click the trigger button to open the panel and then click the language
+ * option inside it.
+ */
+async function switchLanguage(user: ReturnType<typeof userEvent.setup>, langCode: string) {
+  // Open the language selector dropdown
+  const triggers = screen.getAllByRole('button', { name: 'Language' });
+  const trigger = triggers[0]!;
+  await user.click(trigger);
+
+  // Find the option by its lang attribute and click it
+  const options = screen.getAllByRole('option');
+  const target = options.find((opt) => opt.getAttribute('lang') === langCode);
+  if (!target) throw new Error(`Language option for "${langCode}" not found`);
+  await user.click(target);
+}
+
 describe('Language switching in UI', () => {
   beforeEach(async () => {
     window.localStorage.clear();
@@ -43,8 +63,7 @@ describe('Language switching in UI', () => {
       'What this is built on',
     );
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    await user.selectOptions(selector, 'ta');
+    await switchLanguage(user, 'ta');
 
     // Heading should change to Tamil
     await waitFor(
@@ -70,8 +89,12 @@ describe('Language switching in UI', () => {
       </MemoryRouter>,
     );
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    await user.selectOptions(selector, 'hi');
+    // Wait for page to load
+    expect(await screen.findByRole('heading', { level: 1 }, { timeout: 5000 })).toHaveTextContent(
+      'What this is built on',
+    );
+
+    await switchLanguage(user, 'hi');
 
     await waitFor(
       () => {
@@ -91,8 +114,11 @@ describe('Language switching in UI', () => {
       </MemoryRouter>,
     );
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    await user.selectOptions(selector, 'te');
+    expect(await screen.findByRole('heading', { level: 1 }, { timeout: 5000 })).toHaveTextContent(
+      'What this is built on',
+    );
+
+    await switchLanguage(user, 'te');
 
     await waitFor(
       () => {
@@ -112,8 +138,11 @@ describe('Language switching in UI', () => {
       </MemoryRouter>,
     );
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    await user.selectOptions(selector, 'bn');
+    expect(await screen.findByRole('heading', { level: 1 }, { timeout: 5000 })).toHaveTextContent(
+      'What this is built on',
+    );
+
+    await switchLanguage(user, 'bn');
 
     await waitFor(
       () => {
@@ -133,8 +162,11 @@ describe('Language switching in UI', () => {
       </MemoryRouter>,
     );
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    await user.selectOptions(selector, 'mr');
+    expect(await screen.findByRole('heading', { level: 1 }, { timeout: 5000 })).toHaveTextContent(
+      'What this is built on',
+    );
+
+    await switchLanguage(user, 'mr');
 
     await waitFor(
       () => {

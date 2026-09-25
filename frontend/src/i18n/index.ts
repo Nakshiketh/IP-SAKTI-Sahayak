@@ -39,8 +39,11 @@ export function initI18n(): Promise<typeof i18n> {
     .use(initReactI18next)
     .init({
       resources,
-      supportedLngs: LOCALE_CODES,
+      supportedLngs: LOCALE_CODES as unknown as string[],
       fallbackLng: DEFAULT_LOCALE,
+      // Prevent i18next from splitting "zh-Hant" into "zh-Hant" + "zh" and
+      // loading both. Each hyphenated code is its own locale.
+      load: 'currentOnly',
       ns: NAMESPACES,
       defaultNS: DEFAULT_NAMESPACE,
       detection: {
@@ -58,7 +61,18 @@ export function initI18n(): Promise<typeof i18n> {
 
   // Detection has run by now, so this is the language the reader will actually
   // see rather than a guess made before it.
-  const detected = findLocale(i18n.resolvedLanguage ?? i18n.language);
+/**
+ * `language`, not `resolvedLanguage`.
+ *
+ * They differ in exactly the case that matters here. `language` is what
+ * detection chose; `resolvedLanguage` is what i18next could actually resolve
+ * after falling back. On a fresh load only English is bundled, so a reader
+ * returning in Arabic has `language === 'ar'` and `resolvedLanguage === 'en'`
+ * — and asking for the resolved one loaded the English bundles, found them
+ * already present, and returned. The Arabic files were never fetched and the
+ * reader's saved language was silently ignored on every reload.
+ */
+  const detected = findLocale(i18n.language ?? i18n.resolvedLanguage);
   return ensureLocale(detected.code).then(() => i18n);
 }
 

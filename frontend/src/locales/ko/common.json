@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "아유르베다, 지식 재산권 및 규제"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "주요",
+    "home": "홈",
+    "sahayak": "Sahayak에게 질문",
+    "covered": "다루는 범위",
+    "howItWorks": "작동 방식",
+    "sources": "출처",
+    "about": "소개"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "Sahayak에게 질문",
+    "check": "내 제품 확인"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "메뉴",
+    "close": "메뉴 닫기",
+    "title": "메뉴"
   },
   "language": {
-    "label": "Language",
+    "label": "언어",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "{{percent}}% 번역됨",
+    "groupIndian": "인도 언어",
+    "groupInternational": "국제",
+    "selectTitle": "언어 선택",
+    "searchPlaceholder": "언어 검색",
+    "clearSearch": "검색 지우기",
+    "noResults": "언어를 찾을 수 없음"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "본문으로 건너뛰기",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "이 제품이 저장하는 정보"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "닫기",
+    "remove": "제거"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,8 +117,8 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "인도",
+    "INTL": "국제"
   },
   "productClass": {
     "classical_generic": "Classical formulation",

@@ -1,0 +1,291 @@
+{
+  "__untranslated": true,
+  "meta": {
+    "title": "How it works",
+    "description": "How a question becomes an answer, why the sources are retrieved rather than remembered, and when the system declines to answer."
+  },
+  "heading": "How a question becomes a cited answer",
+  "standfirst": "How a question becomes a cited answer, and when the system declines to answer rather than guess.",
+  "status": {
+    "heading": "What is actually built",
+    "body": "Every answer is built from verified official sources — the Acts, Rules, guidelines and government portals listed on the Sources page — and every claim links to the one it came from."
+  },
+  "pipeline": {
+    "navLabel": "The pipeline",
+    "heading": "What happens to a question",
+    "standfirst": "Thirteen stages. Select one to see what it does, what it hands on, and what happens when it fails. Nothing advances on a timer.",
+    "listLabel": "Pipeline stages",
+    "does": "What it does",
+    "outputs": "What it hands on",
+    "fails": "When it fails",
+    "stages": {
+      "detect": {
+        "name": "Language detection",
+        "does": "Works out which of the six supported languages the question is in, with a confidence score.",
+        "outputs": "A language code and a confidence, both shown in the interface so the reader can correct them.",
+        "fails": "A wrong guess is visible and correctable rather than silent. Below a confidence floor it asks instead of guessing."
+      },
+      "understand": {
+        "name": "Query understanding",
+        "does": "Extracts what is being asked: intent, which rights are in play, which regulatory areas, hints about the product class, and named entities such as herbs, dosage forms and destination markets.",
+        "outputs": "A structured query, plus a decision on whether the question can be answered at all without more facts.",
+        "fails": "An ambiguous question routes to a clarifying question rather than to a confident answer about the wrong thing."
+      },
+      "clarify": {
+        "name": "Clarify, if the class is undetermined",
+        "does": "Where the answer depends on what the product is regulatorily and that is not yet known, asks the single most decisive question rather than answering for every possibility.",
+        "outputs": "Either a product class, or an explicit statement that the answer is conditional on it.",
+        "fails": "If the reader declines to answer, the system says which way the answer would turn rather than picking one."
+      },
+      "route": {
+        "name": "Jurisdiction split",
+        "does": "Selects the namespace to search. India and International are separate indexes, and a single retrieval call reads one of them.",
+        "outputs": "A namespace, or two retrievals for a cross-border question.",
+        "fails": "There is no fallback that merges the two. A question that cannot be routed is asked which jurisdiction it means."
+      },
+      "retrieve": {
+        "name": "Retrieval",
+        "does": "Keyword search (BM25) over the selected namespace, with metadata filters applied before scoring — jurisdiction, effective-date window, document type, product class and topic — so superseded text is never a candidate. A dense-vector channel is fused in by rank once an embedding model is configured; today it reports itself unavailable rather than returning noise.",
+        "outputs": "A candidate set of passages with their scores and metadata.",
+        "fails": "Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
+      },
+      "rerank": {
+        "name": "Reranking",
+        "does": "A cross-encoder reads each candidate against the question and reorders them, cutting a broad candidate set down to the few that actually bear on it.",
+        "outputs": "A short ranked list, carrying both the retrieval score and the rerank score.",
+        "fails": "If nothing clears the rerank threshold, that is itself a signal, and confidence drops or the system abstains."
+      },
+      "context": {
+        "name": "Context assembly",
+        "does": "Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
+        "outputs": "A context block where every passage is addressable by id.",
+        "fails": "If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
+      },
+      "generate": {
+        "name": "Generation",
+        "does": "With no language model configured, the answer is composed from the packed passages themselves: every sentence is the text of a verified passage, cited to it, and a procedural question is answered as numbered steps in the order they happen. With a model configured, it answers from the same passages and nothing else, under a schema that maps each claim to the passages behind it.",
+        "outputs": "Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
+        "fails": "If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
+      },
+      "map": {
+        "name": "Citation mapping",
+        "does": "Checks every passage id the model returned against the passages actually supplied. Any claim whose citation does not verify is dropped.",
+        "outputs": "An answer where every marker resolves to a real retrieved passage.",
+        "fails": "If too many claims drop, the answer is downgraded or abstains. An uncited answer is never shown in place of a cited one."
+      },
+      "confidence": {
+        "name": "Confidence scoring",
+        "does": "Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
+        "outputs": "A level and a one-sentence reason, both shown.",
+        "fails": "Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
+      },
+      "abstain": {
+        "name": "Abstention check",
+        "does": "The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
+        "outputs": "Either an answer, or one of the abstention states below with what the reader is offered next.",
+        "fails": "This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
+      },
+      "translate": {
+        "name": "Translation",
+        "does": "Translates the answer into the reader's language, behind an interface so the implementation can be swapped — including for national language infrastructure.",
+        "outputs": "A translated answer with untranslated citation metadata.",
+        "fails": "Source passages are never translated. A translated citation is no longer a citation, and a reader checking a source needs the words as published."
+      },
+      "render": {
+        "name": "The answer, with its sources",
+        "does": "Renders the four blocks with claim-level markers, the confidence and its reason, and the source cards behind them. Sentences resting on no passage are marked as general explanation.",
+        "outputs": "What you see on the workspace: an answer whose every marker resolves to a passage you can open and read in the words it was published in.",
+        "fails": "If citation mapping produced nothing to show, this surface renders an abstention rather than an unsourced answer."
+      }
+    },
+    "buildSummary": "Of these {{total}} stages, {{live}} are running, {{demo}} run on partial data, and {{planned}} has an interface with nothing behind it."
+  },
+  "retrieval": {
+    "navLabel": "Why retrieval",
+    "heading": "Why the sources are retrieved rather than remembered",
+    "body1": "A language model asked a legal question from its training data answers from memory. That answer is undated, unattributed, and confidently wrong on anything that has been amended since the model was trained — which, in this field, is a great deal. It cannot tell you where it got something, because it does not know.",
+    "body2": "Retrieval changes what the model is allowed to use. The answer is constrained to a curated, version-tracked set of published documents, each claim points at the passage behind it, and every answer carries the date of the sources it used.",
+    "honestly": "What this does not do",
+    "body3": "It reduces hallucination and localises it. It does not eliminate it. A model can still misread a passage, or state something the passage does not quite say. That is precisely why every claim is checkable against the passage it names, why sentences resting on nothing are marked as such, and why the system is built to abstain rather than to produce something plausible."
+  },
+  "abstention": {
+    "navLabel": "Abstention",
+    "heading": "Declining to answer is a feature",
+    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. All five are reachable today.",
+    "offers": "What you are offered",
+    "states": {
+      "nothing": {
+        "title": "Nothing relevant found",
+        "body": "I couldn't find anything in these sources that answers this reliably.",
+        "offers": "Rephrase, narrow the jurisdiction, name the product type, see what's covered, or send the question to a human with the context already filled in."
+      },
+      "scope": {
+        "title": "Outside what this covers",
+        "body": "This is outside what I can answer. I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, individual legal opinions, or predictions about whether an application will succeed.",
+        "offers": "A plain statement of what it can do instead, and the escalation route."
+      },
+      "conflict": {
+        "title": "The sources disagree",
+        "body": "Two passages point different ways, and the answer depends on which governs.",
+        "offers": "Both passages, with their dates and their documents, so the reader can see the disagreement rather than being handed one side of it."
+      },
+      "stale": {
+        "title": "The sources may be out of date",
+        "body": "What was found sits outside its effective window, or predates an amendment the corpus knows about.",
+        "offers": "The passage with its date shown, and a plain statement that the position may have changed."
+      },
+      "facts": {
+        "title": "It depends on facts you have not given",
+        "body": "The answer turns on something only you know — usually what the product is regulatorily.",
+        "offers": "The single most decisive question, rather than a list of every possibility."
+      }
+    }
+  },
+  "jurisdictions": {
+    "navLabel": "Keeping jurisdictions apart",
+    "heading": "Two namespaces, never merged",
+    "body": "India and International are separate indexes. A retrieval call reads one of them, and a cross-border question runs two retrievals and produces two answers rather than one blended paragraph. The reason is not tidiness: an answer that mixes the Indian position with an export market's is wrong in a way that reads as right, and a reader acting on it would not be able to tell which half applied to them.",
+    "sideBySide": "The same question, answered twice",
+    "note": "These two answers were produced separately and are shown side by side. Nothing in the product merges them, and no interface anywhere presents a single answer covering both.",
+    "inLabel": "Under India",
+    "intlLabel": "Under the United Kingdom"
+  },
+  "architecture": {
+    "navLabel": "Architecture",
+    "heading": "How it is put together",
+    "standfirst": "Layers, and what state each part is in. The retriever's metadata filters are listed because they are what makes superseded text unreachable rather than merely deprioritised.",
+    "filtersHeading": "Retriever metadata filters",
+    "filters": "Jurisdiction · product class · IP right · regulatory area · effective date window · document type · language",
+    "notScheduled": "Not scheduled",
+    "notScheduledBody": "A knowledge graph over entities and provisions, agentic orchestration across several sources for one question, and connectors to subscription databases. These are directions, not commitments, and none of them is being built.",
+    "layers": {
+      "client": {
+        "name": "Client",
+        "items": "Web app · design system · six-language interface"
+      },
+      "api": {
+        "name": "API",
+        "items": "Query · classify · ABS check · sources · feedback · escalate · health · corpus version"
+      },
+      "orchestrator": {
+        "name": "Orchestrator",
+        "items": "Query understanding · refusals · jurisdiction routing · retriever · reranker · context builder · generator · citation mapper · confidence scorer · translator · audit"
+      },
+      "stores": {
+        "name": "Stores",
+        "items": "Verified official sources, kept separately for India and for international sources · append-only audit log."
+      },
+      "corpus": {
+        "name": "Corpus pipeline",
+        "items": "Fetch · parse · section-aware chunking · enrich · version diff · validate. The embed stage has no model behind it and writes no vectors."
+      }
+    }
+  },
+  "evaluation": {
+    "navLabel": "Evaluation",
+    "heading": "How it is measured",
+    "standfirst": "These are the axes it is scored on, and the numbers below are from the last run of the gold set. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else. The numbers that look bad are here too.",
+    "notRunTitle": "No evaluation has been run",
+    "notRunBody": "No summary has been published, so there are no numbers on this page. When the harness runs it writes a summary that this page reads, and whatever it says appears here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
+    "colMetric": "Measure",
+    "colWhat": "What it counts",
+    "colTarget": "Target",
+    "colResult": "Result",
+    "noResult": "not measured",
+    "lastRun": "Last run {{date}}",
+    "metrics": {
+      "answerAccuracy": {
+        "name": "Answer accuracy",
+        "what": "Whether the answer is right, judged against a reference answer. No reference answers have been written: writing them means stating what a source says, and no source has been read.",
+        "target": "as high as the sources allow"
+      },
+      "citationCorrectness": {
+        "name": "Citation correctness",
+        "what": "Whether the passage a claim cites actually supports that claim. Needs a judge, human or model, so it is not measured here — citation groundedness is the part a machine can check.",
+        "target": "as high as possible"
+      },
+      "citationValidity": {
+        "name": "Citation validity",
+        "what": "Whether every citation resolves to a real, current passage.",
+        "target": "100%"
+      },
+      "abstentionPrecision": {
+        "name": "Abstention precision",
+        "what": "When it declines, whether it was right to.",
+        "target": "high"
+      },
+      "abstentionRecall": {
+        "name": "Abstention recall",
+        "what": "Whether it answers the questions it should answer, rather than declining defensively.",
+        "target": "high"
+      },
+      "jurisdictionPurity": {
+        "name": "Jurisdiction purity",
+        "what": "Whether any answer mixes the Indian position with another jurisdiction's.",
+        "target": "100%"
+      },
+      "authorityPurity": {
+        "name": "Authority purity",
+        "what": "Whether a filed or granted record ever appeared as a citation.",
+        "target": "100%"
+      },
+      "classificationAccuracy": {
+        "name": "Classification accuracy",
+        "what": "Whether the product class the flow reaches is the right one.",
+        "target": "high"
+      },
+      "multilingualQuality": {
+        "name": "Multilingual quality",
+        "what": "Round-trip translation plus a native-speaker rubric on a subset. Not measured: no native speaker has reviewed a run.",
+        "target": "parity with English"
+      },
+      "latency": {
+        "name": "Latency",
+        "what": "Median time through the whole pipeline. Excludes any hosted-model call, which is not made with the offline generator.",
+        "target": "usable"
+      },
+      "citationGroundedness": {
+        "name": "Citation groundedness",
+        "what": "Whether every citation points at a passage that was actually retrieved for that question. Narrower than citation correctness, and unlike it, checkable by a machine.",
+        "target": "100%"
+      },
+      "citationCoverage": {
+        "name": "Citation coverage",
+        "what": "Whether an answer cites at least one instrument the test question expects.",
+        "target": "as high as the corpus allows"
+      },
+      "abstentionReason": {
+        "name": "Abstention reason",
+        "what": "When it declines, whether it declines for the right one of the five reasons rather than merely declining.",
+        "target": "high"
+      },
+      "forbiddenClaims": {
+        "name": "Forbidden claims",
+        "what": "Whether answers avoid the phrases each case forbids — novelty conclusions, outcome predictions, dosage.",
+        "target": "100%"
+      },
+      "languageDetection": {
+        "name": "Language detection",
+        "what": "Whether the script a question is written in is identified. Devanagari cannot separate Hindi from Marathi, so either counts for either and the interface reports the ambiguity.",
+        "target": "high"
+      },
+      "recordsOffered": {
+        "name": "Records offered",
+        "what": "Whether filed or granted records appear beside an answer when the question is about the kind of thing that gets filed.",
+        "target": "high"
+      },
+      "recordsDoNotRescue": {
+        "name": "Records do not rescue",
+        "what": "Where a record exists and the sources do not support an answer, whether the system still declines.",
+        "target": "100%"
+      },
+      "errors": {
+        "name": "Errors",
+        "what": "Cases that raised rather than answering or declining.",
+        "target": "zero"
+      }
+    },
+    "caveatTitle": "What these numbers were measured against",
+    "caseCount": "{{count}} cases"
+  }
+}

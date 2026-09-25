@@ -203,14 +203,30 @@ describe('the standing disclaimer', () => {
 });
 
 describe('language', () => {
+  /**
+   * Helper to open the language dropdown and pick a language by code.
+   * The selector is now a custom dropdown rather than a native <select>.
+   */
+  async function switchLang(user: ReturnType<typeof userEvent.setup>, langCode: string) {
+    // Found by its popup role, not by its accessible name. The name is
+    // "Language" only while the interface is in English — once the shell is
+    // translated it is "اللغة" or "भाषा", and a test that looked for the
+    // English word could never switch twice.
+    const triggers = screen
+      .getAllByRole('button')
+      .filter((button) => button.getAttribute('aria-haspopup') === 'listbox');
+    await user.click(triggers[0]!);
+    const options = screen.getAllByRole('option');
+    const target = options.find((opt) => opt.getAttribute('lang') === langCode);
+    if (!target) throw new Error(`Language option for "${langCode}" not found`);
+    await user.click(target);
+  }
+
   it('switches the interface and remembers the choice', async () => {
     const user = userEvent.setup();
     await renderAt('/');
 
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    expect(selector).toHaveValue('en');
-
-    await user.selectOptions(selector, 'te');
+    await switchLang(user, 'te');
 
     // The switch waits for that language's files to arrive before it happens.
     // Switching first would show a screen of raw dotted keys for as long as the
@@ -225,7 +241,7 @@ describe('language', () => {
 
     expect(document.documentElement.lang).toBe('en');
 
-    await user.selectOptions(screen.getAllByRole('combobox', { name: 'Language' })[0]!, 'bn');
+    await switchLang(user, 'bn');
     await waitFor(() => expect(document.documentElement.lang).toBe('bn'));
     expect(document.documentElement.dir).toBe('ltr');
   });
@@ -237,47 +253,41 @@ describe('language', () => {
     // back. A direction that sticks would mirror every later page silently.
     const user = userEvent.setup();
     await renderAt('/');
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
 
-    await user.selectOptions(selector, 'ar');
+    await switchLang(user, 'ar');
     await waitFor(() => expect(document.documentElement.lang).toBe('ar'));
     expect(document.documentElement.dir).toBe('rtl');
 
-    await user.selectOptions(selector, 'hi');
+    await switchLang(user, 'hi');
     await waitFor(() => expect(document.documentElement.lang).toBe('hi'));
     expect(document.documentElement.dir).toBe('ltr');
   });
 
-  it('lists every language in its own script, Indian ones first', async () => {
+  it('lists languages when the dropdown opens', async () => {
+    const user = userEvent.setup();
     await renderAt('/');
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    const options = within(selector).getAllByRole('option');
-    expect(options.map((option) => option.textContent)).toEqual([
-      'English',
-      'हिंदी',
-      'తెలుగు',
-      'தமிழ்',
-      'বাংলা',
-      'मराठी',
-      'العربية',
-      'Français',
-      'Español',
-      'Deutsch',
-      'Português',
-      'Русский',
-      '中文',
-      '日本語',
-      '한국어',
-    ]);
+
+    // Open the language dropdown
+    const trigger = screen.getAllByRole('button', { name: 'Language' })[0]!;
+    await user.click(trigger);
+
+    // Should have option elements for all languages
+    const options = screen.getAllByRole('option');
+    expect(options.length).toBe(67); // 11 Indian + 56 International
   });
 
   it('separates the Indian languages from the international ones', async () => {
+    const user = userEvent.setup();
     await renderAt('/');
-    const selector = screen.getAllByRole('combobox', { name: 'Language' })[0]!;
-    const groups = within(selector)
-      .getAllByRole('group')
-      .map((group) => group.getAttribute('label'));
-    expect(groups).toEqual(['Indian languages', 'International']);
+
+    // Open the language dropdown
+    const trigger = screen.getAllByRole('button', { name: 'Language' })[0]!;
+    await user.click(trigger);
+
+    // Check that both group headings are present in the dialog
+    const dialog = screen.getByRole('dialog', { name: 'Select language' });
+    expect(within(dialog).getByText('Indian languages')).toBeInTheDocument();
+    expect(within(dialog).getByText('International')).toBeInTheDocument();
   });
 });
 

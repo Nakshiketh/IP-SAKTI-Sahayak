@@ -26,7 +26,10 @@ import { findLocale } from '@/i18n/languages';
  */
 export function Shell() {
   const { t, i18n } = useTranslation('common');
-  const locale = findLocale(i18n.resolvedLanguage ?? i18n.language);
+  // See the note in i18n/index.ts: `language` is the reader's choice,
+  // `resolvedLanguage` is what survived fallback. <html dir> must follow the
+  // choice, or a right-to-left language never turns the page round.
+  const locale = findLocale(i18n.language ?? i18n.resolvedLanguage);
   const backdrop = useHeroAudio({
     storageKey: 'sahayak.backdrop',
     soundByDefault: true,

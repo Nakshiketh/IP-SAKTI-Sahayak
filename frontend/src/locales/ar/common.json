@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "الأيورفيدا والملكية الفكرية والتنظيم"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "الرئيسية",
+    "home": "الصفحة الرئيسية",
+    "sahayak": "اسأل سهايك",
+    "covered": "ما الذي يشمله",
+    "howItWorks": "كيف يعمل",
+    "sources": "المصادر",
+    "about": "نبذة"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "اسأل سهايك",
+    "check": "افحص منتجي"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "القائمة",
+    "close": "إغلاق القائمة",
+    "title": "القائمة"
   },
   "language": {
-    "label": "Language",
+    "label": "اللغة",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "{{percent}}% مترجم",
+    "groupIndian": "اللغات الهندية",
+    "groupInternational": "دولي",
+    "selectTitle": "اختر اللغة",
+    "searchPlaceholder": "ابحث عن اللغات",
+    "clearSearch": "مسح البحث",
+    "noResults": "لم يتم العثور على لغات"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "تخطَّ إلى المحتوى",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "ما الذي يخزنه هذا المنتج"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "إغلاق",
+    "remove": "إزالة"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,8 +117,8 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "الهند",
+    "INTL": "دولي"
   },
   "productClass": {
     "classical_generic": "Classical formulation",

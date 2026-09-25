@@ -4,7 +4,8 @@ Agent: read this first in every phase and update it last. Keep it under about 20
 
 ## Status
 - **Current phase: 10 — complete.** The ten-phase upgrade is finished. `docs/upgrade/FINAL_REPORT.md` is the account of it; read that before this file.
-- Last green gate: phase 10 — backend **613**, frontend **245 + 194 = 439** (two batches), typecheck, eslint, ruff + format, schema current, locale check clean, evals below_target [] with 0 errors, build **117.1 kB** of a 150 kB budget.
+- Last green gate: language selector expansion (67 locales + searchable dropdown) — backend **666**, frontend **491** passed (all 34 test files), typecheck clean, eslint clean, ruff + format clean, evals 170 cases with 0 errors, build **133.2 kB** of 150 kB budget.
+- Language selector upgraded: expanded from 15 to 67 languages (11 Indian + 56 international) with fuzzy search, accessible keyboard navigation, Lucide check icons, and script font mappings. All locale files generated and synced.
 - T1–T18 all exist and pass, indexed in `backend/tests/test_hardening.py` so the catalogue cannot rot into numbers with nothing behind them.
 - Phase 10 found and closed two real gaps nothing else covered: `corpus/fetch.py` fetched without the host allowlist (SSRF), and `SourceCard.tsx` rendered a citation URL as an `href` with no scheme check.
 - **Translation was broken and is now fixed** — see below. It had never run, so nothing regressed; it simply could not have worked.

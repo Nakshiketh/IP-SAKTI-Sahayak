@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "Ayurveda, propriété intellectuelle et réglementation"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
+    "label": "Principal",
+    "home": "Accueil",
+    "sahayak": "Demander à Sahayak",
+    "covered": "Ce qui est couvert",
+    "howItWorks": "Comment ça marche",
     "sources": "Sources",
-    "about": "About"
+    "about": "À propos"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "Demander à Sahayak",
+    "check": "Vérifier mon produit"
   },
   "menu": {
     "open": "Menu",
-    "close": "Close menu",
+    "close": "Fermer le menu",
     "title": "Menu"
   },
   "language": {
-    "label": "Language",
+    "label": "Langue",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "{{percent}} % traduit",
+    "groupIndian": "Langues indiennes",
+    "groupInternational": "International",
+    "selectTitle": "Choisir la langue",
+    "searchPlaceholder": "Rechercher des langues",
+    "clearSearch": "Effacer la recherche",
+    "noResults": "Aucune langue trouvée"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "Aller au contenu",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "Ce que ce produit conserve"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "Fermer",
+    "remove": "Supprimer"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,7 +117,7 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
+    "IN": "Inde",
     "INTL": "International"
   },
   "productClass": {

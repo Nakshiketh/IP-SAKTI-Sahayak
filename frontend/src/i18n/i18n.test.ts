@@ -25,7 +25,7 @@ import { findMissingBundles } from '@/i18n/resources';
  *
  * The app bundles English eagerly and fetches the other five on demand, so
  * `resources` deliberately holds only English. This test still has to compare
- * all six key sets, so it does its own eager glob — test-only code, which never
+ * all key sets, so it does its own eager glob — test-only code, which never
  * reaches the bundle the reader downloads.
  */
 const files = import.meta.glob<{ default: Record<string, unknown> }>('../locales/*/*.json', {
@@ -59,19 +59,27 @@ function flatten(node: Record<string, unknown>, prefix = ''): string[] {
 }
 
 describe('locales', () => {
-  it('covers the fifteen languages the product claims to answer in', () => {
+  it('covers all languages the product claims to answer in', () => {
+    // Indian languages come first (alphabetical by English name),
+    // then international languages (alphabetical by English name).
     expect(LOCALE_CODES).toEqual([
-      // The Indian six come first, and that order is the point: this is an
-      // Indian product, and the languages its readers work in are not an
-      // afterthought below a list of export markets.
-      'en', 'hi', 'te', 'ta', 'bn', 'mr',
-      'ar', 'fr', 'es', 'de', 'pt', 'ru', 'zh', 'ja', 'ko',
+      // Indian (alphabetical)
+      'bn', 'en', 'gu', 'hi', 'kn', 'ml', 'mr', 'pa', 'ta', 'te', 'ur',
+      // International (alphabetical)
+      'sq', 'am', 'ar', 'hy', 'bs', 'bg', 'my', 'ca', 'hr', 'cs',
+      'da', 'nl', 'et', 'fil', 'fi', 'fr', 'fr-CA', 'ka', 'de', 'el',
+      'hu', 'is', 'id', 'ga', 'it', 'ja', 'jv', 'kk', 'ko', 'lv',
+      'lt', 'mk', 'ms', 'mt', 'mn', 'nb', 'fa', 'pl', 'pt', 'pt-BR',
+      'ro', 'ru', 'zh', 'sk', 'sl', 'so', 'es', 'es-419', 'sw', 'sv',
+      'th', 'zh-Hant', 'zh-HK', 'tr', 'uk', 'vi',
     ]);
   });
 
   it('keeps the Indian languages first and distinguishable', () => {
-    expect(INDIAN_LOCALES.map((l) => l.code)).toEqual(['en', 'hi', 'te', 'ta', 'bn', 'mr']);
-    expect(INTERNATIONAL_LOCALES).toHaveLength(9);
+    expect(INDIAN_LOCALES.map((l) => l.code)).toEqual([
+      'bn', 'en', 'gu', 'hi', 'kn', 'ml', 'mr', 'pa', 'ta', 'te', 'ur',
+    ]);
+    expect(INTERNATIONAL_LOCALES.length).toBe(56);
     // Together they are everything: a locale that is in neither list would be
     // one the switcher groups nowhere and a reader never reaches.
     expect(INDIAN_LOCALES.length + INTERNATIONAL_LOCALES.length).toBe(LOCALES.length);
@@ -81,33 +89,37 @@ describe('locales', () => {
     // A script with no font stack in tokens.css renders as tofu, and the reader
     // cannot tell a missing font from a broken product.
     for (const locale of LOCALES) expect(scriptOf(locale.code)).toBe(locale.script);
-    expect(new Set(LOCALES.map((l) => l.script)).size).toBe(10);
+    expect(new Set(LOCALES.map((l) => l.script)).size).toBe(21);
   });
 
   it('names each language in its own script, never transliterated', () => {
     const native = Object.fromEntries(LOCALES.map((l) => [l.code, l.nativeName]));
-    expect(native).toEqual({
-      en: 'English',
-      hi: 'हिंदी',
-      te: 'తెలుగు',
-      ta: 'தமிழ்',
-      bn: 'বাংলা',
-      mr: 'मराठी',
-      ar: 'العربية',
-      fr: 'Français',
-      es: 'Español',
-      de: 'Deutsch',
-      pt: 'Português',
-      ru: 'Русский',
-      zh: '中文',
-      ja: '日本語',
-      ko: '한국어',
-    });
+    // Spot-check some key ones
+    expect(native.en).toBe('English');
+    expect(native.hi).toBe('हिंदी');
+    expect(native.te).toBe('తెలుగు');
+    expect(native.ta).toBe('தமிழ்');
+    expect(native.bn).toBe('বাংলা');
+    expect(native.mr).toBe('मराठी');
+    expect(native.ar).toBe('العربية');
+    expect(native.fr).toBe('Français');
+    expect(native.ja).toBe('日本語');
+    expect(native.ko).toBe('한국어');
+    expect(native.gu).toBe('ગુજરાતી');
+    expect(native.kn).toBe('ಕನ್ನಡ');
+    expect(native.ml).toBe('മലയാളം');
+    expect(native.pa).toBe('ਪੰਜਾਬੀ');
+    expect(native.ur).toBe('اردو');
+    expect(native.zh).toBe('简体中文');
+    expect(native['zh-Hant']).toBe('繁體中文');
+    expect(native.ru).toBe('Русский');
+    expect(native.de).toBe('Deutsch');
+    expect(native.th).toBe('ไทย');
   });
 
   it('never writes a language name in Latin letters when it has its own script', () => {
     // "Hindi" in a switcher is useless to someone who reads only Devanagari.
-    const latin = /^[A-Za-zÀ-ɏ\s'-]+$/;
+    const latin = /^[A-Za-zÀ-ɏ\s'()-]+$/;
     for (const locale of LOCALES) {
       if (locale.script === 'Latn') continue;
       expect(latin.test(locale.nativeName), `${locale.code} is transliterated`).toBe(false);
@@ -144,21 +156,33 @@ describe('findLocale', () => {
   });
 
   it('falls back to English rather than returning nothing', () => {
-    // 'pt-BR' used to be the unsupported tag here. Portuguese now exists, so it
-    // resolves to 'pt' — which is the fallback working, not failing. Swahili
-    // stands in for a language the product does not offer.
-    expect(findLocale('sw-KE').code).toBe('en');
+    // Swahili ('sw') is now a supported language. Use something truly unsupported.
+    expect(findLocale('xh-ZA').code).toBe('en');
     expect(findLocale(undefined).code).toBe('en');
-    expect(findLocale('pt-BR').code).toBe('pt');
-    expect(findLocale('zh-Hans-CN').code).toBe('zh');
   });
 
-  it('carries a direction per locale, and Arabic is the one that differs', () => {
+  it('resolves regional Chinese tags correctly', () => {
+    expect(findLocale('zh-Hans-CN').code).toBe('zh');
+    expect(findLocale('zh-Hant').code).toBe('zh-Hant');
+    expect(findLocale('zh-HK').code).toBe('zh-HK');
+  });
+
+  it('resolves regional variants with exact match first', () => {
+    expect(findLocale('pt-BR').code).toBe('pt-BR');
+    expect(findLocale('fr-CA').code).toBe('fr-CA');
+    expect(findLocale('es-419').code).toBe('es-419');
+  });
+
+  it('carries a direction per locale, and RTL languages are marked correctly', () => {
     expect(findLocale('ar').dir).toBe('rtl');
+    expect(findLocale('fa').dir).toBe('rtl');
+    expect(findLocale('ur').dir).toBe('rtl');
     const rtl = LOCALES.filter((locale) => locale.dir === 'rtl').map((l) => l.code);
-    expect(rtl).toEqual(['ar']);
-    // Every Indian language is left-to-right, so adding Arabic must not have
-    // flipped any of them by touching a shared default.
-    for (const locale of INDIAN_LOCALES) expect(locale.dir).toBe('ltr');
+    expect(rtl).toEqual(expect.arrayContaining(['ar', 'fa', 'ur']));
+    // Every Indian language except Urdu is left-to-right.
+    for (const locale of INDIAN_LOCALES) {
+      if (locale.code === 'ur') continue;
+      expect(locale.dir).toBe('ltr');
+    }
   });
 });

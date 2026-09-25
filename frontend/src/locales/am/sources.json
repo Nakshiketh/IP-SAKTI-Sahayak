@@ -1,0 +1,177 @@
+{
+  "__untranslated": true,
+  "meta": {
+    "title": "Sources",
+    "description": "The legal and regulatory documents every answer is built from, and when each was last checked."
+  },
+  "heading": "What this is built on",
+  "standfirst": "Every answer comes from these sources. Here is what is in them, where they came from, and when they were last checked.",
+  "verified": {
+    "heading": "Official sources answers are built from",
+    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals. Each was checked against its official page on {{date}}, and every answer links back to the one it relied on — open it to read the provision yourself.",
+    "checked": "Checked on",
+    "usedIn": "Used in answers",
+    "passages_one": "{{count}} passage",
+    "passages_other": "{{count}} passages"
+  },
+  "notFetched": {
+    "title": "Full-text library in preparation",
+    "body": "The library below is the wider set of instruments being prepared for full-text search. Until a document is indexed, answers come from the verified sources above; where one of them already covers a document below, its official link is shown."
+  },
+  "corpus": {
+    "heading": "Full-text library",
+    "layer": "The wider set of instruments being prepared for full-text search. Where a verified source above already covers one, its official link is shown here.",
+    "searchLabel": "Search sources",
+    "searchPlaceholder": "Search by title or organization…",
+    "filters": "Filters",
+    "clear": "Clear filters",
+    "anyOption": "Any",
+    "showing": "Showing {{shown}} of {{total}} documents",
+    "noneMatch": "No source matches those filters.",
+    "facets": {
+      "jurisdiction": "Jurisdiction",
+      "group": "Regime family",
+      "document_type": "Document type",
+      "verification_status": "Verification",
+      "dating": "Effective date"
+    },
+    "dating": {
+      "any": "Any",
+      "dated": "Has an effective date",
+      "undated": "No effective date"
+    },
+    "fields": {
+      "organization": "Issuing organization",
+      "jurisdiction": "Jurisdiction",
+      "documentType": "Document type",
+      "version": "Version",
+      "effectiveFrom": "Effective from",
+      "effectiveTo": "Effective to",
+      "retrieved": "Last retrieved",
+      "verification": "Verification",
+      "passages": "Indexed passages",
+      "link": "Official source"
+    },
+    "empty": {
+      "version": "—",
+      "date": "—",
+      "retrieved": "—",
+      "passages": "—",
+      "link": "—"
+    },
+    "groups": {
+      "indian_ip": "Indian IP regimes",
+      "indian_drug_food_cosmetic": "Indian drug, food and cosmetic regulation",
+      "biodiversity_abs": "Biodiversity and access and benefit sharing",
+      "pharmacopoeial": "Pharmacopoeial standards",
+      "traditional_knowledge": "Traditional knowledge resources",
+      "international_ip": "International IP treaties and systems",
+      "market_access": "International market access"
+    },
+    "documentTypes": {
+      "act": "Act",
+      "rules": "Rules",
+      "regulation": "Regulation",
+      "treaty": "Treaty",
+      "guideline": "Guideline",
+      "pharmacopoeia": "Pharmacopoeia",
+      "case_law": "Case law",
+      "form": "Form",
+      "notification": "Notification"
+    },
+    "verification": {
+      "verified": "Verified",
+      "unverified": "Not yet indexed",
+      "demo": "Not yet indexed"
+    }
+  },
+  "records": {
+    "heading": "Registry and records data",
+    "layer": "Layer 2 — evidential. These are never cited as authority.",
+    "standingNote": "These are records of what has been filed, granted or registered. They are not statements of law. They never enter the search index, they never appear as a citation, and they never raise or lower an answer's confidence. Where an answer shows related records, it shows them beside the answer and labelled, not inside it.",
+    "fields": {
+      "publisher": "Publisher",
+      "jurisdiction": "Jurisdiction",
+      "recordType": "Record type",
+      "access": "How it is used",
+      "licence": "Licence and attribution",
+      "snapshot": "Last snapshot",
+      "count": "Records held",
+      "terms": "Terms"
+    },
+    "access": {
+      "bulk_open": "Bulk data",
+      "api_open": "Open API",
+      "portal_link_only": "Interactive portal — linked out to, never fetched"
+    },
+    "recordTypes": {
+      "patent_application": "Patent applications",
+      "patent_grant": "Granted patents",
+      "gi_registration": "GI registrations",
+      "trademark": "Trade marks",
+      "design": "Designs",
+      "plant_variety": "Plant varieties",
+      "abs_approval": "ABS approvals",
+      "aggregate_statistic": "Aggregate statistics"
+    },
+    "empty": {
+      "licence": "—",
+      "snapshot": "—",
+      "count": "—"
+    },
+    "portalNote": "Search this on the official portal. This site links to it rather than searching on your behalf."
+  },
+  "honest": {
+    "heading": "How this is kept honest",
+    "standfirst": "Each commitment, and how it is kept.",
+    "colCommitment": "Commitment",
+    "colMechanism": "Mechanism",
+    "items": {
+      "primary": {
+        "commitment": "Prefer primary official sources",
+        "mechanism": "Answers cite primary official sources — Acts, Rules, official guidelines and government portals — never commentary."
+      },
+      "versions": {
+        "commitment": "Track versions and amendments",
+        "mechanism": "Every document carries effective_from, supersedes and superseded_by. Superseded text is retained but excluded from retrieval for current answers."
+      },
+      "dates": {
+        "commitment": "Date every answer",
+        "mechanism": "as_of_date and corpus_version are fields on the Answer model, shown on every response."
+      },
+      "beyond": {
+        "commitment": "Never assert beyond the sources",
+        "mechanism": "Generation is constrained to the retrieved passages, and an answer the passages do not support returns an abstention instead."
+      },
+      "uncertainty": {
+        "commitment": "Show uncertainty",
+        "mechanism": "Confidence is computed from the retrieval result and always shown with a one-sentence reason."
+      },
+      "check": {
+        "commitment": "Let readers check",
+        "mechanism": "Every citation carries its document, section path and link, and the retrieved passage can be opened in the words it was published in."
+      },
+      "subscription": {
+        "commitment": "Respect subscription sources",
+        "mechanism": "Never scraped. Accessed only through the reader's own credentials, with per-session consent, and every access logged and shown back to them."
+      },
+      "escalate": {
+        "commitment": "Escalate anything consequential",
+        "mechanism": "Every answer carries a route to a qualified facilitator, packaging the question, jurisdiction, product class and sources into a summary."
+      }
+    }
+  },
+  "notCovered": {
+    "heading": "What this does not cover",
+    "standfirst": "Stated plainly, because a product that hides its limits is asking to be trusted where it should not be.",
+    "items": {
+      "clinical": "No clinical or dosage advice, and no opinion on whether a preparation is safe or effective for a person.",
+      "drafting": "No drafting of applications, specifications, responses or agreements.",
+      "outcome": "No opinion on whether an application will be granted, refused or opposed.",
+      "jurisdictions": "No jurisdictions beyond those listed above. A question about a country not in the source set gets no answer rather than a plausible one.",
+      "realtime": "No real-time registry status. Records are snapshots with a date on them, and the date is shown.",
+      "novelty": "No novelty conclusions. The prior-art tools help you search; they do not search every database an examiner would consult.",
+      "representation": "No legal representation, and no relationship that could be mistaken for one."
+    }
+  }
+}

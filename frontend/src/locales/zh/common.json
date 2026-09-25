@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "阿育吠陀、知识产权与监管"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "主要",
+    "home": "首页",
+    "sahayak": "询问 Sahayak",
+    "covered": "涵盖内容",
+    "howItWorks": "工作原理",
+    "sources": "来源",
+    "about": "关于"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "询问 Sahayak",
+    "check": "检查我的产品"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "菜单",
+    "close": "关闭菜单",
+    "title": "菜单"
   },
   "language": {
-    "label": "Language",
+    "label": "语言",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "已翻译 {{percent}}%",
+    "groupIndian": "印度语言",
+    "groupInternational": "国际",
+    "selectTitle": "选择语言",
+    "searchPlaceholder": "搜索语言",
+    "clearSearch": "清除搜索",
+    "noResults": "未找到语言"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "跳至内容",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "本产品存储哪些内容"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "关闭",
+    "remove": "移除"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,8 +117,8 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
-    "INTL": "International"
+    "IN": "印度",
+    "INTL": "国际"
   },
   "productClass": {
     "classical_generic": "Classical formulation",

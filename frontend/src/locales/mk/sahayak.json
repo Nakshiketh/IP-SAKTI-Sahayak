@@ -1,0 +1,629 @@
+{
+  "__untranslated": true,
+  "meta": {
+    "title": "Ask Sahayak",
+    "description": "Ask about intellectual property or regulation for an Ayurvedic product."
+  },
+  "heading": "Sahayak",
+  "standfirst": "Ask about intellectual property or regulation for an Ayurvedic product. Answers are built from cited sources.",
+  "notLegalAdvice": "Information, not legal advice",
+  "questionLabel": "Your question",
+  "demoNotice": "No documents have been ingested yet, so this was answered from a small set of demonstration sources. What happened is real — the search, the sources chosen, the confidence and its reason. The text behind each source is a placeholder until the documents themselves are fetched.",
+  "emptyHeading": "Nothing asked yet",
+  "emptyBody": "Type a question on the homepage, or use the example below.",
+  "tryExample": "See the example answer",
+  "context": {
+    "label": "What this answer assumes",
+    "jurisdiction": "{{jurisdiction}}",
+    "language": "answering in {{language}}",
+    "productKnown": "product: {{productClass}}",
+    "productUnknown": "product not yet identified",
+    "changeJurisdiction": "Change jurisdiction",
+    "changeLanguage": "Change answer language",
+    "changeProduct": "Set the product type",
+    "close": "Done"
+  },
+  "composer": {
+    "label": "Your question",
+    "placeholder": "Ask about protecting, registering, manufacturing or selling an Ayurvedic product…",
+    "send": "Ask",
+    "detected": "Detected: {{language}}",
+    "detectedAmbiguous": "Detected {{script}} script: could be {{languages}}",
+    "change": "change",
+    "detectionNote": "Detected from the script you typed in. Correct it if it is wrong.",
+    "shortcutHint": "Ctrl+K to focus, Ctrl+Enter to send, / for examples"
+  },
+  "jurisdictionLabel": "Jurisdiction",
+  "marketLabel": "Market",
+  "markets": {
+    "uk": "United Kingdom",
+    "eu": "European Union",
+    "us": "United States"
+  },
+  "starters": {
+    "heading": "Try one of these",
+    "more": "More examples",
+    "groups": {
+      "protecting": "Protecting an innovation",
+      "market": "Getting to market",
+      "biological": "Using biological resources",
+      "abroad": "Going abroad"
+    },
+    "items": {
+      "reformulated": "We reformulated a classical preparation — is there anything patentable in it?",
+      "manufacturing": "What do we need in place before manufacturing an Ayurvedic product in India?",
+      "uk": "How do we file one international patent application for several countries?",
+      "brandName": "Can we register our brand name if it contains a classical formulation name?",
+      "gi": "Does our regional herb qualify for a geographical indication?",
+      "healthClaim": "How is an Ayurveda Aahara food product regulated, and where do we apply?",
+      "classification": "Is our product a medicine, a nutraceutical or a cosmetic?",
+      "wildCollect": "We wild-collect a herb — what compliance applies before we commercialise?",
+      "bioSource": "Do we need to declare the biological source in a patent application?",
+      "multiCountry": "How do we protect the brand in several countries at once?"
+    }
+  },
+  "answer": {
+    "heading": "Answer",
+    "questionLabel": "You asked",
+    "announced": "Answer ready, with {{count}} sources.",
+    "sourcesButton": "Sources",
+    "sourcesTitle": "Sources",
+    "newQuestion": "Ask another question"
+  },
+  "rail": {
+    "expand": "Show context",
+    "collapse": "Hide context",
+    "title": "Context"
+  },
+  "status": {
+    "searchingIn": "Searching Indian sources…",
+    "searchingIntl": "Searching international sources…",
+    "reading": "Reading {{passages}} passages from {{documents}} documents…",
+    "summary": "{{passages}} passages from {{documents}} documents · {{jurisdiction}} · {{seconds}}s",
+    "summaryNone": "No passages cleared the threshold · {{jurisdiction}} · {{seconds}}s",
+    "expand": "Show what happened",
+    "detailHeading": "Stage by stage",
+    "passagesHeading": "Passages considered",
+    "scoreRetrieval": "retrieval",
+    "scoreRerank": "rerank",
+    "belowFloor": "below the floor",
+    "outOfWindow": "outside its effective window",
+    "stages": {
+      "detect": "Language detection",
+      "understand": "Query understanding",
+      "route": "Jurisdiction routing",
+      "retrieve": "Retrieval",
+      "rerank": "Reranking",
+      "reason": "Reasoning",
+      "context": "Context assembly",
+      "generate": "Generation",
+      "map": "Citation mapping",
+      "translate": "Translation"
+    },
+    "milliseconds": "{{ms}} ms",
+    "routedElsewhere": "You asked about “{{marker}}”, so this was answered from {{jurisdiction}} sources rather than the jurisdiction selected above."
+  },
+  "abstention": {
+    "offersHeading": "What you can do",
+    "nothing_relevant": {
+      "title": "I couldn't find anything in these sources that answers this reliably",
+      "body": "Try narrowing the jurisdiction, naming the product type, or rephrasing. You can also see what's covered, or send this to a human IP facilitator with the context already filled in."
+    },
+    "out_of_scope": {
+      "title": "This is outside what I can answer",
+      "body": "I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, individual legal opinions, or predictions about whether an application will succeed."
+    },
+    "sources_conflict": {
+      "title": "The only passages I found point different ways",
+      "body": "Rather than pick one, here are both, with the documents they came from. Which governs is the question to put to someone qualified."
+    },
+    "sources_out_of_date": {
+      "title": "What I found sits outside its effective window",
+      "body": "The position on record here may have changed. The passages and their dates are below."
+    },
+    "needs_more_facts": {
+      "title": "This turns on something only you can tell me",
+      "body": "What your product is regulatorily decides the answer, and answering for every possibility would be worse than asking."
+    },
+    "offers": {
+      "rephrase": "Rephrase the question",
+      "jurisdiction": "Pick a jurisdiction",
+      "product": "Name the product type",
+      "covered": "See what's covered",
+      "escalate": "Send this to a human"
+    },
+    "language_unsupported": {
+      "title": "This question could not be searched",
+      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for — not because the sources are silent."
+    }
+  },
+  "error": {
+    "title": "The answer could not be produced",
+    "retry": "Try again",
+    "unreachable": "The service could not be reached. Check that it is running, then try again. Nothing has been answered.",
+    "offline": "This device is not connected, so nothing was searched. Reconnect and try again — your question is still in the box.",
+    "generation_unavailable": "Sources were found, but nothing is configured to write an answer from them. Nothing has been answered.",
+    "rate_limited": "Too many questions in a short time. Wait a moment, then try again.",
+    "request_too_large": "That question was too large to send. Shorten it and try again.",
+    "question_too_long": "That question is longer than this accepts. Shorten it and try again.",
+    "unknown": "Something went wrong on the way to an answer. Nothing has been answered, and nothing was guessed.",
+    "timeout": "The search took too long and was stopped. Nothing has been answered. A shorter question usually finishes.",
+    "shorter": "Ask a shorter question"
+  },
+  "records": {
+    "tab": "Related records",
+    "sourcesTab": "Sources",
+    "note": "Filed or granted records. Evidence of what was filed, not a statement of law, and never part of the answer above.",
+    "empty": "No related records for this question.",
+    "stillAbstained": "These records do not answer the question. The system still declined, and they are shown only because they exist.",
+    "noSnapshot": "never taken"
+  },
+  "elsewhere": {
+    "tab": "Search elsewhere",
+    "heading": "This product did not search these",
+    "notSearched": "These registries are interactive, and their terms generally do not allow a product like this one to search them automatically. So it has not. What follows is where to look yourself, not a set of places that have been checked — finding nothing here would mean nothing.",
+    "open": "Open this registry",
+    "linkPending": "Link not yet verified, so none is offered. Search this registry directly.",
+    "loading": "Loading…",
+    "none": "No registries are listed for this."
+  },
+  "escalate": {
+    "open": "Get someone to look at this",
+    "title": "Send this to a human",
+    "intro": "This packages what you asked and what the system found into a summary you can copy or send. There is no expert network behind this button — it is an honest handoff, not a queue.",
+    "summaryLabel": "Summary",
+    "copy": "Copy the summary",
+    "copied": "Copied",
+    "channels": "Official facilitation channels are listed on the sources page."
+  },
+  "answerActions": {
+    "copy": "Copy the answer",
+    "copied": "Copied",
+    "link": "Copy a link to this answer",
+    "linked": "Link copied"
+  },
+  "followUps": {
+    "heading": "Where this leaves off",
+    "classify": "What is my product, regulatorily?",
+    "switchToExport": "What changes if we sell it abroad?",
+    "switchToIndia": "What is the Indian position?",
+    "abs": "What access and benefit-sharing duties apply?",
+    "priorArt": "What is already on the record for this?"
+  },
+  "flows": {
+    "offerHeading": "This depends on something the answer does not know",
+    "yes": "Yes",
+    "no": "No",
+    "back": "Back",
+    "restart": "Start again",
+    "progress": "Question {{current}} of at most {{total}}",
+    "close": "Close",
+    "classify": {
+      "offer": "This depends on what your product is regulatorily. Work it out — a few questions.",
+      "open": "Work out the product type",
+      "title": "What is your product, regulatorily?",
+      "intro": "The fewest questions that settle it. Anything already known is skipped, and you can change any answer afterwards.",
+      "resultHeading": "What this makes it",
+      "singleClass": "On these answers, this is a {{class}}.",
+      "multipleClasses": "On these answers, more than one route may be open.",
+      "drivenBy": "What decided it",
+      "changesHeading": "What would change this",
+      "consequencesHeading": "What follows from it",
+      "consequencesNote": "A general orientation. Ask Sahayak for the cited detail on your own product.",
+      "panelRegulatory": "Regulatory route",
+      "panelIp": "Intellectual property posture",
+      "panelAbs": "Access and benefit sharing",
+      "apply": "Use this as my product type",
+      "applied": "Set as your product type",
+      "questions": {
+        "external_use": "Is it applied externally for appearance rather than for a therapeutic effect?",
+        "food_route": "Is it intended as a food or a supplement rather than as a medicine?",
+        "therapeutic_claim": "Are you making a specific therapeutic claim for it?",
+        "purified_fraction": "Is any ingredient a purified or standardised extract or fraction, rather than a whole-plant preparation?",
+        "classical_unmodified": "Is the formulation, and the method of making it, taken from an authoritative classical text unmodified?",
+        "novel_ingredient": "Does it contain a non-Ayurvedic or otherwise novel ingredient?",
+        "human_evidence": "Do you have human evidence of its safety and effectiveness?",
+        "changed_formulation": "Have you changed the ingredients, the proportions, the dosage form or the method?"
+      },
+      "changes": {
+        "cosmetic": "Making a therapeutic claim for it would take this out of the cosmetic route entirely.",
+        "ayurveda_aahar": "Making a specific therapeutic claim would move this towards a medicine, with a different regulator and different limits on what you may say.",
+        "food_or_drug": "Dropping the therapeutic claim would settle this as a food. Keeping it points at a medicine. The claim is the fork, and it is yours to choose.",
+        "phytopharmaceutical": "Using the whole-plant preparation rather than a purified or standardised fraction would move this back towards the classical or proprietary routes.",
+        "classical_generic": "Changing an ingredient, a proportion, the dosage form or the method would move this to the proprietary route — and with it, what you can protect.",
+        "patent_proprietary": "Returning to the text unmodified would move this back to the classical route. Adding a novel ingredient would move it on towards a new drug.",
+        "new_non_classical_drug": "Removing the novel ingredient would move this back towards the proprietary route.",
+        "new_non_classical_drug_no_evidence": "Removing the novel ingredient would move this back towards the proprietary route. Note also that you said you do not yet hold human evidence, which this route generally expects."
+      }
+    },
+    "abs": {
+      "offer": "This touches access and benefit sharing. Work out where you stand — five questions.",
+      "open": "Work out where you stand",
+      "title": "Where do you stand on access and benefit sharing?",
+      "intro": "An orientation aid, not a determination. It points at which authority is likely involved and what usually comes first.",
+      "resultHeading": "Where this puts you",
+      "authority": "Which authority is likely involved",
+      "firstStep": "What usually comes first",
+      "sharing": "What the benefit-sharing question is",
+      "patent": "How it meets a patent application",
+      "amended": "The Biological Diversity Act was amended in 2023 and its rules remade in 2024, so check the current position against the published instrument.",
+      "questions": {
+        "who": "Who is accessing the resource?",
+        "access": "Are you accessing a biological resource, or knowledge associated with one?",
+        "purpose": "Is the use research, or commercial?",
+        "ip": "Do you intend to seek intellectual property over anything that comes of it?",
+        "knowledge": "Is the knowledge you are drawing on codified in published texts, or held by a community?"
+      },
+      "options": {
+        "indian_individual": "An Indian individual",
+        "indian_company": "An Indian company",
+        "foreign_entity": "A foreign entity",
+        "practitioner": "A registered practitioner",
+        "researcher": "A researcher",
+        "yes": "Yes",
+        "no": "No",
+        "research": "Research",
+        "commercial": "Commercial",
+        "codified": "Codified in published texts",
+        "community": "Held by a community"
+      },
+      "noTrigger": "On these answers, nothing you have described accesses a biological resource or associated knowledge, so the access and benefit-sharing duties are not engaged. That can change the moment a resource enters the picture.",
+      "amendedHeading": "The position has moved recently",
+      "answersRecap": "Based on: {{who}}, {{purpose}} use."
+    },
+    "priorArt": {
+      "offer": "You can see what is already on the record for something like this — as orientation, not as a search.",
+      "open": "See what is on the record",
+      "title": "What is already on the record?",
+      "intro": "Describe the formulation and this builds the search terms an examiner would start from, and links to the official databases to search.",
+      "inputLabel": "Describe the formulation",
+      "inputPlaceholder": "Ingredients, dosage form, what it is for…",
+      "build": "Build the search terms",
+      "termsHeading": "Search terms",
+      "termsNote": "Generated from what you typed. Add Sanskrit and vernacular names, botanical names and classification codes when you search.",
+      "resultsHeading": "Records found",
+      "noRecords": "No patent records are held on this site. Search the official databases linked below.",
+      "elsewhereHeading": "Databases this cannot search",
+      "elsewhereNote": "These databases cannot be searched from here. Nothing on this page has been searched on your behalf.",
+      "linkPending": "link not yet verified",
+      "tkdlHeading": "The Traditional Knowledge Digital Library",
+      "tkdlBody": "This product cannot search it. Access is restricted to patent offices under access agreements, and no amount of orientation here substitutes for what an examiner will see there. If prior art matters to a decision you are about to take, that is a question for a patent professional.",
+      "banner": "This is an orientation aid, not a novelty search. Finding nothing here does not mean an invention is new.",
+      "snapshotNone": "no snapshot taken"
+    }
+  },
+  "guidanceEnds": {
+    "heading": "Where guidance ends",
+    "stepperLabel": "How much expert review this needs",
+    "current": "this answer",
+    "canSay": "What we can say",
+    "canSayBody_one": "One issue is raised by the facts you gave, answered from official sources below.",
+    "canSayBody_other": "{{count}} issues are raised by the facts you gave, each answered from official sources below.",
+    "cannotConclude": "What we cannot conclude",
+    "cannotNovelty": "Whether your formulation is novel or patentable. Only examination, after a professional search, decides that.",
+    "cannotTkdl": "What the restricted TKDL database contains. Access is limited to patent offices under agreement, and it was not searched.",
+    "cannotUnresolved_one": "One conflict between sources that nothing here settles.",
+    "cannotUnresolved_other": "{{count}} conflicts between sources that nothing here settles.",
+    "cannotMissingFacts_one": "Anything that turns on the one fact still missing.",
+    "cannotMissingFacts_other": "Anything that turns on the {{count}} facts still missing.",
+    "whoReviews": "Who should review this",
+    "noReviewNeeded": "Nothing here needs a professional before you act on it.",
+    "wouldSettle": "Answering these would settle more of it",
+    "level": {
+      "l0": {
+        "label": "No review needed",
+        "body": "The sources answer what you asked. The limits listed here still apply to every answer."
+      },
+      "l1": {
+        "label": "Facts missing",
+        "body": "You can take this further yourself by supplying the facts listed below."
+      },
+      "l2": {
+        "label": "Expert review advised",
+        "body": "Something here is genuinely uncertain — an issue came out weak, or a conflict needs a person to look at it."
+      },
+      "l3": {
+        "label": "Expert review needed",
+        "body": "Part of this turns on applying a provision to your facts, which is a judgement this product must not make for you."
+      }
+    },
+    "specialist": {
+      "registered_patent_agent": "A registered patent agent",
+      "traditional_knowledge_expert": "A traditional-knowledge specialist",
+      "biodiversity_abs_consultant": "A biodiversity and access-and-benefit-sharing consultant",
+      "ayush_drug_regulatory_consultant": "An Ayush drug regulatory consultant",
+      "food_safety_consultant": "A food safety consultant",
+      "trade_mark_attorney": "A trade mark attorney",
+      "geographical_indication_facilitator": "A geographical indication facilitator",
+      "intellectual_property_lawyer": "An intellectual property lawyer"
+    }
+  },
+  "conflicts": {
+    "heading": "Overlaps and conflicts",
+    "standfirst": "Two obligations can both apply without contradicting each other. Where one genuinely governs the other, the rule that decides it is named.",
+    "noIssue": "Across the whole question",
+    "needsReview": "Needs a person to decide",
+    "columns": {
+      "issue": "Issue",
+      "sourceA": "One source",
+      "sourceB": "The other",
+      "relationship": "Relationship",
+      "resolution": "Resolution"
+    },
+    "resolution": {
+      "separate_obligations": "Both apply",
+      "resolved_by_authority": "Higher authority governs",
+      "resolved_by_date": "Later instrument governs",
+      "unresolved": "Unresolved"
+    },
+    "explanation": {
+      "conflictJurisdictional": "Two legal systems ask different things of the same product. Neither overrides the other.",
+      "conflictScopeOverlap": "Different legal questions about one product, which can all apply at once.",
+      "conflictAuthority": "The same point stated at different levels of authority.",
+      "conflictTemporalSuperseded": "One instrument supersedes the other.",
+      "conflictTemporalLater": "The two took effect on different dates.",
+      "conflictClassification": "More than one category is open on the facts given.",
+      "conflictMissingFact": "A fact nobody has stated decides between two readings.",
+      "conflictTrueSource": "Equal authority, same system, both in force, and still in tension."
+    }
+  },
+  "issues": {
+    "patent": "Patent",
+    "traditional_knowledge": "Traditional knowledge",
+    "biodiversity_abs": "Biodiversity and benefit sharing",
+    "drug_regulation": "Drug regulation",
+    "food_regulation": "Food regulation",
+    "trade_mark": "Trade mark",
+    "design": "Design",
+    "geographical_indication": "Geographical indication",
+    "copyright": "Copyright",
+    "trade_secret": "Trade secret"
+  },
+  "provenance": {
+    "heading": "Why am I seeing this?",
+    "document": "Document",
+    "authority": "Published by",
+    "section": "Section",
+    "jurisdiction": "Legal system",
+    "verification": "Checked",
+    "reviewedAt": "Last confirmed",
+    "asOf": "Read on",
+    "applies": "Applies to you",
+    "needsFacts": "would need to know: {{facts}}",
+    "ranking": "Ranking signal",
+    "rankingNote": "how well this passage matched your words — not how confident the answer is",
+    "openOfficial": "Open the official source",
+    "reviewState": {
+      "verified_official": "Fetched from the official host and hashed",
+      "human_reviewed": "Read against the official original by a person",
+      "needs_review": "Awaiting review",
+      "unverified": "Not verified",
+      "superseded": "Superseded",
+      "unavailable": "Unavailable"
+    },
+    "applicability": {
+      "applies": "Applies",
+      "may_apply": "May apply",
+      "not_indicated": "Not indicated by your facts"
+    }
+  },
+  "receipt": {
+    "heading": "Answer receipt",
+    "caseId": "Answer ID",
+    "queryId": "Query ID",
+    "asOf": "Sources read on",
+    "corpusVersion": "Corpus version",
+    "jurisdiction": "Legal system",
+    "language": "Language",
+    "sources": "Source documents",
+    "verification": "Verification",
+    "verificationValue": "{{verified}} of {{total}} citations from verified sources",
+    "reviewDates": "Source review dates",
+    "noReviewYet": "No source has been confirmed by a person yet",
+    "confidenceByIssue": "Confidence by issue",
+    "overallOnly": "Whole answer: {{level}}",
+    "claimsRemoved": "Claims removed",
+    "safetyFlags": "Safety flags",
+    "noFlags": "None"
+  },
+  "abstainCode": {
+    "insufficient_authoritative_evidence": "No usable source was found for this",
+    "missing_material_facts": "A fact that decides the answer is missing",
+    "unsupported_jurisdiction": "This legal system is not covered",
+    "conflicting_authoritative_sources": "Two sources of equal standing disagree",
+    "source_status_uncertain": "A governing source may have changed",
+    "professional_interpretation_required": "This needs a provision applied to your facts",
+    "request_for_legal_verdict": "This asked for a verdict this product must not give",
+    "out_of_scope_clinical_query": "This is a clinical question",
+    "out_of_scope_non_ip": "This is outside intellectual property and these products"
+  },
+  "protection": {
+    "heading": "What you could protect",
+    "standfirst": "Six kinds of protection, and where each stands on the facts you have given. “Needs more information” is not the same as “not available”.",
+    "right": {
+      "patent": "Patent",
+      "trademark": "Trade mark",
+      "design": "Design",
+      "copyright": "Copyright",
+      "geographical_indication": "Geographical indication",
+      "trade_secret": "Trade secret"
+    },
+    "relevance": {
+      "relevant": "Relevant",
+      "possibly_relevant": "Possibly relevant",
+      "needs_more_information": "Needs more information",
+      "not_indicated": "Not indicated"
+    },
+    "whyHeading": "Why",
+    "factsHeading": "What would settle it",
+    "sourcesHeading": "Read",
+    "nextHeading": "Next step",
+    "reason": {
+      "protectionProcessDescribed": "You described a process or a distinctive feature.",
+      "protectionNeedProcess": "Nothing yet says whether there is a new process or technique.",
+      "protectionPatentGeneral": "A patent may be available for a new technical contribution.",
+      "protectionBrandGiven": "You gave a brand name.",
+      "protectionNeedBrand": "Nothing yet says whether a name or logo is involved.",
+      "protectionNoBrand": "No name or logo was mentioned.",
+      "protectionPackagingMentioned": "You mentioned packaging or appearance.",
+      "protectionNeedAppearance": "Nothing yet describes the product's appearance or packaging.",
+      "protectionLabelAndText": "Label artwork, text and photographs are original work.",
+      "protectionRegionMentioned": "You mentioned a place of origin.",
+      "protectionNoOriginClaim": "No claim was made linking the product to a place.",
+      "protectionKeptConfidential": "You said it has been kept confidential.",
+      "protectionAlreadyPublic": "It has already been made public.",
+      "protectionNeedDisclosure": "Nothing yet says whether it has been kept confidential."
+    },
+    "step": {
+      "protectionStepPriorArtSearch": "Run a prior-art search before filing anything.",
+      "protectionStepSearchRegister": "Search the trade marks register for the name.",
+      "protectionStepDecideName": "Decide whether you will sell under a name of your own.",
+      "protectionStepDesignNovelty": "Check whether the appearance is new before you publish it.",
+      "protectionStepDescribeAppearance": "Describe the shape, surface or packaging.",
+      "protectionStepKeepRecords": "Keep dated records of who made the artwork and text.",
+      "protectionStepCheckGiRegister": "Check whether a geographical indication already covers this.",
+      "protectionStepWriteItDown": "Write down what is confidential and who has access.",
+      "protectionStepDecideDisclosure": "Decide what has already been shown outside the company."
+    }
+  },
+  "sourceMatrix": {
+    "heading": "The sources this rests on",
+    "standfirst": "Every document behind this answer, with how far each has been checked.",
+    "columns": {
+      "document": "Document",
+      "authority": "Published by",
+      "jurisdiction": "Legal system",
+      "section": "Provision",
+      "status": "Checked",
+      "reviewed": "Last confirmed"
+    },
+    "notReviewed": "Not yet"
+  },
+  "brief": {
+    "open": "Prepare for expert review",
+    "heading": "Case brief",
+    "standfirst": "Everything a professional would need to pick this up, on one page.",
+    "printed": "Prepared on {{date}} by IP-SAKTI Sahayak. Information, not legal advice.",
+    "copy": "Copy summary",
+    "copied": "Copied",
+    "exportJson": "Export JSON",
+    "print": "Print",
+    "sections": {
+      "question": "The question asked",
+      "facts": "Facts stated",
+      "missing": "Facts still missing",
+      "classification": "Classification",
+      "issues": "Issues and confidence",
+      "conflicts": "Overlaps and conflicts",
+      "sources": "Sources and excerpts",
+      "unresolved": "Unresolved questions",
+      "specialists": "Suggested specialists",
+      "audit": "Audit information"
+    },
+    "noFacts": "No facts were stated in the question.",
+    "noneMissing": "Nothing material is missing.",
+    "noConflicts": "No overlap or conflict was found.",
+    "candidates": "Still open: {{classes}}"
+  },
+  "inShort": {
+    "heading": "In short",
+    "meansForYou": "What this means for you"
+  },
+  "view": {
+    "label": "How much detail",
+    "simple": "Simple",
+    "expert": "Expert",
+    "showEvidence": "Show the evidence",
+    "hideEvidence": "Hide the evidence",
+    "simpleNote": "The answer, what it means for you, and how much expert review it needs."
+  },
+  "glossary": {
+    "explainer": "Plain-language explainer",
+    "explainerNote": "Written to be read, not to be relied on. Go to the source for the words that count.",
+    "openSource": "Read the source",
+    "heading_one": "One term explained",
+    "heading_other": "{{count}} terms explained"
+  },
+  "hints": {
+    "dismiss": "Got it",
+    "start": {
+      "title": "Start by asking",
+      "body": "Type a question in your own words. You do not need the legal term for it."
+    },
+    "escalation": {
+      "title": "Where guidance ends",
+      "body": "Every answer says what it will not conclude, and who should look at the rest."
+    },
+    "sources": {
+      "title": "Every sentence has a source",
+      "body": "Tap a numbered marker to see the passage it came from and how far it has been checked."
+    }
+  },
+  "feedback": {
+    "question": "Did this answer help?",
+    "whichPart": "Which part needs work?",
+    "thanks": "Recorded, with nothing identifying you.",
+    "skip": "Rather not say",
+    "verdict": {
+      "yes": "Yes",
+      "partly": "Partly",
+      "no": "No"
+    },
+    "aspect": {
+      "the_answer": "The answer itself",
+      "the_sources": "The sources",
+      "what_to_do_next": "What to do next",
+      "why_it_could_not_conclude": "Why it would not conclude",
+      "the_language": "The language it used"
+    }
+  },
+  "voice": {
+    "speak": "Speak your question",
+    "listening": "Listening — tap to stop",
+    "note": "What you say is turned into text here and shown for you to correct. Nothing is sent until you press Ask, and no audio is kept.",
+    "unsupported": "This browser cannot turn speech into text in {{language}}. Type your question instead."
+  },
+  "helpline": {
+    "heading": "Try the helpline",
+    "notAPhoneLine": "No phone service is connected",
+    "notAPhoneLineBody": "This is a rehearsal of the conversation a helpline would have, not a call. This product has no phone number and nothing here dials anyone. The answers come from the same pipeline as the typed interface, so what a caller would hear can be checked before anyone funds a phone line.",
+    "start": "Start the rehearsal",
+    "inProgress": "Rehearsal in progress",
+    "end": "End",
+    "muteVoice": "Mute",
+    "unmuteVoice": "Unmute",
+    "speak": "Hold to speak",
+    "typeInstead": "Or type what the caller would say",
+    "transcript": "Transcript",
+    "caller": "Caller",
+    "sahayak": "Sahayak",
+    "thinking": "Looking through the sources…",
+    "greeting": "IP-SAKTI Sahayak. Ask about protecting or registering an Ayurvedic product, and I will answer from official sources. I cannot give medical or dosage advice.",
+    "nothing": "I could not find anything in the sources on that.",
+    "failed": "Something went wrong reaching the sources. Nothing was answered.",
+    "summary": "After the call",
+    "summaryBody": "{{count}} question(s) asked over {{duration}}.",
+    "summaryNotKept": "Nothing from this rehearsal is stored. No audio existed at any point, and the transcript is gone when you leave the page."
+  },
+  "document": {
+    "heading": "Ask about your own document",
+    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first, because a PDF often holds something other than what you expect — and a scanned page holds no text at all.",
+    "choose": "Choose a file",
+    "limits": "PDF, .txt or .md. Up to 10 MB.",
+    "reading": "Reading the file…",
+    "failed": "That file could not be read",
+    "remove": "Remove",
+    "extracted": "{{characters}} characters read.",
+    "truncated": "Only the beginning is shown.",
+    "use": "Put this text in the question box",
+    "notStored": "Nothing is uploaded to storage. The file is read and dropped; this text stays in your browser until you close the tab."
+  },
+  "thread": {
+    "heading": "This conversation",
+    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — this is a record of what you asked, not a memory.",
+    "answered": "Answered, {{confidence}} confidence, {{count}} source(s)",
+    "declined": "Declined — the sources did not carry it",
+    "failed": "Could not be answered — something went wrong",
+    "carried": "Asked together with the question before it."
+  }
+}

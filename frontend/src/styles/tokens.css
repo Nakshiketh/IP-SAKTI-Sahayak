@@ -164,6 +164,35 @@
     -webkit-text-size-adjust: 100%;
   }
 
+  /*
+   * Mixed direction, one paragraph at a time.
+   *
+   * In a right-to-left document, a paragraph of English is still laid out
+   * under RTL paragraph rules, which throws its trailing punctuation to the
+   * front: "Ancient knowledge." renders as ".Ancient knowledge". Arabic sits
+   * at a low coverage, so most of what an Arabic reader sees is English
+   * fallback, and every sentence of it would have looked broken.
+   *
+   * `plaintext` tells the browser to decide each paragraph's direction from
+   * its own first strong character instead of inheriting the page's. An
+   * English paragraph lays out left-to-right with its full stop at the end; an
+   * Arabic one is unaffected, because its first strong character is Arabic. So
+   * this costs a translated page nothing and fixes an untranslated one.
+   *
+   * Scoped to RTL: in a left-to-right page there is nothing to correct, and
+   * changing direction resolution everywhere would be a wider change than the
+   * problem needs.
+   *
+   * The descendant selector is not belt and braces. `unicode-bidi` does not
+   * inherit, and the hero is an <h1> of three `display: block` spans — each its
+   * own bidi paragraph, each reverting to the page direction. The rule on the
+   * h1 alone fixed nothing a reader could see.
+   */
+  :root[dir='rtl'] :is(p, li, h1, h2, h3, dd, dt, td, th, figcaption, blockquote),
+  :root[dir='rtl'] :is(p, li, h1, h2, h3, dd, dt, td, th, figcaption, blockquote) * {
+    unicode-bidi: plaintext;
+  }
+
   body {
     margin: 0;
     background-color: rgb(var(--bone-rgb));

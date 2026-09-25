@@ -2,40 +2,44 @@
   "__untranslated": true,
   "brand": {
     "name": "IP-SAKTI Sahayak",
-    "descriptor": "Ayurveda, intellectual property and regulation"
+    "descriptor": "Ayurveda, geistiges Eigentum und Regulierung"
   },
   "nav": {
-    "label": "Main",
-    "home": "Home",
-    "sahayak": "Ask Sahayak",
-    "covered": "What's covered",
-    "howItWorks": "How it works",
-    "sources": "Sources",
-    "about": "About"
+    "label": "Haupt",
+    "home": "Startseite",
+    "sahayak": "Sahayak fragen",
+    "covered": "Was abgedeckt ist",
+    "howItWorks": "So funktioniert es",
+    "sources": "Quellen",
+    "about": "Über"
   },
   "cta": {
-    "ask": "Ask Sahayak",
-    "check": "Check my product"
+    "ask": "Sahayak fragen",
+    "check": "Mein Produkt prüfen"
   },
   "menu": {
-    "open": "Menu",
-    "close": "Close menu",
-    "title": "Menu"
+    "open": "Menü",
+    "close": "Menü schließen",
+    "title": "Menü"
   },
   "language": {
-    "label": "Language",
+    "label": "Sprache",
     "changed": "Language changed to {{language}}",
-    "partial": "{{percent}}% translated",
-    "groupIndian": "Indian languages",
-    "groupInternational": "International"
+    "partial": "{{percent}} % übersetzt",
+    "groupIndian": "Indische Sprachen",
+    "groupInternational": "International",
+    "selectTitle": "Sprache auswählen",
+    "searchPlaceholder": "Sprachen suchen",
+    "clearSearch": "Suche löschen",
+    "noResults": "Keine Sprachen gefunden"
   },
-  "skipToContent": "Skip to content",
+  "skipToContent": "Zum Inhalt springen",
   "footer": {
     "disclaimer": "IP-SAKTI Sahayak provides information retrieved from published legal and regulatory sources. It does not provide legal advice, grant intellectual-property rights, approve products, or replace any regulatory authority. Verify important decisions against current official sources and a qualified professional.",
     "sourceMeta": "Sources as of {{date}} · {{count}} documents · v{{version}}",
     "sourceMetaEmpty": "v{{version}}",
     "sourceMetaUnavailable": "Source information is unavailable right now.",
-    "privacy": "What this product stores"
+    "privacy": "Was dieses Produkt speichert"
   },
   "notFound": {
     "title": "There is no page here",
@@ -53,8 +57,8 @@
     "body": "Pages already open still work. Anything that needs the service — asking a question, opening a source passage — will wait until you are back."
   },
   "actions": {
-    "close": "Close",
-    "remove": "Remove"
+    "close": "Schließen",
+    "remove": "Entfernen"
   },
   "record": {
     "notAuthority": "Filed or granted record — evidence of what was filed, not a statement of law. Snapshot {{date}}.",
@@ -113,7 +117,7 @@
     "provenancePending": "provenance pending review"
   },
   "jurisdiction": {
-    "IN": "India",
+    "IN": "Indien",
     "INTL": "International"
   },
   "productClass": {
