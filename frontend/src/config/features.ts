@@ -38,7 +38,7 @@ export const FEATURES: FeatureFlags = {
   voice: true,
   helplineSim: false,
   documentIntel: false,
-  adminInsights: false,
+  adminInsights: true,
   scanBadgeLogin: true,
   publicAsk: false,
 };

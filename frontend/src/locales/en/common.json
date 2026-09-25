@@ -211,5 +211,53 @@
     "timeoutRetry": "Try again",
     "timeoutShorter": "Ask a shorter question",
     "partial": "Part of this finished. What is shown below did work."
+  },
+  "insights": {
+    "meta": {
+      "title": "Insights",
+      "description": "Where this deployment is used, where it works, and where it does not."
+    },
+    "heading": "Insights",
+    "standfirst": "Usage for whoever runs this deployment. Built from the audit log, which holds a hash of each question and never the words — so nothing here can show what anyone asked.",
+    "loading": "Reading the audit log…",
+    "retry": "Try again",
+    "noBuckets": "Nothing above the reporting threshold.",
+    "disabled": {
+      "heading": "Insights are switched off here",
+      "body": "This deployment has feature_admin_insights set to false, so the endpoint does not exist rather than refusing. Turn it on with SAHAYAK_FEATURE_ADMIN_INSIGHTS=true."
+    },
+    "forbidden": {
+      "heading": "This account is not an administrator",
+      "body": "Signing in is not enough to read usage for a deployment. Administrators are named in SAHAYAK_ADMIN_USERNAMES, which is empty by default, because an administrator should be something a deployment grants rather than something that exists by accident."
+    },
+    "unreachable": {
+      "heading": "Could not reach the server",
+      "body": "The figures could not be read. Nothing is shown rather than a stale or partial number."
+    },
+    "empty": {
+      "heading": "Nobody has asked anything yet",
+      "body": "That is a fact worth showing, and it is not the same as a 0% abstention rate. Rates appear once there are rows behind them."
+    },
+    "figures": {
+      "total": "Questions",
+      "abstention": "Abstained",
+      "escalation": "Escalated",
+      "refusal": "Refused",
+      "p50": "Median response",
+      "p95": "95th percentile"
+    },
+    "suppressed": {
+      "heading": "Some counts are withheld",
+      "body": "A category with fewer than {{minimum}} questions is not shown: in a domain this specific, four questions is four people, not a statistic. {{count}} categor(y/ies) were withheld on this page, so the columns below will not add up to the total — which is the point."
+    },
+    "byJurisdiction": "By jurisdiction",
+    "byLanguage": "By language",
+    "bySource": "Most used sources",
+    "gaps": {
+      "heading": "Where the corpus fell short",
+      "standfirst": "Grouped by the reason the product gave for declining, never by guessing what the question was about.",
+      "none": "No group of abstentions is large enough to report.",
+      "row": "questions reached: {{reason}}"
+    }
   }
 }

@@ -146,9 +146,23 @@ class Settings(BaseSettings):
     feature_voice: bool = True
     feature_helpline_sim: bool = False
     feature_document_intel: bool = False
-    feature_admin_insights: bool = False
+    feature_admin_insights: bool = True
     feature_scan_badge_login: bool = True
     feature_public_ask: bool = False
+
+    # -- administration ----------------------------------------------------
+    #: Usernames allowed to read /api/v1/admin/insight, comma-separated.
+    #:
+    #: Named here rather than as a role on the accounts table. A role column is
+    #: a migration on the table every sign-in depends on, for a list that in
+    #: practice holds one or two names and changes when a deployment changes.
+    #: Empty means nobody, which is the right default: an administrator is
+    #: something a deployment grants, never something that exists by accident.
+    admin_usernames: str = ""
+
+    @property
+    def admin_username_list(self) -> list[str]:
+        return [name.strip() for name in self.admin_usernames.split(",") if name.strip()]
 
     @property
     def cors_origin_list(self) -> list[str]:

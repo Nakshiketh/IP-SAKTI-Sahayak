@@ -14,6 +14,7 @@ from app.api import (
     demo,
     feedback,
     health,
+    insight,
     privacy,
     query,
     records,
@@ -137,6 +138,7 @@ def create_app() -> FastAPI:
     app.include_router(feedback.router)
     app.include_router(privacy.router)
     app.include_router(demo.router)
+    app.include_router(insight.router)
     return app
 
 

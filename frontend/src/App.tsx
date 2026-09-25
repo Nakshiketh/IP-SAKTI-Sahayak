@@ -1,6 +1,7 @@
 import { type ComponentType, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
+import { FEATURES } from '@/config/features';
 import { Shell } from '@/components/layout/Shell';
 import { i18n } from '@/i18n';
 import { ensureNamespace } from '@/i18n/resources';
@@ -65,6 +66,7 @@ const About = route(() => import('@/routes/About'));
 const Privacy = route(() => import('@/routes/Privacy'), 'privacy');
 const DesignSystem = route(() => import('@/routes/DesignSystem'));
 const AuditLog = route(() => import('@/routes/AuditLog'));
+const Insights = route(() => import('@/routes/Insights'));
 
 export default function App() {
   return (
@@ -107,6 +109,11 @@ function Gate() {
           <Route path="/sources" element={<Sources />} />
           <Route path="/about" element={<About />} />
           <Route path="/privacy" element={<Privacy />} />
+          {/* Not in the navigation. It is for whoever runs the deployment, and
+              the server refuses it for everyone else whether or not a link
+              exists — the flag removes the route, and the allowlist decides
+              who may read it. */}
+          {FEATURES.adminInsights ? <Route path="/insights" element={<Insights />} /> : null}
           <Route path="*" element={<NotFound />} />
         </Route>
         {import.meta.env.DEV ? <Route path="/design" element={<DesignSystem />} /> : null}
