@@ -65,6 +65,7 @@ function route<P>(load: () => Promise<{ default: ComponentType<P> }>, ...namespa
 
 const Login = route(() => import('@/routes/Login'));
 const CreatePassword = route(() => import('@/routes/CreatePassword'));
+const ForgotPassword = route(() => import('@/routes/ForgotPassword'));
 const Sahayak = route(() => import('@/routes/Sahayak'), 'sahayak');
 const Assessment = route(() => import('@/routes/Assessment'), 'assessment');
 // `sahayak` too: the protection map and the roadmap are rendered here.
@@ -92,7 +93,8 @@ export default function App() {
  * Nothing renders until the server has said who is signed in (`checking`), so
  * a protected page never flashes for someone who is not. Then:
  *
- * - **Anonymous:** `/login`, and every other address sends the reader there.
+ * - **Anonymous:** `/login` and `/forgot-password`; every other address sends
+ *   the reader to `/login`.
  * - **Restricted** (temporary password): `/create-password`, and nothing else.
  * - **Signed in:** the site. `/login` and `/create-password` go to the home
  *   page, which is where a sign-in lands.
@@ -109,6 +111,7 @@ function Gate() {
       <Suspense fallback={null}>
         <Routes>
           <Route path="/login" element={<Login onSignedIn={refresh} />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Suspense>
@@ -150,6 +153,7 @@ function Gate() {
         </Route>
         <Route path="/login" element={<Navigate to="/" replace />} />
         <Route path="/create-password" element={<Navigate to="/" replace />} />
+        <Route path="/forgot-password" element={<Navigate to="/" replace />} />
         {import.meta.env.DEV ? <Route path="/design" element={<DesignSystem />} /> : null}
         {import.meta.env.DEV ? <Route path="/audit" element={<AuditLog />} /> : null}
       </Routes>

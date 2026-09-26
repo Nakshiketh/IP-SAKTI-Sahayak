@@ -68,9 +68,46 @@ def _signed_in_member(request: pytest.FixtureRequest):
     from app.main import app
 
     limits.reset_all()
+    # Send limits are counted from the codes table, so each test starts with
+    # none: otherwise the suite's own earlier sends would count against it.
+    # This is the throwaway members database set above, never the real one.
+    from app.auth.store import connect
+
+    with connect() as connection:
+        connection.execute("DELETE FROM otp_codes")
+        connection.execute("DELETE FROM reset_tokens")
+        connection.execute("DELETE FROM auth_challenges")
+        connection.commit()
     if request.node.get_closest_marker("real_auth"):
         yield
         return
     app.dependency_overrides[require_member] = lambda: TEST_MEMBER
     yield
     app.dependency_overrides.pop(require_member, None)
+
+
+@pytest.fixture
+def outbox(monkeypatch: pytest.MonkeyPatch) -> list[dict[str, str]]:
+    """Capture email instead of sending it. Exists only inside a test run.
+
+    Swaps `app.auth.email.send_email` with pytest's monkeypatch; the application
+    has no switch that could do the same, so there is no way to reach this in
+    development or production.
+    """
+    from app.auth import email
+
+    sent: list[dict[str, str]] = []
+
+    def capture(*, to: str, subject: str, html: str, text: str) -> email.Sent:
+        sent.append({"to": to, "subject": subject, "html": html, "text": text})
+        return email.Sent(code=250, reply="OK queued (test)")
+
+    monkeypatch.setattr(email, "send_email", capture)
+    return sent
+
+
+def code_from(message: dict[str, str]) -> str:
+    """The six-digit code in a captured verification email."""
+    import re
+
+    return re.search(r"^\s+(\d{6})$", message["text"], re.M).group(1)

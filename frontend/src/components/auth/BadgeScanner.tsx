@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthSpinner } from '@/components/auth/AuthField';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { cn } from '@/lib/cn';
-import { AuthError, logInWithCardImage, type NextStep } from '@/services/auth';
+import { AuthError, verifyCardImage, type CardChallenge } from '@/services/auth';
 
 /**
  * Sign-in with the live camera and the one authorised QR code.
@@ -102,7 +102,7 @@ export function BadgeScanner({
 }: {
   open: boolean;
   onClose: () => void;
-  onSignedIn: (next: NextStep) => void;
+  onSignedIn: (challenge: CardChallenge) => void;
 }) {
   const titleId = useId();
   const { t } = useTranslation('common');
@@ -134,17 +134,22 @@ export function BadgeScanner({
     async (image: Blob, source: 'camera' | 'upload'): Promise<boolean> => {
       inFlightRef.current = true;
       try {
-        const next = await logInWithCardImage(image);
+        const challenge = await verifyCardImage(image);
         doneRef.current = true;
         setPhase('verified');
-        window.setTimeout(() => onSignedIn(next), 700);
+        window.setTimeout(() => onSignedIn(challenge), 700);
         return true;
       } catch (error) {
         const code = error instanceof AuthError ? error.code : 'unknown';
         if (code === 'QR_INVALID') {
           setDenial(null);
           setPhase('denied');
-        } else if (code === 'QR_REVOKED' || code === 'MEMBER_INACTIVE') {
+        } else if (
+          code === 'QR_REVOKED' ||
+          code === 'MEMBER_INACTIVE' ||
+          code === 'OTP_SEND_FAILED' ||
+          code === 'OTP_SEND_LIMIT'
+        ) {
           setDenial(error instanceof AuthError && error.message ? error.message : null);
           setPhase('denied');
         } else if (code === 'no_code') {

@@ -19,6 +19,7 @@ from app.auth import cards
 from app.auth.store import connect
 from app.core import badge
 from app.main import app
+from tests.conftest import code_from
 from tests.members import CSRF, make_member
 
 #: The Digital QR Badge as it was issued. Kept here, not in the web app's public
@@ -38,7 +39,7 @@ def card_holder() -> dict[str, str]:
 
 
 @pytest.fixture
-def client(card_holder) -> TestClient:
+def client(card_holder, outbox) -> TestClient:
     return TestClient(app, headers=CSRF)
 
 
@@ -62,12 +63,34 @@ def jpeg(pixels: np.ndarray) -> bytes:
 
 
 def show(client: TestClient, image: bytes, content_type: str = "image/jpeg"):
-    return client.post("/api/v1/auth/badge", content=image, headers={"Content-Type": content_type})
+    return client.post(
+        "/api/v1/auth/qr/verify", content=image, headers={"Content-Type": content_type}
+    )
 
 
 class TestAuthorisedQr:
-    def test_the_authorised_code_signs_in(self, client: TestClient) -> None:
+    def test_the_card_starts_a_challenge_and_emails_a_code(
+        self, client: TestClient, card_holder, outbox
+    ) -> None:
         response = show(client, jpeg(render(badge.BADGE)))
+        assert response.status_code == 200
+        body = response.json()
+        assert set(body) == {"challengeId", "member", "maskedEmail", "resendAvailableAt"}
+        assert body["member"]["memberId"] == card_holder["member_id"]
+        assert set(body["member"]) == {"name", "role", "institution", "memberId"}
+        assert "@example.org" in body["maskedEmail"] and "*" in body["maskedEmail"]
+        (message,) = outbox
+        assert message["to"] == f"{card_holder['username']}@example.org"
+        # The card alone opens nothing.
+        assert "set-cookie" not in response.headers
+        assert client.get("/api/v1/auth/me").status_code == 401
+
+    def test_the_code_completes_the_sign_in(self, client: TestClient, outbox) -> None:
+        challenge = show(client, jpeg(render(badge.BADGE))).json()["challengeId"]
+        response = client.post(
+            "/api/v1/auth/otp/verify",
+            json={"challengeId": challenge, "code": code_from(outbox[0])},
+        )
         assert response.status_code == 200
         assert response.json() == {"next": "dashboard"}
         assert client.get("/api/v1/auth/me").status_code == 200
@@ -139,18 +162,22 @@ class TestAuthorisedQr:
         assert response.status_code == 403
         assert response.json()["code"] == "MEMBER_INACTIVE"
 
-    def test_a_card_on_a_temporary_password_opens_a_restricted_session(self) -> None:
+    def test_a_card_on_a_temporary_password_opens_a_restricted_session(self, outbox) -> None:
         member = make_member(must_change=True)
         with connect() as connection:
             cards.issue_card(connection, member["member_id"])
         client = TestClient(app, headers=CSRF)
-        response = show(client, jpeg(render(badge.BADGE)))
+        challenge = show(client, jpeg(render(badge.BADGE))).json()["challengeId"]
+        response = client.post(
+            "/api/v1/auth/otp/verify",
+            json={"challengeId": challenge, "code": code_from(outbox[0])},
+        )
         assert response.json() == {"next": "change-password"}
         assert client.get("/api/v1/auth/me").json()["restricted"] is True
 
     def test_sign_in_without_the_csrf_header_is_refused(self, card_holder) -> None:
         response = TestClient(app).post(
-            "/api/v1/auth/badge",
+            "/api/v1/auth/qr/verify",
             content=jpeg(render(badge.BADGE)),
             headers={"Content-Type": "image/jpeg"},
         )

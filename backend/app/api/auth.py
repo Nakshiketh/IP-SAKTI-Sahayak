@@ -7,22 +7,24 @@ browser can read from script says who is signed in except `GET /me`.
 There is no registration. Members are issued: the seed creates them and
 `issue-card` gives them a card (`python -m app.auth.cli --help`).
 
-**QR sign-in, for now.** `POST /badge` still signs a member straight in when the
-camera shows their card, as the old sign-in did. Phase 4 puts an emailed
-one-time code between the card and the session; until then the card alone is
-the credential, exactly as before this change.
+**QR sign-in** is two steps: the card shown to the camera (`/qr/verify`), then
+the code emailed to the member (`/otp/verify`). The card alone opens nothing.
+
+**Forgot password** never says whether the details matched anyone: the same
+answer, the same challenge id and the same timing, either way.
 """
 
 from __future__ import annotations
 
+import contextlib
 import time
 from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends, Request, Response
+from fastapi import APIRouter, BackgroundTasks, Depends, Request, Response
 from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
-from app.auth import limits, passwords, sessions
+from app.auth import limits, otp, passwords, reset, sessions
 from app.auth.cards import BADGE_TOKEN
 from app.auth.deps import (
     CurrentMember,
@@ -32,8 +34,8 @@ from app.auth.deps import (
     require_member,
     user_agent,
 )
-from app.auth.hashing import hash_password, token_hash, verify_password
-from app.auth.members import log_event
+from app.auth.hashing import hash_password, same, token_hash, verify_password
+from app.auth.members import log_event, mask_email
 from app.auth.store import connect
 from app.core.badge import is_badge
 from app.core.errors import ApiError, RateLimited
@@ -183,15 +185,112 @@ def login(body: LoginBody, request: Request, response: Response) -> NextStep:
 #: Still images only; anything else is refused before it reaches the matcher.
 BADGE_IMAGE_TYPES = ("image/jpeg", "image/png", "image/webp")
 
+SEND_FAILED = "We couldn't send the verification email. Try again in a moment."
+FORGOT_SENT = (
+    "If these details match a registered member, a verification code has been sent "
+    "to the registered email."
+)
+RESET_EXPIRED = "This reset has expired. Request a new code."
+RESET_COOKIE_PATH = "/api/v1/auth/password/reset"
 
-@router.post("/badge", response_model=NextStep)
-async def badge(request: Request, response: Response) -> NextStep:
-    """Sign in by showing a member card to the camera.
 
-    The body is one still image. It is matched in memory against the card
-    pattern (`app.core.badge`) and discarded. The pattern resolves to a card
-    row, and the card to its member; a revoked card or an inactive member is
-    refused with its own code.
+class MemberCard(BaseModel):
+    name: str
+    role: str
+    institution: str
+    member_id: str = Field(serialization_alias="memberId")
+
+
+class QrVerified(BaseModel):
+    challenge_id: str = Field(serialization_alias="challengeId")
+    member: MemberCard
+    masked_email: str = Field(serialization_alias="maskedEmail")
+    resend_available_at: float = Field(serialization_alias="resendAvailableAt")
+
+
+class ChallengeBody(BaseModel):
+    challenge_id: str = Field(min_length=1, max_length=64, alias="challengeId")
+
+
+class CodeBody(ChallengeBody):
+    code: str = Field(max_length=16)
+
+
+class Resent(BaseModel):
+    resend_available_at: float = Field(serialization_alias="resendAvailableAt")
+
+
+class ForgotBody(BaseModel):
+    identifier: str = Field(min_length=1, max_length=64)
+    email: str = Field(min_length=1, max_length=200)
+
+
+class ForgotSent(BaseModel):
+    message: str
+    challenge_id: str = Field(serialization_alias="challengeId")
+
+
+class ResetBody(BaseModel):
+    new_password: str = Field(max_length=256, alias="newPassword")
+    confirm_password: str = Field(max_length=256, alias="confirmPassword")
+
+
+class Done(BaseModel):
+    message: str
+
+
+def _attempts_left(remaining: int) -> str:
+    return f"That code is incorrect. {remaining} attempt{'' if remaining == 1 else 's'} left."
+
+
+def _otp_refusal(error: otp.OtpError) -> ApiError:
+    """The API's answer for each way a code or a send can be refused."""
+    match error:
+        case otp.OtpIncorrect():
+            remaining = int(error.details.get("attempts_remaining", 0))
+            return ApiError(
+                "OTP_INCORRECT",
+                _attempts_left(remaining),
+                400,
+                extra={"attemptsRemaining": remaining},
+            )
+        case otp.OtpExpired():
+            return ApiError("OTP_EXPIRED", "This code has expired. Request a new one.", 400)
+        case otp.OtpLocked():
+            return ApiError(
+                "OTP_LOCKED",
+                "Too many incorrect attempts. Scan your Member ID again to get a new code.",
+                400,
+            )
+        case otp.ChallengeExpired():
+            return ApiError("CHALLENGE_EXPIRED", "This verification has expired. Start again.", 400)
+        case otp.OtpCooldown():
+            return ApiError(
+                "OTP_COOLDOWN",
+                "Wait a moment before asking for another code.",
+                429,
+                extra={"retryAfter": int(error.details.get("retry_after", 60))},
+            )
+        case otp.OtpSendLimit():
+            return ApiError("OTP_SEND_LIMIT", "Too many codes requested. Try again later.", 429)
+        case _:
+            return ApiError("OTP_SEND_FAILED", SEND_FAILED, 503)
+
+
+@router.post("/qr/verify", response_model=QrVerified, response_model_by_alias=True)
+async def qr_verify(request: Request) -> QrVerified:
+    """Show a member card to the camera; on a match, email a code.
+
+    The body is one still image, matched in memory against the card pattern
+    (`app.core.badge`) and discarded. The card has no readable payload (it is
+    the existing QR badge, kept at the member's request), so the image, not a
+    decoded string, is what is sent. A match resolves to the card's member; a
+    revoked card or an inactive member is refused by name. Nothing about the
+    member is taken from the request.
+
+    On a match: a login challenge is created, a code is emailed, and the reader
+    is shown who they are signing in as. No session exists until the code is
+    entered at `/otp/verify`.
     """
     check_csrf(request)
     ip, agent = client_ip(request), user_agent(request)
@@ -212,6 +311,12 @@ async def badge(request: Request, response: Response) -> NextStep:
     if not match:
         raise ApiError("QR_INVALID", QR_INVALID, 403)
 
+    # Frames are cheap and arrive several a second; a recognised card starts a
+    # challenge and sends an email, so it has a limit of its own.
+    retry_after = limits.qr_match_per_ip().check(ip)
+    if retry_after:
+        raise RateLimited(retry_after)
+
     digest = token_hash(BADGE_TOKEN)
     with connect() as connection:
         card = connection.execute(
@@ -231,14 +336,190 @@ async def badge(request: Request, response: Response) -> NextStep:
         if not card["is_active"]:
             raise ApiError("MEMBER_INACTIVE", "This membership is not active.", 403)
         log_event(connection, "qr_verified", card["id"], ip, agent)
+        challenge_id = otp.create_challenge(connection, card["id"], "login")
+
+    try:
+        issued = await run_in_threadpool(_issue, challenge_id, ip)
+    except otp.OtpError as error:
+        raise _otp_refusal(error) from None
+
+    return QrVerified(
+        challenge_id=challenge_id,
+        member=MemberCard(
+            name=card["name"],
+            role=card["role"],
+            institution=card["institution"],
+            member_id=card["member_id"],
+        ),
+        masked_email=mask_email(card["email"]),
+        resend_available_at=issued.resend_available_at,
+    )
+
+
+def _issue(challenge_id: str, ip: str) -> otp.Issued:
+    """Issue a code on a connection of its own (it may run on another thread)."""
+    with connect() as connection:
+        return otp.issue_code(connection, challenge_id, ip=ip)
+
+
+@router.post("/otp/resend", response_model=Resent, response_model_by_alias=True)
+def otp_resend(body: ChallengeBody, request: Request) -> Resent:
+    """A new code for a live challenge, replacing the last one. Send limits apply."""
+    check_csrf(request)
+    try:
+        issued = _issue(body.challenge_id, client_ip(request))
+    except otp.OtpError as error:
+        raise _otp_refusal(error) from None
+    return Resent(resend_available_at=issued.resend_available_at)
+
+
+@router.post("/otp/verify", response_model=NextStep)
+def otp_verify(body: CodeBody, request: Request, response: Response) -> NextStep:
+    """The emailed code for a QR sign-in. On success, a session."""
+    check_csrf(request)
+    ip = client_ip(request)
+    retry_after = limits.otp_verify_per_ip().check(ip)
+    if retry_after:
+        raise RateLimited(retry_after)
+    with connect() as connection:
+        try:
+            member_fk = otp.verify_code(
+                connection, body.challenge_id, body.code, purpose="login", ip=ip
+            )
+        except otp.OtpError as error:
+            raise _otp_refusal(error) from None
         now = time.time()
         connection.execute(
             "UPDATE members SET last_login_at = ?, updated_at = ? WHERE id = ?",
-            (now, now, card["id"]),
+            (now, now, member_fk),
         )
         connection.commit()
+        log_event(connection, "login_success", member_fk, ip, user_agent(request))
+        member = connection.execute("SELECT * FROM members WHERE id = ?", (member_fk,)).fetchone()
+    return _start_session(request, response, dict(member))
 
-    return _start_session(request, response, dict(card))
+
+# -- forgot password -------------------------------------------------------------
+
+
+@router.post("/password/forgot", response_model=ForgotSent, response_model_by_alias=True)
+def password_forgot(body: ForgotBody, request: Request, background: BackgroundTasks) -> ForgotSent:
+    """Start a password reset. The answer is the same whether or not anyone matched.
+
+    Matching details get a real challenge and an emailed code; anything else
+    gets a decoy challenge with no member, which no code will ever satisfy.
+    The code is issued after the response in both cases, so a real match takes
+    no longer to answer than a miss.
+    """
+    check_csrf(request)
+    ip = client_ip(request)
+    identifier = body.identifier.strip().lower()
+    for limiter, key in (
+        (limits.forgot_per_identifier(), identifier),
+        (limits.forgot_per_ip(), ip),
+    ):
+        retry_after = limiter.check(key)
+        if retry_after:
+            raise RateLimited(retry_after)
+
+    with connect() as connection:
+        row = connection.execute(
+            "SELECT id, email FROM members WHERE (username = ? OR lower(member_id) = ?)"
+            " AND is_active = 1",
+            (identifier, identifier),
+        ).fetchone()
+        matched = row is not None and same(row["email"], body.email.strip().lower())
+        challenge_id = otp.create_challenge(
+            connection, row["id"] if matched else None, "password_reset"
+        )
+        if matched:
+            log_event(connection, "password_reset_requested", row["id"], ip, user_agent(request))
+
+    background.add_task(_send_reset_code, challenge_id, ip)
+    return ForgotSent(message=FORGOT_SENT, challenge_id=challenge_id)
+
+
+def _send_reset_code(challenge_id: str, ip: str) -> None:
+    """After the response: issue (and, for a real member, email) the code."""
+    # A failure is already an auth event where there is a member, and the
+    # request's answer could not have depended on it.
+    with contextlib.suppress(otp.OtpError):
+        _issue(challenge_id, ip)
+
+
+@router.post("/password/forgot/verify", response_model=Done)
+def password_forgot_verify(body: CodeBody, request: Request, response: Response) -> Done:
+    """The emailed reset code. On success, a ten-minute, single-use reset cookie."""
+    check_csrf(request)
+    ip = client_ip(request)
+    retry_after = limits.otp_verify_per_ip().check(ip)
+    if retry_after:
+        raise RateLimited(retry_after)
+    with connect() as connection:
+        try:
+            member_fk = otp.verify_code(
+                connection, body.challenge_id, body.code, purpose="password_reset", ip=ip
+            )
+        except otp.OtpError as error:
+            raise _otp_refusal(error) from None
+        raw = reset.issue(connection, member_fk)
+    response.set_cookie(
+        reset.COOKIE_NAME,
+        raw,
+        max_age=reset.LIFETIME_SECONDS,
+        path=RESET_COOKIE_PATH,
+        httponly=True,
+        samesite="strict",
+        secure=get_settings().cookie_secure,
+    )
+    return Done(message="Code verified. Choose a new password.")
+
+
+@router.post("/password/reset", response_model=Done)
+def password_reset(body: ResetBody, request: Request, response: Response) -> Done:
+    """Set a new password with the reset cookie. Ends every session the member has."""
+    check_csrf(request)
+    raw = request.cookies.get(reset.COOKIE_NAME, "")
+    with connect() as connection:
+        # Looked at before it is spent, so a password that breaks a rule can be
+        # corrected without starting the reset again.
+        holder = reset.holder(connection, raw)
+        if holder is None:
+            raise ApiError("RESET_EXPIRED", RESET_EXPIRED, 400)
+        found = passwords.problems(
+            body.new_password,
+            body.confirm_password,
+            username=holder["username"],
+            member_id=holder["member_id"],
+            current_hash=holder["password_hash"],
+        )
+        if found:
+            raise ApiError(found[0], "The new password does not meet the rules.", 422)
+
+        member_fk = reset.consume(connection, raw)
+        if member_fk is None:
+            raise ApiError("RESET_EXPIRED", RESET_EXPIRED, 400)
+        now = time.time()
+        connection.execute(
+            "UPDATE members SET password_hash = ?, must_change_password = 0,"
+            " password_changed_at = ?, failed_login_count = 0, locked_until = NULL,"
+            " updated_at = ? WHERE id = ?",
+            (hash_password(body.new_password), now, now, member_fk),
+        )
+        connection.commit()
+        sessions.revoke_all(connection, member_fk)
+        log_event(connection, "password_reset", member_fk, client_ip(request), user_agent(request))
+
+    response.delete_cookie(
+        reset.COOKIE_NAME,
+        path=RESET_COOKIE_PATH,
+        httponly=True,
+        samesite="strict",
+        secure=get_settings().cookie_secure,
+    )
+    # This browser's own session, if it had one, is over too.
+    _clear_cookie(response)
+    return Done(message="Password updated. Log in with your new password.")
 
 
 @router.post("/password/change", response_model=NextStep)

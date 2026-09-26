@@ -240,6 +240,30 @@
       "password_unchanged": "Choose a password different from your temporary one.",
       "password_is_identifier": "Don't use your username or Member ID as your password.",
       "password_mismatch": "The two passwords do not match."
+    },
+    "forgotTitle": "Reset your password",
+    "forgotBody": "Enter your Member ID or username and the email registered to your membership.",
+    "registeredEmail": "Registered email",
+    "forgotSend": "Send verification code",
+    "forgotStartAgain": "Start again",
+    "forgotNewPassword": "Choose a new password",
+    "backToLogin": "Back to log in",
+    "code": {
+      "verified": "Member ID verified",
+      "name": "Name",
+      "role": "Role",
+      "institution": "Institution",
+      "memberId": "Member ID",
+      "title": "Enter your verification code",
+      "sentTo": "We sent a 6-digit code to {{email}}. It expires in 5 minutes.",
+      "sentReset": "Enter the 6-digit code from the email. It expires in 5 minutes.",
+      "label": "6-digit code",
+      "verify": "Verify",
+      "checking": "Checking the code…",
+      "resendIn": "Resend code in {{time}}",
+      "resend": "Resend code",
+      "resent": "A new code has been sent.",
+      "scanAgain": "Scan your Member ID again"
     }
   },
   "states": {

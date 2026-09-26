@@ -28,7 +28,38 @@ def badge_per_ip() -> RateLimiter:
     return RateLimiter(240, 60)
 
 
+@lru_cache
+def qr_match_per_ip() -> RateLimiter:
+    """Recognised cards, which start a challenge and send an email: 10 a minute."""
+    return RateLimiter(10, 60)
+
+
+@lru_cache
+def otp_verify_per_ip() -> RateLimiter:
+    """Code guesses across all challenges: 30 a minute from one address."""
+    return RateLimiter(30, 60)
+
+
+@lru_cache
+def forgot_per_identifier() -> RateLimiter:
+    """Forgot-password requests naming one identifier: 3 an hour, member or not."""
+    return RateLimiter(3, 60 * 60)
+
+
+@lru_cache
+def forgot_per_ip() -> RateLimiter:
+    """Forgot-password requests from one address: 10 an hour."""
+    return RateLimiter(10, 60 * 60)
+
+
 def reset_all() -> None:
     """For tests: empty every bucket."""
-    for limiter in (login_per_ip(), badge_per_ip()):
+    for limiter in (
+        login_per_ip(),
+        badge_per_ip(),
+        qr_match_per_ip(),
+        otp_verify_per_ip(),
+        forgot_per_identifier(),
+        forgot_per_ip(),
+    ):
         limiter.reset()

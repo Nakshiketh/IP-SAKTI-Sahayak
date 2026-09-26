@@ -25,12 +25,20 @@ export type NextStep = 'change-password' | 'dashboard';
 export class AuthError extends Error {
   readonly code: string;
   readonly status: number;
+  /** Extra fields the server sent beside the message, e.g. `attemptsRemaining`. */
+  readonly details: Readonly<Record<string, unknown>>;
 
-  constructor(message: string, code: string, status: number) {
+  constructor(
+    message: string,
+    code: string,
+    status: number,
+    details: Record<string, unknown> = {},
+  ) {
     super(message);
     this.name = 'AuthError';
     this.code = code;
     this.status = status;
+    this.details = details;
   }
 }
 
@@ -65,10 +73,14 @@ async function post<T>(path: string, body?: unknown): Promise<T> {
   }
 
   if (!response.ok) {
-    if (response.status >= 500) throw new AuthError('', SERVER_ERROR, response.status);
+    const code = typeof payload.code === 'string' ? payload.code : null;
+    // A 5xx without one of this API's codes is the server falling over; one
+    // with a code (e.g. OTP_SEND_FAILED) is a refusal with its own sentence.
+    if (response.status >= 500 && code === null) {
+      throw new AuthError('', SERVER_ERROR, response.status);
+    }
     const message = typeof payload.message === 'string' ? payload.message : '';
-    const code = typeof payload.code === 'string' ? payload.code : 'error';
-    throw new AuthError(message, code, response.status);
+    throw new AuthError(message, code ?? 'error', response.status, payload);
   }
   return payload as T;
 }
@@ -81,14 +93,64 @@ export async function logIn(identifier: string, password: string): Promise<NextS
   return next;
 }
 
+/** Who a recognised card belongs to, as the server read it. */
+export interface MemberCard {
+  name: string;
+  role: string;
+  institution: string;
+  memberId: string;
+}
+
+export interface CardChallenge {
+  challengeId: string;
+  member: MemberCard;
+  maskedEmail: string;
+  /** Unix seconds. */
+  resendAvailableAt: number;
+}
+
 /**
  * Show a member card to the camera: one frame or photo, as a JPEG, PNG or WebP
- * blob. Answers with the next step, or `no_code`, `QR_INVALID`, `QR_REVOKED`
- * or `MEMBER_INACTIVE`.
+ * blob. A recognised card starts a sign-in and emails a code; the answer says
+ * whose card it is. Refusals: `no_code`, `QR_INVALID`, `QR_REVOKED`,
+ * `MEMBER_INACTIVE`, `OTP_SEND_FAILED`.
  */
-export async function logInWithCardImage(image: Blob): Promise<NextStep> {
-  const { next } = await post<{ next: NextStep }>('/api/v1/auth/badge', image);
+export function verifyCardImage(image: Blob): Promise<CardChallenge> {
+  return post<CardChallenge>('/api/v1/auth/qr/verify', image);
+}
+
+/** The emailed code for a card sign-in. `OTP_INCORRECT` carries `attemptsRemaining`. */
+export async function verifyLoginCode(challengeId: string, code: string): Promise<NextStep> {
+  const { next } = await post<{ next: NextStep }>('/api/v1/auth/otp/verify', {
+    challengeId,
+    code,
+  });
   return next;
+}
+
+/** A new code for the same sign-in or reset. Returns when the next one may be asked for. */
+export async function resendCode(challengeId: string): Promise<number> {
+  const { resendAvailableAt } = await post<{ resendAvailableAt: number }>(
+    '/api/v1/auth/otp/resend',
+    { challengeId },
+  );
+  return resendAvailableAt;
+}
+
+/** Start a reset. The answer never says whether the details matched a member. */
+export function forgotPassword(
+  identifier: string,
+  email: string,
+): Promise<{ message: string; challengeId: string }> {
+  return post('/api/v1/auth/password/forgot', { identifier, email });
+}
+
+export async function verifyResetCode(challengeId: string, code: string): Promise<void> {
+  await post('/api/v1/auth/password/forgot/verify', { challengeId, code });
+}
+
+export async function resetPassword(newPassword: string, confirmPassword: string): Promise<void> {
+  await post('/api/v1/auth/password/reset', { newPassword, confirmPassword });
 }
 
 export async function changePassword(input: {

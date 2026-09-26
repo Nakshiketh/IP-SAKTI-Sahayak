@@ -21,7 +21,7 @@ from pathlib import Path
 
 from app.core.settings import get_settings
 
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 SCHEMA = """
 CREATE TABLE IF NOT EXISTS auth_schema (
@@ -101,6 +101,16 @@ CREATE TABLE IF NOT EXISTS sessions (
 );
 CREATE INDEX IF NOT EXISTS sessions_member ON sessions(member_fk);
 
+-- Version 2: the single-use token a verified password-reset code earns, held
+-- in an HttpOnly cookie for ten minutes. Only its HMAC is stored.
+CREATE TABLE IF NOT EXISTS reset_tokens (
+    id_hash     TEXT PRIMARY KEY,
+    member_fk   INTEGER NOT NULL REFERENCES members(id),
+    created_at  REAL NOT NULL,
+    expires_at  REAL NOT NULL,
+    used_at     REAL
+);
+
 CREATE TABLE IF NOT EXISTS auth_events (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
     member_fk   INTEGER REFERENCES members(id),
@@ -122,5 +132,11 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
     connection.executescript(SCHEMA)
     if connection.execute("SELECT 1 FROM auth_schema").fetchone() is None:
         connection.execute("INSERT INTO auth_schema (version) VALUES (?)", (SCHEMA_VERSION,))
+    else:
+        # Every change so far only adds tables, which the script above creates;
+        # the row just records that it has run.
+        connection.execute(
+            "UPDATE auth_schema SET version = ? WHERE version < ?", (SCHEMA_VERSION, SCHEMA_VERSION)
+        )
     connection.commit()
     return connection

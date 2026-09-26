@@ -27,11 +27,20 @@ class ApiErrorBody(BaseModel):
 class ApiError(Exception):
     """Raised anywhere in the pipeline; rendered by the handler below."""
 
-    def __init__(self, code: str, message: str, status_code: int = 400) -> None:
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        status_code: int = 400,
+        *,
+        extra: dict[str, object] | None = None,
+    ) -> None:
         super().__init__(message)
         self.code = code
         self.message = message
         self.status_code = status_code
+        #: Machine-readable details beside the message, e.g. attempts remaining.
+        self.extra = extra or {}
 
 
 class GenerationUnavailable(ApiError):
@@ -73,6 +82,9 @@ async def api_error_handler(_request: Request, exc: Exception) -> JSONResponse:
         headers["Retry-After"] = str(error.retry_after_seconds)
     return JSONResponse(
         status_code=error.status_code,
-        content=ApiErrorBody(code=error.code, message=error.message).model_dump(),
+        content={
+            **error.extra,
+            **ApiErrorBody(code=error.code, message=error.message).model_dump(),
+        },
         headers=headers,
     )

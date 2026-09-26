@@ -398,3 +398,26 @@ Nothing else:
 - **Render:** free web services on Render may block outbound SMTP. If they do,
   email codes will work locally but not on the public link. Check before
   relying on it there.
+
+## 16. Phase 4 notes
+
+- **QR sign-in is two steps.** `POST /auth/qr/verify` takes the camera frame
+  (the card has no readable payload, decision 1). A match creates a login
+  challenge and emails a code, and the response gives `challengeId`, `member`,
+  `maskedEmail` and `resendAvailableAt`. The session is issued only by
+  `POST /auth/otp/verify`. The old `/auth/badge` direct sign-in is gone.
+- **Limits.** Frames: 240 per minute per address. Recognised cards: 10 per
+  minute per address, as the brief requires. Code checks: 30 per minute per
+  address. Forgot password: 3 per hour per identifier, whether or not it
+  matches a member, and 10 per hour per address.
+- **Forgot password.** It always returns the same status, message and
+  challenge-id shape. The code is issued after the response in both cases, so
+  a real match does not answer more slowly. A decoy challenge never verifies.
+  A verified code sets `sahayak_reset`: HttpOnly, SameSite=Strict, scoped to
+  `/api/v1/auth/password/reset`, 10 minutes, single use. A password that
+  breaks a rule does not use it up. A reset ends every session the member has.
+- **Frontend.** The screens are working but plain, in the current sign-in
+  style: the code step after a scan, and `/forgot-password`. Phase 5 designs
+  them properly.
+- **Not verified with real email.** `backend/.env` did not exist yet. Every
+  path through a real code was tested with email captured in tests.

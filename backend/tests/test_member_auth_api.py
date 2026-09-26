@@ -403,7 +403,12 @@ class TestCsrf:
 OPEN = {
     ("GET", "/api/v1/health"),
     ("POST", "/api/v1/auth/login"),
-    ("POST", "/api/v1/auth/badge"),
+    ("POST", "/api/v1/auth/qr/verify"),
+    ("POST", "/api/v1/auth/otp/resend"),
+    ("POST", "/api/v1/auth/otp/verify"),
+    ("POST", "/api/v1/auth/password/forgot"),
+    ("POST", "/api/v1/auth/password/forgot/verify"),
+    ("POST", "/api/v1/auth/password/reset"),
     ("POST", "/api/v1/auth/logout"),
 }
 

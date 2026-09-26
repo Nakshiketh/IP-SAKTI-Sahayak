@@ -1,17 +1,19 @@
 import { ScanLine } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
 
 import { AudioControl } from '@/components/auth/AudioControl';
 import { AuthField, AuthFormError, AuthSpinner } from '@/components/auth/AuthField';
 import { BadgeScanner } from '@/components/auth/BadgeScanner';
+import { CodeStep } from '@/components/auth/CodeStep';
 import { HeroVideo } from '@/components/auth/HeroVideo';
 import { LanguageSelector } from '@/components/layout/LanguageSelector';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { useHeroAudio } from '@/hooks/useHeroAudio';
 import { useAuth } from '@/hooks/authContext';
 import { authMessage } from '@/lib/authCopy';
-import { logIn, type NextStep } from '@/services/auth';
+import { logIn, verifyLoginCode, type CardChallenge, type NextStep } from '@/services/auth';
 
 /**
  * The front door.
@@ -32,8 +34,13 @@ export default function Login({ onSignedIn }: { onSignedIn: () => void }) {
   useDocumentMeta(t('auth.signInTitle'), t('auth.heroBody'));
 
   const audio = useHeroAudio();
-  const { notice, clearNotice } = useAuth();
+  const { notice: authNotice, clearNotice } = useAuth();
+  // A finished password reset arrives with its own notice in the router state.
+  const arrived = (useLocation().state as { notice?: 'passwordUpdated' } | null)?.notice;
+  const notice = arrived ?? authNotice;
   const [scannerOpen, setScannerOpen] = useState(false);
+  // Set once a card is recognised: the code step replaces the sign-in form.
+  const [challenge, setChallenge] = useState<CardChallenge | null>(null);
   const signedIn: SignedIn = () => {
     clearNotice();
     onSignedIn();
@@ -86,7 +93,24 @@ export default function Login({ onSignedIn }: { onSignedIn: () => void }) {
               </p>
             ) : null}
 
-            <SignInForm onSignedIn={signedIn} onScan={() => setScannerOpen(true)} />
+            {challenge ? (
+              <CodeStep
+                challengeId={challenge.challengeId}
+                member={challenge.member}
+                maskedEmail={challenge.maskedEmail}
+                resendAvailableAt={challenge.resendAvailableAt}
+                onSubmit={async (code) => {
+                  signedIn(await verifyLoginCode(challenge.challengeId, code));
+                }}
+                onRestart={() => {
+                  setChallenge(null);
+                  setScannerOpen(true);
+                }}
+                restartLabel={t('auth.code.scanAgain')}
+              />
+            ) : (
+              <SignInForm onSignedIn={signedIn} onScan={() => setScannerOpen(true)} />
+            )}
           </div>
         </main>
 
@@ -101,9 +125,9 @@ export default function Login({ onSignedIn }: { onSignedIn: () => void }) {
       <BadgeScanner
         open={scannerOpen}
         onClose={() => setScannerOpen(false)}
-        onSignedIn={(next) => {
+        onSignedIn={(recognised) => {
           setScannerOpen(false);
-          signedIn(next);
+          setChallenge(recognised);
         }}
       />
     </>
@@ -197,14 +221,14 @@ function SignInForm({ onSignedIn, onScan }: { onSignedIn: SignedIn; onScan: () =
             disabled={pending}
           />
           <div className="mt-2 text-right">
-            <a
-              href="#reset"
+            <Link
+              to="/forgot-password"
               className="rounded-data text-xs text-white/60 underline underline-offset-4
                 hover:text-white focus-visible:outline-none focus-visible:ring-2
                 focus-visible:ring-white/70"
             >
               {t('auth.forgot')}
-            </a>
+            </Link>
           </div>
         </div>
 
