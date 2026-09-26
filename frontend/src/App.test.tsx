@@ -273,21 +273,29 @@ describe('language', () => {
 
     // Should have option elements for all languages
     const options = screen.getAllByRole('option');
-    expect(options.length).toBe(67); // 11 Indian + 56 International
+    expect(options.length).toBe(67);
   });
 
-  it('separates the Indian languages from the international ones', async () => {
+  it('lists the languages A to Z, with no group headings', async () => {
     const user = userEvent.setup();
     await renderAt('/');
 
-    // Open the language dropdown
-    const trigger = screen.getAllByRole('button', { name: 'Language' })[0]!;
+    const trigger = screen
+      .getAllByRole('button')
+      .filter((button) => button.getAttribute('aria-haspopup') === 'listbox')[0]!;
     await user.click(trigger);
 
-    // Check that both group headings are present in the dialog
     const dialog = screen.getByRole('dialog', { name: 'Select language' });
-    expect(within(dialog).getByText('Indian languages')).toBeInTheDocument();
-    expect(within(dialog).getByText('International')).toBeInTheDocument();
+    // The grouping is gone: with sixty-seven entries and a search box, "which
+    // group is mine in" is not the question, and A to Z needs no explaining.
+    expect(within(dialog).queryByText('Indian languages')).not.toBeInTheDocument();
+    expect(within(dialog).queryByText('International')).not.toBeInTheDocument();
+
+    const names = within(dialog)
+      .getAllByRole('option')
+      .map((option) => option.getAttribute('data-english') ?? option.textContent ?? '');
+    expect(names[0]).toMatch(/Albanian/);
+    expect(names[names.length - 1]).toMatch(/Vietnamese/);
   });
 });
 

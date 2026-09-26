@@ -26,8 +26,6 @@
     "label": "ഭാഷ",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% വിവർത്തനം ചെയ്തു",
-    "groupIndian": "ഇന്ത്യൻ ഭാഷകൾ",
-    "groupInternational": "അന്താരാഷ്ട്ര",
     "selectTitle": "ഭാഷ തിരഞ്ഞെടുക്കുക",
     "searchPlaceholder": "ഭാഷകൾ തിരയുക",
     "clearSearch": "തിരയൽ മായ്ക്കുക",

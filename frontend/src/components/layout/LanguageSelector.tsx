@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { changeLanguage } from '@/i18n';
 import {
   findLocale,
-  INDIAN_LOCALES,
-  INTERNATIONAL_LOCALES,
+  LOCALES,
   isFullyTranslated,
   LOCALE_STATUS,
   type LocaleDefinition,
@@ -54,11 +53,12 @@ export function LanguageSelector({ className }: { className?: string }) {
     [search],
   );
 
-  const indianFiltered = useMemo(() => filterLocales(INDIAN_LOCALES), [filterLocales]);
-  const intlFiltered = useMemo(() => filterLocales(INTERNATIONAL_LOCALES), [filterLocales]);
+  // One list, in the alphabetical order LOCALES is already kept in. The
+  // grouping this replaced answered "which group is mine in", which is not the
+  // question a reader of a sixty-seven-item list with a search box is asking.
+  const filtered = useMemo(() => filterLocales(LOCALES), [filterLocales]);
 
-  /** Flat list of all visible locales for keyboard navigation. */
-  const flatList = useMemo(() => [...indianFiltered, ...intlFiltered], [indianFiltered, intlFiltered]);
+  const flatList = filtered;
 
   /** Close on outside click. */
   useEffect(() => {
@@ -230,57 +230,21 @@ export function LanguageSelector({ className }: { className?: string }) {
 
           {/* Language list */}
           <div ref={listRef} role="listbox" className="flex-1 overflow-y-auto overscroll-contain">
-            {indianFiltered.length === 0 && intlFiltered.length === 0 && (
+            {filtered.length === 0 && (
               <p className="px-4 py-6 text-center text-sm text-muted">
                 {t('language.noResults')}
               </p>
             )}
 
-            {indianFiltered.length > 0 && (
-              <div>
-                <div
-                  className="sticky top-0 bg-surface/95 px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted backdrop-blur-sm"
-                  role="presentation"
-                >
-                  {t('language.groupIndian')}
-                </div>
-                {indianFiltered.map((locale) => {
-                  const globalIdx = flatList.indexOf(locale);
-                  return (
-                    <LanguageItem
-                      key={locale.code}
-                      locale={locale}
-                      isActive={locale.code === current.code}
-                      isFocused={globalIdx === focusIndex}
-                      onSelect={handleSelect}
-                    />
-                  );
-                })}
-              </div>
-            )}
-
-            {intlFiltered.length > 0 && (
-              <div>
-                <div
-                  className="sticky top-0 bg-surface/95 px-4 py-2 text-xs font-medium uppercase tracking-wider text-muted backdrop-blur-sm"
-                  role="presentation"
-                >
-                  {t('language.groupInternational')}
-                </div>
-                {intlFiltered.map((locale) => {
-                  const globalIdx = flatList.indexOf(locale);
-                  return (
-                    <LanguageItem
-                      key={locale.code}
-                      locale={locale}
-                      isActive={locale.code === current.code}
-                      isFocused={globalIdx === focusIndex}
-                      onSelect={handleSelect}
-                    />
-                  );
-                })}
-              </div>
-            )}
+            {filtered.map((locale, index) => (
+              <LanguageItem
+                key={locale.code}
+                locale={locale}
+                isActive={locale.code === current.code}
+                isFocused={index === focusIndex}
+                onSelect={handleSelect}
+              />
+            ))}
           </div>
         </div>
       )}

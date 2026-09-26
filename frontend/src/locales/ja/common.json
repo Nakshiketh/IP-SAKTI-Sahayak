@@ -26,8 +26,6 @@
     "label": "言語",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% 翻訳済み",
-    "groupIndian": "インドの言語",
-    "groupInternational": "国際",
     "selectTitle": "言語を選択",
     "searchPlaceholder": "言語を検索",
     "clearSearch": "検索をクリア",

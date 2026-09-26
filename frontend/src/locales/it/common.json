@@ -26,8 +26,6 @@
     "label": "Lingua",
     "changed": "Language changed to {{language}}",
     "partial": "Tradotto al {{percent}} %",
-    "groupIndian": "Lingue indiane",
-    "groupInternational": "Internazionale",
     "selectTitle": "Seleziona lingua",
     "searchPlaceholder": "Cerca lingue",
     "clearSearch": "Cancella ricerca",

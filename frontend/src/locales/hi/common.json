@@ -25,8 +25,6 @@
     "label": "भाषा",
     "changed": "भाषा बदलकर {{language}} कर दी गई",
     "partial": "{{percent}}% अनूदित",
-    "groupIndian": "भारतीय भाषाएँ",
-    "groupInternational": "अंतरराष्ट्रीय",
     "selectTitle": "भाषा चुनें",
     "searchPlaceholder": "भाषाएँ खोजें",
     "clearSearch": "खोज साफ़ करें",

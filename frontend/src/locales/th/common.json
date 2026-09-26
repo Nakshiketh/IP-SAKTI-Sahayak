@@ -26,8 +26,6 @@
     "label": "ภาษา",
     "changed": "Language changed to {{language}}",
     "partial": "แปลแล้ว {{percent}}%",
-    "groupIndian": "ภาษาอินเดีย",
-    "groupInternational": "นานาชาติ",
     "selectTitle": "เลือกภาษา",
     "searchPlaceholder": "ค้นหาภาษา",
     "clearSearch": "ล้างการค้นหา",

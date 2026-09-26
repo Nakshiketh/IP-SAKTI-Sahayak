@@ -26,8 +26,6 @@
     "label": "ভাষা",
     "changed": "ভাষা পরিবর্তন করে {{language}} করা হয়েছে",
     "partial": "{{percent}}% অনূদিত",
-    "groupIndian": "ভারতীয় ভাষা",
-    "groupInternational": "আন্তর্জাতিক",
     "selectTitle": "ভাষা নির্বাচন করুন",
     "searchPlaceholder": "ভাষা খুঁজুন",
     "clearSearch": "অনুসন্ধান মুছুন",

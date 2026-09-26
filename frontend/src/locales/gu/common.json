@@ -26,8 +26,6 @@
     "label": "ભાષા",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% અનુવાદિત",
-    "groupIndian": "ભારતીય ભાષાઓ",
-    "groupInternational": "આંતરરાષ્ટ્રીય",
     "selectTitle": "ભાષા પસંદ કરો",
     "searchPlaceholder": "ભાષાઓ શોધો",
     "clearSearch": "શોધ સાફ કરો",

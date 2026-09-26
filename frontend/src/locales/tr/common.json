@@ -26,8 +26,6 @@
     "label": "Dil",
     "changed": "Language changed to {{language}}",
     "partial": "%{{percent}} çevrildi",
-    "groupIndian": "Hint dilleri",
-    "groupInternational": "Uluslararası",
     "selectTitle": "Dil seçin",
     "searchPlaceholder": "Dilleri ara",
     "clearSearch": "Aramayı temizle",

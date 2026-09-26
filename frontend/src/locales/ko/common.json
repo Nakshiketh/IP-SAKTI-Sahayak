@@ -26,8 +26,6 @@
     "label": "언어",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% 번역됨",
-    "groupIndian": "인도 언어",
-    "groupInternational": "국제",
     "selectTitle": "언어 선택",
     "searchPlaceholder": "언어 검색",
     "clearSearch": "검색 지우기",

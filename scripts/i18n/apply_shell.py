@@ -57,8 +57,6 @@ PATHS = (
     "skipToContent",
     "language.label",
     "language.partial",
-    "language.groupIndian",
-    "language.groupInternational",
     "language.selectTitle",
     "language.searchPlaceholder",
     "language.clearSearch",

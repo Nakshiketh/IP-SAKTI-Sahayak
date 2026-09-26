@@ -26,8 +26,6 @@
     "label": "Мова",
     "changed": "Language changed to {{language}}",
     "partial": "Перекладено {{percent}} %",
-    "groupIndian": "Індійські мови",
-    "groupInternational": "Міжнародні",
     "selectTitle": "Вибрати мову",
     "searchPlaceholder": "Пошук мов",
     "clearSearch": "Очистити пошук",

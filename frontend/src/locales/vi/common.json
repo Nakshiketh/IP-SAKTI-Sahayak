@@ -26,8 +26,6 @@
     "label": "Ngôn ngữ",
     "changed": "Language changed to {{language}}",
     "partial": "Đã dịch {{percent}} %",
-    "groupIndian": "Ngôn ngữ Ấn Độ",
-    "groupInternational": "Quốc tế",
     "selectTitle": "Chọn ngôn ngữ",
     "searchPlaceholder": "Tìm ngôn ngữ",
     "clearSearch": "Xóa tìm kiếm",

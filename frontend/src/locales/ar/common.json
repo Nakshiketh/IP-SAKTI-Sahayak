@@ -26,8 +26,6 @@
     "label": "اللغة",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% مترجم",
-    "groupIndian": "اللغات الهندية",
-    "groupInternational": "دولي",
     "selectTitle": "اختر اللغة",
     "searchPlaceholder": "ابحث عن اللغات",
     "clearSearch": "مسح البحث",

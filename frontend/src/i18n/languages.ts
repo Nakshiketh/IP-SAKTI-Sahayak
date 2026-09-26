@@ -1,23 +1,29 @@
 import meta from './locales.meta.json';
 
 /**
- * The languages this product answers in: Indian and international.
+ * The languages this product answers in: sixty-seven, in alphabetical order by
+ * English name.
  *
- * The Indian languages come first and are the reason the feature exists — a
- * vaidya in Nashik is the reader this product was built for. The international
- * languages were added because an Ayurvedic exporter's questions are answered by
- * WIPO, the EPO and foreign registries, and the people they deal with there do
- * not read Devanagari.
+ * They used to be grouped, Indian languages first and international after. The
+ * grouping is gone and the order is flat, because with sixty-seven entries and
+ * a search box the question a reader has stopped being "which group is mine in"
+ * and became "where is my language in this list" — and the only answer that
+ * needs no explanation is A to Z. English sorts among the rest rather than
+ * being pinned to the top: it is the fallback, not a favourite.
  *
- * `dir` was carried per locale from the start, when all six were
+ * Sorted by English name rather than native name deliberately. A list ordered
+ * by native name spans ten scripts and has no order a reader can predict;
+ * the Latin name under each entry is what makes A to Z scannable.
+ *
+ * `dir` was carried per locale from the start, when every language was
  * left-to-right, on the reasoning that the cost is one field and the cost of
  * discovering the assumption later is every layout at once. Arabic is that
  * later, and the bet paid: `Shell.tsx` already set `documentElement.dir` from
  * this field, so the whole interface mirrored without a layout change.
  *
- * `script` is new and earns its place differently. A page that renders Chinese
- * in a font with no CJK coverage shows boxes, and the reader cannot tell a
- * missing font from a broken product. See `scriptOf` and fonts.css.
+ * `script` drives font loading. A page that renders Chinese in a font with no
+ * CJK coverage shows boxes, and the reader cannot tell a missing font from a
+ * broken product. See `scriptOf` and fonts.css.
  */
 /**
  * The codes, as a union rather than `string`.
@@ -129,8 +135,6 @@ export interface LocaleDefinition {
   englishName: string;
   dir: 'ltr' | 'rtl';
   script: ScriptCode;
-  /** India's official languages, which this product is first of all for. */
-  indian: boolean;
 }
 
 /**
@@ -138,76 +142,73 @@ export interface LocaleDefinition {
  * then international (alphabetically by English name).
  */
 export const LOCALES: readonly LocaleDefinition[] = [
-  // ── Indian languages (alphabetical by English name) ──
-  { code: 'bn', nativeName: 'বাংলা', englishName: 'Bangla', dir: 'ltr', script: 'Beng', indian: true },
-  { code: 'en', nativeName: 'English', englishName: 'English', dir: 'ltr', script: 'Latn', indian: true },
-  { code: 'gu', nativeName: 'ગુજરાતી', englishName: 'Gujarati', dir: 'ltr', script: 'Gujr', indian: true },
-  { code: 'hi', nativeName: 'हिंदी', englishName: 'Hindi', dir: 'ltr', script: 'Deva', indian: true },
-  { code: 'kn', nativeName: 'ಕನ್ನಡ', englishName: 'Kannada', dir: 'ltr', script: 'Knda', indian: true },
-  { code: 'ml', nativeName: 'മലയാളം', englishName: 'Malayalam', dir: 'ltr', script: 'Mlym', indian: true },
-  { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', dir: 'ltr', script: 'Deva', indian: true },
-  { code: 'pa', nativeName: 'ਪੰਜਾਬੀ', englishName: 'Punjabi', dir: 'ltr', script: 'Guru', indian: true },
-  { code: 'ta', nativeName: 'தமிழ்', englishName: 'Tamil', dir: 'ltr', script: 'Taml', indian: true },
-  { code: 'te', nativeName: 'తెలుగు', englishName: 'Telugu', dir: 'ltr', script: 'Telu', indian: true },
-  { code: 'ur', nativeName: 'اردو', englishName: 'Urdu', dir: 'rtl', script: 'Arab', indian: true },
-
-  // ── International languages (alphabetical by English name) ──
-  { code: 'sq', nativeName: 'Shqip', englishName: 'Albanian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'am', nativeName: 'አማርኛ', englishName: 'Amharic', dir: 'ltr', script: 'Ethi', indian: false },
-  { code: 'ar', nativeName: 'العربية', englishName: 'Arabic', dir: 'rtl', script: 'Arab', indian: false },
-  { code: 'hy', nativeName: 'Հայերեն', englishName: 'Armenian', dir: 'ltr', script: 'Armn', indian: false },
-  { code: 'bs', nativeName: 'bosanski', englishName: 'Bosnian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'bg', nativeName: 'български', englishName: 'Bulgarian', dir: 'ltr', script: 'Cyrl', indian: false },
-  { code: 'my', nativeName: 'ဗမာ', englishName: 'Burmese', dir: 'ltr', script: 'Mymr', indian: false },
-  { code: 'ca', nativeName: 'català', englishName: 'Catalan', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'hr', nativeName: 'hrvatski', englishName: 'Croatian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'cs', nativeName: 'čeština', englishName: 'Czech', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'da', nativeName: 'dansk', englishName: 'Danish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'nl', nativeName: 'Nederlands', englishName: 'Dutch', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'et', nativeName: 'eesti', englishName: 'Estonian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'fil', nativeName: 'Filipino', englishName: 'Filipino', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'fi', nativeName: 'suomi', englishName: 'Finnish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'fr', nativeName: 'Français', englishName: 'French (France)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'fr-CA', nativeName: 'Français (Canada)', englishName: 'French (Canada)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'ka', nativeName: 'ქართული', englishName: 'Georgian', dir: 'ltr', script: 'Geor', indian: false },
-  { code: 'de', nativeName: 'Deutsch', englishName: 'German', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'el', nativeName: 'Ελληνικά', englishName: 'Greek', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'hu', nativeName: 'magyar', englishName: 'Hungarian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'is', nativeName: 'íslenska', englishName: 'Icelandic', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'id', nativeName: 'Indonesia', englishName: 'Indonesian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'ga', nativeName: 'Gaeilge', englishName: 'Irish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'it', nativeName: 'italiano', englishName: 'Italian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'ja', nativeName: '日本語', englishName: 'Japanese', dir: 'ltr', script: 'Jpan', indian: false },
-  { code: 'jv', nativeName: 'Jawa', englishName: 'Javanese', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'kk', nativeName: 'қазақ тілі', englishName: 'Kazakh', dir: 'ltr', script: 'Cyrl', indian: false },
-  { code: 'ko', nativeName: '한국어', englishName: 'Korean', dir: 'ltr', script: 'Kore', indian: false },
-  { code: 'lv', nativeName: 'latviešu', englishName: 'Latvian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'lt', nativeName: 'lietuvių', englishName: 'Lithuanian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'mk', nativeName: 'македонски', englishName: 'Macedonian', dir: 'ltr', script: 'Cyrl', indian: false },
-  { code: 'ms', nativeName: 'Melayu', englishName: 'Malay', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'mt', nativeName: 'Malti', englishName: 'Maltese', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'mn', nativeName: 'Монгол', englishName: 'Mongolian', dir: 'ltr', script: 'Mong', indian: false },
-  { code: 'nb', nativeName: 'norsk bokmål', englishName: 'Norwegian Bokmål', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'fa', nativeName: 'فارسی', englishName: 'Persian', dir: 'rtl', script: 'Arab', indian: false },
-  { code: 'pl', nativeName: 'polski', englishName: 'Polish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'pt', nativeName: 'Português (Portugal)', englishName: 'Portuguese (Portugal)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'pt-BR', nativeName: 'Português (Brasil)', englishName: 'Portuguese (Brazil)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'ro', nativeName: 'română', englishName: 'Romanian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'ru', nativeName: 'Русский', englishName: 'Russian', dir: 'ltr', script: 'Cyrl', indian: false },
-  { code: 'zh', nativeName: '简体中文', englishName: 'Simplified Chinese', dir: 'ltr', script: 'Hans', indian: false },
-  { code: 'sk', nativeName: 'slovenčina', englishName: 'Slovak', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'sl', nativeName: 'slovenščina', englishName: 'Slovenian', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'so', nativeName: 'Soomaali', englishName: 'Somali', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'es', nativeName: 'Español (España)', englishName: 'Spanish (Spain)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'es-419', nativeName: 'Español (Latinoamérica)', englishName: 'Spanish (Latin America)', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'sw', nativeName: 'Kiswahili', englishName: 'Swahili', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'sv', nativeName: 'svenska', englishName: 'Swedish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'th', nativeName: 'ไทย', englishName: 'Thai', dir: 'ltr', script: 'Thai', indian: false },
-  { code: 'zh-Hant', nativeName: '繁體中文', englishName: 'Traditional Chinese', dir: 'ltr', script: 'Hant', indian: false },
-  { code: 'zh-HK', nativeName: '繁體中文 (香港)', englishName: 'Traditional Chinese (Hong Kong)', dir: 'ltr', script: 'Hant', indian: false },
-  { code: 'tr', nativeName: 'Türkçe', englishName: 'Turkish', dir: 'ltr', script: 'Latn', indian: false },
-  { code: 'uk', nativeName: 'українська', englishName: 'Ukrainian', dir: 'ltr', script: 'Cyrl', indian: false },
-  { code: 'vi', nativeName: 'Tiếng Việt', englishName: 'Vietnamese', dir: 'ltr', script: 'Latn', indian: false },
+  { code: 'sq', nativeName: 'Shqip', englishName: 'Albanian', dir: 'ltr', script: 'Latn' },
+  { code: 'am', nativeName: 'አማርኛ', englishName: 'Amharic', dir: 'ltr', script: 'Ethi' },
+  { code: 'ar', nativeName: 'العربية', englishName: 'Arabic', dir: 'rtl', script: 'Arab' },
+  { code: 'hy', nativeName: 'Հայերեն', englishName: 'Armenian', dir: 'ltr', script: 'Armn' },
+  { code: 'bn', nativeName: 'বাংলা', englishName: 'Bangla', dir: 'ltr', script: 'Beng' },
+  { code: 'bs', nativeName: 'bosanski', englishName: 'Bosnian', dir: 'ltr', script: 'Latn' },
+  { code: 'bg', nativeName: 'български', englishName: 'Bulgarian', dir: 'ltr', script: 'Cyrl' },
+  { code: 'my', nativeName: 'ဗမာ', englishName: 'Burmese', dir: 'ltr', script: 'Mymr' },
+  { code: 'ca', nativeName: 'català', englishName: 'Catalan', dir: 'ltr', script: 'Latn' },
+  { code: 'hr', nativeName: 'hrvatski', englishName: 'Croatian', dir: 'ltr', script: 'Latn' },
+  { code: 'cs', nativeName: 'čeština', englishName: 'Czech', dir: 'ltr', script: 'Latn' },
+  { code: 'da', nativeName: 'dansk', englishName: 'Danish', dir: 'ltr', script: 'Latn' },
+  { code: 'nl', nativeName: 'Nederlands', englishName: 'Dutch', dir: 'ltr', script: 'Latn' },
+  { code: 'en', nativeName: 'English', englishName: 'English', dir: 'ltr', script: 'Latn' },
+  { code: 'et', nativeName: 'eesti', englishName: 'Estonian', dir: 'ltr', script: 'Latn' },
+  { code: 'fil', nativeName: 'Filipino', englishName: 'Filipino', dir: 'ltr', script: 'Latn' },
+  { code: 'fi', nativeName: 'suomi', englishName: 'Finnish', dir: 'ltr', script: 'Latn' },
+  { code: 'fr-CA', nativeName: 'Français (Canada)', englishName: 'French (Canada)', dir: 'ltr', script: 'Latn' },
+  { code: 'fr', nativeName: 'Français', englishName: 'French (France)', dir: 'ltr', script: 'Latn' },
+  { code: 'ka', nativeName: 'ქართული', englishName: 'Georgian', dir: 'ltr', script: 'Geor' },
+  { code: 'de', nativeName: 'Deutsch', englishName: 'German', dir: 'ltr', script: 'Latn' },
+  { code: 'el', nativeName: 'Ελληνικά', englishName: 'Greek', dir: 'ltr', script: 'Latn' },
+  { code: 'gu', nativeName: 'ગુજરાતી', englishName: 'Gujarati', dir: 'ltr', script: 'Gujr' },
+  { code: 'hi', nativeName: 'हिंदी', englishName: 'Hindi', dir: 'ltr', script: 'Deva' },
+  { code: 'hu', nativeName: 'magyar', englishName: 'Hungarian', dir: 'ltr', script: 'Latn' },
+  { code: 'is', nativeName: 'íslenska', englishName: 'Icelandic', dir: 'ltr', script: 'Latn' },
+  { code: 'id', nativeName: 'Indonesia', englishName: 'Indonesian', dir: 'ltr', script: 'Latn' },
+  { code: 'ga', nativeName: 'Gaeilge', englishName: 'Irish', dir: 'ltr', script: 'Latn' },
+  { code: 'it', nativeName: 'italiano', englishName: 'Italian', dir: 'ltr', script: 'Latn' },
+  { code: 'ja', nativeName: '日本語', englishName: 'Japanese', dir: 'ltr', script: 'Jpan' },
+  { code: 'jv', nativeName: 'Jawa', englishName: 'Javanese', dir: 'ltr', script: 'Latn' },
+  { code: 'kn', nativeName: 'ಕನ್ನಡ', englishName: 'Kannada', dir: 'ltr', script: 'Knda' },
+  { code: 'kk', nativeName: 'қазақ тілі', englishName: 'Kazakh', dir: 'ltr', script: 'Cyrl' },
+  { code: 'ko', nativeName: '한국어', englishName: 'Korean', dir: 'ltr', script: 'Kore' },
+  { code: 'lv', nativeName: 'latviešu', englishName: 'Latvian', dir: 'ltr', script: 'Latn' },
+  { code: 'lt', nativeName: 'lietuvių', englishName: 'Lithuanian', dir: 'ltr', script: 'Latn' },
+  { code: 'mk', nativeName: 'македонски', englishName: 'Macedonian', dir: 'ltr', script: 'Cyrl' },
+  { code: 'ms', nativeName: 'Melayu', englishName: 'Malay', dir: 'ltr', script: 'Latn' },
+  { code: 'ml', nativeName: 'മലയാളം', englishName: 'Malayalam', dir: 'ltr', script: 'Mlym' },
+  { code: 'mt', nativeName: 'Malti', englishName: 'Maltese', dir: 'ltr', script: 'Latn' },
+  { code: 'mr', nativeName: 'मराठी', englishName: 'Marathi', dir: 'ltr', script: 'Deva' },
+  { code: 'mn', nativeName: 'Монгол', englishName: 'Mongolian', dir: 'ltr', script: 'Mong' },
+  { code: 'nb', nativeName: 'norsk bokmål', englishName: 'Norwegian Bokmål', dir: 'ltr', script: 'Latn' },
+  { code: 'fa', nativeName: 'فارسی', englishName: 'Persian', dir: 'rtl', script: 'Arab' },
+  { code: 'pl', nativeName: 'polski', englishName: 'Polish', dir: 'ltr', script: 'Latn' },
+  { code: 'pt-BR', nativeName: 'Português (Brasil)', englishName: 'Portuguese (Brazil)', dir: 'ltr', script: 'Latn' },
+  { code: 'pt', nativeName: 'Português (Portugal)', englishName: 'Portuguese (Portugal)', dir: 'ltr', script: 'Latn' },
+  { code: 'pa', nativeName: 'ਪੰਜਾਬੀ', englishName: 'Punjabi', dir: 'ltr', script: 'Guru' },
+  { code: 'ro', nativeName: 'română', englishName: 'Romanian', dir: 'ltr', script: 'Latn' },
+  { code: 'ru', nativeName: 'Русский', englishName: 'Russian', dir: 'ltr', script: 'Cyrl' },
+  { code: 'zh', nativeName: '简体中文', englishName: 'Simplified Chinese', dir: 'ltr', script: 'Hans' },
+  { code: 'sk', nativeName: 'slovenčina', englishName: 'Slovak', dir: 'ltr', script: 'Latn' },
+  { code: 'sl', nativeName: 'slovenščina', englishName: 'Slovenian', dir: 'ltr', script: 'Latn' },
+  { code: 'so', nativeName: 'Soomaali', englishName: 'Somali', dir: 'ltr', script: 'Latn' },
+  { code: 'es-419', nativeName: 'Español (Latinoamérica)', englishName: 'Spanish (Latin America)', dir: 'ltr', script: 'Latn' },
+  { code: 'es', nativeName: 'Español (España)', englishName: 'Spanish (Spain)', dir: 'ltr', script: 'Latn' },
+  { code: 'sw', nativeName: 'Kiswahili', englishName: 'Swahili', dir: 'ltr', script: 'Latn' },
+  { code: 'sv', nativeName: 'svenska', englishName: 'Swedish', dir: 'ltr', script: 'Latn' },
+  { code: 'ta', nativeName: 'தமிழ்', englishName: 'Tamil', dir: 'ltr', script: 'Taml' },
+  { code: 'te', nativeName: 'తెలుగు', englishName: 'Telugu', dir: 'ltr', script: 'Telu' },
+  { code: 'th', nativeName: 'ไทย', englishName: 'Thai', dir: 'ltr', script: 'Thai' },
+  { code: 'zh-Hant', nativeName: '繁體中文', englishName: 'Traditional Chinese', dir: 'ltr', script: 'Hant' },
+  { code: 'zh-HK', nativeName: '繁體中文 (香港)', englishName: 'Traditional Chinese (Hong Kong)', dir: 'ltr', script: 'Hant' },
+  { code: 'tr', nativeName: 'Türkçe', englishName: 'Turkish', dir: 'ltr', script: 'Latn' },
+  { code: 'uk', nativeName: 'українська', englishName: 'Ukrainian', dir: 'ltr', script: 'Cyrl' },
+  { code: 'ur', nativeName: 'اردو', englishName: 'Urdu', dir: 'rtl', script: 'Arab' },
+  { code: 'vi', nativeName: 'Tiếng Việt', englishName: 'Vietnamese', dir: 'ltr', script: 'Latn' },
 ] as const;
 
 /** The scripts in use, for a caller that needs to load a font per script. */
@@ -215,13 +216,7 @@ export function scriptOf(code: LocaleCode): ScriptCode {
   return LOCALES.find((locale) => locale.code === code)?.script ?? 'Latn';
 }
 
-export const INDIAN_LOCALES: readonly LocaleDefinition[] = LOCALES.filter(
-  (locale) => locale.indian,
-);
 
-export const INTERNATIONAL_LOCALES: readonly LocaleDefinition[] = LOCALES.filter(
-  (locale) => !locale.indian,
-);
 
 export const LOCALE_CODES: readonly LocaleCode[] = LOCALES.map((locale) => locale.code);
 

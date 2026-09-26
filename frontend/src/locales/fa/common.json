@@ -26,8 +26,6 @@
     "label": "زبان",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}٪ ترجمه‌شده",
-    "groupIndian": "زبان‌های هندی",
-    "groupInternational": "بین‌المللی",
     "selectTitle": "انتخاب زبان",
     "searchPlaceholder": "جستجوی زبان‌ها",
     "clearSearch": "پاک کردن جستجو",

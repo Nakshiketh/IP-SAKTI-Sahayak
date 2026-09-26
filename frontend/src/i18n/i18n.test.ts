@@ -11,8 +11,6 @@ import { describe, expect, it } from 'vitest';
 import {
   DEFAULT_LOCALE,
   findLocale,
-  INDIAN_LOCALES,
-  INTERNATIONAL_LOCALES,
   LOCALE_CODES,
   LOCALES,
   NAMESPACES,
@@ -60,29 +58,31 @@ function flatten(node: Record<string, unknown>, prefix = ''): string[] {
 
 describe('locales', () => {
   it('covers all languages the product claims to answer in', () => {
-    // Indian languages come first (alphabetical by English name),
-    // then international languages (alphabetical by English name).
-    expect(LOCALE_CODES).toEqual([
-      // Indian (alphabetical)
-      'bn', 'en', 'gu', 'hi', 'kn', 'ml', 'mr', 'pa', 'ta', 'te', 'ur',
-      // International (alphabetical)
-      'sq', 'am', 'ar', 'hy', 'bs', 'bg', 'my', 'ca', 'hr', 'cs',
-      'da', 'nl', 'et', 'fil', 'fi', 'fr', 'fr-CA', 'ka', 'de', 'el',
-      'hu', 'is', 'id', 'ga', 'it', 'ja', 'jv', 'kk', 'ko', 'lv',
-      'lt', 'mk', 'ms', 'mt', 'mn', 'nb', 'fa', 'pl', 'pt', 'pt-BR',
-      'ro', 'ru', 'zh', 'sk', 'sl', 'so', 'es', 'es-419', 'sw', 'sv',
-      'th', 'zh-Hant', 'zh-HK', 'tr', 'uk', 'vi',
-    ]);
+    // The set, not the order. Order is alphabetical and has its own test
+    // below; asserting sixty-seven codes in sequence here would fail for a
+    // rename as loudly as for a language going missing, and only one of those
+    // is worth a failing build.
+    expect(LOCALE_CODES).toHaveLength(67);
+    expect(new Set(LOCALE_CODES).size).toBe(67);
+    for (const code of ['en', 'hi', 'bn', 'ta', 'te', 'mr', 'ar', 'zh', 'zh-Hant', 'pt-BR']) {
+      expect(LOCALE_CODES).toContain(code);
+    }
   });
 
-  it('keeps the Indian languages first and distinguishable', () => {
-    expect(INDIAN_LOCALES.map((l) => l.code)).toEqual([
-      'bn', 'en', 'gu', 'hi', 'kn', 'ml', 'mr', 'pa', 'ta', 'te', 'ur',
-    ]);
-    expect(INTERNATIONAL_LOCALES.length).toBe(56);
-    // Together they are everything: a locale that is in neither list would be
-    // one the switcher groups nowhere and a reader never reaches.
-    expect(INDIAN_LOCALES.length + INTERNATIONAL_LOCALES.length).toBe(LOCALES.length);
+  it('is in alphabetical order by English name', () => {
+    // The switcher renders LOCALES in order and no longer groups, so the order
+    // here IS what a reader sees. Sorted by the Latin name rather than the
+    // native one, because a list ordered across twenty-one scripts has no
+    // order anyone can predict.
+    const names = LOCALES.map((locale) => locale.englishName);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+  });
+
+  it('does not pin English to the top', () => {
+    // It is the fallback, not a favourite, and an alphabetical list with one
+    // exception in it is not an alphabetical list.
+    expect(LOCALES[0]?.code).not.toBe('en');
+    expect(LOCALES.some((locale) => locale.code === 'en')).toBe(true);
   });
 
   it('knows a script for every locale, so no reader gets a box instead of a word', () => {
@@ -179,10 +179,11 @@ describe('findLocale', () => {
     expect(findLocale('ur').dir).toBe('rtl');
     const rtl = LOCALES.filter((locale) => locale.dir === 'rtl').map((l) => l.code);
     expect(rtl).toEqual(expect.arrayContaining(['ar', 'fa', 'ur']));
-    // Every Indian language except Urdu is left-to-right.
-    for (const locale of INDIAN_LOCALES) {
-      if (locale.code === 'ur') continue;
-      expect(locale.dir).toBe('ltr');
+    // The Indian languages other than Urdu are left-to-right, and adding a
+    // right-to-left locale must not have flipped one of them through a shared
+    // default.
+    for (const code of ['hi', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'pa']) {
+      expect(findLocale(code).dir).toBe('ltr');
     }
   });
 });

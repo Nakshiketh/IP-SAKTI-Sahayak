@@ -26,8 +26,6 @@
     "label": "زبان",
     "changed": "Language changed to {{language}}",
     "partial": "{{percent}}% ترجمہ شدہ",
-    "groupIndian": "بھارتی زبانیں",
-    "groupInternational": "بین الاقوامی",
     "selectTitle": "زبان منتخب کریں",
     "searchPlaceholder": "زبانیں تلاش کریں",
     "clearSearch": "تلاش صاف کریں",
