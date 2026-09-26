@@ -304,6 +304,19 @@
       "backToScan": "Scan your Member ID instead",
       "logOut": "Log out",
       "wordmarkHindi": "सहायक"
+    },
+    "card": {
+      "title": "Demo member card",
+      "body": "The card for the demo member on this instance. Print it or save it, then scan it at the Member Portal.",
+      "label": "Member card of {{name}}",
+      "issued": "Issued",
+      "scanAt": "Scan at the IP-SAKTI Sahayak Member Portal",
+      "download": "Download card (PNG)",
+      "print": "Print card",
+      "printNote": "Printing sets the card at its true size, 85.6 by 54 mm. Print at 100% scale, not “fit to page”.",
+      "downloadFailed": "The card image could not be made. Try again, or print the card instead.",
+      "unavailable": "The demo card is not available on this instance.",
+      "toPortal": "Open the Member Portal"
     }
   },
   "states": {

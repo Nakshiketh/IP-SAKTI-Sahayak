@@ -409,6 +409,9 @@ OPEN = {
     ("POST", "/api/v1/auth/password/forgot"),
     ("POST", "/api/v1/auth/password/forgot/verify"),
     ("POST", "/api/v1/auth/password/reset"),
+    # 404 unless ENABLE_DEMO_CARD is on outside production (test_demo_card.py).
+    ("GET", "/api/v1/demo/member-card"),
+    ("GET", "/api/v1/demo/member-card/qr.png"),
     ("POST", "/api/v1/auth/logout"),
 }
 

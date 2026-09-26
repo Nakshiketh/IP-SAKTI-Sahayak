@@ -67,6 +67,9 @@ const Login = route(() => import('@/routes/Login'));
 const CreatePassword = route(() => import('@/routes/CreatePassword'));
 const ForgotPassword = route(() => import('@/routes/ForgotPassword'));
 const PasswordLogin = route(() => import('@/routes/PasswordLogin'));
+// The demo card: reachable signed in or out, since it is what a member signs
+// in with. The API decides whether it exists (ENABLE_DEMO_CARD, not production).
+const DemoCardPage = route(() => import('@/routes/DemoCard'));
 const Sahayak = route(() => import('@/routes/Sahayak'), 'sahayak');
 const Assessment = route(() => import('@/routes/Assessment'), 'assessment');
 // `sahayak` too: the protection map and the roadmap are rendered here.
@@ -114,6 +117,7 @@ function Gate() {
           <Route path="/login" element={<Login onSignedIn={refresh} />} />
           <Route path="/login/password" element={<PasswordLogin onSignedIn={refresh} />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/demo/member-card" element={<DemoCardPage />} />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </Suspense>
@@ -125,6 +129,7 @@ function Gate() {
       <Suspense fallback={null}>
         <Routes>
           <Route path="/create-password" element={<CreatePassword onDone={refresh} />} />
+          <Route path="/demo/member-card" element={<DemoCardPage />} />
           <Route path="*" element={<Navigate to="/create-password" replace />} />
         </Routes>
       </Suspense>
@@ -157,6 +162,7 @@ function Gate() {
         <Route path="/login/password" element={<Navigate to="/" replace />} />
         <Route path="/create-password" element={<Navigate to="/" replace />} />
         <Route path="/forgot-password" element={<Navigate to="/" replace />} />
+        <Route path="/demo/member-card" element={<DemoCardPage />} />
         {import.meta.env.DEV ? <Route path="/design" element={<DesignSystem />} /> : null}
         {import.meta.env.DEV ? <Route path="/audit" element={<AuditLog />} /> : null}
       </Routes>

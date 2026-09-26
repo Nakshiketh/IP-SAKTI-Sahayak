@@ -421,3 +421,27 @@ Nothing else:
   them properly.
 - **Not verified with real email.** `backend/.env` did not exist yet. Every
   path through a real code was tested with email captured in tests.
+
+## 17. Phase 6 notes
+
+- **API.** `GET /api/v1/demo/member-card` (the card's details, from the member
+  and card tables) and `GET /api/v1/demo/member-card/qr.png` (the file
+  `issue-card` wrote to `demo/cards/`, served with `Cache-Control: no-store`).
+  Both answer 404 unless `ENABLE_DEMO_CARD=true` and the environment is not
+  `production`. They are open, because the card is what a member signs in
+  with. Neither generates an image or reads a token. A missing image or card
+  says which command to run.
+- **Page.** `/demo/member-card`, reachable signed in or out. The card is
+  CR80: every size is in container units, so fixing its width at 85.6 mm in
+  print fixes everything on it. The QR image is 34% of the card's width,
+  29.1 mm, so the code itself is 22.8 mm. The front shows the wordmark,
+  "सहायक", name, role, institution, Member ID, issue date, the QR and "Scan at
+  the IP-SAKTI Sahayak Member Portal". There is no photograph and no emblem.
+- **Buttons.** "Download card (PNG)" draws the same layout on a canvas at
+  300 dpi (1011 × 638 px), with no new dependency. "Print card" prints the
+  card alone.
+- **Checked.** The PNG from "Download card" signs in through the portal's
+  upload fallback. A shrunken screen capture of the on-screen card signs in
+  when sent as a camera frame. A test composes a card and photographs it
+  through the real matcher. Scanning a phone screen with a laptop webcam, and
+  printing at true size, are for the member to confirm.

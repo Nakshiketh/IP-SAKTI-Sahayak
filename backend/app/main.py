@@ -15,6 +15,7 @@ from app.api import (
     auth,
     classify,
     demo,
+    demo_card,
     documents,
     feedback,
     health,
@@ -192,6 +193,9 @@ def create_app() -> FastAPI:
     # Open: sign-in, and health (which protects its own corpus-version route).
     app.include_router(auth.router)
     app.include_router(health.router)
+    # The demo member card: open, because it is what a member signs in with,
+    # and absent (404) unless ENABLE_DEMO_CARD is on outside production.
+    app.include_router(demo_card.router)
 
     # Everything else needs a full member session. Attached here, per router,
     # so a route added to any of these is protected without anyone remembering

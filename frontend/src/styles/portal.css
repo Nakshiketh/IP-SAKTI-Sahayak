@@ -41,3 +41,28 @@
     }
   }
 }
+
+/* The demo member card, printed: the card alone, at CR80 size (85.6 x 54 mm).
+   Everything inside the card is sized in container units, so fixing its width
+   fixes every measurement on it. */
+@media print {
+  @page {
+    margin: 12mm;
+  }
+
+  .demo-card-page {
+    min-height: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+  }
+
+  .demo-card-page h1,
+  .demo-card-page h1 + p {
+    display: none !important;
+  }
+
+  .demo-card {
+    width: 85.6mm !important;
+    margin: 0 !important;
+  }
+}
