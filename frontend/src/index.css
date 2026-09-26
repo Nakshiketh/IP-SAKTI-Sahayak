@@ -4,6 +4,7 @@
 @import './styles/fonts.css';
 @import './styles/tokens.css';
 @import './styles/structures.css';
+@import './styles/portal.css';
 
 @tailwind base;
 @tailwind components;

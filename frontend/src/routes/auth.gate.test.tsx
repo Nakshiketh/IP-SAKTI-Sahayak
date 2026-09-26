@@ -40,7 +40,9 @@ describe('an anonymous reader', () => {
     renderAt('/sahayak');
     // Before the server has answered, nothing at all is rendered.
     expect(screen.queryByRole('navigation')).toBeNull();
-    expect(await screen.findByRole('heading', { level: 1, name: 'Sign in' })).toBeInTheDocument();
+    expect(
+      await screen.findByRole('heading', { level: 1, name: 'Registered Member Portal' }),
+    ).toBeInTheDocument();
     expect(screen.getByTestId('where')).toHaveTextContent('/login');
     expect(screen.queryByRole('link', { name: 'Ask Sahayak' })).toBeNull();
   });
@@ -48,7 +50,7 @@ describe('an anonymous reader', () => {
   it('has no way to register', async () => {
     stubFetch(() => undefined);
     renderAt('/login');
-    await screen.findByRole('heading', { level: 1, name: 'Sign in' });
+    await screen.findByRole('heading', { level: 1, name: 'Registered Member Portal' });
     expect(screen.queryByText(/create one/i)).toBeNull();
     expect(screen.queryByText(/create an account/i)).toBeNull();
   });
@@ -63,11 +65,11 @@ describe('an anonymous reader', () => {
     expect(currentTestSession().state).toBe('anonymous');
 
     const user = userEvent.setup();
-    renderAt('/sahayak');
+    renderAt('/login/password');
     await user.type(await screen.findByLabelText('Member ID or username'), 'IPS-2026-0001');
     await user.type(screen.getByLabelText('Password'), 'Correct-horse-1');
     signInForTest(); // what the server now says when asked
-    await user.click(screen.getByRole('button', { name: 'Sign in' }));
+    await user.click(screen.getByRole('button', { name: 'Log in' }));
 
     await waitFor(() => expect(screen.getByTestId('where')).toHaveTextContent(/^\/$/));
     const [, init] = fetchSpy.mock.calls.find(([url]) => url === '/api/v1/auth/login')!;
@@ -92,10 +94,10 @@ describe('an anonymous reader', () => {
         : undefined,
     );
     const user = userEvent.setup();
-    renderAt('/login');
+    renderAt('/login/password');
     await user.type(await screen.findByLabelText('Member ID or username'), 'someone');
     await user.type(screen.getByLabelText('Password'), 'wrong');
-    await user.click(screen.getByRole('button', { name: 'Sign in' }));
+    await user.click(screen.getByRole('button', { name: 'Log in' }));
     expect(
       await screen.findByText('Member ID/username or password is incorrect.'),
     ).toBeInTheDocument();
@@ -104,10 +106,10 @@ describe('an anonymous reader', () => {
   it('says so plainly when the server cannot be reached', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new TypeError('Failed to fetch')));
     const user = userEvent.setup();
-    renderAt('/login');
+    renderAt('/login/password');
     await user.type(await screen.findByLabelText('Member ID or username'), 'someone');
     await user.type(screen.getByLabelText('Password'), 'whatever');
-    await user.click(screen.getByRole('button', { name: 'Sign in' }));
+    await user.click(screen.getByRole('button', { name: 'Log in' }));
     expect(
       await screen.findByText("Can't reach the server. Check your connection and try again."),
     ).toBeInTheDocument();

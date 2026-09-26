@@ -1,0 +1,43 @@
+/* The member portal's two motions, and nothing else.
+
+   The scan line sweeps while the camera is looking for a card; the seal presses
+   in once when a card is verified. Both answer something happening, and both
+   are removed entirely under prefers-reduced-motion — not shortened, removed. */
+
+@layer components {
+  @keyframes portal-sweep {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(calc(100% - 2px));
+    }
+  }
+
+  .portal-sweep {
+    animation: portal-sweep 2.4s linear infinite;
+  }
+
+  @keyframes portal-press {
+    0% {
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .portal-press {
+    animation: portal-press 220ms cubic-bezier(0.2, 0, 0, 1) 1 both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portal-sweep {
+      display: none;
+    }
+
+    .portal-press {
+      animation: none;
+    }
+  }
+}

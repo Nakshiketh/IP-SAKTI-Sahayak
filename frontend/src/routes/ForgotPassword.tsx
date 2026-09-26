@@ -1,116 +1,104 @@
-import { Check } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { AudioControl } from '@/components/auth/AudioControl';
-import { AuthField, AuthFormError, AuthSpinner } from '@/components/auth/AuthField';
-import { CodeStep } from '@/components/auth/CodeStep';
-import { HeroVideo } from '@/components/auth/HeroVideo';
+import { CodeEntry } from '@/components/portal/CodeEntry';
+import { Field, FormError, PasswordChecklist } from '@/components/portal/controls';
+import { primaryButton, textLink } from '@/components/portal/styles';
+import { LockLine } from '@/components/portal/LockLine';
+import { PortalLayout } from '@/components/portal/PortalLayout';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
-import { useHeroAudio } from '@/hooks/useHeroAudio';
 import { authMessage, isPasswordErrorCode, PASSWORD_RULES as RULES } from '@/lib/authCopy';
-import { cn } from '@/lib/cn';
 import { AuthError, forgotPassword, resetPassword, verifyResetCode } from '@/services/auth';
 
 /**
  * Forgot password: details, then the emailed code, then a new password.
  *
  * The first answer is the same whether or not the details matched a member,
- * and the code step does not say where a code was sent: doing either would
- * tell a stranger which Member IDs and emails belong together. A code that
- * never arrives simply never verifies.
- *
- * Same surface as the sign-in page; Phase 5 restyles all of these together.
+ * and the code step does not say where a code was sent: either would tell a
+ * stranger which Member IDs and emails belong together. A code that never
+ * arrives simply never verifies.
  */
 
 type Step =
   | { kind: 'details' }
-  | { kind: 'code'; challengeId: string; resendAvailableAt: number }
+  | { kind: 'code'; challengeId: string; resendAvailableAt: number; message: string }
   | { kind: 'password' };
 
 export default function ForgotPassword() {
   const { t } = useTranslation('common');
   useDocumentMeta(t('auth.forgotTitle'), t('auth.forgotBody'));
-  const audio = useHeroAudio();
   const navigate = useNavigate();
   const [step, setStep] = useState<Step>({ kind: 'details' });
-  const [sent, setSent] = useState<string | null>(null);
+  const [announcement, setAnnouncement] = useState('');
+  const heading = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (step.kind !== 'details') heading.current?.focus();
+  }, [step.kind]);
 
   return (
-    <>
-      <HeroVideo videoRef={audio.videoRef} muted={audio.muted} />
-      <div className="relative flex min-h-[100svh] flex-col text-white">
-        <header className="px-5 py-5 sm:px-8">
-          <span className="block font-display text-md">{t('brand.name')}</span>
-          <span className="block text-xs text-white/75">{t('brand.descriptor')}</span>
-        </header>
+    <PortalLayout>
+      <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
+        {t('auth.forgotTitle')}
+      </h1>
 
-        <main className="flex flex-1 items-center justify-center px-4 py-8 sm:px-6">
-          <div
-            className="w-full max-w-[26rem] rounded-data border border-white/25 bg-[#0B120E]/20 p-6
-            shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.2)]
-            backdrop-blur-[10px] backdrop-saturate-150 sm:p-8"
-          >
-            <h1 className="font-display text-xl tracking-tight">{t('auth.forgotTitle')}</h1>
+      {step.kind === 'details' ? (
+        <DetailsStep
+          onSent={(challengeId, message) => {
+            setAnnouncement(message);
+            setStep({
+              kind: 'code',
+              challengeId,
+              message,
+              resendAvailableAt: Date.now() / 1000 + 60,
+            });
+          }}
+        />
+      ) : null}
 
-            {step.kind === 'details' ? (
-              <DetailsStep
-                onSent={(challengeId, message) => {
-                  setSent(message);
-                  setStep({
-                    kind: 'code',
-                    challengeId,
-                    resendAvailableAt: Date.now() / 1000 + 60,
-                  });
-                }}
-              />
-            ) : null}
-
-            {step.kind === 'code' ? (
-              <>
-                {sent ? (
-                  <p role="status" className="mt-3 text-sm text-white/85">
-                    {sent}
-                  </p>
-                ) : null}
-                <CodeStep
-                  challengeId={step.challengeId}
-                  resendAvailableAt={step.resendAvailableAt}
-                  onSubmit={async (code) => {
-                    await verifyResetCode(step.challengeId, code);
-                    setStep({ kind: 'password' });
-                  }}
-                  onRestart={() => setStep({ kind: 'details' })}
-                  restartLabel={t('auth.forgotStartAgain')}
-                />
-              </>
-            ) : null}
-
-            {step.kind === 'password' ? (
-              <PasswordStep
-                onDone={() => navigate('/login', { state: { notice: 'passwordUpdated' } })}
-                onExpired={() => setStep({ kind: 'details' })}
-              />
-            ) : null}
-
-            <p className="mt-6 border-t border-white/15 pt-5 text-center text-sm text-white/75">
-              <Link
-                to="/login"
-                className="rounded-data text-white underline underline-offset-4
-                  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              >
-                {t('auth.backToLogin')}
-              </Link>
-            </p>
+      {step.kind === 'code' ? (
+        <div className="mt-6">
+          <h2 ref={heading} tabIndex={-1} className="text-[20px] font-semibold focus:outline-none">
+            {t('auth.code.title')}
+          </h2>
+          {/* Announced once, by the live region at the foot of the page. */}
+          <p className="mt-2 text-[16px] text-white/[0.86]">{step.message}</p>
+          <div className="mt-4">
+            <CodeEntry
+              challengeId={step.challengeId}
+              resendAvailableAt={step.resendAvailableAt}
+              intro={t('auth.code.sentReset')}
+              onSubmit={async (code) => {
+                await verifyResetCode(step.challengeId, code);
+                setStep({ kind: 'password' });
+              }}
+              onRestart={() => setStep({ kind: 'details' })}
+              restartLabel={t('auth.forgotStartAgain')}
+              onAnnounce={setAnnouncement}
+            />
           </div>
-        </main>
+        </div>
+      ) : null}
 
-        <footer className="flex justify-end px-5 py-5 sm:px-8">
-          <AudioControl {...audio} />
-        </footer>
-      </div>
-    </>
+      {step.kind === 'password' ? (
+        <PasswordStep
+          headingRef={heading}
+          onDone={() => navigate('/login/password', { state: { notice: 'passwordUpdated' } })}
+          onExpired={() => setStep({ kind: 'details' })}
+        />
+      ) : null}
+
+      <p className="mt-6">
+        <Link to="/login/password" className={textLink}>
+          {t('auth.backToLogin')}
+        </Link>
+      </p>
+      <p className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </p>
+      <LockLine />
+    </PortalLayout>
   );
 }
 
@@ -152,10 +140,10 @@ function DetailsStep({ onSent }: { onSent: (challengeId: string, message: string
 
   return (
     <>
-      <p className="mt-1.5 text-base text-white/80">{t('auth.forgotBody')}</p>
-      <form onSubmit={submit} noValidate className="mt-6 space-y-4">
-        <AuthFormError message={formError} />
-        <AuthField
+      <p className="mt-2 text-[16px] text-white/[0.86]">{t('auth.forgotBody')}</p>
+      <form onSubmit={submit} noValidate className="mt-6 space-y-5">
+        <FormError message={formError} />
+        <Field
           label={t('auth.identifier')}
           name="username"
           value={values.identifier}
@@ -165,25 +153,18 @@ function DetailsStep({ onSent }: { onSent: (challengeId: string, message: string
           disabled={pending}
           autoFocus
         />
-        <AuthField
+        <Field
           label={t('auth.registeredEmail')}
           name="email"
           type="email"
+          inputMode="email"
           value={values.email}
           onChange={set('email')}
           error={errors.email}
           autoComplete="email"
           disabled={pending}
         />
-        <button
-          type="submit"
-          disabled={pending}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-data bg-white
-            px-4 py-2.5 text-base font-medium text-[#0B120E] focus-visible:outline-none
-            focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-not-allowed
-            disabled:opacity-60"
-        >
-          {pending ? <AuthSpinner /> : null}
+        <button type="submit" disabled={pending} className={primaryButton}>
           {t('auth.forgotSend')}
         </button>
       </form>
@@ -191,16 +172,21 @@ function DetailsStep({ onSent }: { onSent: (challengeId: string, message: string
   );
 }
 
-function PasswordStep({ onDone, onExpired }: { onDone: () => void; onExpired: () => void }) {
+function PasswordStep({
+  headingRef,
+  onDone,
+  onExpired,
+}: {
+  headingRef: React.RefObject<HTMLHeadingElement>;
+  onDone: () => void;
+  onExpired: () => void;
+}) {
   const { t } = useTranslation('common');
-  const headingRef = useRef<HTMLHeadingElement>(null);
   const [values, setValues] = useState({ password: '', confirm: '' });
   const [errors, setErrors] = useState<{ password?: string; confirm?: string }>({});
   const [formError, setFormError] = useState<string | null>(null);
   const [expired, setExpired] = useState(false);
   const [pending, setPending] = useState(false);
-
-  useEffect(() => headingRef.current?.focus(), []);
 
   const set = (field: 'password' | 'confirm') => (value: string) => {
     setValues((current) => ({ ...current, [field]: value }));
@@ -236,12 +222,12 @@ function PasswordStep({ onDone, onExpired }: { onDone: () => void; onExpired: ()
   }
 
   return (
-    <form onSubmit={submit} noValidate className="mt-4 space-y-4">
-      <h2 ref={headingRef} tabIndex={-1} className="font-display text-lg focus:outline-none">
+    <form onSubmit={submit} noValidate className="mt-6 space-y-5">
+      <h2 ref={headingRef} tabIndex={-1} className="text-[20px] font-semibold focus:outline-none">
         {t('auth.forgotNewPassword')}
       </h2>
-      <AuthFormError message={formError} />
-      <AuthField
+      <FormError message={formError} />
+      <Field
         label={t('auth.newPassword')}
         name="new-password"
         type="password"
@@ -250,23 +236,10 @@ function PasswordStep({ onDone, onExpired }: { onDone: () => void; onExpired: ()
         error={errors.password}
         autoComplete="new-password"
         disabled={pending || expired}
+        describedBy="reset-rules"
       />
-      <ul aria-label={t('auth.rulesHeading')} className="space-y-1 text-sm">
-        {RULES.map((rule) => {
-          const met = rule.test(values.password);
-          return (
-            <li
-              key={rule.key}
-              className={cn('flex items-center gap-2', met ? 'text-white' : 'text-white/65')}
-            >
-              <Check size={14} aria-hidden="true" className={met ? 'opacity-100' : 'opacity-25'} />
-              {t(`auth.${rule.key}`)}
-              <span className="sr-only">{met ? t('auth.ruleMet') : t('auth.ruleNotMet')}</span>
-            </li>
-          );
-        })}
-      </ul>
-      <AuthField
+      <PasswordChecklist password={values.password} id="reset-rules" />
+      <Field
         label={t('auth.confirmNewPassword')}
         name="confirm-password"
         type="password"
@@ -277,25 +250,11 @@ function PasswordStep({ onDone, onExpired }: { onDone: () => void; onExpired: ()
         disabled={pending || expired}
       />
       {expired ? (
-        <button
-          type="button"
-          onClick={onExpired}
-          className="inline-flex w-full items-center justify-center rounded-data bg-white px-4
-            py-2.5 text-base font-medium text-[#0B120E] focus-visible:outline-none
-            focus-visible:ring-2 focus-visible:ring-white/70"
-        >
+        <button type="button" onClick={onExpired} className={primaryButton}>
           {t('auth.forgotStartAgain')}
         </button>
       ) : (
-        <button
-          type="submit"
-          disabled={pending}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-data bg-white
-            px-4 py-2.5 text-base font-medium text-[#0B120E] focus-visible:outline-none
-            focus-visible:ring-2 focus-visible:ring-white/70 disabled:cursor-not-allowed
-            disabled:opacity-60"
-        >
-          {pending ? <AuthSpinner /> : null}
+        <button type="submit" disabled={pending} className={primaryButton}>
           {pending ? t('auth.saving') : t('auth.savePassword')}
         </button>
       )}

@@ -1,247 +1,246 @@
-import { ScanLine } from 'lucide-react';
-import { useState } from 'react';
+import { Camera, ImageUp, SwitchCamera } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
 
-import { AudioControl } from '@/components/auth/AudioControl';
-import { AuthField, AuthFormError, AuthSpinner } from '@/components/auth/AuthField';
-import { BadgeScanner } from '@/components/auth/BadgeScanner';
-import { CodeStep } from '@/components/auth/CodeStep';
-import { HeroVideo } from '@/components/auth/HeroVideo';
-import { LanguageSelector } from '@/components/layout/LanguageSelector';
+import { CodeEntry } from '@/components/portal/CodeEntry';
+import { FormError } from '@/components/portal/controls';
+import { primaryButton, secondaryButton, textLink } from '@/components/portal/styles';
+import { LockLine } from '@/components/portal/LockLine';
+import { MemberRecord } from '@/components/portal/MemberRecord';
+import { PortalLayout } from '@/components/portal/PortalLayout';
+import { ScannerViewport } from '@/components/portal/ScannerViewport';
+import { useAuth, type AuthNotice } from '@/hooks/authContext';
+import { useCardScanner, type CameraProblem } from '@/hooks/useCardScanner';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
-import { useHeroAudio } from '@/hooks/useHeroAudio';
-import { useAuth } from '@/hooks/authContext';
-import { authMessage } from '@/lib/authCopy';
-import { logIn, verifyLoginCode, type CardChallenge, type NextStep } from '@/services/auth';
+import { verifyLoginCode, type CardChallenge } from '@/services/auth';
 
 /**
- * The front door.
+ * The Registered Member Portal: scan the member card, then enter the code.
  *
- * Full-viewport video, a frosted card over it, and two ways in: the member
- * card shown to the camera, or a Member ID or username with a password. There
- * is no registration: members are issued.
+ * One path through the middle: "Scan Member ID". Everything else ("Log in
+ * another way", uploading a photo) is offered beside it, not in front of it.
+ * The camera starts only when the reader asks.
  *
- * This is the one surface in the product that sits on video rather than paper,
- * which is why it carries its own field and button styling. Everything past it
- * is the reference document the rest of the app is.
+ * Three steps on one page, each announced and each moving focus to its own
+ * heading: the scanner; the member record with the code boxes; and the short
+ * "Verified. Opening your dashboard…" before the home page.
  */
 
-type SignedIn = (next: NextStep) => void;
+type Step = { kind: 'scan' } | { kind: 'code'; challenge: CardChallenge } | { kind: 'success' };
+
+const PROBLEM_TEXT = {
+  denied: 'auth.portal.cameraDenied',
+  insecure: 'auth.portal.cameraInsecure',
+  none: 'auth.portal.cameraNone',
+  busy: 'auth.portal.cameraBusy',
+  failed: 'auth.portal.cameraFailed',
+} as const satisfies Record<CameraProblem, string>;
 
 export default function Login({ onSignedIn }: { onSignedIn: () => void }) {
   const { t } = useTranslation('common');
-  useDocumentMeta(t('auth.signInTitle'), t('auth.heroBody'));
+  useDocumentMeta(t('auth.portal.title'), t('auth.portal.subtitle'));
 
-  const audio = useHeroAudio();
   const { notice: authNotice, clearNotice } = useAuth();
-  // A finished password reset arrives with its own notice in the router state.
-  const arrived = (useLocation().state as { notice?: 'passwordUpdated' } | null)?.notice;
+  const arrived = (useLocation().state as { notice?: AuthNotice } | null)?.notice;
   const notice = arrived ?? authNotice;
-  const [scannerOpen, setScannerOpen] = useState(false);
-  // Set once a card is recognised: the code step replaces the sign-in form.
-  const [challenge, setChallenge] = useState<CardChallenge | null>(null);
-  const signedIn: SignedIn = () => {
-    clearNotice();
-    onSignedIn();
-  };
+
+  const [step, setStep] = useState<Step>({ kind: 'scan' });
+  const [announcement, setAnnouncement] = useState('');
+  const stepHeading = useRef<HTMLHeadingElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const scanner = useCardScanner((challenge) => setStep({ kind: 'code', challenge }));
+  const { phase, problem, refusal } = scanner;
+
+  // Focus follows the step, so a keyboard or screen-reader user lands on it.
+  useEffect(() => {
+    if (step.kind !== 'scan') stepHeading.current?.focus();
+  }, [step.kind]);
+
+  // Say each change of state once, politely.
+  useEffect(() => {
+    const said: Partial<Record<typeof phase, string>> = {
+      starting: t('auth.portal.cameraPermission'),
+      scanning: t('auth.portal.scanning'),
+      checking: t('auth.portal.checking'),
+      detected: t('auth.code.verified'),
+    };
+    if (phase === 'blocked' && problem) setAnnouncement(t(PROBLEM_TEXT[problem]));
+    else if (said[phase]) setAnnouncement(said[phase]!);
+  }, [phase, problem, t]);
+
+  const refusalText = refusal
+    ? refusal.code === 'no_code'
+      ? t('auth.portal.uploadNone')
+      : refusal.message || t('auth.errGeneric')
+    : null;
+  useEffect(() => {
+    if (refusalText) setAnnouncement(refusalText);
+  }, [refusalText]);
+
+  const status =
+    phase === 'starting'
+      ? t('auth.portal.cameraPermission')
+      : phase === 'scanning'
+        ? t('auth.portal.scanning')
+        : phase === 'checking'
+          ? t('auth.portal.checking')
+          : phase === 'detected'
+            ? t('auth.code.verified')
+            : null;
+
+  const scanning = phase === 'starting' || phase === 'scanning' || phase === 'checking';
 
   return (
-    <>
-      <HeroVideo videoRef={audio.videoRef} muted={audio.muted} />
+    <PortalLayout>
+      <h1 className="font-display text-[28px] font-semibold leading-tight sm:text-[36px]">
+        {t('auth.portal.title')}
+      </h1>
+      <p className="mt-2 text-[16px] leading-[1.5] text-white/[0.86]">
+        {t('auth.portal.subtitle')}
+      </p>
 
-      <a
-        href="#signin-card"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50
-          focus:rounded-data focus:bg-white focus:px-4 focus:py-2 focus:text-base
-          focus:font-medium focus:text-[#0B120E]"
-      >
-        {t('auth.signInTitle')}
-      </a>
-
-      {/* 100svh, not 100vh: mobile Safari measures the large viewport unit with
-          the browser chrome retracted, which pushes a 100vh layout under the
-          address bar until the reader scrolls. */}
-      <div className="relative flex min-h-[100svh] flex-col text-white">
-        <header className="flex items-center justify-between gap-4 px-5 py-5 sm:px-8">
-          <div className="leading-tight">
-            <span className="block font-display text-md">{t('brand.name')}</span>
-            <span className="block text-xs text-white/75">{t('brand.descriptor')}</span>
-          </div>
-          <LanguageSelector className="border-white/25 bg-black/30 text-white" />
-        </header>
-
-        <main
-          id="signin-card"
-          className="flex flex-1 items-center justify-center px-4 py-8 sm:px-6"
+      {notice && step.kind === 'scan' ? (
+        <p
+          role="status"
+          className="mt-5 rounded-[6px] border border-white/[0.35] bg-white/[0.08] px-3 py-2 text-[14px]"
         >
-          <div
-            className="w-full max-w-[26rem] rounded-data border border-white/25 bg-[#0B120E]/20 p-6
-            shadow-[0_24px_60px_-12px_rgba(0,0,0,0.45),inset_0_1px_0_rgba(255,255,255,0.2)]
-            backdrop-blur-[10px] backdrop-saturate-150 sm:p-8"
-          >
-            <h1 className="font-display text-xl tracking-tight">{t('auth.signInTitle')}</h1>
-            <p className="mt-1.5 text-base text-white/80">{t('auth.signInBody')}</p>
+          {t(`auth.notice.${notice}`)}
+        </p>
+      ) : null}
 
-            {notice ? (
-              <p
-                role="status"
-                className="mt-4 rounded-data border border-white/25 bg-white/[0.08] px-3 py-2
-                  text-sm text-white"
-              >
-                {t(`auth.notice.${notice}`)}
-              </p>
+      {step.kind === 'scan' ? (
+        <div className="mt-6">
+          <ScannerViewport videoRef={scanner.videoRef} phase={phase} mirrored={scanner.mirrored}>
+            {phase === 'idle' || phase === 'blocked' ? (
+              <div className="absolute inset-0 grid place-items-center">
+                <Camera size={28} aria-hidden="true" className="text-white/[0.55]" />
+              </div>
             ) : null}
+          </ScannerViewport>
 
-            {challenge ? (
-              <CodeStep
-                challengeId={challenge.challengeId}
-                member={challenge.member}
-                maskedEmail={challenge.maskedEmail}
-                resendAvailableAt={challenge.resendAvailableAt}
-                onSubmit={async (code) => {
-                  signedIn(await verifyLoginCode(challenge.challengeId, code));
-                }}
-                onRestart={() => {
-                  setChallenge(null);
-                  setScannerOpen(true);
-                }}
-                restartLabel={t('auth.code.scanAgain')}
-              />
-            ) : (
-              <SignInForm onSignedIn={signedIn} onScan={() => setScannerOpen(true)} />
-            )}
+          <p className="mt-3 min-h-[1.5rem] text-[14px] text-white/[0.86]">{status}</p>
+          <div className="space-y-2">
+            {phase === 'blocked' && problem ? (
+              <FormError message={t(PROBLEM_TEXT[problem])} />
+            ) : null}
+            <FormError message={refusalText} />
           </div>
-        </main>
 
-        <footer className="flex items-end justify-between gap-4 px-5 py-5 sm:px-8">
-          <p className="max-w-[24rem] text-xs leading-relaxed text-white/70">
-            {t('auth.membersOnly')}
-          </p>
-          <AudioControl {...audio} />
-        </footer>
-      </div>
+          <div className="mt-4 space-y-3">
+            {scanning ? (
+              <div className="flex gap-3">
+                <button type="button" onClick={scanner.stop} className={secondaryButton}>
+                  {t('auth.portal.cancel')}
+                </button>
+                {scanner.cameraCount > 1 ? (
+                  <button type="button" onClick={scanner.switchCamera} className={secondaryButton}>
+                    <SwitchCamera size={18} aria-hidden="true" />
+                    {t('auth.portal.switchCamera')}
+                  </button>
+                ) : null}
+              </div>
+            ) : phase === 'detected' ? null : (
+              <button
+                type="button"
+                onClick={() => {
+                  clearNotice();
+                  scanner.start();
+                }}
+                className={primaryButton}
+              >
+                {phase === 'blocked' ? t('auth.portal.tryCamera') : t('auth.portal.scan')}
+              </button>
+            )}
 
-      <BadgeScanner
-        open={scannerOpen}
-        onClose={() => setScannerOpen(false)}
-        onSignedIn={(recognised) => {
-          setScannerOpen(false);
-          setChallenge(recognised);
-        }}
-      />
-    </>
-  );
-}
+            <div className="flex items-center gap-3 py-1" aria-hidden="true">
+              <span className="h-px flex-1 bg-white/25" />
+              <span className="text-[14px] text-white/[0.78]">{t('auth.portal.or')}</span>
+              <span className="h-px flex-1 bg-white/25" />
+            </div>
 
-const primaryButton =
-  'inline-flex w-full items-center justify-center gap-2 rounded-data bg-white px-4 py-2.5 ' +
-  'text-base font-medium text-[#0B120E] transition hover:bg-white/90 ' +
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ' +
-  'disabled:cursor-not-allowed disabled:opacity-60';
-
-function SignInForm({ onSignedIn, onScan }: { onSignedIn: SignedIn; onScan: () => void }) {
-  const { t } = useTranslation('common');
-  const [values, setValues] = useState({ username: '', password: '' });
-  const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
-  const [formError, setFormError] = useState<string | null>(null);
-  const [pending, setPending] = useState(false);
-
-  const set = (field: 'username' | 'password') => (value: string) => {
-    setValues((current) => ({ ...current, [field]: value }));
-    // Clear a complaint as soon as it is being addressed; holding it until the
-    // next submit makes the form feel like it is not listening.
-    if (errors[field]) setErrors((current) => ({ ...current, [field]: undefined }));
-    if (formError) setFormError(null);
-  };
-
-  async function submit(event: React.FormEvent) {
-    event.preventDefault();
-    if (pending) return;
-
-    const found: typeof errors = {};
-    if (!values.username.trim()) found.username = t('auth.errIdentifier');
-    if (!values.password) found.password = t('auth.errPassword');
-    setErrors(found);
-    if (Object.keys(found).length > 0) return;
-
-    setPending(true);
-    setFormError(null);
-    try {
-      onSignedIn(await logIn(values.username.trim(), values.password));
-    } catch (error) {
-      setFormError(authMessage(error, t));
-    } finally {
-      setPending(false);
-    }
-  }
-
-  return (
-    <>
-      <button
-        type="button"
-        onClick={onScan}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-data
-          border border-white/25 bg-white/[0.06] px-4 py-2.5 text-base font-medium text-white
-          transition hover:border-white/40 hover:bg-white/[0.12]
-          focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-      >
-        <ScanLine size={18} aria-hidden="true" />
-        {t('auth.scanBadge')}
-      </button>
-
-      <div className="my-5 flex items-center gap-3" aria-hidden="true">
-        <span className="h-px flex-1 bg-white/15" />
-        <span className="text-xs uppercase tracking-[0.14em] text-white/60">{t('auth.or')}</span>
-        <span className="h-px flex-1 bg-white/15" />
-      </div>
-
-      <form onSubmit={submit} noValidate className="space-y-4">
-        <AuthFormError message={formError} />
-
-        <AuthField
-          label={t('auth.identifier')}
-          name="username"
-          value={values.username}
-          onChange={set('username')}
-          error={errors.username}
-          autoComplete="username"
-          disabled={pending}
-        />
-
-        <div>
-          <AuthField
-            label={t('auth.password')}
-            name="password"
-            type="password"
-            value={values.password}
-            onChange={set('password')}
-            error={errors.password}
-            autoComplete="current-password"
-            disabled={pending}
-          />
-          <div className="mt-2 text-right">
-            <Link
-              to="/forgot-password"
-              className="rounded-data text-xs text-white/60 underline underline-offset-4
-                hover:text-white focus-visible:outline-none focus-visible:ring-2
-                focus-visible:ring-white/70"
-            >
-              {t('auth.forgot')}
+            <Link to="/login/password" className={secondaryButton}>
+              {t('auth.portal.another')}
             </Link>
+
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={phase === 'checking' || phase === 'detected'}
+              className={`${textLink} inline-flex items-center gap-2`}
+            >
+              <ImageUp size={16} aria-hidden="true" />
+              {t('auth.portal.upload')}
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="sr-only"
+              onChange={(event) => {
+                const file = event.target.files?.[0];
+                event.target.value = '';
+                if (file) void scanner.uploadFile(file);
+              }}
+            />
           </div>
         </div>
+      ) : null}
 
-        <button type="submit" className={primaryButton} disabled={pending}>
-          {pending ? <AuthSpinner /> : null}
-          {pending ? t('auth.submitting') : t('auth.submit')}
-        </button>
+      {step.kind === 'code' ? (
+        <div className="mt-6">
+          <h2
+            ref={stepHeading}
+            tabIndex={-1}
+            className="text-[20px] font-semibold text-[#8FD1A8] focus:outline-none"
+          >
+            {t('auth.code.verified')}
+          </h2>
+          <div className="mt-3">
+            <MemberRecord member={step.challenge.member} />
+          </div>
+          <div className="mt-6">
+            <CodeEntry
+              challengeId={step.challenge.challengeId}
+              resendAvailableAt={step.challenge.resendAvailableAt}
+              intro={t('auth.code.sentTo', { email: step.challenge.maskedEmail })}
+              onSubmit={async (code) => {
+                await verifyLoginCode(step.challenge.challengeId, code);
+                setStep({ kind: 'success' });
+                setAnnouncement(t('auth.portal.success'));
+                window.setTimeout(() => {
+                  clearNotice();
+                  onSignedIn();
+                }, 700);
+              }}
+              onRestart={() => {
+                setStep({ kind: 'scan' });
+                scanner.start();
+              }}
+              restartLabel={t('auth.code.scanAgain')}
+              onAnnounce={setAnnouncement}
+            />
+          </div>
+        </div>
+      ) : null}
 
-        {/* Announced without stealing focus from the field being corrected. */}
-        <p className="sr-only" role="status">
-          {pending ? t('auth.submitting') : ''}
-        </p>
-      </form>
-    </>
+      {step.kind === 'success' ? (
+        <h2
+          ref={stepHeading}
+          tabIndex={-1}
+          className="mt-8 text-[20px] font-semibold text-[#8FD1A8] focus:outline-none"
+        >
+          {t('auth.portal.success')}
+        </h2>
+      ) : null}
+
+      <LockLine />
+      <p className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </p>
+    </PortalLayout>
   );
 }

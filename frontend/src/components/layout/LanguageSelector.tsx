@@ -22,7 +22,15 @@ import { cn } from '@/lib/cn';
  * Keyboard accessible: Escape closes, ArrowDown/Up navigate, Enter selects.
  * Clicking outside closes. Focus is trapped inside the panel when open.
  */
-export function LanguageSelector({ className }: { className?: string }) {
+export function LanguageSelector({
+  className,
+  tone = 'default',
+}: {
+  className?: string;
+  /** `inverse` for a dark surface, such as the member portal over its video. */
+  tone?: 'default' | 'inverse';
+}) {
+  const inverse = tone === 'inverse';
   const { t, i18n } = useTranslation('common');
   const id = useId();
   // The reader's choice, not what fallback resolved to — otherwise the
@@ -138,18 +146,25 @@ export function LanguageSelector({ className }: { className?: string }) {
         className={cn(
           'inline-flex cursor-pointer items-center gap-1.5',
           'rounded-control border border-transparent bg-transparent',
-          'px-2 py-1 text-base text-ink',
-          'transition-colors duration-quick ease-incise hover:border-rule-strong',
+          'px-2 py-1 text-base',
+          inverse
+            ? 'text-white hover:border-white/50 focus-visible:outline-white'
+            : 'text-ink hover:border-rule-strong',
+          'transition-colors duration-quick ease-incise',
         )}
       >
-        <Globe size={16} aria-hidden="true" className="shrink-0 text-muted" />
+        <Globe
+          size={16}
+          aria-hidden="true"
+          className={cn('shrink-0', inverse ? 'text-white/80' : 'text-muted')}
+        />
         <span lang={current.code}>{current.nativeName}</span>
       </button>
 
       {/* How far the language a reader is actually in has been translated,
           said in that language, at the moment it matters. */}
       {isFullyTranslated(current.code) ? null : (
-        <span className="ml-1 text-xs text-muted">
+        <span className={cn('ml-1 text-xs', inverse ? 'text-white/75' : 'text-muted')}>
           {t('language.partial', {
             percent: Math.round((LOCALE_STATUS[current.code]?.coverage ?? 0) * 100),
           })}

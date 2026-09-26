@@ -3,7 +3,9 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, useLocation } from 'react-router-dom';
 
 import App from '@/App';
-import { CodeStep } from '@/components/auth/CodeStep';
+import { CodeEntry } from '@/components/portal/CodeEntry';
+import { MemberRecord } from '@/components/portal/MemberRecord';
+import { strengthOf } from '@/components/portal/styles';
 
 /** The emailed-code step and the forgot-password flow, against a stubbed API. */
 
@@ -18,73 +20,86 @@ function json(body: unknown, status = 200) {
 afterEach(() => vi.unstubAllGlobals());
 
 describe('the code step', () => {
-  const member = {
-    name: 'Nakshiketh',
-    role: 'Student / Researcher',
-    institution: 'MGIT',
-    memberId: 'IPS-2026-0001',
-  };
-
   function renderStep(onSubmit: (code: string) => Promise<void>, resendIn = 42) {
     const onRestart = vi.fn();
+    const onAnnounce = vi.fn();
     render(
-      <CodeStep
+      <CodeEntry
         challengeId="c1"
-        member={member}
-        maskedEmail="n**********8@gmail.com"
+        intro="We sent a 6-digit code to n**********8@gmail.com. It expires in 5 minutes."
         resendAvailableAt={Date.now() / 1000 + resendIn}
         onSubmit={onSubmit}
         onRestart={onRestart}
         restartLabel="Scan your Member ID again"
+        onAnnounce={onAnnounce}
       />,
     );
-    return { onRestart };
+    return { onRestart, onAnnounce };
   }
 
-  it('shows the member record, where the code went, and focuses its heading', () => {
+  const box = (n: number) => screen.getByLabelText(`Digit ${n} of 6`);
+
+  it('offers six boxes, the first taking the one-time-code autofill', () => {
     renderStep(vi.fn());
-    expect(screen.getByText('Member ID verified')).toBeInTheDocument();
-    expect(screen.getByText('IPS-2026-0001')).toBeInTheDocument();
     expect(
       screen.getByText(
         'We sent a 6-digit code to n**********8@gmail.com. It expires in 5 minutes.',
       ),
     ).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Enter your verification code' })).toHaveFocus();
-    const input = screen.getByLabelText('6-digit code');
-    expect(input).toHaveAttribute('inputmode', 'numeric');
-    expect(input).toHaveAttribute('autocomplete', 'one-time-code');
+    for (let n = 1; n <= 6; n++) expect(box(n)).toHaveAttribute('inputmode', 'numeric');
+    expect(box(1)).toHaveAttribute('autocomplete', 'one-time-code');
   });
 
-  it('submits by itself once six digits are in, and ignores anything else typed', async () => {
-    const onSubmit = vi.fn().mockResolvedValue(undefined);
-    renderStep(onSubmit);
-    await userEvent.type(screen.getByLabelText('6-digit code'), '12a34-56');
-    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith('123456'));
-  });
-
-  it('accepts a pasted code', async () => {
+  it('moves forward as digits are typed and submits by itself at six', async () => {
     const onSubmit = vi.fn().mockResolvedValue(undefined);
     renderStep(onSubmit);
     const user = userEvent.setup();
-    await user.click(screen.getByLabelText('6-digit code'));
-    await user.paste('654321');
+    await user.click(box(1));
+    await user.keyboard('4');
+    expect(box(2)).toHaveFocus();
+    await user.keyboard('2a817');
+    expect(onSubmit).not.toHaveBeenCalled();
+    await user.keyboard('3');
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledWith('428173'));
+  });
+
+  it('fills every box from a paste into any box', async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    renderStep(onSubmit);
+    const user = userEvent.setup();
+    await user.click(box(3));
+    await user.paste('654 321');
     await waitFor(() => expect(onSubmit).toHaveBeenCalledWith('654321'));
   });
 
-  it('shows the server’s words for a wrong code', async () => {
+  it('Backspace on an empty box steps back and clears the one before', async () => {
+    renderStep(vi.fn());
+    const user = userEvent.setup();
+    await user.click(box(1));
+    await user.keyboard('12');
+    expect(box(3)).toHaveFocus();
+    await user.keyboard('{Backspace}');
+    expect(box(2)).toHaveFocus();
+    expect(box(2)).toHaveValue('');
+    expect(box(1)).toHaveValue('1');
+  });
+
+  it('shows the server wording for a wrong code and clears the boxes', async () => {
     const { AuthError } = await import('@/services/auth');
-    renderStep(() =>
+    const { onAnnounce } = renderStep(() =>
       Promise.reject(
         new AuthError('That code is incorrect. 3 attempts left.', 'OTP_INCORRECT', 400),
       ),
     );
-    await userEvent.type(screen.getByLabelText('6-digit code'), '000000');
+    const user = userEvent.setup();
+    await user.click(box(1));
+    await user.paste('000000');
     expect(await screen.findByText('That code is incorrect. 3 attempts left.')).toBeInTheDocument();
-    expect(screen.getByLabelText('6-digit code')).toHaveValue('');
+    expect(onAnnounce).toHaveBeenCalledWith('That code is incorrect. 3 attempts left.');
+    expect(box(1)).toHaveValue('');
   });
 
-  it('offers a restart once the code is locked', async () => {
+  it('offers the way back once the code is locked', async () => {
     const { AuthError } = await import('@/services/auth');
     const { onRestart } = renderStep(() =>
       Promise.reject(
@@ -95,10 +110,12 @@ describe('the code step', () => {
         ),
       ),
     );
-    await userEvent.type(screen.getByLabelText('6-digit code'), '000000');
+    const user = userEvent.setup();
+    await user.click(box(1));
+    await user.paste('000000');
     await screen.findByText(/Too many incorrect attempts/);
-    expect(screen.getByLabelText('6-digit code')).toBeDisabled();
-    await userEvent.click(screen.getAllByRole('button', { name: 'Scan your Member ID again' })[0]!);
+    expect(box(1)).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: 'Scan your Member ID again' }));
     expect(onRestart).toHaveBeenCalled();
   });
 
@@ -117,6 +134,39 @@ describe('the code step', () => {
     const [url, init] = spy.mock.calls[0] as unknown as [string, RequestInit];
     expect(url).toBe('/api/v1/auth/otp/resend');
     expect(JSON.parse(String(init.body))).toEqual({ challengeId: 'c1' });
+  });
+});
+
+describe('the member record', () => {
+  it('lists name, role, institution and Member ID beside a Verified seal', () => {
+    render(
+      <MemberRecord
+        member={{
+          name: 'Nakshiketh',
+          role: 'Student / Researcher',
+          institution: 'MGIT',
+          memberId: 'IPS-2026-0001',
+        }}
+      />,
+    );
+    for (const text of [
+      'Nakshiketh',
+      'Student / Researcher',
+      'MGIT',
+      'IPS-2026-0001',
+      'Verified',
+    ]) {
+      expect(screen.getByText(text)).toBeInTheDocument();
+    }
+  });
+});
+
+describe('the password checklist', () => {
+  it('rates Weak, Fair and Strong', () => {
+    expect(strengthOf('abc').label).toBe('weak');
+    expect(strengthOf('Fresh1ab').label).toBe('fair');
+    expect(strengthOf('Fresh-Leaf-2026').label).toBe('strong');
+    expect(strengthOf('').score).toBe(0);
   });
 });
 
@@ -143,7 +193,7 @@ describe('forgot password', () => {
 
     const user = userEvent.setup();
     render(
-      <MemoryRouter initialEntries={['/login']}>
+      <MemoryRouter initialEntries={['/login/password']}>
         <App />
         <Where />
       </MemoryRouter>,
@@ -157,13 +207,15 @@ describe('forgot password', () => {
     await user.type(screen.getByLabelText('Registered email'), 'nakshiketh28@gmail.com');
     await user.click(screen.getByRole('button', { name: 'Send verification code' }));
 
-    expect(
-      await screen.findByText(/If these details match a registered member/),
-    ).toBeInTheDocument();
+    // Shown on the page and said once by the live region.
+    expect(await screen.findAllByText(/If these details match a registered member/)).toHaveLength(
+      2,
+    );
     // The code step does not say where a code went.
     expect(screen.queryByText(/@gmail\.com/)).toBeNull();
 
-    await user.type(screen.getByLabelText('6-digit code'), '424242');
+    await user.click(await screen.findByLabelText('Digit 1 of 6'));
+    await user.paste('424242');
     await user.type(await screen.findByLabelText('New password'), 'Fresh-Leaf-2026');
     await user.type(screen.getByLabelText('Confirm new password'), 'Fresh-Leaf-2026');
     await user.click(screen.getByRole('button', { name: 'Save password' }));
@@ -171,7 +223,7 @@ describe('forgot password', () => {
     expect(
       await screen.findByText('Password updated. Log in with your new password.'),
     ).toBeInTheDocument();
-    expect(screen.getByTestId('where')).toHaveTextContent('/login');
+    expect(screen.getByTestId('where')).toHaveTextContent('/login/password');
     expect(calls.map(([url]) => url)).toEqual(
       expect.arrayContaining([
         '/api/v1/auth/password/forgot',
@@ -210,7 +262,8 @@ describe('forgot password', () => {
     await user.type(await screen.findByLabelText('Member ID or username'), 'someone');
     await user.type(screen.getByLabelText('Registered email'), 'a@b.org');
     await user.click(screen.getByRole('button', { name: 'Send verification code' }));
-    await user.type(await screen.findByLabelText('6-digit code'), '111111');
+    await user.click(await screen.findByLabelText('Digit 1 of 6'));
+    await user.paste('111111');
     await user.type(await screen.findByLabelText('New password'), 'Fresh-Leaf-2026');
     await user.type(screen.getByLabelText('Confirm new password'), 'Fresh-Leaf-2026');
     await user.click(screen.getByRole('button', { name: 'Save password' }));
