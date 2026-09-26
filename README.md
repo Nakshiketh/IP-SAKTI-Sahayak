@@ -235,10 +235,11 @@ will succeed. No novelty conclusions — the prior-art feature is an orientation
 records, not a search of every database an examiner would consult. No real-time registry status.
 Only the jurisdictions listed in the corpus policy.
 
-No authentication and no multi-tenancy, because there are no accounts. The rate limit is keyed on a
-client-supplied session id and is trivially rotated; it exists to stop one open tab hammering a
-model, not to stop a determined caller. A deployment exposed to the public internet needs a gateway
-in front of this.
+Only registered members get in: a member card and an emailed code, or a password (see
+`docs/auth/SETUP.md` and `docs/SECURITY.md`). There is no self-registration and no multi-tenancy
+beyond each member's own saved analyses. The question rate limit is keyed on a client-supplied
+session id and is trivially rotated; it exists to stop one open tab hammering a model, not to stop
+a determined caller. A deployment exposed to the public internet needs a gateway in front of this.
 
 Five of the six languages are seeded with English placeholders rather than translated. The files
 carry `__untranslated: true` and `make i18n` reports the coverage, so the gap is visible rather than

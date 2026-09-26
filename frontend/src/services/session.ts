@@ -2,9 +2,10 @@
  * A session id, for rate limiting and for tying an answer to the feedback about
  * it. Not a user id, and deliberately not durable.
  *
- * It lives in `sessionStorage`, so it dies with the tab. Nothing about a reader
- * survives that, which is the point: the product has no accounts, and an
- * identifier that outlived the tab would be one anyway. Where storage is
+ * It lives in `sessionStorage`, so it dies with the tab. It is not the sign-in
+ * session, which is an HttpOnly cookie no script can read (`services/auth.ts`),
+ * and it opens nothing: it only names a tab to the rate limiter and to the
+ * feedback it leaves. Where storage is
  * unavailable — a private window with it disabled — a fresh id is minted per
  * call, which costs the rate limiter some precision and costs the reader
  * nothing.

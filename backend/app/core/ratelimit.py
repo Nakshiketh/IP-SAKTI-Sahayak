@@ -1,8 +1,10 @@
 """A per-session request limit.
 
-Keyed on the session id the client sends, never on an IP address and never on a
-user identity — the product has no accounts, and logging an address to enforce a
-limit would create the personal data `docs/SECURITY.md` says it does not hold.
+This limiter, for questions, is keyed on the session id the client sends, never
+on an address or a member: question traffic should not tie a question to a
+person. The sign-in routes are different, and limit per address and per account
+(`app.auth.limits`, and the lockout in `app.api.auth`); this class is the bucket
+both use.
 
 A session id is client-supplied and therefore trivially rotated. That is
 accepted: this limit exists to keep one open tab from hammering a model, not to

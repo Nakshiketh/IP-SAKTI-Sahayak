@@ -181,20 +181,57 @@ claim that there is no column for the question text can be checked rather than b
 gated twice: the route is not registered in a production build, and the endpoint refuses to serve
 outside a development environment. Either alone would be a route whose safety rests on one flag.
 
+### Member sign-in
+
+Only registered members get in. The plan and its decisions are in `docs/auth/AUTH_PLAN.md`.
+
+- **Sessions.** A server-side row per session. The cookie `sahayak_session` carries 256 random
+  bits and is HttpOnly, SameSite=Lax, Path=/, and Secure when `COOKIE_SECURE=true`. Only an HMAC
+  of it (keyed with `SESSION_SECRET`) is stored. Timeouts: 60 minutes idle, 12 hours absolute.
+  A temporary password gives a restricted session: 10 minutes, and good only for `/auth/me`,
+  changing the password and logging out. A new id is issued on every login and every password
+  change, and a password change or reset ends every other session.
+- **Every route is protected.** Everything except health and the sign-in routes needs a full
+  session, attached per router in `app/main.py`. `tests/test_member_auth_api.py` walks every
+  registered route and fails if one answers without a session.
+- **CSRF.** Every state-changing request must carry `X-Sahayak-CSRF: 1`. A request that names an
+  `Origin` must name one this deployment serves. CORS is an explicit list with credentials, never
+  `*`.
+- **Hashes.** Passwords are argon2id. The card's token is stored as a SHA-256. One-time codes are
+  an HMAC keyed with `OTP_SECRET` and bound to their challenge. Every comparison is
+  constant-time.
+- **Codes.** Six digits from `secrets.randbelow`. Each lasts 5 minutes, works once, and allows
+  5 attempts. Sends are limited to one every 60 s, 5 an hour per member and 20 an hour per
+  address. A failed send invalidates the code. There is no console, log or fallback code in any
+  environment.
+- **No enumeration.** Password login gives one message for an unknown user and a wrong password,
+  and runs a full argon2 verify either way. Forgot password always gives the same answer and
+  challenge id, and emails the code after responding.
+- **Lockout and limits.** Five wrong passwords lock the account for 15 minutes. Limits per
+  address: password login 20 a minute; recognised cards 10 a minute; code checks 30 a minute;
+  forgot-password requests 3 an hour per identifier and 10 an hour per address.
+- **Audit.** Sign-in events go to `auth_events`: the event, the member, the address and the user
+  agent. There is no column that could hold a secret, and `tests/test_member_auth_acceptance.py`
+  checks that none reaches a log either.
+
 ### What is not claimed
 
-Accounts exist, with a sign-in in front of the site, and they are the front door rather than a
-security boundary: tokens are HMAC-signed with a per-process secret, with no refresh, revocation or
-rotation. The one place an account is a boundary is the invention analyst: `/api/v1/analyst/*`
-requires a valid token, and a saved analysis (`data/analyses.sqlite3`, holding the inventor's own
-words and findings) is read, written and deleted only through the account that created it — another
-account gets a 404, not a 403, so it cannot even learn the analysis exists. If a hosted model is
-configured as the analyst's reader, message text goes to that provider; the reader's output is
-checked against the message before it is applied. No multi-tenancy beyond that, and no protection
-against a determined caller: the rate limit is keyed on
-a client-supplied session id and is trivially rotated. No secret management beyond a gitignored
-`.env`. A deployment exposed to the public internet needs a gateway in front of this, and the honest
-statement of that is here rather than in a paragraph implying otherwise.
+- **The card is not secret.** It is the existing QR badge, kept at the member's request, and its
+  pattern is in this repository. Scanning it only starts a sign-in. The code emailed to the member
+  is what completes it, so a copied card alone opens nothing.
+- **Rate limits live in process memory.** One process, one set of buckets, and a restart clears
+  them. The per-account lockout is in the database and survives restarts. Behind Render's proxy,
+  per-address limits count the proxy's address rather than each reader's.
+- **Storage is SQLite on the instance's disk.** On a host that wipes its disk when it sleeps,
+  sessions and history go with it. The demo member and card are re-created on boot from
+  `DEMO_MEMBER_TEMP_PASSWORD` (`app/auth/bootstrap.py`).
+- **Secrets live in a gitignored `backend/.env`.** There is no secret manager. The server refuses
+  to start without `SESSION_SECRET` and `OTP_SECRET`.
+- **The analyst's data belongs to one member.** A saved analysis (`data/analyses.sqlite3`) is read,
+  written and deleted only through the member who created it. Another member gets a 404. If a
+  hosted model is configured as the analyst's reader, message text goes to that provider.
+- **No gateway.** A deployment exposed to the public internet should still put one in front of
+  this. The honest statement of that is here, not in a paragraph implying otherwise.
 
 ## Secrets
 
