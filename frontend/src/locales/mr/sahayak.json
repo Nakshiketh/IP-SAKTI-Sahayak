@@ -31,7 +31,8 @@
     "detectedAmbiguous": "पहचानी गई {{script}} लिपि: {{languages}} हो सकती है",
     "change": "बदला",
     "detectionNote": "आपके द्वारा टाइप की गई लिपि से पहचाना गया। यदि यह गलत है तो इसे सही करें।",
-    "shortcutHint": "फ़ोकस करने के लिए Ctrl+K, भेजने के लिए Ctrl+Enter, उदाहरणों के लिए /"
+    "shortcutHint": "फ़ोकस करने के लिए Ctrl+K, भेजने के लिए Ctrl+Enter, उदाहरणों के लिए /",
+    "otherWays": "Other ways to ask"
   },
   "jurisdictionLabel": "अधिकार क्षेत्र",
   "marketLabel": "बाज़ार",

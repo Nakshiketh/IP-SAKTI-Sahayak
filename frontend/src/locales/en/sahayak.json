@@ -30,7 +30,8 @@
     "detectedAmbiguous": "Detected {{script}} script: could be {{languages}}",
     "change": "change",
     "detectionNote": "Detected from the script you typed in. Correct it if it is wrong.",
-    "shortcutHint": "Ctrl+K to focus, Ctrl+Enter to send, / for examples"
+    "shortcutHint": "Ctrl+K to focus, Ctrl+Enter to send, / for examples",
+    "otherWays": "Other ways to ask"
   },
   "jurisdictionLabel": "Jurisdiction",
   "marketLabel": "Market",

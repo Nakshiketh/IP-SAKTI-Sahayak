@@ -1,7 +1,7 @@
 import { forwardRef, lazy, Suspense, useId, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Select } from '@/components/ui';
+import { Button, Disclosure, Select } from '@/components/ui';
 import { FEATURES } from '@/config/features';
 import { LOCALES, type LocaleCode } from '@/i18n/languages';
 import { detectScript } from '@/lib/detectScript';
@@ -127,20 +127,30 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
           a file is data — it has no authority, it is never cited, and putting
           it here rather than sending it straight on is what keeps that true
           somewhere the reader can see. */}
-      {FEATURES.documentIntel ? (
-        <Suspense fallback={null}>
-          <DocumentUpload
-            onText={(text) =>
-              setQuestion((current) => (current ? `${current}\n\n${text}` : text))
-            }
-          />
-        </Suspense>
-      ) : null}
+      {/* Folded away, and the reason is rhythm rather than tidiness. Both of
+          these sit above the answer, so left open they put a file uploader and
+          a helpline banner between the reader and the thing they asked for —
+          two full sections to scroll past on every result. They are
+          alternative ways IN to a question, wanted before one is asked and
+          almost never after, so one quiet line holds them until asked for. */}
+      {FEATURES.documentIntel || FEATURES.helplineSim ? (
+        <Disclosure summary={t('composer.otherWays')} className="mt-3">
+          {FEATURES.documentIntel ? (
+            <Suspense fallback={null}>
+              <DocumentUpload
+                onText={(text) =>
+                  setQuestion((current) => (current ? `${current}\n\n${text}` : text))
+                }
+              />
+            </Suspense>
+          ) : null}
 
-      {FEATURES.helplineSim ? (
-        <Suspense fallback={null}>
-          <HelplineSimulator language={language} />
-        </Suspense>
+          {FEATURES.helplineSim ? (
+            <Suspense fallback={null}>
+              <HelplineSimulator language={language} />
+            </Suspense>
+          ) : null}
+        </Disclosure>
       ) : null}
 
       <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">

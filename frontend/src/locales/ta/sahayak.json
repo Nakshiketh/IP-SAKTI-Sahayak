@@ -31,7 +31,8 @@
     "detectedAmbiguous": "கண்டறியப்பட்ட {{script}} எழுத்துரு: {{languages}} ஆக இருக்கலாம்",
     "change": "மாற்று",
     "detectionNote": "நீங்கள் தட்டச்சு செய்த எழுத்துருவிலிருந்து கண்டறியப்பட்டது. தவறாக இருந்தால் சரிசெய்யவும்.",
-    "shortcutHint": "தேர்ந்தெடுக்க Ctrl+K, அனுப்ப Ctrl+Enter, உதாரணங்களுக்கு /"
+    "shortcutHint": "தேர்ந்தெடுக்க Ctrl+K, அனுப்ப Ctrl+Enter, உதாரணங்களுக்கு /",
+    "otherWays": "Other ways to ask"
   },
   "jurisdictionLabel": "நீதி வரம்பு",
   "marketLabel": "சந்தை",
