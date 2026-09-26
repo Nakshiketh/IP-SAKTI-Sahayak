@@ -17,6 +17,8 @@ coverage/
 .env
 .env.local
 *.local
+# Member card images. The only copy of a card outside the database's hash.
+demo/cards/
 
 # Generated indexes, chunk stores, raw fetched documents.
 # The manifest and the fetch recipe are committed; the documents are not.

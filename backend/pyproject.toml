@@ -20,6 +20,8 @@ dependencies = [
   # flag is the thing that decides whether uploads exist.
   "python-multipart>=0.0.9",
   "pypdf>=5.0",
+  # Member passwords: argon2id, a memory-hard KDF. Nothing in the stdlib does it.
+  "argon2-cffi>=23.1",
 ]
 
 [project.optional-dependencies]

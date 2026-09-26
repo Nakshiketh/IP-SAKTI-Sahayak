@@ -163,6 +163,34 @@ class Settings(BaseSettings):
     #: something a deployment grants, never something that exists by accident.
     admin_usernames: str = ""
 
+    # -- member authentication ---------------------------------------------
+    #: Read by the exact names in `docs/auth/AUTH_PLAN.md`, without the
+    #: `SAHAYAK_` prefix: they are the names a deployment is told to fill, and a
+    #: prefix nobody asked for is a key somebody fills under the wrong name.
+    #: None of them is ever logged or returned.
+
+    email_host: str = Field(default="smtp.gmail.com", validation_alias="EMAIL_HOST")
+    email_port: int = Field(default=465, validation_alias="EMAIL_PORT")
+    email_secure: bool = Field(default=True, validation_alias="EMAIL_SECURE")
+    email_user: str = Field(default="", validation_alias="EMAIL_USER")
+    email_password: str = Field(default="", validation_alias="EMAIL_PASSWORD")
+    email_from: str = Field(default="", validation_alias="EMAIL_FROM")
+
+    session_secret: str = Field(default="", validation_alias="SESSION_SECRET")
+    otp_secret: str = Field(default="", validation_alias="OTP_SECRET")
+
+    app_base_url: str = Field(default="", validation_alias="APP_BASE_URL")
+    cookie_secure: bool = Field(default=False, validation_alias="COOKIE_SECURE")
+
+    #: The demo member's temporary password. The seed refuses to run without it.
+    demo_member_temp_password: str = Field(default="", validation_alias="DEMO_MEMBER_TEMP_PASSWORD")
+    enable_demo_card: bool = Field(default=False, validation_alias="ENABLE_DEMO_CARD")
+
+    @property
+    def members_db_path(self) -> Path:
+        """Members live beside the old accounts table: one accounts database."""
+        return self.data_dir / "accounts.sqlite3"
+
     @property
     def admin_username_list(self) -> list[str]:
         return [name.strip() for name in self.admin_usernames.split(",") if name.strip()]
