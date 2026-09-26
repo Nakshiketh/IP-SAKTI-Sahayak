@@ -102,31 +102,34 @@ export const Composer = forwardRef<HTMLTextAreaElement, ComposerProps>(function 
             'transition-colors duration-quick ease-incise hover:border-ink/60',
           )}
         />
+        {/* In the row with the box and the Ask button, because that is where
+            the controls for asking belong — a reader looking for a microphone
+            looks beside the thing they would speak into, not in a paragraph
+            underneath it. Self-stretch keeps it the height of the box, so the
+            three line up on both edges at every width. */}
+        {FEATURES.voice ? (
+          <Suspense fallback={null}>
+            <VoiceInput
+              className="flex shrink-0 items-stretch self-stretch [&>button]:h-auto [&>button]:self-stretch"
+              language={language}
+              onTranscript={(said) =>
+                setQuestion((current) => (current ? `${current} ${said}` : said))
+              }
+              showNote={false}
+            />
+          </Suspense>
+        ) : null}
+
         <Button onClick={submit} className="shrink-0 self-stretch px-5">
           {t('composer.send')}
         </Button>
       </div>
 
-      {/* The transcript lands in the box for the person to read and correct.
-          Nothing is submitted for them: speech recognition mishears domain
-          words worst of all, and "Form 18" misheard is a different question. */}
-      {FEATURES.voice ? (
-        <Suspense fallback={null}>
-          <VoiceInput
-            className="mt-2"
-            language={language}
-            onTranscript={(said) =>
-              setQuestion((current) => (current ? `${current} ${said}` : said))
-            }
-          />
-        </Suspense>
-      ) : null}
+      {/* The promise keeps its place under the row. It moved out of the button
+          because a sentence does not fit in a 44px square, not because it
+          stopped mattering. */}
+      {FEATURES.voice ? <p className="mt-1.5 text-xs text-muted">{t('voice.note')}</p> : null}
 
-      {/* The extracted text lands in the box, exactly as the transcript does,
-          and for the same reason: the person reads it and decides. Text out of
-          a file is data — it has no authority, it is never cited, and putting
-          it here rather than sending it straight on is what keeps that true
-          somewhere the reader can see. */}
       {/* Folded away, and the reason is rhythm rather than tidiness. Both of
           these sit above the answer, so left open they put a file uploader and
           a helpline banner between the reader and the thing they asked for —

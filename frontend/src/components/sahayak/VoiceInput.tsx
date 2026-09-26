@@ -1,7 +1,7 @@
+import { Mic, Square } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { Button } from '@/components/ui';
 import { cn } from '@/lib/cn';
 
 /**
@@ -49,11 +49,21 @@ export function VoiceInput({
   language,
   onTranscript,
   className,
+  showNote = true,
 }: {
   language: string;
   /** The words, for the composer to show and the person to correct. */
   onTranscript: (text: string) => void;
   className?: string;
+  /**
+   * Whether this renders the promise beneath the button.
+   *
+   * The promise itself is not optional — "nothing is sent until you press Ask,
+   * and no audio is kept" has to be somewhere a person reads it. What moves is
+   * where. Sitting in the input row the button has no room for a sentence, so
+   * the composer renders it under the row instead and passes false here.
+   */
+  showNote?: boolean;
 }) {
   const { t } = useTranslation('sahayak');
   const [listening, setListening] = useState(false);
@@ -93,17 +103,35 @@ export function VoiceInput({
     );
   }
 
+  const label = listening ? t('voice.listening') : t('voice.speak');
+
   return (
     <div className={cn('print:hidden', className)}>
-      <Button
-        variant="secondary"
-        size="sm"
+      {/* The words became the accessible name rather than disappearing. An
+          icon-only control with no label is unusable by anyone reading the
+          page through a screen reader, and a microphone glyph is not
+          self-explanatory to everyone who can see it either — the title
+          carries it on hover, the aria-label everywhere else.
+
+          44px square: the minimum a finger can hit reliably. The listening
+          state is carried by a different glyph as well as aria-pressed, so it
+          does not depend on noticing a colour. */}
+      <button
+        type="button"
         onClick={() => (listening ? active.current?.stop() : listen())}
         aria-pressed={listening}
+        aria-label={label}
+        title={label}
+        className={cn(
+          'inline-flex h-11 w-11 shrink-0 items-center justify-center',
+          'rounded-control border text-ink',
+          'transition-colors duration-quick ease-incise',
+          listening ? 'border-ink bg-surface-sunk' : 'border-rule-strong hover:border-ink',
+        )}
       >
-        {listening ? t('voice.listening') : t('voice.speak')}
-      </Button>
-      <p className="mt-1.5 text-xs text-muted">{t('voice.note')}</p>
+        {listening ? <Square size={16} aria-hidden="true" /> : <Mic size={18} aria-hidden="true" />}
+      </button>
+      {showNote ? <p className="mt-1.5 text-xs text-muted">{t('voice.note')}</p> : null}
     </div>
   );
 }
