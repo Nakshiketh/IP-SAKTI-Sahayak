@@ -103,10 +103,10 @@
   "retrieval": {
     "navLabel": "సేకరణ ఎందుకు",
     "heading": "మూలాలు గుర్తుంచుకోకుండా ఎందుకు సేకరించబడతాయి",
-    "body1": "A language model asked a legal question from its training data answers from memory. That answer is undated, unattributed, and confidently wrong on anything that has been amended since the model was trained — which, in this field, is a great deal. It cannot tell you where it got something, because it does not know.",
-    "body2": "Retrieval changes what the model is allowed to use. The answer is constrained to a curated, version-tracked set of published documents, each claim points at the passage behind it, and every answer carries the date of the sources it used.",
+    "body1": "A language model answering a legal question from training data answers from memory: undated, unattributed, and confidently wrong on anything amended since it was trained. It cannot tell you where it got something, because it does not know.",
+    "body2": "Retrieval constrains the answer to a curated, version-tracked set of published documents. Each claim points at the passage behind it, and every answer carries the date of the sources it used.",
     "honestly": "What this does not do",
-    "body3": "It reduces hallucination and localises it. It does not eliminate it. A model can still misread a passage, or state something the passage does not quite say. That is precisely why every claim is checkable against the passage it names, why sentences resting on nothing are marked as such, and why the system is built to abstain rather than to produce something plausible."
+    "body3": "It reduces hallucination and localises it. It does not eliminate it: a model can still misread a passage, or state something the passage does not quite say. So every claim is checkable against the passage it names, sentences resting on nothing are marked, and the system abstains rather than produce something plausible."
   },
   "abstention": {
     "navLabel": "నిరాకరణ",
@@ -121,7 +121,7 @@
       },
       "scope": {
         "title": "Outside what this covers",
-        "body": "This is outside what I can answer. I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, individual legal opinions, or predictions about whether an application will succeed.",
+        "body": "Outside what I can answer. I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, legal opinions, or predictions about whether an application will succeed.",
         "offers": "A plain statement of what it can do instead, and the escalation route."
       },
       "conflict": {
@@ -144,7 +144,7 @@
   "jurisdictions": {
     "navLabel": "అధికార పరిధులను వేరుగా ఉంచడం",
     "heading": "రెండు నేమ్‌స్పేస్‌లు, ఎప్పుడూ కలపబడవు",
-    "body": "India and International are separate indexes. A retrieval call reads one of them, and a cross-border question runs two retrievals and produces two answers rather than one blended paragraph. The reason is not tidiness: an answer that mixes the Indian position with an export market's is wrong in a way that reads as right, and a reader acting on it would not be able to tell which half applied to them.",
+    "body": "India and International are separate indexes. A retrieval call reads one; a cross-border question runs two and produces two answers rather than one blended paragraph. An answer mixing the Indian position with an export market's is wrong in a way that reads as right, and a reader could not tell which half applied to them.",
     "sideBySide": "The same question, answered twice",
     "note": "These two answers were produced separately and are shown side by side. Nothing in the product merges them, and no interface anywhere presents a single answer covering both.",
     "inLabel": "Under India",
@@ -157,7 +157,7 @@
     "filtersHeading": "Retriever metadata filters",
     "filters": "Jurisdiction · product class · IP right · regulatory area · effective date window · document type · language",
     "notScheduled": "Not scheduled",
-    "notScheduledBody": "A knowledge graph over entities and provisions, agentic orchestration across several sources for one question, and connectors to subscription databases. These are directions, not commitments, and none of them is being built.",
+    "notScheduledBody": "A knowledge graph over entities and provisions, agentic orchestration across several sources, connectors to subscription databases. Directions, not commitments. None is being built.",
     "layers": {
       "client": {
         "name": "Client",

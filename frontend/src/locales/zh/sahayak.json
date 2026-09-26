@@ -8,7 +8,7 @@
   "standfirst": "Ask about intellectual property or regulation for an Ayurvedic product. Answers are built from cited sources.",
   "notLegalAdvice": "Information, not legal advice",
   "questionLabel": "Your question",
-  "demoNotice": "No documents have been ingested yet, so this was answered from a small set of demonstration sources. What happened is real — the search, the sources chosen, the confidence and its reason. The text behind each source is a placeholder until the documents themselves are fetched.",
+  "demoNotice": "No documents have been ingested yet, so this was answered from a small set of demonstration sources. What happened is real — the search, the sources chosen, the confidence and its reason. The text behind each source is a placeholder.",
   "emptyHeading": "Nothing asked yet",
   "emptyBody": "Type a question on the homepage, or use the example below.",
   "tryExample": "See the example answer",
@@ -135,7 +135,7 @@
     },
     "language_unsupported": {
       "title": "This question could not be searched",
-      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for — not because the sources are silent."
+      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for."
     }
   },
   "error": {
@@ -171,7 +171,7 @@
   "escalate": {
     "open": "Get someone to look at this",
     "title": "Send this to a human",
-    "intro": "This packages what you asked and what the system found into a summary you can copy or send. There is no expert network behind this button — it is an honest handoff, not a queue.",
+    "intro": "Packages what you asked and what the system found into a summary you can copy or send. There is no expert network behind this button — it is a handoff, not a queue.",
     "summaryLabel": "Summary",
     "copy": "Copy the summary",
     "copied": "Copied",
@@ -608,7 +608,7 @@
   },
   "document": {
     "heading": "Ask about your own document",
-    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first, because a PDF often holds something other than what you expect — and a scanned page holds no text at all.",
+    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first: a PDF often holds something other than what you expect, and a scanned page holds no text at all.",
     "choose": "Choose a file",
     "limits": "PDF, .txt or .md. Up to 10 MB.",
     "reading": "Reading the file…",
@@ -621,7 +621,7 @@
   },
   "thread": {
     "heading": "This conversation",
-    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — this is a record of what you asked, not a memory.",
+    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — a record of what you asked, not a memory.",
     "answered": "Answered, {{confidence}} confidence, {{count}} source(s)",
     "declined": "Declined — the sources did not carry it",
     "failed": "Could not be answered — something went wrong",

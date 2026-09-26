@@ -5,7 +5,7 @@
     "description": "ఈ ఉత్పత్తి ఏమి నిల్వ చేస్తుంది, ఏమి నిల్వ చేయదు, ఎంతకాలం ఉంచుతుంది మరియు దానిని ఎలా తొలగించాలి."
   },
   "heading": "ఈ ఉత్పత్తి ఏమి నిల్వ చేస్తుంది",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "ఏదైనా ఎందుకు ఉంచబడుతుంది",
     "body": "ఒకే ఒక కారణం: సమాధానాన్ని తనిఖీ చేయడానికి. ప్రతి వాదన ఎక్కడ నుండి వచ్చిందో చెప్పే ఉత్పత్తి, అది ఏ భాగాలను చదివిందో, అవి ఏ పత్రంలోని ఏ వెర్షన్‌లో ఉన్నాయో చూపించగలగాలి. ఇది రికార్డు. విశ్లేషణల కోసం ఇక్కడ ఏదీ ఉంచబడదు.",

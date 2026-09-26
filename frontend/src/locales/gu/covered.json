@@ -8,7 +8,7 @@
   "standfirst": "Different parts of an Ayurvedic product raise different questions. This page maps which is which.",
   "pending": {
     "title": "Nothing on this page is sourced yet",
-    "body": "No documents have been ingested, so every statement below is marked pending against the source it will cite. The sourcing plan is real — each marker names the instrument the statement will rest on — but nothing here has been read from a published document, and none of it should be relied on as settled."
+    "body": "No documents have been ingested, so every statement below is marked pending against the source it will cite. Each marker names the instrument the statement will rest on, but nothing here has been read from a published document."
   },
   "contents": "On this page",
   "marker": {
@@ -28,7 +28,7 @@
     "regHeading": "Regulation asks",
     "regBody": "What must I do before I can make, sell or advertise this? It is about permission: what the state requires of you before a product may reach a buyer.",
     "couplingHeading": "For Ayurveda, they are one question asked twice",
-    "couplingBody": "Most industries can treat these separately. Here you cannot, because the regulatory classification of a formulation determines what intellectual property is realistically available to it. A preparation taken unchanged from an authoritative text is documented knowledge, which is why the composition is hard to claim — and the same fact is what lets it use the classical licensing route. Change the formulation and both answers change together.",
+    "couplingBody": "Most industries treat these separately. Here you cannot: the regulatory classification of a formulation determines what intellectual property is realistically available to it. A preparation taken unchanged from an authoritative text is documented knowledge, which is why the composition is hard to claim — and the same fact lets it use the classical licensing route. Change the formulation and both answers change.",
     "matrixHeading": "What each product class opens and closes",
     "matrixNote": "Short cells by design. The detail belongs in an answer with the passage attached.",
     "colProduct": "Product class",
@@ -85,7 +85,7 @@
         "protects": "A new invention that is not obvious to someone skilled in the field, for a limited term, in exchange for disclosing how it works.",
         "inAyurveda": "Rarely the formulation itself. More often a process, a delivery form, a purified fraction, or a specific combination that does something the individual ingredients were not already known to do.",
         "question": "We reformulated a classical preparation — is there anything patentable in it?",
-        "doesNot": "It does not give you permission to sell. A granted patent and a manufacturing licence are separate things and neither implies the other. It also does not make a formulation new: documented traditional knowledge is prior art, and an aggregation of properties already known is generally not an invention.",
+        "doesNot": "It does not give you permission to sell: a granted patent and a manufacturing licence are separate and neither implies the other. It does not make a formulation new — documented traditional knowledge is prior art, and an aggregation of known properties is generally not an invention.",
         "jurisdiction": "India, with separate filings in every other country you want protection in."
       },
       "gi": {
@@ -93,7 +93,7 @@
         "protects": "A name identifying goods as coming from a particular place, where a quality, reputation or characteristic is due to that origin.",
         "inAyurveda": "Regional herbs and preparations whose character is tied to where they grow, or to how a locality has long made them.",
         "question": "Our herb grows only in one district — does that qualify for a geographical indication?",
-        "doesNot": "It is not owned by one company. A GI is held for a class of producers who meet the specification, so registering one does not give you exclusivity over your competitors in the same region. It also does not stop anyone outside the region making a similar product under a different name.",
+        "doesNot": "It is not owned by one company. A GI is held for a class of producers meeting the specification, so it gives no exclusivity over competitors in the same region, and does not stop anyone outside it making a similar product under another name.",
         "jurisdiction": "India. Protection elsewhere is separate and works differently from country to country."
       },
       "trademarks": {
@@ -101,13 +101,13 @@
         "protects": "A sign that tells a buyer who made the product.",
         "inAyurveda": "Brand names for Ayurvedic, Siddha and Unani products, house marks, and the get-up of a pack.",
         "question": "Can we register our brand name if it contains a classical formulation name?",
-        "doesNot": "It does not hand you a classical formulation name. A mark that merely describes what the product is will struggle, and other manufacturers need to use the same classical name for the same preparation. Registration also does not license a claim that the advertising rules prohibit — the mark and the claim are judged separately.",
+        "doesNot": "It does not hand you a classical formulation name. A mark merely describing the product will struggle, and other manufacturers need the same classical name for the same preparation. Registration does not license a claim the advertising rules prohibit — mark and claim are judged separately.",
         "jurisdiction": "India, with separate registration abroad or through an international filing system."
       },
       "copyright": {
         "title": "Copyright",
         "protects": "Original expression — text, images, artwork, software — not the ideas, facts or methods inside it.",
-        "inAyurveda": "Course material, translations and commentaries, packaging artwork, photography, software. The classical texts themselves are long out of copyright; a new translation or an original commentary is a new work with its own term.",
+        "inAyurveda": "Course material, translations and commentaries, packaging artwork, photography, software. The classical texts are long out of copyright; a new translation or commentary is a new work with its own term.",
         "question": "Can we stop someone copying our training material?",
         "doesNot": "It does not protect a formulation, a process, or a treatment protocol. Someone may read your book and make your product.",
         "jurisdiction": "India, with protection in most other countries arising automatically under treaty rather than by registration."
@@ -133,15 +133,15 @@
         "protects": "In India, no standalone statute. Confidential information is held through contract, employment terms and the general law rather than by any registration.",
         "inAyurveda": "Process know-how, sourcing relationships, standardisation methods — precisely the things a patent application would have to disclose.",
         "question": "Should we file a patent or keep the process confidential?",
-        "doesNot": "It gives you nothing against independent discovery or reverse engineering. And it is in direct tension with two disclosure obligations: what a patent application must reveal, and what a regulatory dossier must contain. Choosing secrecy is choosing to forgo both.",
+        "doesNot": "It gives you nothing against independent discovery or reverse engineering, and it is in direct tension with two disclosure obligations: what a patent application must reveal, and what a regulatory dossier must contain.",
         "jurisdiction": "India — and the absence of a dedicated statute is itself the point, so this section states a gap rather than a regime."
       },
       "tk": {
         "title": "Traditional knowledge",
         "protects": "It depends on whether the knowledge is codified in published texts or held by a community. These are different problems with different answers.",
-        "inAyurveda": "Codified knowledge in the authoritative texts is the reason many formulation patents fail — it is prior art, and it is documented specifically so that it can be cited as such. Community-held knowledge raises a different question, about consent and about sharing what comes of it.",
+        "inAyurveda": "Codified knowledge in the authoritative texts is why many formulation patents fail: it is prior art, documented so it can be cited as such. Community-held knowledge raises a different question, about consent and about sharing what comes of it.",
         "question": "Our formulation comes from a community's practice — what do we owe them?",
-        "doesNot": "Defensive protection stops others from patenting what is already known. It does not give you an exclusive right of your own, and it is not a substitute for the access and benefit-sharing duties below.",
+        "doesNot": "Defensive protection stops others patenting what is already known. It gives you no exclusive right of your own, and does not substitute for the access and benefit-sharing duties below.",
         "jurisdiction": "India, and internationally: a 2024 treaty addresses intellectual property, genetic resources and associated traditional knowledge, including what an applicant must disclose."
       }
     }
@@ -154,7 +154,7 @@
     "items": {
       "classification": {
         "title": "Product classification",
-        "body": "Everything downstream follows from what your product is: a classical preparation, a patent or proprietary medicine, a new non-classical drug, a phytopharmaceutical, a food, or a cosmetic. The classification is not a label you choose — it follows from the formulation, the claim you make, and how far you have moved from an authoritative text.",
+        "body": "Everything downstream follows from what your product is: a classical preparation, a patent or proprietary medicine, a new non-classical drug, a phytopharmaceutical, a food, or a cosmetic. The classification is not a label you choose — it follows from the formulation, the claim, and how far you have moved from an authoritative text.",
         "watchFor": "Businesses often decide their route first and describe the product to fit. That is the wrong way round, and it is expensive to unwind."
       },
       "licence": {
@@ -170,11 +170,11 @@
       "quality": {
         "title": "Quality and pharmacopoeial standards",
         "body": "Published pharmacopoeial monographs set identity, purity and strength standards for many single drugs and formulations, and a formulary records recognised preparations.",
-        "watchFor": "Where a monograph exists, meeting it is not a marketing claim you can make — it is the baseline. Where none exists, you have to be able to say what standard you are working to and why."
+        "watchFor": "Where a monograph exists, meeting it is the baseline, not a marketing claim. Where none exists, you must be able to say what standard you work to and why."
       },
       "labelling": {
         "title": "Labelling",
-        "body": "What must appear on the pack is set by more than one regime at once: drug rules, packaged-commodity rules, and — if the product is a food — the food authority's labelling regulations.",
+        "body": "What must appear on the pack is set by more than one regime at once: drug rules, packaged-commodity rules, and — for a food — the food authority's labelling regulations.",
         "watchFor": "The regimes overlap rather than nest. Satisfying one does not mean you have satisfied another."
       },
       "advertising": {
@@ -184,7 +184,7 @@
       },
       "food": {
         "title": "The food and nutraceutical route",
-        "body": "A product intended as a food or supplement rather than a medicine falls under the food authority, which has its own category for Ayurveda-derived foods, its own approval process, and its own limits on what a claim may say.",
+        "body": "A product intended as a food or supplement rather than a medicine falls under the food authority, with its own category for Ayurveda-derived foods, its own approval process, and its own limits on claims.",
         "watchFor": "This route is often chosen to avoid drug licensing. It brings different obligations rather than fewer, and it narrows what you may claim the product does."
       },
       "cosmetic": {
@@ -199,7 +199,7 @@
       },
       "marketAccess": {
         "title": "Import, export and market access",
-        "body": "An Indian licence carries no weight abroad. Each destination decides for itself whether your product is a medicine, a supplement, a food or a novel ingredient, and answers that question by its own rules.",
+        "body": "An Indian licence carries no weight abroad. Each destination decides by its own rules whether your product is a medicine, a supplement, a food or a novel ingredient.",
         "watchFor": "The most common surprise is that the product changes category at the border, and with it the entire compliance burden."
       }
     }
@@ -207,19 +207,19 @@
   "abs": {
     "navLabel": "Access and benefit sharing",
     "heading": "Access and benefit sharing",
-    "standfirst": "This is the obligation most often discovered late, and it is the one that touches both halves of this page: it can attach to your manufacturing and to your patent application at the same time.",
+    "standfirst": "The obligation most often discovered late, and the one touching both halves of this page: it can attach to your manufacturing and your patent application at once.",
     "whoHeading": "Who owes duties",
-    "whoBody": "The obligations differ depending on who you are. Indian individuals and companies, foreign entities, registered practitioners and researchers are not treated identically, and the difference is not a formality — it changes which authority you deal with and what you must do before you begin.",
+    "whoBody": "Indian individuals and companies, foreign entities, registered practitioners and researchers are not treated identically. The difference changes which authority you deal with and what you must do before you begin.",
     "triggerHeading": "When access is triggered",
-    "triggerBody": "The trigger is accessing a biological resource, or knowledge associated with it, for research or for commercial use. Wild collection, cultivation on someone else's terms, and sourcing through a trader are not the same act, and they are not treated the same way.",
+    "triggerBody": "The trigger is accessing a biological resource, or knowledge associated with it, for research or commercial use. Wild collection, cultivation on someone else's terms, and sourcing through a trader are not the same act.",
     "authorityHeading": "Which authority",
-    "authorityBody": "There is a national authority and there are state boards, and which one you approach depends on who you are and what you are doing. Approaching the wrong one costs time rather than being fatal, but it is avoidable.",
+    "authorityBody": "There is a national authority and there are state boards; which you approach depends on who you are and what you are doing. Approaching the wrong one costs time rather than being fatal.",
     "sharingHeading": "What benefit sharing means",
-    "sharingBody": "Benefit sharing is not always a payment. It can be monetary, or take the form of technology transfer, joint ownership, local employment, or support for conservation — and it is agreed rather than assessed unilaterally.",
+    "sharingBody": "Benefit sharing is not always a payment. It can be monetary, or technology transfer, joint ownership, local employment, or support for conservation — and it is agreed rather than assessed unilaterally.",
     "patentHeading": "Where it meets a patent application",
-    "patentBody": "A patent application drawing on a biological resource carries disclosure obligations about the source, and the two regimes are connected by design rather than by accident. Filing without having addressed access is the most common way this obligation becomes visible — at the point where it is most expensive.",
+    "patentBody": "A patent application drawing on a biological resource carries disclosure obligations about the source. Filing without having addressed access is the commonest way this obligation becomes visible, at the point where it is most expensive.",
     "changeHeading": "The position has moved recently",
-    "changeBody": "The Indian regime was amended, and the rules under it remade, within the last few years. Some categories of user were treated differently after that change than before it. Any statement about who owes what is therefore only as good as its effective date, which is why this product carries one on every answer.",
+    "changeBody": "The Indian regime was amended and its rules remade within the last few years, and some categories of user were treated differently afterwards. Any statement about who owes what is only as good as its effective date, which is why every answer carries one.",
     "asOfNote": "Answers are built from verified sources, version {{version}}. Law changes: check the position against the published instrument before relying on it."
   }
 }

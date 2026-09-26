@@ -231,7 +231,7 @@
     },
     "forbidden": {
       "heading": "This account is not an administrator",
-      "body": "Signing in is not enough to read usage for a deployment. Administrators are named in SAHAYAK_ADMIN_USERNAMES, which is empty by default, because an administrator should be something a deployment grants rather than something that exists by accident."
+      "body": "Signing in is not enough to read usage for a deployment. Administrators are named in SAHAYAK_ADMIN_USERNAMES, empty by default, because an administrator is something a deployment grants rather than something that exists by accident."
     },
     "unreachable": {
       "heading": "Could not reach the server",
@@ -251,7 +251,7 @@
     },
     "suppressed": {
       "heading": "Some counts are withheld",
-      "body": "A category with fewer than {{minimum}} questions is not shown: in a domain this specific, four questions is four people, not a statistic. {{count}} categor(y/ies) were withheld on this page, so the columns below will not add up to the total — which is the point."
+      "body": "A category with fewer than {{minimum}} questions is not shown: here, four questions is four people, not a statistic. {{count}} categor(y/ies) were withheld, so the columns below will not add up to the total — which is the point."
     },
     "byJurisdiction": "By jurisdiction",
     "byLanguage": "By language",

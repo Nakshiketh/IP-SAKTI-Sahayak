@@ -8,7 +8,7 @@
   "standfirst": "ஒவ்வொரு பதிலும் இந்த ஆதாரங்களில் இருந்தே வருகின்றன. அவற்றில் என்ன உள்ளது, அவை எங்கிருந்து வந்தன, எப்போது கடைசியாகச் சரிபார்க்கப்பட்டன என்பது இங்கே உள்ளது.",
   "verified": {
     "heading": "Official sources answers are built from",
-    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals. Each was checked against its official page on {{date}}, and every answer links back to the one it relied on — open it to read the provision yourself.",
+    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals, each checked against its official page on {{date}}. Every answer links back to the one it relied on.",
     "checked": "Checked on",
     "usedIn": "Used in answers",
     "passages_one": "{{count}} passage",

@@ -5,7 +5,7 @@
     "description": "हे उत्पादन काय संग्रहित करते, काय नाही, किती काळ ठेवते आणि ते कसे नष्ट करावे."
   },
   "heading": "हे उत्पादन काय संग्रहित करते",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "काहीही का ठेवले जाते",
     "body": "फक्त एक कारण: जेणेकरून उत्तराची पडताळणी केली जाऊ शकेल. जे उत्पादन प्रत्येक दावा कुठून आला हे सांगते, त्याला नंतर त्याने कोणते उतारे वाचले हे दाखवता आले पाहिजे. विश्लेषणासाठी येथे काहीही ठेवले जात नाही.",

@@ -5,7 +5,7 @@
     "description": "இந்த தயாரிப்பு எதைச் சேமிக்கிறது, எதைச் சேமிக்காது, எவ்வளவு காலம் வைத்திருக்கிறது, அதை எவ்வாறு நிராகரிப்பது."
   },
   "heading": "இந்த தயாரிப்பு எதைச் சேமிக்கிறது",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "ஏன் எதுவும் வைத்திருக்கப்படுகிறது",
     "body": "ஒரே ஒரு காரணம்: ஒரு பதிலைச் சரிபார்க்க முடியும் என்பதற்காக. ஒவ்வொரு கூற்றும் எங்கிருந்து வந்தது என்று கூறும் ஒரு தயாரிப்பு, பின்னர் தான் படித்த பத்திகள், அவை எந்த ஆவணத்தின் எந்தப் பதிப்பில் இருந்தன, பதிலளிக்க மறுத்ததா என்பதைக் காட்ட முடிய வேண்டும். இதுதான் பதிவு. பகுப்பாய்வு, தனிப்பயனாக்கம் அல்லது மாதிரியை மேம்படுத்த இங்கு எதுவும் வைக்கப்படவில்லை.",

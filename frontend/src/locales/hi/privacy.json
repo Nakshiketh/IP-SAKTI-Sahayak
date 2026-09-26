@@ -5,7 +5,7 @@
     "description": "यह उत्पाद क्या संग्रहीत करता है, क्या नहीं, इसे कितने समय तक रखता है, और इसे कैसे हटाया जाए।"
   },
   "heading": "यह उत्पाद क्या संग्रहीत करता है",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "कुछ भी क्यों रखा जाता है",
     "body": "केवल एक कारण: ताकि उत्तर की जाँच की जा सके। जो उत्पाद यह बताता है कि प्रत्येक दावा कहाँ से आया, उसे बाद में यह दिखाने में सक्षम होना चाहिए कि उसने कौन से अंश पढ़े, वे अंश किस दस्तावेज़ के किस संस्करण में थे, और क्या उसने उत्तर देने से परहेज किया। यह रिकॉर्ड है। यहाँ विश्लेषिकी, वैयक्तिकरण या मॉडल को बेहतर बनाने के लिए कुछ भी नहीं रखा जाता है।",

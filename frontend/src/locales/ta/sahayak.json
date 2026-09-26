@@ -135,7 +135,7 @@
     },
     "language_unsupported": {
       "title": "This question could not be searched",
-      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for — not because the sources are silent."
+      "body": "The sources are in English and no translation service is configured, so this question was never put into a language they could be searched in. Nothing was found because nothing was looked for."
     }
   },
   "error": {
@@ -608,7 +608,7 @@
   },
   "document": {
     "heading": "Ask about your own document",
-    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first, because a PDF often holds something other than what you expect — and a scanned page holds no text at all.",
+    "standfirst": "Read a PDF or text file and put what it says into the question box. The text is shown first: a PDF often holds something other than what you expect, and a scanned page holds no text at all.",
     "choose": "Choose a file",
     "limits": "PDF, .txt or .md. Up to 10 MB.",
     "reading": "Reading the file…",
@@ -621,7 +621,7 @@
   },
   "thread": {
     "heading": "This conversation",
-    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — this is a record of what you asked, not a memory.",
+    "note": "Every question is answered on its own evidence. Nothing you asked earlier changes what the sources return now, and nothing is remembered on the server — a record of what you asked, not a memory.",
     "answered": "Answered, {{confidence}} confidence, {{count}} source(s)",
     "declined": "Declined — the sources did not carry it",
     "failed": "Could not be answered — something went wrong",

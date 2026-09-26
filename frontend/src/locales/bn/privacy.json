@@ -5,7 +5,7 @@
     "description": "এই পণ্যটি কী সংরক্ষণ করে, কী করে না, কতক্ষণ রাখে এবং কীভাবে তা বর্জন করবেন।"
   },
   "heading": "এই পণ্যটি কী সংরক্ষণ করে",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "কেন কোনো কিছু সংরক্ষণ করা হয়",
     "body": "একটি মাত্র কারণ: যাতে উত্তরটি যাচাই করা যায়। যে পণ্য প্রতিটি দাবির উৎস প্রকাশ করে, তাকে অবশ্যই দেখাতে সক্ষম হতে হবে যে এটি কোন অংশগুলি পড়েছে এবং কোন নথির সংস্করণ ব্যবহার করেছে। এটি রেকর্ড। অ্যানালিটিক্স বা মডেল প্রশিক্ষণের জন্য এখানে কিছুই রাখা হয় না।",

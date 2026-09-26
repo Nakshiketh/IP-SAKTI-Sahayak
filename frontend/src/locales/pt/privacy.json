@@ -5,13 +5,13 @@
     "description": "What this product stores, what it does not, how long it keeps it, and how to discard it."
   },
   "heading": "What this product stores",
-  "opening": "This product has accounts and a sign-in, and that is all it uses them for: a name, an email address and a username, so it knows who is signed in. It does not profile you, does not follow you between sessions, and never attaches your identity to a question you ask — the audit row for a query still carries no account. What follows is the whole of what is written down, why each thing is written, and what you can do about it.",
+  "opening": "This product has accounts and a sign-in, and uses them only for that: a name, an email address and a username. It does not profile you, does not follow you between sessions, and never attaches your identity to a question — the audit row for a query carries no account. What follows is the whole of what is written down, and what you can do about it.",
   "purpose": {
     "heading": "Why anything is kept at all",
-    "body": "One reason: so that an answer can be checked. A product that says where every claim came from has to be able to show, afterwards, which passages it read, which version of which document those passages were in, and whether it abstained. That is the record. Nothing here is kept for analytics, for personalisation, or to improve a model.",
+    "body": "So that an answer can be checked. A product that says where every claim came from must be able to show afterwards which passages it read, which version of which document they were in, and whether it abstained. Nothing is kept for analytics, personalisation, or to improve a model.",
     "limitation": "Purpose limitation. What is written is written for that check and used for nothing else.",
     "minimisation": "Data minimisation. The record answers \"did this behave the way it says it does\". None of the questions it answers needs your words, so your words are not in it.",
-    "consent": "Consent. The core function — asking a question and getting a cited answer — runs on what is described here and asks for nothing more. Anything beyond it is asked for separately, names what it is, and waits."
+    "consent": "Consent. Asking a question and getting a cited answer runs on what is described here and asks for nothing more. Anything beyond it is asked for separately, names what it is, and waits."
   },
   "stored": {
     "heading": "What is written down",
@@ -19,7 +19,7 @@
     "colField": "What",
     "colWhy": "Why it is there",
     "sessionId": "A session id",
-    "sessionIdWhy": "A random value this tab made up. It ties your question to the feedback you leave about the answer, and it is what the rate limit counts. It lives in this tab and dies with it.",
+    "sessionIdWhy": "A random value this tab made up. It ties your question to the feedback you leave, and it is what the rate limit counts. It lives in this tab and dies with it.",
     "questionHash": "A fingerprint of the question",
     "questionHashWhy": "A one-way digest, not the text. It lets the same question asked twice be recognised as the same question. The words cannot be recovered from it.",
     "passages": "The passage ids retrieved",
@@ -38,7 +38,7 @@
     "intro": "These are not fields that are left empty. They are not columns.",
     "question": "The text of your question.",
     "answer": "The text of the answer.",
-    "note": "Any note you type into the feedback box. The box is offered, the verdict is kept, and the note is discarded — a note nobody can act on is a liability rather than a feature.",
+    "note": "Any note you type into the feedback box. The verdict is kept and the note discarded: a note nobody can act on is a liability, not a feature.",
     "identity": "Your name, email address, organisation or any other identifier. You are never asked for one.",
     "ip": "Your IP address. The rate limit counts the session id instead, precisely so an address never has to be held.",
     "credentials": "Any credential of yours. This product never holds, stores or transmits a password or an API key belonging to you, for any source, at any point.",
@@ -46,21 +46,21 @@
   },
   "sharing": {
     "heading": "Who else sees it",
-    "body": "Nobody. The record is a file on the machine running this product. There is no analytics script, no advertising network, no error-reporting service and no third-party tag anywhere in this interface — the content policy on this page forbids loading one.",
-    "model": "If a deployment is configured to use a hosted model, the question text and the retrieved passages are sent to that provider to write the answer, and the answer's own status line names which generator ran. With no key configured — the default — no text leaves the machine at all.",
+    "body": "Nobody. The record is a file on the machine running this product. There is no analytics script, advertising network, error-reporting service or third-party tag in this interface — the content policy on this page forbids loading one.",
+    "model": "If a deployment uses a hosted model, the question text and retrieved passages are sent to that provider to write the answer, and the status line names which generator ran. With no key configured — the default — no text leaves the machine.",
     "escalate": "The handoff summary is assembled in your browser and copied to your clipboard. It is not sent anywhere. There is no expert network behind it, and nothing is queued.",
-    "analyses": "Analyses you run in \"Analyse my invention\" are the one exception: the conversation, the formulation you describe and its findings are saved to your account in a local database on this instance, so you can return to them. They are readable only when signed in as you, and they are used for nothing else.",
-    "analysesDelete": "Each saved analysis has a delete control on its page. Deleting removes the conversation, the formulation and every earlier run of its findings. If a hosted model is configured to read your messages, the message text is sent to that provider; with none configured, it never leaves the machine."
+    "analyses": "Analyses in \"Analyse my invention\" are the exception: the conversation, the formulation and its findings are saved to your account in a local database on this instance. They are readable only when signed in as you, and used for nothing else.",
+    "analysesDelete": "Each saved analysis has a delete control. Deleting removes the conversation, the formulation and every earlier run of its findings. If a hosted model is configured to read your messages, the message text is sent to that provider; with none configured, it never leaves the machine."
   },
   "retention": {
     "heading": "How long it is kept",
     "session": "The session id: until this tab closes.",
-    "rows": "The audit rows: for as long as the deployment keeps them. They are append-only, so a row is never quietly rewritten — an operator who removes them removes them wholesale, and the record does not pretend otherwise.",
+    "rows": "The audit rows: for as long as the deployment keeps them. They are append-only, so a row is never quietly rewritten — an operator who removes them removes them wholesale.",
     "language": "Your language choice: until you change it or clear your browser storage. It is a preference, not a record of what you asked."
   },
   "deletion": {
     "heading": "Discarding what links to you",
-    "body": "There is no account to close, because there is no account. What ties one row to another is the session id, and that id is in this tab and nowhere else. Discarding it is not a gesture towards a deletion path — it is the whole of one. The rows that remain hold no identity, no address and none of your words, so there is nothing left in them to connect to a person.",
+    "body": "There is no account to close, because there is no account. What ties one row to another is the session id, and that id is in this tab and nowhere else. Discarding it is the whole of the deletion path. The rows that remain hold no identity, no address and none of your words.",
     "action": "Discard this session",
     "confirm": "Discard it? The next question starts fresh, with no history and no consents.",
     "done": "Discarded. This tab now has a new session id, and the earlier one is gone.",
@@ -68,7 +68,7 @@
   },
   "consent": {
     "heading": "Sources that would need your say-so",
-    "body": "Some registries and databases are reached only through a subscription that belongs to the reader, not to this product. Those are never fetched here, under any setting. If one is ever used, it is used with your own credentials, one named source at a time, after you have said so — never under a blanket agreement.",
+    "body": "Some registries are reached only through a subscription belonging to the reader, not to this product. Those are never fetched here, under any setting. If one is ever used, it is used with your own credentials, one named source at a time, after you have said so — never under a blanket agreement.",
     "none": "No source in the current set needs your credentials. This sentence is read from the source manifest, not typed here, so it stops being shown the moment one is added.",
     "some_one": "{{count}} source in the current set would need your credentials.",
     "some_other": "{{count}} sources in the current set would need your credentials.",
@@ -85,7 +85,7 @@
   },
   "log": {
     "heading": "Your access log",
-    "intro": "Every consent decision this session has made, newest first. Withdrawing does not remove the grant that came before it: it happened, and a log that erased it could not show when the access was held.",
+    "intro": "Every consent decision this session has made, newest first. Withdrawing does not remove the grant before it: it happened, and a log that erased it could not show when the access was held.",
     "empty": "Nothing has been agreed to in this session.",
     "loading": "Reading your access log.",
     "unavailable": "The access log could not be reached. Nothing is being shown rather than a guess at what it holds.",
@@ -97,7 +97,7 @@
   },
   "basis": {
     "heading": "The basis for holding it",
-    "body": "The audit record is what makes a source-cited product auditable, which is the function you came here for; it is held for that and nothing else. Consent is asked for separately, and only where something goes beyond that function — reaching a source with your own credentials is the one case in this design. Where consent is asked, it names the source, it is given by an action you take, and withdrawing it is on this page and takes effect immediately.",
+    "body": "The audit record is what makes a source-cited product auditable, and it is held for that alone. Consent is asked separately, and only where something goes beyond that function — reaching a source with your own credentials is the one case here. Where consent is asked, it names the source, and withdrawing it is on this page and immediate.",
     "notAdvice": "None of this makes the product an authority. It does not grant rights, approve products, issue licences or replace a professional adviser."
   }
 }

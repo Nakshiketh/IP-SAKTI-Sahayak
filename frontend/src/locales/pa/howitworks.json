@@ -8,7 +8,7 @@
   "standfirst": "How a question becomes a cited answer, and when the system declines to answer rather than guess.",
   "status": {
     "heading": "What is actually built",
-    "body": "Every answer is built from verified official sources — the Acts, Rules, guidelines and government portals listed on the Sources page — and every claim links to the one it came from."
+    "body": "Every answer is built from the Acts, Rules, guidelines and portals listed on the Sources page, and every claim links to the one it came from."
   },
   "pipeline": {
     "navLabel": "The pipeline",
@@ -45,7 +45,7 @@
       },
       "retrieve": {
         "name": "Retrieval",
-        "does": "Keyword search (BM25) over the selected namespace, with metadata filters applied before scoring — jurisdiction, effective-date window, document type, product class and topic — so superseded text is never a candidate. A dense-vector channel is fused in by rank once an embedding model is configured; today it reports itself unavailable rather than returning noise.",
+        "does": "Keyword search (BM25) over the selected namespace. Metadata filters — jurisdiction, effective-date window, document type, product class, topic — are applied before scoring, so superseded text is never a candidate. A dense-vector channel fuses in once an embedding model is configured; today it reports itself unavailable.",
         "outputs": "A candidate set of passages with their scores and metadata.",
         "fails": "Below a retrieval floor there is nothing to answer from, and the pipeline goes to abstention rather than to generation."
       },
@@ -57,13 +57,13 @@
       },
       "context": {
         "name": "Context assembly",
-        "does": "Packs the chosen passages with their metadata headers — title, section path, version, effective date — so the model can attribute what it uses. The token budget is enforced with document diversity, so the window is never filled from a single document.",
+        "does": "Packs the chosen passages with their metadata headers — title, section path, version, effective date — so each can be attributed. The token budget enforces document diversity, so the window is never filled from one document.",
         "outputs": "A context block where every passage is addressable by id.",
         "fails": "If diversity cannot be met, the answer is marked as resting on a single source, which caps its confidence."
       },
       "generate": {
         "name": "Generation",
-        "does": "With no language model configured, the answer is composed from the packed passages themselves: every sentence is the text of a verified passage, cited to it, and a procedural question is answered as numbered steps in the order they happen. With a model configured, it answers from the same passages and nothing else, under a schema that maps each claim to the passages behind it.",
+        "does": "With no language model configured, every sentence is the text of a verified passage, cited to it; a procedural question is answered as numbered steps. With a model configured, it answers from the same passages and nothing else, under a schema mapping each claim to the passages behind it.",
         "outputs": "Structured blocks and a claim-to-passage map, never prose to be parsed afterwards.",
         "fails": "If the passages do not support an answer, the model is required to return an abstention object rather than its best guess."
       },
@@ -75,13 +75,13 @@
       },
       "confidence": {
         "name": "Confidence scoring",
-        "does": "Computes high, moderate, low or abstain from the retrieval result — how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are all within their effective window.",
+        "does": "Computes high, moderate, low or abstain from how many passages cleared the threshold, how many distinct documents they came from, whether they contradict each other, and whether they are within their effective window.",
         "outputs": "A level and a one-sentence reason, both shown.",
         "fails": "Records never raise or lower it. Confidence is a property of the sources, not of how the answer reads."
       },
       "abstain": {
         "name": "Abstention check",
-        "does": "The last gate before an answer is shown. Decides whether the question was out of scope, whether the sources conflict, whether they are out of date, or whether nothing relevant was found.",
+        "does": "The last gate before an answer is shown. Decides whether the question was out of scope, the sources conflict, they are out of date, or nothing relevant was found.",
         "outputs": "Either an answer, or one of the abstention states below with what the reader is offered next.",
         "fails": "This is the stage that is allowed to fail loudly. Abstaining is a correct outcome, not an error."
       },
@@ -103,15 +103,15 @@
   "retrieval": {
     "navLabel": "Why retrieval",
     "heading": "Why the sources are retrieved rather than remembered",
-    "body1": "A language model asked a legal question from its training data answers from memory. That answer is undated, unattributed, and confidently wrong on anything that has been amended since the model was trained — which, in this field, is a great deal. It cannot tell you where it got something, because it does not know.",
-    "body2": "Retrieval changes what the model is allowed to use. The answer is constrained to a curated, version-tracked set of published documents, each claim points at the passage behind it, and every answer carries the date of the sources it used.",
+    "body1": "A language model answering a legal question from training data answers from memory: undated, unattributed, and confidently wrong on anything amended since it was trained. It cannot tell you where it got something, because it does not know.",
+    "body2": "Retrieval constrains the answer to a curated, version-tracked set of published documents. Each claim points at the passage behind it, and every answer carries the date of the sources it used.",
     "honestly": "What this does not do",
-    "body3": "It reduces hallucination and localises it. It does not eliminate it. A model can still misread a passage, or state something the passage does not quite say. That is precisely why every claim is checkable against the passage it names, why sentences resting on nothing are marked as such, and why the system is built to abstain rather than to produce something plausible."
+    "body3": "It reduces hallucination and localises it. It does not eliminate it: a model can still misread a passage, or state something the passage does not quite say. So every claim is checkable against the passage it names, sentences resting on nothing are marked, and the system abstains rather than produce something plausible."
   },
   "abstention": {
     "navLabel": "Abstention",
     "heading": "Declining to answer is a feature",
-    "standfirst": "Most of the work in a product like this is in knowing when not to answer. These are the states, with what each one offers the reader next. All five are reachable today.",
+    "standfirst": "Most of the work in a product like this is knowing when not to answer. These are the states, and what each offers next. All five are reachable today.",
     "offers": "What you are offered",
     "states": {
       "nothing": {
@@ -121,7 +121,7 @@
       },
       "scope": {
         "title": "Outside what this covers",
-        "body": "This is outside what I can answer. I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, individual legal opinions, or predictions about whether an application will succeed.",
+        "body": "Outside what I can answer. I cover intellectual property and regulatory requirements for Ayurvedic products — not clinical advice, legal opinions, or predictions about whether an application will succeed.",
         "offers": "A plain statement of what it can do instead, and the escalation route."
       },
       "conflict": {
@@ -144,7 +144,7 @@
   "jurisdictions": {
     "navLabel": "Keeping jurisdictions apart",
     "heading": "Two namespaces, never merged",
-    "body": "India and International are separate indexes. A retrieval call reads one of them, and a cross-border question runs two retrievals and produces two answers rather than one blended paragraph. The reason is not tidiness: an answer that mixes the Indian position with an export market's is wrong in a way that reads as right, and a reader acting on it would not be able to tell which half applied to them.",
+    "body": "India and International are separate indexes. A retrieval call reads one; a cross-border question runs two and produces two answers rather than one blended paragraph. An answer mixing the Indian position with an export market's is wrong in a way that reads as right, and a reader could not tell which half applied to them.",
     "sideBySide": "The same question, answered twice",
     "note": "These two answers were produced separately and are shown side by side. Nothing in the product merges them, and no interface anywhere presents a single answer covering both.",
     "inLabel": "Under India",
@@ -157,7 +157,7 @@
     "filtersHeading": "Retriever metadata filters",
     "filters": "Jurisdiction · product class · IP right · regulatory area · effective date window · document type · language",
     "notScheduled": "Not scheduled",
-    "notScheduledBody": "A knowledge graph over entities and provisions, agentic orchestration across several sources for one question, and connectors to subscription databases. These are directions, not commitments, and none of them is being built.",
+    "notScheduledBody": "A knowledge graph over entities and provisions, agentic orchestration across several sources, connectors to subscription databases. Directions, not commitments. None is being built.",
     "layers": {
       "client": {
         "name": "Client",
@@ -184,9 +184,9 @@
   "evaluation": {
     "navLabel": "Evaluation",
     "heading": "How it is measured",
-    "standfirst": "These are the axes it is scored on, and the numbers below are from the last run of the gold set. Two of them have a target of one hundred per cent, because a single failure on either is the kind that destroys trust in everything else. The numbers that look bad are here too.",
+    "standfirst": "The axes it is scored on, from the last run of the gold set. Two have a target of one hundred per cent, because a single failure on either destroys trust in the rest. The numbers that look bad are here too.",
     "notRunTitle": "No evaluation has been run",
-    "notRunBody": "No summary has been published, so there are no numbers on this page. When the harness runs it writes a summary that this page reads, and whatever it says appears here — including the bad numbers. A page of metric definitions with no results is less impressive than a table of figures, and considerably more honest.",
+    "notRunBody": "No summary has been published, so there are no numbers here. When the harness runs it writes a summary this page reads, and whatever it says appears — including the bad numbers.",
     "colMetric": "Measure",
     "colWhat": "What it counts",
     "colTarget": "Target",
@@ -201,7 +201,7 @@
       },
       "citationCorrectness": {
         "name": "Citation correctness",
-        "what": "Whether the passage a claim cites actually supports that claim. Needs a judge, human or model, so it is not measured here — citation groundedness is the part a machine can check.",
+        "what": "Whether the passage a claim cites actually supports it. Needs a judge, human or model, so it is not measured here. Citation groundedness is the part a machine can check.",
         "target": "as high as possible"
       },
       "citationValidity": {

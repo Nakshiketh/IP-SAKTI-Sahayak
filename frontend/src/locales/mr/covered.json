@@ -85,7 +85,7 @@
         "protects": "(पेटंट) A new invention that is not obvious to someone skilled in the field, for a limited term, in exchange for disclosing how it works.",
         "inAyurveda": "Rarely the formulation itself. More often a process, a delivery form, a purified fraction, or a specific combination that does something the individual ingredients were not already known to do.",
         "question": "We reformulated a classical preparation — is there anything patentable in it?",
-        "doesNot": "It does not give you permission to sell. A granted patent and a manufacturing licence are separate things and neither implies the other. It also does not make a formulation new: documented traditional knowledge is prior art, and an aggregation of properties already known is generally not an invention.",
+        "doesNot": "It does not give you permission to sell: a granted patent and a manufacturing licence are separate and neither implies the other. It does not make a formulation new — documented traditional knowledge is prior art, and an aggregation of known properties is generally not an invention.",
         "jurisdiction": "India, with separate filings in every other country you want protection in."
       },
       "gi": {
@@ -93,7 +93,7 @@
         "protects": "(भौगोलिक संकेत) A name identifying goods as coming from a particular place, where a quality, reputation or characteristic is due to that origin.",
         "inAyurveda": "Regional herbs and preparations whose character is tied to where they grow, or to how a locality has long made them.",
         "question": "Our herb grows only in one district — does that qualify for a geographical indication?",
-        "doesNot": "It is not owned by one company. A GI is held for a class of producers who meet the specification, so registering one does not give you exclusivity over your competitors in the same region. It also does not stop anyone outside the region making a similar product under a different name.",
+        "doesNot": "It is not owned by one company. A GI is held for a class of producers meeting the specification, so it gives no exclusivity over competitors in the same region, and does not stop anyone outside it making a similar product under another name.",
         "jurisdiction": "India. Protection elsewhere is separate and works differently from country to country."
       },
       "trademarks": {
@@ -101,13 +101,13 @@
         "protects": "(ट्रेडमार्क) A sign that tells a buyer who made the product.",
         "inAyurveda": "Brand names for Ayurvedic, Siddha and Unani products, house marks, and the get-up of a pack.",
         "question": "Can we register our brand name if it contains a classical formulation name?",
-        "doesNot": "It does not hand you a classical formulation name. A mark that merely describes what the product is will struggle, and other manufacturers need to use the same classical name for the same preparation. Registration also does not license a claim that the advertising rules prohibit — the mark and the claim are judged separately.",
+        "doesNot": "It does not hand you a classical formulation name. A mark merely describing the product will struggle, and other manufacturers need the same classical name for the same preparation. Registration does not license a claim the advertising rules prohibit — mark and claim are judged separately.",
         "jurisdiction": "India, with separate registration abroad or through an international filing system."
       },
       "copyright": {
         "title": "कॉपीराइट",
         "protects": "(कॉपीराइट) Original expression — text, images, artwork, software — not the ideas, facts or methods inside it.",
-        "inAyurveda": "Course material, translations and commentaries, packaging artwork, photography, software. The classical texts themselves are long out of copyright; a new translation or an original commentary is a new work with its own term.",
+        "inAyurveda": "Course material, translations and commentaries, packaging artwork, photography, software. The classical texts are long out of copyright; a new translation or commentary is a new work with its own term.",
         "question": "Can we stop someone copying our training material?",
         "doesNot": "It does not protect a formulation, a process, or a treatment protocol. Someone may read your book and make your product.",
         "jurisdiction": "India, with protection in most other countries arising automatically under treaty rather than by registration."
@@ -133,15 +133,15 @@
         "protects": "(व्यापार गुपिते) In India, no standalone statute. Confidential information is held through contract, employment terms and the general law rather than by any registration.",
         "inAyurveda": "Process know-how, sourcing relationships, standardisation methods — precisely the things a patent application would have to disclose.",
         "question": "Should we file a patent or keep the process confidential?",
-        "doesNot": "It gives you nothing against independent discovery or reverse engineering. And it is in direct tension with two disclosure obligations: what a patent application must reveal, and what a regulatory dossier must contain. Choosing secrecy is choosing to forgo both.",
+        "doesNot": "It gives you nothing against independent discovery or reverse engineering, and it is in direct tension with two disclosure obligations: what a patent application must reveal, and what a regulatory dossier must contain.",
         "jurisdiction": "India — and the absence of a dedicated statute is itself the point, so this section states a gap rather than a regime."
       },
       "tk": {
         "title": "पारंपरिक ज्ञान",
         "protects": "(पारंपरिक ज्ञान) It depends on whether the knowledge is codified in published texts or held by a community. These are different problems with different answers.",
-        "inAyurveda": "Codified knowledge in the authoritative texts is the reason many formulation patents fail — it is prior art, and it is documented specifically so that it can be cited as such. Community-held knowledge raises a different question, about consent and about sharing what comes of it.",
+        "inAyurveda": "Codified knowledge in the authoritative texts is why many formulation patents fail: it is prior art, documented so it can be cited as such. Community-held knowledge raises a different question, about consent and about sharing what comes of it.",
         "question": "Our formulation comes from a community's practice — what do we owe them?",
-        "doesNot": "Defensive protection stops others from patenting what is already known. It does not give you an exclusive right of your own, and it is not a substitute for the access and benefit-sharing duties below.",
+        "doesNot": "Defensive protection stops others patenting what is already known. It gives you no exclusive right of your own, and does not substitute for the access and benefit-sharing duties below.",
         "jurisdiction": "India, and internationally: a 2024 treaty addresses intellectual property, genetic resources and associated traditional knowledge, including what an applicant must disclose."
       }
     }
@@ -170,7 +170,7 @@
       "quality": {
         "title": "गुणवत्ता आणि फार्माकोपिया मानके",
         "body": "[गुणवत्ता आणि फार्माकोपिया मानके] Published pharmacopoeial monographs set identity, purity and strength standards for many single drugs and formulations, and a formulary records recognised preparations.",
-        "watchFor": "Where a monograph exists, meeting it is not a marketing claim you can make — it is the baseline. Where none exists, you have to be able to say what standard you are working to and why."
+        "watchFor": "Where a monograph exists, meeting it is the baseline, not a marketing claim. Where none exists, you must be able to say what standard you work to and why."
       },
       "labelling": {
         "title": "लेबलिंग",

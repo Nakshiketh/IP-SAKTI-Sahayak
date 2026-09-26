@@ -8,7 +8,7 @@
   "standfirst": "Every answer comes from these sources. Here is what is in them, where they came from, and when they were last checked.",
   "verified": {
     "heading": "Official sources answers are built from",
-    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals. Each was checked against its official page on {{date}}, and every answer links back to the one it relied on — open it to read the provision yourself.",
+    "standfirst": "Ask Sahayak answers from these {{count}} official documents and portals, each checked against its official page on {{date}}. Every answer links back to the one it relied on.",
     "checked": "Checked on",
     "usedIn": "Used in answers",
     "passages_one": "{{count}} passage",
@@ -16,7 +16,7 @@
   },
   "notFetched": {
     "title": "Full-text library in preparation",
-    "body": "The library below is the wider set of instruments being prepared for full-text search. Until a document is indexed, answers come from the verified sources above; where one of them already covers a document below, its official link is shown."
+    "body": "The wider set of instruments being prepared for full-text search. Until a document is indexed, answers come from the verified sources above; where one already covers a document below, its official link is shown."
   },
   "corpus": {
     "heading": "Full-text library",
@@ -88,7 +88,7 @@
   "records": {
     "heading": "Registry and records data",
     "layer": "Layer 2 — evidential. These are never cited as authority.",
-    "standingNote": "These are records of what has been filed, granted or registered. They are not statements of law. They never enter the search index, they never appear as a citation, and they never raise or lower an answer's confidence. Where an answer shows related records, it shows them beside the answer and labelled, not inside it.",
+    "standingNote": "Records of what has been filed, granted or registered. They are not statements of law. They never enter the search index, never appear as a citation, and never change an answer's confidence. Where an answer shows related records, it shows them beside the answer and labelled, not inside it.",
     "fields": {
       "publisher": "Publisher",
       "jurisdiction": "Jurisdiction",
