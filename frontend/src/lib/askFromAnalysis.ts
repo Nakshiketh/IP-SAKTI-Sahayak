@@ -40,7 +40,13 @@ export function questionFromAnalysis(conversation: Conversation): string | null 
 
   const parts: string[] = [];
 
-  const what = [invention.form, invention.category].filter(Boolean).join(' ').trim();
+  // The form is stored as a key — `face_pack`, `oral_formulation` — and the
+  // category beside it is a single word like `skin`. Joined raw they produced
+  // "an Ayurvedic face_pack skin", which reads as machine output and tells the
+  // reader their own product was not understood. The form alone, with its
+  // underscores opened out, is the plain phrase a person would use; the
+  // category is dropped here because it adds nothing a form has not said.
+  const what = (invention.form ?? invention.category ?? '').replace(/_/g, ' ').trim();
   parts.push(
     what
       ? `We have developed an Ayurvedic ${what}${invention.title ? ` (${invention.title})` : ''}.`

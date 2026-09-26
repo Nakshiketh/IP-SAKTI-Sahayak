@@ -81,6 +81,19 @@ describe('the question built from an analysis', () => {
     expect(question).toContain('skin cleansing and oil absorption');
   });
 
+  it('writes the form as words, never as the key it is stored under', () => {
+    // It came out as "an Ayurvedic face_pack skin" in the browser: a raw enum
+    // and a stray category. A reader seeing that learns their product was not
+    // understood, before they have read a word of the answer.
+    const underscored = conversation();
+    underscored.invention.form = 'oral_formulation';
+    underscored.invention.category = 'skin';
+    const question = questionFromAnalysis(underscored)!;
+    expect(question).toContain('an Ayurvedic oral formulation');
+    expect(question).not.toContain('_');
+    expect(question).not.toContain('oral formulation skin');
+  });
+
   it('keeps a distinctive feature as a belief, not as a finding', () => {
     // The analyst will not conclude that anything is distinctive. A question
     // generated from it that asserted so would be putting a verdict into the
