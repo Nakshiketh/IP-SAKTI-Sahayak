@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Findings } from '@/components/analyst/Findings';
 import { Roadmap } from '@/components/analyst/Roadmap';
 import { ProtectionMap } from '@/components/answer/ProtectionMap';
+import { askUrlFromAnalysis } from '@/lib/askFromAnalysis';
 import { Journey, type StageState } from '@/components/analyst/Journey';
 import { Badge, Button, Chip, LiveRegion } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
@@ -212,6 +213,10 @@ export default function Analyst() {
   const lastUser = [...(conversation?.messages ?? [])].reverse().find((m) => m.role === 'user');
   const suggestions = busy ? [] : (lastAssistant?.meta.suggestions ?? []);
   const showJourney = busy || Boolean(conversation?.analysis);
+  // Only once there is an analysis: before that the composition is still being
+  // gathered, and a question built from half a formulation would be answered
+  // on facts the reader had not finished giving.
+  const askHref = conversation?.analysis ? askUrlFromAnalysis(conversation) : null;
 
   return (
     <article className="mx-auto max-w-[80rem] px-5 py-10">
@@ -429,6 +434,25 @@ export default function Analyst() {
 
         {conversation?.analysis?.intelligence?.protection?.length ? (
           <ProtectionMap className="mt-8" entries={conversation.analysis.intelligence.protection} />
+        ) : null}
+
+        {/* The bridge to the other half of the product. It carries the analysed
+            composition rather than whatever was last typed, and the composed
+            question lands in the Ask Sahayak box where the reader can read and
+            edit it before pressing Ask — carrying something they never saw
+            would be the same defect as a hidden prompt. */}
+        {askHref ? (
+          <section className="mt-8 border-t border-rule pt-5">
+            <h2 className="text-base">{t('bridge.heading')}</h2>
+            <p className="mt-2 max-w-measure text-base text-muted">{t('bridge.body')}</p>
+            <Link
+              to={askHref}
+              className="mt-3 inline-block rounded-control border border-rule-strong px-3 py-2 text-base transition-colors duration-quick hover:border-ink"
+            >
+              {t('bridge.action')}
+            </Link>
+            <p className="mt-2 text-xs text-muted">{t('bridge.note')}</p>
+          </section>
         ) : null}
       </div>
     </article>
