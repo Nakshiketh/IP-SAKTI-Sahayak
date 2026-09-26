@@ -140,7 +140,9 @@ describe('analyse my invention', () => {
 
     expect(await screen.findByText('What is it for?')).toBeInTheDocument();
     const sent = fetchMock.mock.calls.find(([url]) => String(url).endsWith('/messages'));
-    expect(sent?.[1]?.headers).toMatchObject({ Authorization: 'Bearer test-token' });
+    // The session is a cookie; a write carries the CSRF header and no token.
+    expect(sent?.[1]?.headers).toMatchObject({ 'X-Sahayak-CSRF': '1' });
+    expect(sent?.[1]?.headers).not.toHaveProperty('Authorization');
 
     const table = screen.getByRole('table');
     expect(within(table).getByText('Neem')).toBeInTheDocument();

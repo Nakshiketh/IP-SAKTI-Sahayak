@@ -107,6 +107,9 @@ export default defineConfig({
       '/api': {
         target: process.env.SAHAYAK_API_TARGET ?? 'http://127.0.0.1:8000',
         changeOrigin: true,
+        // Adds X-Forwarded-For/-Host/-Proto, so sign-in rate limits count the
+        // reader's address rather than the dev server's.
+        xfwd: true,
       },
     },
   },

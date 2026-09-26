@@ -188,6 +188,7 @@ def test_feedback_is_kept_in_its_own_file() -> None:
 # -- T17: a public question can never reach a saved case ----------------------
 
 
+@pytest.mark.real_auth
 def test_the_workspace_refuses_a_request_with_no_account() -> None:
     client = TestClient(app)
     for path in ("/api/v1/analyst/conversations",):

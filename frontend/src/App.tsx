@@ -1,5 +1,5 @@
 import { type ComponentType, lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { FEATURES } from '@/config/features';
 import { Shell } from '@/components/layout/Shell';
@@ -53,10 +53,7 @@ import NotFound from '@/routes/NotFound';
  * cannot declare this for itself — there is no backend to fetch a missing
  * namespace on demand, so it has to be in place before anything renders.
  */
-function route<P>(
-  load: () => Promise<{ default: ComponentType<P> }>,
-  ...namespaces: string[]
-) {
+function route<P>(load: () => Promise<{ default: ComponentType<P> }>, ...namespaces: string[]) {
   return lazy<ComponentType<P>>(async () => {
     const [module] = await Promise.all([
       load(),
@@ -67,6 +64,7 @@ function route<P>(
 }
 
 const Login = route(() => import('@/routes/Login'));
+const CreatePassword = route(() => import('@/routes/CreatePassword'));
 const Sahayak = route(() => import('@/routes/Sahayak'), 'sahayak');
 const Assessment = route(() => import('@/routes/Assessment'), 'assessment');
 // `sahayak` too: the protection map and the roadmap are rendered here.
@@ -89,19 +87,41 @@ export default function App() {
 }
 
 /**
- * The front door, or the site.
+ * The front door, the create-password step, or the site.
  *
- * A stored session renders the site straight away; the server check runs behind
- * it and can send a reader back here if the token is genuinely dead. See
- * `useAuth` for why that is the right way round.
+ * Nothing renders until the server has said who is signed in (`checking`), so
+ * a protected page never flashes for someone who is not. Then:
+ *
+ * - **Anonymous:** `/login`, and every other address sends the reader there.
+ * - **Restricted** (temporary password): `/create-password`, and nothing else.
+ * - **Signed in:** the site. `/login` and `/create-password` go to the home
+ *   page, which is where a sign-in lands.
+ *
+ * The API is the boundary that matters; this decides what the browser shows.
  */
 function Gate() {
-  const { status, signedIn } = useAuth();
+  const { status, refresh } = useAuth();
+
+  if (status === 'checking') return null;
 
   if (status === 'anonymous') {
     return (
       <Suspense fallback={null}>
-        <Login onSignedIn={signedIn} />
+        <Routes>
+          <Route path="/login" element={<Login onSignedIn={refresh} />} />
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      </Suspense>
+    );
+  }
+
+  if (status === 'restricted') {
+    return (
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/create-password" element={<CreatePassword onDone={refresh} />} />
+          <Route path="*" element={<Navigate to="/create-password" replace />} />
+        </Routes>
       </Suspense>
     );
   }
@@ -128,6 +148,8 @@ function Gate() {
           {FEATURES.adminInsights ? <Route path="/insights" element={<Insights />} /> : null}
           <Route path="*" element={<NotFound />} />
         </Route>
+        <Route path="/login" element={<Navigate to="/" replace />} />
+        <Route path="/create-password" element={<Navigate to="/" replace />} />
         {import.meta.env.DEV ? <Route path="/design" element={<DesignSystem />} /> : null}
         {import.meta.env.DEV ? <Route path="/audit" element={<AuditLog />} /> : null}
       </Routes>

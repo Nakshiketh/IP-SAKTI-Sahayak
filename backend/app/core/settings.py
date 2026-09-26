@@ -186,10 +186,25 @@ class Settings(BaseSettings):
     demo_member_temp_password: str = Field(default="", validation_alias="DEMO_MEMBER_TEMP_PASSWORD")
     enable_demo_card: bool = Field(default=False, validation_alias="ENABLE_DEMO_CARD")
 
+    #: Where the member tables are read from. Overridable so the test suite
+    #: never writes to the repository's own accounts database.
+    members_db_override: Path | None = None
+
     @property
     def members_db_path(self) -> Path:
         """Members live beside the old accounts table: one accounts database."""
-        return self.data_dir / "accounts.sqlite3"
+        return self.members_db_override or (self.data_dir / "accounts.sqlite3")
+
+    def missing_auth_settings(self) -> list[str]:
+        """Names of the auth secrets that are absent or shorter than 32 characters."""
+        return [
+            name
+            for name, value in (
+                ("SESSION_SECRET", self.session_secret),
+                ("OTP_SECRET", self.otp_secret),
+            )
+            if len(value.strip()) < 32
+        ]
 
     @property
     def admin_username_list(self) -> list[str]:

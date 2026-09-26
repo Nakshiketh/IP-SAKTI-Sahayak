@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-
-import { readStoredSession } from '@/services/auth';
+import { apiFetch } from '@/lib/http';
 
 /**
  * System-level numbers, for whoever runs this deployment.
@@ -62,14 +61,11 @@ export function useInsight(): { result: InsightState; reload: () => void } {
 
   useEffect(() => {
     let live = true;
-    const token = readStoredSession()?.token;
 
     void (async () => {
       let response: Response;
       try {
-        response = await fetch('/api/v1/admin/insight', {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
+        response = await apiFetch('/api/v1/admin/insight');
       } catch {
         if (live) setResult({ state: 'unreachable' });
         return;

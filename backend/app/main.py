@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-from fastapi import FastAPI, Request
+from contextlib import asynccontextmanager
+
+from fastapi import Depends, FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse, Response
 from starlette.middleware.base import BaseHTTPMiddleware
@@ -21,6 +23,8 @@ from app.api import (
     records,
     sources,
 )
+from app.auth.bootstrap import bootstrap_members
+from app.auth.deps import require_member
 from app.core.errors import ApiError, RequestTooLarge, api_error_handler
 from app.core.settings import get_settings
 
@@ -124,8 +128,26 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
         return response
 
 
+class MissingAuthSettings(RuntimeError):
+    """Raised at startup, naming the absent keys and never their values."""
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    bootstrap_members()
+    yield
+
+
 def create_app() -> FastAPI:
     settings = get_settings()
+    missing = settings.missing_auth_settings()
+    if missing:
+        raise MissingAuthSettings(
+            "Missing or too short in backend/.env: "
+            + ", ".join(missing)
+            + ". Each needs at least 32 random characters. Generate them with:"
+            " cd backend && .venv/Scripts/python.exe -m app.auth.cli gen-secrets"
+        )
     # The interactive documentation lists every endpoint and its shape, which is
     # a map of the attack surface and a page that loads third-party script. It
     # is worth having while building and is not worth serving anywhere else.
@@ -140,6 +162,7 @@ def create_app() -> FastAPI:
         docs_url="/api/docs" if development else None,
         redoc_url="/api/redoc" if development else None,
         openapi_url="/api/openapi.json" if development else None,
+        lifespan=lifespan,
     )
     app.add_middleware(SecurityHeadersMiddleware)
     app.add_middleware(
@@ -150,25 +173,38 @@ def create_app() -> FastAPI:
     )
     app.add_middleware(
         CORSMiddleware,
+        # An explicit list, never "*": the session is a cookie now. Both
+        # deployments are same-origin, so this only matters for a caller
+        # somebody deliberately lists.
         allow_origins=settings.cors_origin_list,
-        allow_credentials=False,
+        allow_credentials=True,
         allow_methods=["GET", "POST", "DELETE"],
-        allow_headers=["*"],
+        allow_headers=["Content-Type", "X-Sahayak-CSRF", "X-Session-Id"],
     )
     app.add_exception_handler(ApiError, api_error_handler)
 
+    # Open: sign-in, and health (which protects its own corpus-version route).
     app.include_router(auth.router)
-    app.include_router(analyst.router)
     app.include_router(health.router)
-    app.include_router(query.router)
-    app.include_router(classify.router)
-    app.include_router(sources.router)
-    app.include_router(records.router)
-    app.include_router(feedback.router)
-    app.include_router(privacy.router)
-    app.include_router(demo.router)
-    app.include_router(insight.router)
-    app.include_router(documents.router)
+
+    # Everything else needs a full member session. Attached here, per router,
+    # so a route added to any of these is protected without anyone remembering
+    # to protect it. `tests/test_member_auth_routes.py` walks every registered
+    # route and fails if one outside the open list answers without a session.
+    protected = [Depends(require_member)]
+    for router in (
+        analyst.router,
+        query.router,
+        classify.router,
+        sources.router,
+        records.router,
+        feedback.router,
+        privacy.router,
+        demo.router,
+        insight.router,
+        documents.router,
+    ):
+        app.include_router(router, dependencies=protected)
     return app
 
 

@@ -206,7 +206,41 @@
     "scanUploadNone": "उस फ़ोटो में कोई QR कोड नहीं मिला। पास से, साफ़ फ़ोटो लें।",
     "scanSwitch": "कैमरा बदलें",
     "scanPrivacy": "फ़्रेम इसी इंस्टेंस पर जाँचे जाते हैं और कभी सहेजे नहीं जाते।",
-    "cameraFallback": "आप इसके बजाय बैज की फ़ोटो अपलोड कर सकते हैं।"
+    "cameraFallback": "आप इसके बजाय बैज की फ़ोटो अपलोड कर सकते हैं।",
+    "identifier": "Member ID or username",
+    "errIdentifier": "Enter your Member ID or username.",
+    "membersOnly": "Authorized members only. Your account and verification information are protected.",
+    "unreachable": "Can't reach the server. Check your connection and try again.",
+    "serverError": "Something went wrong on our side. Try again in a moment.",
+    "notice": {
+      "loggedOut": "You've been logged out.",
+      "expired": "Your session has expired. Log in again.",
+      "unreachable": "Can't reach the server. Check your connection and try again.",
+      "passwordUpdated": "Password updated. Log in with your new password."
+    },
+    "createTitle": "Create your new password",
+    "createBody": "Your account uses a temporary password. Set a new one to continue.",
+    "newPassword": "New password",
+    "confirmNewPassword": "Confirm new password",
+    "rulesHeading": "Your new password needs",
+    "ruleLength": "8 to 128 characters",
+    "ruleUpper": "An uppercase letter",
+    "ruleLower": "A lowercase letter",
+    "ruleNumber": "A number",
+    "ruleMet": "(done)",
+    "ruleNotMet": "(not yet)",
+    "savePassword": "Save password",
+    "saving": "Saving…",
+    "passwordErrors": {
+      "password_rules": "Meet all four rules below.",
+      "password_length": "Use 8 to 128 characters.",
+      "password_uppercase": "Add an uppercase letter.",
+      "password_lowercase": "Add a lowercase letter.",
+      "password_number": "Add a number.",
+      "password_unchanged": "Choose a password different from your temporary one.",
+      "password_is_identifier": "Don't use your username or Member ID as your password.",
+      "password_mismatch": "The two passwords do not match."
+    }
   },
   "states": {
     "timeout": "खोज में बहुत अधिक समय लगा।",

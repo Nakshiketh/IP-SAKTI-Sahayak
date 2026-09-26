@@ -1,269 +1,204 @@
-"""Sign-in, registration and badge sign-in.
+"""Member sign-in: password login, QR sign-in, password change, who am I, log out.
 
-Three endpoints and one store. Accounts live in a SQLite file of their own,
-beside the audit log and the records database rather than inside either: an
-account is not a corpus passage and it is not evidence of a filing, and putting
-it in either store would be the kind of mixing this product spends its
-architecture avoiding.
+Sessions are server-side rows with an opaque id in an HttpOnly cookie
+(`app.auth.sessions`). Nothing here returns a token in a body, and nothing the
+browser can read from script says who is signed in except `GET /me`.
 
-**What this is not.** Sessions are bearer tokens signed with an HMAC over a
-process-local secret, which is enough to prove this instance issued them and
-nothing more. There is no refresh, no revocation list and no rotation. Before
-this carries a real user, the token belongs in an httpOnly cookie, the secret
-belongs in the environment rather than in memory, and passwords deserve a
-purpose-built KDF rather than the PBKDF2 below.
+There is no registration. Members are issued: the seed creates them and
+`issue-card` gives them a card (`python -m app.auth.cli --help`).
 
-Passwords are stored as PBKDF2-HMAC-SHA256 with a per-account salt. That is
-stdlib, so it adds no dependency, and it is a real KDF rather than a hash — a
-plain SHA-256 of a password is a lookup table away from plaintext.
+**QR sign-in, for now.** `POST /badge` still signs a member straight in when the
+camera shows their card, as the old sign-in did. Phase 4 puts an emailed
+one-time code between the card and the session; until then the card alone is
+the credential, exactly as before this change.
 """
 
 from __future__ import annotations
 
-import hashlib
-import hmac
-import json
-import os
-import re
-import secrets
-import sqlite3
 import time
-from base64 import urlsafe_b64decode, urlsafe_b64encode
-from pathlib import Path
-from typing import Annotated
+from typing import Annotated, Literal
 
-from fastapi import APIRouter, Depends, Header, Request
+from fastapi import APIRouter, Depends, Request, Response
 from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
+from app.auth import limits, passwords, sessions
+from app.auth.cards import BADGE_TOKEN
+from app.auth.deps import (
+    CurrentMember,
+    Session,
+    check_csrf,
+    client_ip,
+    require_member,
+    user_agent,
+)
+from app.auth.hashing import hash_password, token_hash, verify_password
+from app.auth.members import log_event
+from app.auth.store import connect
 from app.core.badge import is_badge
-from app.core.errors import ApiError
+from app.core.errors import ApiError, RateLimited
 from app.core.settings import get_settings
 
 router = APIRouter(prefix="/api/v1/auth", tags=["auth"])
 
-#: Deliberately permissive: the only claims worth making here are that there is
-#: something before the @, something after it, and a dot in the domain. A
-#: stricter pattern rejects valid addresses, and the authority on whether an
-#: address works is whether mail sent to it arrives.
-EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
+#: Five wrong passwords lock the account for fifteen minutes.
+MAX_FAILED_LOGINS = 5
+LOCKOUT_SECONDS = 15 * 60
 
-#: Cost factor. 200k is the low end of current guidance and stays responsive on
-#: the modest hardware this is expected to run on.
-PBKDF2_ROUNDS = 200_000
+INCORRECT = "Member ID/username or password is incorrect."
+LOCKED = "Too many failed attempts. Try again in 15 minutes, or reset your password."
+QR_INVALID = "This QR code isn't an IP-SAKTI Sahayak Member ID. Scan the QR on your member card."
 
-#: How long a session lasts. Short, because there is no refresh path.
-TOKEN_TTL_SECONDS = 12 * 60 * 60
-
-#: Signing key. Generated per process: restarting invalidates every session,
-#: which is the honest behaviour for a secret that was never persisted.
-_SECRET = secrets.token_bytes(32)
-
-
-# -- storage -----------------------------------------------------------------
-
-
-def _db_path() -> Path:
-    settings = get_settings()
-    return settings.data_dir / "accounts.sqlite3"
-
-
-def _connect() -> sqlite3.Connection:
-    path = _db_path()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    connection = sqlite3.connect(path)
-    connection.row_factory = sqlite3.Row
-    connection.execute(
-        """
-        CREATE TABLE IF NOT EXISTS accounts (
-            username    TEXT PRIMARY KEY,
-            name        TEXT NOT NULL,
-            email       TEXT NOT NULL,
-            salt        BLOB NOT NULL,
-            password    BLOB NOT NULL,
-            badge_code  TEXT UNIQUE,
-            created_at  REAL NOT NULL
-        )
-        """
-    )
-    connection.commit()
-    return connection
-
-
-def _hash(password: str, salt: bytes) -> bytes:
-    return hashlib.pbkdf2_hmac("sha256", password.encode("utf-8"), salt, PBKDF2_ROUNDS)
-
-
-def ensure_demo_account() -> None:
-    """Seed one account, so a fresh install can be signed into.
-
-    Idempotent. The credentials are in the README and on the sign-in page: this
-    is a demonstration instance, and a hidden default account would be worse
-    than a published one.
-    """
-    with _connect() as connection:
-        exists = connection.execute(
-            "SELECT 1 FROM accounts WHERE username = ?", ("demo",)
-        ).fetchone()
-        if exists:
-            return
-        salt = os.urandom(16)
-        connection.execute(
-            "INSERT INTO accounts (username, name, email, salt, password, badge_code, created_at)"
-            " VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (
-                "demo",
-                "Demo User",
-                "demo@example.com",
-                salt,
-                _hash("demo1234", salt),
-                "SAHAYAK-001",
-                time.time(),
-            ),
-        )
-        connection.commit()
-
-
-# -- tokens ------------------------------------------------------------------
-
-
-def _b64(raw: bytes) -> str:
-    return urlsafe_b64encode(raw).decode("ascii").rstrip("=")
-
-
-def _unb64(raw: str) -> bytes:
-    return urlsafe_b64decode(raw + "=" * (-len(raw) % 4))
-
-
-def issue_token(username: str) -> str:
-    payload = json.dumps(
-        {"sub": username, "exp": int(time.time()) + TOKEN_TTL_SECONDS}, separators=(",", ":")
-    ).encode("utf-8")
-    signature = hmac.new(_SECRET, payload, hashlib.sha256).digest()
-    return f"{_b64(payload)}.{_b64(signature)}"
-
-
-def read_token(token: str) -> str | None:
-    """Return the username a token names, or None if it does not verify."""
-    try:
-        encoded_payload, encoded_signature = token.split(".", 1)
-        payload = _unb64(encoded_payload)
-        expected = hmac.new(_SECRET, payload, hashlib.sha256).digest()
-        # Constant-time: a timing-variable comparison here leaks the signature
-        # one byte at a time.
-        if not hmac.compare_digest(expected, _unb64(encoded_signature)):
-            return None
-        claims = json.loads(payload)
-    except Exception:
-        return None
-
-    if not isinstance(claims, dict) or claims.get("exp", 0) < time.time():
-        return None
-    subject = claims.get("sub")
-    return subject if isinstance(subject, str) else None
+Next = Literal["change-password", "dashboard"]
 
 
 # -- wire models -------------------------------------------------------------
 
 
 class LoginBody(BaseModel):
-    username: str = Field(min_length=1, max_length=64)
+    identifier: str = Field(min_length=1, max_length=64)
     password: str = Field(min_length=1, max_length=256)
 
 
-class RegisterBody(BaseModel):
-    name: str = Field(min_length=1, max_length=120)
-    email: str = Field(min_length=3, max_length=200)
-    username: str = Field(min_length=3, max_length=64)
-    password: str = Field(min_length=8, max_length=256)
+class ChangePasswordBody(BaseModel):
+    current_password: str | None = Field(default=None, max_length=256, alias="currentPassword")
+    new_password: str = Field(max_length=256, alias="newPassword")
+    confirm_password: str = Field(max_length=256, alias="confirmPassword")
 
 
-class AuthUser(BaseModel):
+class NextStep(BaseModel):
+    next: Next
+
+
+class Me(BaseModel):
     name: str
-    username: str
-    email: str
+    role: str
+    institution: str
+    member_id: str = Field(serialization_alias="memberId")
+    restricted: bool
 
 
-class AuthResult(BaseModel):
-    token: str
-    user: AuthUser
+# -- helpers -----------------------------------------------------------------
 
 
-def _result(row: sqlite3.Row) -> AuthResult:
-    return AuthResult(
-        token=issue_token(row["username"]),
-        user=AuthUser(name=row["name"], username=row["username"], email=row["email"]),
+def _set_cookie(response: Response, raw: str, *, restricted: bool) -> None:
+    response.set_cookie(
+        sessions.COOKIE_NAME,
+        raw,
+        max_age=sessions.RESTRICTED_SECONDS if restricted else sessions.ABSOLUTE_SECONDS,
+        path="/",
+        httponly=True,
+        samesite="lax",
+        secure=get_settings().cookie_secure,
     )
+
+
+def _clear_cookie(response: Response) -> None:
+    response.delete_cookie(
+        sessions.COOKIE_NAME,
+        path="/",
+        httponly=True,
+        samesite="lax",
+        secure=get_settings().cookie_secure,
+    )
+
+
+def _start_session(request: Request, response: Response, member: dict) -> NextStep:
+    """End whatever session this browser had, and issue a fresh one."""
+    restricted = bool(member["must_change_password"])
+    with connect() as connection:
+        sessions.revoke(connection, request.cookies.get(sessions.COOKIE_NAME, ""))
+        raw = sessions.create(
+            connection,
+            member["id"],
+            restricted=restricted,
+            ip=client_ip(request),
+            user_agent=user_agent(request),
+        )
+    _set_cookie(response, raw, restricted=restricted)
+    return NextStep(next="change-password" if restricted else "dashboard")
 
 
 # -- endpoints ---------------------------------------------------------------
 
 
-@router.post("/login", response_model=AuthResult)
-def login(body: LoginBody) -> AuthResult:
-    ensure_demo_account()
-    username = body.username.strip().lower()
+@router.post("/login", response_model=NextStep)
+def login(body: LoginBody, request: Request, response: Response) -> NextStep:
+    check_csrf(request)
+    ip, agent = client_ip(request), user_agent(request)
+    retry_after = limits.login_per_ip().check(ip)
+    if retry_after:
+        raise RateLimited(retry_after)
 
-    with _connect() as connection:
+    identifier = body.identifier.strip().lower()
+    now = time.time()
+    with connect() as connection:
         row = connection.execute(
-            "SELECT * FROM accounts WHERE username = ?", (username,)
+            "SELECT * FROM members WHERE username = ? OR lower(member_id) = ?",
+            (identifier, identifier),
         ).fetchone()
 
-    # One message whether the account is missing or the password is wrong: two
-    # messages tell an attacker which usernames exist.
-    if row is None or not hmac.compare_digest(row["password"], _hash(body.password, row["salt"])):
-        raise ApiError("invalid_credentials", "That username and password do not match.", 401)
+        if row is None or not row["is_active"]:
+            # Costs a full argon2 verify, like a real account, so timing does not
+            # say whether this identifier exists.
+            verify_password(None, body.password)
+            log_event(connection, "login_failed", None, ip, agent)
+            raise ApiError("invalid_credentials", INCORRECT, 401)
 
-    return _result(row)
+        if row["locked_until"] and row["locked_until"] > now:
+            verify_password(None, body.password)
+            log_event(connection, "login_locked", row["id"], ip, agent)
+            raise ApiError("account_locked", LOCKED, 423)
 
-
-@router.post("/register", response_model=AuthResult, status_code=201)
-def register(body: RegisterBody) -> AuthResult:
-    ensure_demo_account()
-    username = body.username.strip().lower()
-    email = body.email.strip()
-
-    if not EMAIL.match(email):
-        raise ApiError("invalid_email", "Enter a valid email address.", 422)
-
-    salt = os.urandom(16)
-    try:
-        with _connect() as connection:
+        if not verify_password(row["password_hash"], body.password):
+            failures = row["failed_login_count"] + 1
+            locked = failures >= MAX_FAILED_LOGINS
             connection.execute(
-                "INSERT INTO accounts"
-                " (username, name, email, salt, password, badge_code, created_at)"
-                " VALUES (?, ?, ?, ?, ?, NULL, ?)",
-                (username, body.name.strip(), email, salt, _hash(body.password, salt), time.time()),
+                "UPDATE members SET failed_login_count = ?, locked_until = ?, updated_at = ?"
+                " WHERE id = ?",
+                (
+                    0 if locked else failures,
+                    now + LOCKOUT_SECONDS if locked else None,
+                    now,
+                    row["id"],
+                ),
             )
             connection.commit()
-            row = connection.execute(
-                "SELECT * FROM accounts WHERE username = ?", (username,)
-            ).fetchone()
-    except sqlite3.IntegrityError as error:
-        raise ApiError("username_taken", "That username is already registered.", 409) from error
+            log_event(connection, "login_failed", row["id"], ip, agent)
+            if locked:
+                raise ApiError("account_locked", LOCKED, 423)
+            raise ApiError("invalid_credentials", INCORRECT, 401)
 
-    return _result(row)
+        connection.execute(
+            "UPDATE members SET failed_login_count = 0, locked_until = NULL,"
+            " last_login_at = ?, updated_at = ? WHERE id = ?",
+            (now, now, row["id"]),
+        )
+        connection.commit()
+        log_event(connection, "login_success", row["id"], ip, agent)
+
+    return _start_session(request, response, dict(row))
 
 
-#: The account the authorised QR code signs into.
-BADGE_ACCOUNT_CODE = "SAHAYAK-001"
-
-#: Still images only; anything else is refused before it reaches the decoder.
+#: Still images only; anything else is refused before it reaches the matcher.
 BADGE_IMAGE_TYPES = ("image/jpeg", "image/png", "image/webp")
 
 
-@router.post("/badge", response_model=AuthResult)
-async def badge(request: Request) -> AuthResult:
-    """Sign in by showing the authorised QR code to the camera.
+@router.post("/badge", response_model=NextStep)
+async def badge(request: Request, response: Response) -> NextStep:
+    """Sign in by showing a member card to the camera.
 
-    The body is one still image — a camera frame or a photo. It is compared in
-    memory with the one authorised code (`app.core.badge`) and discarded; nothing
-    is stored. Three answers: a session; `no_code` when no QR code is in view; and
-    `invalid_qr` when a QR code is in view but it is not the authorised one.
-
-    This is the only QR route. There is deliberately no endpoint that accepts a
-    typed or decoded string: a string can be produced by any QR generator.
+    The body is one still image. It is matched in memory against the card
+    pattern (`app.core.badge`) and discarded. The pattern resolves to a card
+    row, and the card to its member; a revoked card or an inactive member is
+    refused with its own code.
     """
+    check_csrf(request)
+    ip, agent = client_ip(request), user_agent(request)
+    retry_after = limits.badge_per_ip().check(ip)
+    if retry_after:
+        raise RateLimited(retry_after)
+
     content_type = request.headers.get("content-type", "").split(";")[0].strip().lower()
     if content_type not in BADGE_IMAGE_TYPES:
         raise ApiError("invalid_image", "Send the frame as a JPEG, PNG or WebP image.", 415)
@@ -275,37 +210,107 @@ async def badge(request: Request) -> AuthResult:
     if match is None:
         raise ApiError("no_code", "No QR code was found in that image.", 422)
     if not match:
-        raise ApiError("invalid_qr", "Invalid QR Code – Access Denied.", 403)
+        raise ApiError("QR_INVALID", QR_INVALID, 403)
 
-    ensure_demo_account()
-    with _connect() as connection:
-        row = connection.execute(
-            "SELECT * FROM accounts WHERE badge_code = ?", (BADGE_ACCOUNT_CODE,)
+    digest = token_hash(BADGE_TOKEN)
+    with connect() as connection:
+        card = connection.execute(
+            "SELECT t.revoked_at, m.* FROM member_qr_tokens t JOIN members m ON m.id = t.member_fk"
+            " WHERE t.token_hash = ? ORDER BY t.revoked_at IS NULL DESC, t.id DESC LIMIT 1",
+            (digest,),
         ).fetchone()
-    if row is None:
-        raise ApiError("invalid_qr", "Invalid QR Code – Access Denied.", 403)
-    return _result(row)
+        if card is None:
+            raise ApiError("QR_INVALID", QR_INVALID, 403)
+        if card["revoked_at"] is not None:
+            log_event(connection, "qr_rejected_revoked", card["id"], ip, agent)
+            raise ApiError(
+                "QR_REVOKED",
+                "This Member ID has been replaced or revoked. Contact the portal administrator.",
+                403,
+            )
+        if not card["is_active"]:
+            raise ApiError("MEMBER_INACTIVE", "This membership is not active.", 403)
+        log_event(connection, "qr_verified", card["id"], ip, agent)
+        now = time.time()
+        connection.execute(
+            "UPDATE members SET last_login_at = ?, updated_at = ? WHERE id = ?",
+            (now, now, card["id"]),
+        )
+        connection.commit()
+
+    return _start_session(request, response, dict(card))
 
 
-def current_user(
-    authorization: Annotated[str | None, Header()] = None,
-) -> str:
-    """Dependency for anything that should require a session."""
-    if not authorization or not authorization.lower().startswith("bearer "):
-        raise ApiError("not_authenticated", "Sign in to continue.", 401)
-    username = read_token(authorization.split(" ", 1)[1].strip())
-    if username is None:
-        raise ApiError("session_expired", "That session has expired. Sign in again.", 401)
-    return username
+@router.post("/password/change", response_model=NextStep)
+def change_password(
+    body: ChangePasswordBody, member: Session, request: Request, response: Response
+) -> NextStep:
+    with connect() as connection:
+        row = connection.execute("SELECT * FROM members WHERE id = ?", (member.pk,)).fetchone()
+
+        # A full session proves the member once knew the password; changing it
+        # still needs the current one, so an unattended browser is not enough.
+        if not member.restricted and not verify_password(
+            row["password_hash"], body.current_password or ""
+        ):
+            raise ApiError("current_password_incorrect", "Your current password is incorrect.", 400)
+
+        found = passwords.problems(
+            body.new_password,
+            body.confirm_password,
+            username=row["username"],
+            member_id=row["member_id"],
+            current_hash=row["password_hash"],
+        )
+        if found:
+            raise ApiError(found[0], "The new password does not meet the rules.", 422)
+
+        now = time.time()
+        connection.execute(
+            "UPDATE members SET password_hash = ?, must_change_password = 0,"
+            " password_changed_at = ?, updated_at = ? WHERE id = ?",
+            (hash_password(body.new_password), now, now, member.pk),
+        )
+        connection.commit()
+        # Every other session ends, this one included; a new full one replaces it.
+        sessions.revoke_all(connection, member.pk)
+        log_event(
+            connection, "password_changed", member.pk, client_ip(request), user_agent(request)
+        )
+        row = connection.execute("SELECT * FROM members WHERE id = ?", (member.pk,)).fetchone()
+
+    return _start_session(request, response, dict(row))
 
 
-@router.get("/me", response_model=AuthUser)
-def me(username: Annotated[str, Depends(current_user)]) -> AuthUser:
-    """Confirm a stored token is still good, on a page load."""
-    with _connect() as connection:
-        row = connection.execute(
-            "SELECT * FROM accounts WHERE username = ?", (username,)
-        ).fetchone()
-    if row is None:
-        raise ApiError("session_expired", "That account no longer exists.", 401)
-    return AuthUser(name=row["name"], username=row["username"], email=row["email"])
+@router.get("/me", response_model=Me, response_model_by_alias=True)
+def me(member: Session) -> Me:
+    return Me(
+        name=member.name,
+        role=member.role,
+        institution=member.institution,
+        member_id=member.member_id,
+        restricted=member.restricted,
+    )
+
+
+@router.post("/logout", status_code=204)
+def logout(request: Request, response: Response) -> Response:
+    """End this browser's session. Answers 204 whether or not one was live."""
+    check_csrf(request)
+    raw = request.cookies.get(sessions.COOKIE_NAME, "")
+    member = None
+    if raw:
+        with connect() as connection:
+            row = sessions.lookup(connection, raw)
+            member = int(row["member_pk"]) if row else None
+            sessions.revoke(connection, raw)
+            if member is not None:
+                log_event(connection, "logout", member, client_ip(request), user_agent(request))
+    reply = Response(status_code=204)
+    _clear_cookie(reply)
+    return reply
+
+
+def current_user(member: Annotated[CurrentMember, Depends(require_member)]) -> str:
+    """The signed-in member's username, for routers keyed on it."""
+    return member.username

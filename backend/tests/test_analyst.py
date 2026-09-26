@@ -17,9 +17,11 @@ from app.analyst.evidence import PRODUCTS_PATH
 from app.analyst.models import Invention
 from app.analyst.reader import parse_quantified, read
 from app.analyst.vocabulary import get_vocabulary
-from app.api import analyst, auth
+from app.api import analyst
 from app.api.deps import get_rate_limiter
+from app.auth import sessions
 from app.main import app
+from tests.members import CSRF, make_member
 
 SAMPLE = """Ayurvedic Turmeric–Neem Face Pack
 For 100 g:
@@ -33,20 +35,28 @@ Purpose:
 Traditional skin cleansing, oil absorption, soothing and skin-care use."""
 
 
+# Real sessions: whose analysis is whose is part of what is tested here.
+pytestmark = pytest.mark.real_auth
+
+
 @pytest.fixture
 def client(tmp_path, monkeypatch) -> TestClient:
-    monkeypatch.setattr(auth, "_db_path", lambda: tmp_path / "accounts.sqlite3")
-    monkeypatch.setattr(auth, "PBKDF2_ROUNDS", 1_000)
     monkeypatch.setattr(analyst, "_db_path", lambda: tmp_path / "analyses.sqlite3")
     get_rate_limiter().reset()
     return TestClient(app)
 
 
-def token(client: TestClient, username: str = "demo", password: str = "demo1234") -> dict:
-    body = client.post(
-        "/api/v1/auth/login", json={"username": username, "password": password}
-    ).json()
-    return {"Authorization": "Bearer " + body["token"]}
+def token(client: TestClient, member: dict | None = None) -> dict:
+    """Headers carrying a live session for `member` (a new one if not given)."""
+    member = member or make_member()
+    signing_in = TestClient(app, headers=CSRF)
+    response = signing_in.post(
+        "/api/v1/auth/login",
+        json={"identifier": member["username"], "password": member["password"]},
+    )
+    assert response.status_code == 200, response.text
+    raw = signing_in.cookies.get(sessions.COOKIE_NAME)
+    return {"Cookie": f"{sessions.COOKIE_NAME}={raw}", **CSRF}
 
 
 def turn(client: TestClient, headers: dict, conversation_id: str, text: str) -> dict:
@@ -161,16 +171,7 @@ def test_an_analysis_belongs_to_its_account(client: TestClient) -> None:
     cid = client.post("/api/v1/analyst/conversations", headers=headers).json()["id"]
     assert client.get(f"/api/v1/analyst/conversations/{cid}").status_code == 401
 
-    client.post(
-        "/api/v1/auth/register",
-        json={
-            "name": "Other",
-            "email": "o@example.com",
-            "username": "other",
-            "password": "password1",
-        },
-    )
-    other = token(client, "other", "password1")
+    other = token(client)
     assert client.get(f"/api/v1/analyst/conversations/{cid}", headers=other).status_code == 404
     assert client.delete(f"/api/v1/analyst/conversations/{cid}", headers=headers).status_code == 204
     assert client.get(f"/api/v1/analyst/conversations/{cid}", headers=headers).status_code == 404

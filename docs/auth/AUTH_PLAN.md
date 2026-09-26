@@ -342,3 +342,39 @@ Nothing else:
 - QR decoding in the browser uses native `BarcodeDetector` and the
   already-installed `html5-qrcode`.
 - The OTP boxes, strength bar and card use no new packages.
+
+## 13. Decisions (2026-09-26, from the member)
+
+1. **The old QR badge stays the card.** Its module pattern is the card's token.
+   `member_qr_tokens` stores its SHA-256, so it can be revoked and reissued
+   like any card. The QR has no decodable payload, so frames still go to the
+   server-side matcher (`app/core/badge.py`) rather than being decoded in the
+   browser. The pattern is in this repository, so the card is not secret; the
+   emailed code (Phase 4) is what stops a copy getting in.
+2. **The background video is not touched**, on the sign-in page or behind it.
+3. **Portal colours match the video; translucent is allowed.** The portal
+   keeps the frosted card over the video, restyled in Phase 5.
+4. **No self-registration.** `POST /auth/register` and the "Create one" link
+   are removed.
+5. **The `demo` / `demo1234` account is gone** from code and docs. The old
+   `accounts` table is left in place, unused: it also holds three accounts
+   people registered themselves, and deleting their rows was not asked for.
+6. **Render:** make the deploy work again once the auth work is done. On boot
+   the server re-seeds the demo member and re-issues the card if it was never
+   issued (`app/auth/bootstrap.py`), so a wiped disk does not break the card.
+7. **Env keys** use the names above, exactly, read from `backend/.env`.
+8. **After login, the home page** (`/`).
+
+## 14. Phase 2 notes
+
+- **Transitional QR sign-in.** Until Phase 4, `POST /auth/badge` still signs a
+  member straight in when the camera shows the card, as before. Phase 4 puts
+  the emailed code in between.
+- **Proxies.** Vite (`xfwd`) and `scripts/serve-public.mjs` now send
+  `X-Forwarded-For`, `-Host` and `-Proto`. The API trusts them only from a
+  loopback peer, and takes the rightmost `X-Forwarded-For` entry. On Render,
+  that entry is Render's own proxy, so per-IP limits there count per proxy
+  rather than per reader. Per-account lockout is unaffected.
+- **Frontend tests.** The gate now waits for `/auth/me` before rendering, so
+  `test/setup.ts` stands in for `checkSession` alone, and Testing Library's
+  `findBy*` wait is 3 s instead of 1 s.

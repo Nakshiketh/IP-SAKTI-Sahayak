@@ -89,7 +89,19 @@ function proxy(request, response) {
       port: API.port || 80,
       method: request.method,
       path: request.url,
-      headers: { ...request.headers, host: API.host },
+      headers: {
+        ...request.headers,
+        host: API.host,
+        // What the API needs to know about the request as the reader sent it:
+        // the address it came from (appended, so the API takes the rightmost
+        // entry, which this proxy wrote), and the host and scheme it was
+        // addressed to, for the API's same-origin check on sign-in.
+        'x-forwarded-for': [request.headers['x-forwarded-for'], request.socket.remoteAddress]
+          .filter(Boolean)
+          .join(', '),
+        'x-forwarded-host': request.headers.host ?? '',
+        'x-forwarded-proto': request.headers['x-forwarded-proto'] ?? 'http',
+      },
     },
     (upstreamResponse) => {
       // Hop-by-hop headers describe the connection to the API, not the one to

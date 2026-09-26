@@ -6,6 +6,7 @@ import {
   type StageTiming,
 } from '@/services/query';
 import { isOffline, withBackoff } from '@/services/retry';
+import { apiFetch } from '@/lib/http';
 
 /**
  * The API client. Reads a newline-delimited JSON stream.
@@ -123,7 +124,7 @@ export async function runHttpQuery(question: string, options: QueryOptions): Pro
     // trying again would ask the same question twice — see `services/retry`.
     response = await withBackoff(
       () =>
-        fetch('/api/v1/query', {
+        apiFetch('/api/v1/query', {
           method: 'POST',
           headers: {
             'content-type': 'application/json',

@@ -1,5 +1,5 @@
 import type { ProtectionEntry } from '@/components/answer/ProtectionMap';
-import { readStoredSession } from '@/services/auth';
+import { apiFetch } from '@/lib/http';
 
 /**
  * The invention analyst, from the API.
@@ -339,15 +339,15 @@ function toCode(status: number): AnalystErrorCode {
   return 'unknown';
 }
 
+// The session is a cookie; `apiFetch` adds the CSRF header to writes.
 function headers(extra: Record<string, string> = {}): Record<string, string> {
-  const session = readStoredSession();
-  return session ? { ...extra, Authorization: `Bearer ${session.token}` } : extra;
+  return extra;
 }
 
 async function call<T>(path: string, method = 'GET'): Promise<T> {
   let response: Response;
   try {
-    response = await fetch(path, { method, headers: headers() });
+    response = await apiFetch(path, { method, headers: headers() });
   } catch {
     throw new AnalystError('unreachable');
   }
@@ -385,7 +385,7 @@ export async function sendTurn(
 
   let response: Response;
   try {
-    response = await fetch(path, init);
+    response = await apiFetch(path, init);
   } catch (error) {
     if (error instanceof DOMException && error.name === 'AbortError') throw error;
     throw new AnalystError('unreachable');

@@ -1,24 +1,35 @@
+import type { Member, SessionCheck } from '@/services/auth';
+
 /**
  * Put a session in place, for tests about something other than signing in.
  *
- * Every route now sits behind the front door, so a test that renders `<App />`
- * to assert on a page has to say who is looking at it. This writes the same two
- * keys `services/auth.ts` writes, so the provider finds a session exactly as it
- * would in a browser.
- *
- * The server check that follows is allowed to fail: `verifySession` reports an
- * unreachable server as `unknown`, and an unknown answer leaves the stored
- * session standing. So a test needs no fetch stub unless it is specifically
- * about a token being rejected.
+ * Every route sits behind the sign-in gate, and the session is an HttpOnly
+ * cookie the page cannot see: the app learns who is signed in by asking
+ * `GET /api/v1/auth/me`. `test/setup.ts` replaces that one question
+ * (`checkSession`) with an answer these two functions control, and leaves the
+ * rest of `services/auth` real. Tests are free to stub `fetch` however they
+ * like without the gate noticing.
  */
-export function signInForTest(
-  user = { name: 'Demo User', username: 'demo', email: 'demo@example.com' },
-): void {
-  sessionStorage.setItem('sahayak.auth.token', 'test-token');
-  sessionStorage.setItem('sahayak.auth.user', JSON.stringify(user));
+
+const TEST_MEMBER: Member = {
+  name: 'Test Member',
+  role: 'Student / Researcher',
+  institution: 'Test Institute',
+  memberId: 'IPS-TEST-0001',
+  restricted: false,
+};
+
+let session: SessionCheck = { state: 'anonymous' };
+
+export function signInForTest(member: Partial<Member> = {}): void {
+  session = { state: 'member', member: { ...TEST_MEMBER, ...member } };
 }
 
 export function signOutForTest(): void {
-  sessionStorage.removeItem('sahayak.auth.token');
-  sessionStorage.removeItem('sahayak.auth.user');
+  session = { state: 'anonymous' };
+}
+
+/** What the stand-in `checkSession` answers. */
+export function currentTestSession(): SessionCheck {
+  return session;
 }

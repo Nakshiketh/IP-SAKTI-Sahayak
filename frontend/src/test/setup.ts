@@ -1,5 +1,7 @@
 import '@testing-library/jest-dom/vitest';
 
+import { configure } from '@testing-library/react';
+
 import { i18n, initI18n } from '@/i18n';
 import { loadAllEnglish } from '@/i18n/resources';
 
@@ -37,3 +39,23 @@ Object.defineProperty(HTMLMediaElement.prototype, 'pause', {
   writable: true,
   value: () => undefined,
 });
+
+// The sign-in gate asks the server who is signed in. Tests answer that one
+// question from `test/signedIn.ts` instead; everything else in the auth service
+// stays real. See `signInForTest`.
+vi.mock('@/services/auth', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/services/auth')>();
+  const { currentTestSession } = await import('@/test/signedIn');
+  return { ...actual, checkSession: vi.fn(async () => currentTestSession()) };
+});
+
+afterEach(async () => {
+  const { signOutForTest } = await import('@/test/signedIn');
+  signOutForTest();
+});
+
+// The sign-in gate now waits for the server's answer before it renders a route
+// (it used to trust a token in sessionStorage synchronously), so the first
+// page in a test file arrives a tick later, behind a cold lazy import. One
+// second was already tight under a full parallel run; `findBy*` waits three.
+configure({ asyncUtilTimeout: 3000 });

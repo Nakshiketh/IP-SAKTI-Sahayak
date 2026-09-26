@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { AuthSpinner } from '@/components/auth/AuthField';
 import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { cn } from '@/lib/cn';
-import { AuthError, signInWithBadgeImage, type AuthSession } from '@/services/auth';
+import { AuthError, logInWithCardImage, type NextStep } from '@/services/auth';
 
 /**
  * Sign-in with the live camera and the one authorised QR code.
@@ -102,7 +102,7 @@ export function BadgeScanner({
 }: {
   open: boolean;
   onClose: () => void;
-  onSignedIn: (session: AuthSession) => void;
+  onSignedIn: (next: NextStep) => void;
 }) {
   const titleId = useId();
   const { t } = useTranslation('common');
@@ -122,6 +122,8 @@ export function BadgeScanner({
   const [mirrored, setMirrored] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [uploadNote, setUploadNote] = useState<string | null>(null);
+  // The server's words for a card it recognised and refused (revoked, inactive).
+  const [denial, setDenial] = useState<string | null>(null);
 
   useFocusTrap(panelRef, open, onClose);
 
@@ -132,14 +134,18 @@ export function BadgeScanner({
     async (image: Blob, source: 'camera' | 'upload'): Promise<boolean> => {
       inFlightRef.current = true;
       try {
-        const session = await signInWithBadgeImage(image);
+        const next = await logInWithCardImage(image);
         doneRef.current = true;
         setPhase('verified');
-        window.setTimeout(() => onSignedIn(session), 700);
+        window.setTimeout(() => onSignedIn(next), 700);
         return true;
       } catch (error) {
         const code = error instanceof AuthError ? error.code : 'unknown';
-        if (code === 'invalid_qr') {
+        if (code === 'QR_INVALID') {
+          setDenial(null);
+          setPhase('denied');
+        } else if (code === 'QR_REVOKED' || code === 'MEMBER_INACTIVE') {
+          setDenial(error instanceof AuthError && error.message ? error.message : null);
           setPhase('denied');
         } else if (code === 'no_code') {
           if (source === 'upload') setUploadNote(t('auth.scanUploadNone'));
@@ -297,7 +303,8 @@ export function BadgeScanner({
   }
 
   const tone = phase === 'verified' ? 'ok' : phase === 'denied' ? 'bad' : 'idle';
-  const status = phase === 'blocked' ? null : t(STATUS_TEXT[phase]);
+  const status =
+    phase === 'blocked' ? null : phase === 'denied' && denial ? denial : t(STATUS_TEXT[phase]);
   const statusTone =
     phase === 'verified'
       ? 'text-emerald-300'
@@ -412,7 +419,7 @@ export function BadgeScanner({
             {phase === 'denied' ? (
               <div className="absolute inset-x-3 bottom-3 flex items-center gap-2 rounded-lg bg-red-950/90 px-3 py-2 text-sm font-medium text-red-100">
                 <ShieldX size={16} aria-hidden="true" className="shrink-0" />
-                {t('auth.scanMismatch')}
+                {denial ?? t('auth.scanMismatch')}
               </div>
             ) : null}
           </div>

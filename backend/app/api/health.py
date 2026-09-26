@@ -9,10 +9,11 @@ the demo fixture or a built corpus.
 
 from __future__ import annotations
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
 
 from app.api.deps import get_namespaces
+from app.auth.deps import require_member
 from app.core.settings import Settings, get_settings
 from app.registry.store import get_registry
 
@@ -49,7 +50,8 @@ def health() -> Health:
     )
 
 
-@router.get("/corpus-version", response_model=CorpusVersion)
+# Health is the one open endpoint besides sign-in; what the corpus holds is not.
+@router.get("/corpus-version", response_model=CorpusVersion, dependencies=[Depends(require_member)])
 def corpus_version() -> CorpusVersion:
     namespaces = get_namespaces()
     registry = get_registry()

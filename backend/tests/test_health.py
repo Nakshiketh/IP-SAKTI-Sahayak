@@ -23,7 +23,10 @@ def test_corpus_version_reports_the_index_that_is_actually_searched() -> None:
     answered from those documents — and reporting them without ``is_demo`` would
     be worse, because the footer would read like a built corpus.
     """
-    response = client.get("/api/v1/corpus-version")
+    # The shared app, which the suite signs in: what the corpus holds is not public.
+    from app.main import app
+
+    response = TestClient(app).get("/api/v1/corpus-version")
     assert response.status_code == 200
     body = response.json()
     assert body["document_count"] > 0

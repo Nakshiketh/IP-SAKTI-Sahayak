@@ -1,4 +1,4 @@
-import { readStoredSession } from '@/services/auth';
+import { apiFetch } from '@/lib/http';
 
 /**
  * Sending a file to be read, and nothing more.
@@ -23,19 +23,16 @@ export interface ReadDocument {
 }
 
 export type ReadResult =
-  | { ok: true; document: ReadDocument }
-  | { ok: false; code: string; message: string };
+  { ok: true; document: ReadDocument } | { ok: false; code: string; message: string };
 
 export async function readDocument(file: File): Promise<ReadResult> {
   const body = new FormData();
   body.append('file', file);
 
-  const token = readStoredSession()?.token;
   let response: Response;
   try {
-    response = await fetch('/api/v1/documents/read', {
+    response = await apiFetch('/api/v1/documents/read', {
       method: 'POST',
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
       body,
     });
   } catch {

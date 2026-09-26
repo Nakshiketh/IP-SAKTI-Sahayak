@@ -166,9 +166,11 @@ def test_no_credential_is_committed() -> None:
             assert not found, f"{path.name}: {found.group(0)[:40]}"
 
 
-def test_the_demo_account_password_is_hashed_not_stored() -> None:
-    source = (REPO_ROOT / "backend" / "app" / "api" / "auth.py").read_text("utf-8")
-    assert "pbkdf2_hmac" in source
-    # The salt is per account, so two accounts with one password do not share a
-    # hash and a stolen table cannot be attacked once for everybody.
-    assert "os.urandom" in source
+def test_member_passwords_are_hashed_with_argon2id() -> None:
+    hashing = (REPO_ROOT / "backend" / "app" / "auth" / "hashing.py").read_text("utf-8")
+    assert "from argon2 import PasswordHasher" in hashing
+    # No password is written anywhere in the source, and none is seeded from it:
+    # the demo member's temporary password comes from the environment.
+    members = (REPO_ROOT / "backend" / "app" / "auth" / "members.py").read_text("utf-8")
+    assert "hash_password(temporary_password)" in members
+    assert "demo1234" not in (REPO_ROOT / "backend" / "app" / "api" / "auth.py").read_text("utf-8")

@@ -1,77 +1,74 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { AuthContext, type AuthContextValue, type AuthStatus } from '@/hooks/authContext';
 import {
-  clearSession,
-  readStoredSession,
-  storeSession,
-  verifySession,
-  type AuthSession,
-  type AuthUser,
-} from '@/services/auth';
+  AuthContext,
+  type AuthContextValue,
+  type AuthNotice,
+  type AuthStatus,
+} from '@/hooks/authContext';
+import { SESSION_EVENT, type SessionEventDetail } from '@/lib/http';
+import { checkSession, logOut, type Member } from '@/services/auth';
 
 /**
  * Who is signed in, for the whole app.
  *
- * A stored session is trusted immediately and checked in the background, rather
- * than the app holding its render until the server answers. The alternative was
- * a third `checking` state that rendered nothing, and it was the wrong trade: it
- * blanks the page on every load, for everyone, to avoid briefly showing the site
- * to the rare reader whose token expired since their last visit — and that
- * reader is stopped by the API on their first real request anyway.
+ * The session is an HttpOnly cookie, so the page cannot know it has one until it
+ * asks. It asks once on load and renders nothing until the answer arrives: a
+ * short blank on load is the price of never showing a protected page, even for
+ * a frame, to someone who is not signed in.
  *
- * So the check runs, and its only power is to downgrade. See `verifySession`
- * for why an unreachable server is not treated as a rejection.
+ * After that, any API call that comes back 401 or "password change required"
+ * (see `lib/http.ts`) moves the reader to the right step without a reload.
  */
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const stored = useMemo(() => readStoredSession(), []);
-  const [status, setStatus] = useState<AuthStatus>(stored ? 'authenticated' : 'anonymous');
-  const [user, setUser] = useState<AuthUser | null>(stored?.user ?? null);
+  const [status, setStatus] = useState<AuthStatus>('checking');
+  const [user, setUser] = useState<Member | null>(null);
+  const [notice, setNotice] = useState<AuthNotice>(null);
 
-  // Confirm a stored token against the server once, on load.
-  useEffect(() => {
-    if (!stored) return;
-    let cancelled = false;
-
-    void (async () => {
-      const check = await verifySession(stored.token);
-      if (cancelled) return;
-
-      if (check.state === 'invalid') {
-        clearSession();
-        setUser(null);
-        setStatus('anonymous');
-        return;
-      }
-
-      // 'valid' refreshes the profile from the server; 'unknown' means the
-      // question could not be asked, and the stored session stands until
-      // something authoritative says otherwise. Neither promotes anything: the
-      // session was already in force before this ran.
-      if (check.state === 'valid') setUser(check.user);
-    })();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [stored]);
-
-  const signedIn = useCallback((session: AuthSession) => {
-    storeSession(session);
-    setUser(session.user);
-    setStatus('authenticated');
-  }, []);
-
-  const signOut = useCallback(() => {
-    clearSession();
+  const refresh = useCallback(async () => {
+    const check = await checkSession();
+    if (check.state === 'member') {
+      setUser(check.member);
+      setStatus(check.member.restricted ? 'restricted' : 'authenticated');
+      setNotice(null);
+      return;
+    }
     setUser(null);
     setStatus('anonymous');
+    if (check.state === 'unknown') setNotice('unreachable');
   }, []);
 
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
+  useEffect(() => {
+    const onSession = (event: Event) => {
+      const detail = (event as CustomEvent<SessionEventDetail>).detail;
+      if (detail === 'restricted') {
+        setStatus('restricted');
+        return;
+      }
+      setUser(null);
+      setStatus('anonymous');
+      setNotice('expired');
+    };
+    window.addEventListener(SESSION_EVENT, onSession);
+    return () => window.removeEventListener(SESSION_EVENT, onSession);
+  }, []);
+
+  const signOut = useCallback(async () => {
+    await logOut();
+    setUser(null);
+    setStatus('anonymous');
+    setNotice('loggedOut');
+  }, []);
+
+  const clearNotice = useCallback(() => setNotice(null), []);
+
   const value = useMemo<AuthContextValue>(
-    () => ({ status, user, signedIn, signOut }),
-    [status, user, signedIn, signOut],
+    () => ({ status, user, notice, refresh, signOut, clearNotice }),
+    [status, user, notice, refresh, signOut, clearNotice],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

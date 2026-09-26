@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Chip } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import type { QueryResult } from '@/services/query';
+import { apiFetch } from '@/lib/http';
 
 /**
  * Did this help?
@@ -42,7 +43,7 @@ export function AnswerFeedback({ result, className }: { result: QueryResult; cla
 
   async function send(chosen: Verdict, aspect?: string) {
     try {
-      await fetch('/api/v1/feedback', {
+      await apiFetch('/api/v1/feedback', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({

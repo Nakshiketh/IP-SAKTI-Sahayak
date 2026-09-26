@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { apiMode } from '@/services/query';
 import { sessionId } from '@/services/session';
+import { apiFetch } from '@/lib/http';
 
 /**
  * Consent, the access log, and the audit rows.
@@ -89,7 +90,7 @@ export function useAccessLog(): AccessLogState & { refresh: () => void } {
       return;
     }
     const controller = new AbortController();
-    fetch('/api/v1/access-log', { headers: headers(), signal: controller.signal })
+    apiFetch('/api/v1/access-log', { headers: headers(), signal: controller.signal })
       .then((response) => {
         if (!response.ok) throw new Error(String(response.status));
         return response.json() as Promise<unknown>;
@@ -117,7 +118,7 @@ export function useAccessLog(): AccessLogState & { refresh: () => void } {
  * it a record of what the interface hoped for.
  */
 export async function recordConsent(sourceId: string, granted: boolean): Promise<string> {
-  const response = await fetch('/api/v1/consent', {
+  const response = await apiFetch('/api/v1/consent', {
     method: 'POST',
     headers: headers(),
     body: JSON.stringify({ source_id: sourceId, granted, session_id: sessionId() }),
