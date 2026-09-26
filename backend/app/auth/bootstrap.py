@@ -19,7 +19,8 @@ from app.auth.members import DEMO_MEMBER, seed_demo_member
 from app.auth.store import connect
 from app.core.settings import get_settings
 
-log = logging.getLogger("sahayak.auth")
+#: Uvicorn's logger, so these lines appear in the server output.
+log = logging.getLogger("uvicorn.error")
 
 
 def bootstrap_members() -> None:

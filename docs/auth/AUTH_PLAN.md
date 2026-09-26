@@ -378,3 +378,23 @@ Nothing else:
 - **Frontend tests.** The gate now waits for `/auth/me` before rendering, so
   `test/setup.ts` stands in for `checkSession` alone, and Testing Library's
   `findBy*` wait is 3 s instead of 1 s.
+
+## 15. Phase 3 notes
+
+- **Email:** `app/auth/email.py`, stdlib `smtplib` only. Port 465 uses implicit
+  TLS; port 587 with `EMAIL_SECURE=false` must upgrade with STARTTLS or
+  nothing is sent. At startup, a background thread logs
+  `email transport ready` or the error's type.
+- **Codes:** `app/auth/otp.py`. Six digits from `secrets.randbelow`, stored as
+  an HMAC over the challenge id and the code. Each code lives 5 minutes, is
+  single-use and allows 5 attempts. Each challenge lives 10 minutes and has
+  one purpose. Sends are limited to one per 60 s per challenge, 5 per member
+  per hour and 20 per address per hour. A failed send invalidates the code.
+  There is no fallback anywhere.
+- **Test email:** run
+  `cd backend && .venv/Scripts/python.exe -m app.auth.cli test-email`. It
+  sends the real template, marked as a test, with a dummy code that is never
+  stored.
+- **Render:** free web services on Render may block outbound SMTP. If they do,
+  email codes will work locally but not on the public link. Check before
+  relying on it there.

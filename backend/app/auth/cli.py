@@ -5,6 +5,7 @@
     .venv/Scripts/python.exe -m app.auth.cli issue-card --member IPS-2026-0001
     .venv/Scripts/python.exe -m app.auth.cli revoke-card --member IPS-2026-0001
     .venv/Scripts/python.exe -m app.auth.cli gen-secrets
+    .venv/Scripts/python.exe -m app.auth.cli test-email
 
 Nothing here prints a password, a code, a token or a secret. `gen-secrets` is
 the exception by design: it prints two fresh random values for you to paste into
@@ -16,10 +17,12 @@ from __future__ import annotations
 import argparse
 import secrets
 import sys
+from datetime import UTC, datetime
 
-from app.auth import cards
-from app.auth.members import SeedRefused, seed_demo_member
+from app.auth import cards, email
+from app.auth.members import DEMO_MEMBER, SeedRefused, seed_demo_member
 from app.auth.store import connect
+from app.auth.templates import otp_email
 from app.core.settings import REPO_ROOT, get_settings
 
 CARDS_DIR = REPO_ROOT / "demo" / "cards"
@@ -66,6 +69,32 @@ def _secrets(_: argparse.Namespace) -> int:
     return 0
 
 
+#: The dummy code in a test email. Marked as a test in the subject and the body,
+#: and never stored, so it cannot sign anyone in.
+TEST_CODE = "123456"
+
+
+def _test_email(args: argparse.Namespace) -> int:
+    rendered = otp_email(TEST_CODE, "login", datetime.now(UTC), test=True)
+    settings = get_settings()
+    print(
+        f"Sending a test message to {args.to} through {settings.email_host}:{settings.email_port}"
+    )
+    try:
+        sent = email.send_email(
+            to=args.to, subject=rendered.subject, html=rendered.html, text=rendered.text
+        )
+    except email.EmailNotConfigured as error:
+        print(f"Not sent: {error}", file=sys.stderr)
+        return 2
+    except email.EmailFailed as error:
+        print(f"Not sent: {error}", file=sys.stderr)
+        return 1
+    print(f"Accepted by the server: {sent.code} {sent.reply}")
+    print("Check the inbox (and the spam folder) of the address above.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="app.auth.cli", description=__doc__.splitlines()[0])
     commands = parser.add_subparsers(dest="command", required=True)
@@ -84,6 +113,10 @@ def main(argv: list[str] | None = None) -> int:
     commands.add_parser(
         "gen-secrets", help="print fresh SESSION_SECRET and OTP_SECRET"
     ).set_defaults(run=_secrets)
+
+    test = commands.add_parser("test-email", help="send one marked test verification email")
+    test.add_argument("--to", default=DEMO_MEMBER.email, help="recipient (default: demo member)")
+    test.set_defaults(run=_test_email)
 
     args = parser.parse_args(argv)
     return args.run(args)

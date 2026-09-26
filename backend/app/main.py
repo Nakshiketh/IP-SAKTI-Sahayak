@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import threading
 from contextlib import asynccontextmanager
 
 from fastapi import Depends, FastAPI, Request
@@ -25,6 +26,7 @@ from app.api import (
 )
 from app.auth.bootstrap import bootstrap_members
 from app.auth.deps import require_member
+from app.auth.email import verify_transport
 from app.core.errors import ApiError, RequestTooLarge, api_error_handler
 from app.core.settings import get_settings
 
@@ -135,6 +137,10 @@ class MissingAuthSettings(RuntimeError):
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
     bootstrap_members()
+    # Checked in the background: a slow or unreachable mail server must not hold
+    # up the API starting. The outcome is logged as "email transport ready" or
+    # the error's type, never a credential.
+    threading.Thread(target=verify_transport, name="email-check", daemon=True).start()
     yield
 
 
