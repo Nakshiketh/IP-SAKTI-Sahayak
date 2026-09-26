@@ -507,13 +507,23 @@ export default function Sahayak() {
                           <FirstVisitHint id="escalation" className="mt-6" />
                           <GuidanceEnds className="mt-6" analysis={result.answer!.analysis} />
 
+                          {/* Outside the Simple/Expert gate on purpose.
+                              Where two obligations meet, and which one governs,
+                              is part of what the answer MEANS — not detail
+                              behind it. Hidden by default, the product reads as
+                              retrieval with a disclaimer; a reader in Simple
+                              mode was told "2 conflicts" in a sentence and
+                              given no way to see what they were. The component
+                              renders nothing when there are none, so a simple
+                              answer stays simple. */}
+                          <ConflictMatrix
+                            className="mt-6"
+                            analysis={result.answer!.analysis}
+                            citations={result.answer!.citations}
+                          />
+
                           {detail === 'expert' ? (
                             <>
-                              <ConflictMatrix
-                                className="mt-6"
-                                analysis={result.answer!.analysis}
-                                citations={result.answer!.citations}
-                              />
                               <SourceMatrix className="mt-6" citations={result.answer!.citations} />
                               <AnswerReceipt className="mt-6" answer={result.answer!} />
                             </>
