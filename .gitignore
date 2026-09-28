@@ -46,3 +46,4 @@ Thumbs.db
 
 # Vite writes these while resolving its config, and sometimes leaves one.
 frontend/vite.config.ts.timestamp-*.mjs
+*.tsbuildinfo

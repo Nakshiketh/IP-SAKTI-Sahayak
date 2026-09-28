@@ -16,3 +16,33 @@ services:
       # Hides the API docs and the raw audit viewer; nothing else changes.
       - key: SAHAYAK_ENVIRONMENT
         value: production
+
+      # Member sign-in. The server will not start without the two secrets;
+      # Render generates them once, so nobody has to invent or paste one.
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: OTP_SECRET
+        generateValue: true
+      # The site is served over https, so the session cookie is marked Secure.
+      - key: COOKIE_SECURE
+        value: "true"
+
+      # Sign-in codes are emailed through Gmail SMTP with an App Password.
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "465"
+      - key: EMAIL_SECURE
+        value: "true"
+      # sync: false — Render asks for these when the Blueprint is applied and
+      # they never live in the repository.
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: EMAIL_PASSWORD
+        sync: false
+      # The disk is not kept, so the member is seeded afresh on every start
+      # from this temporary password (changed at first login each time).
+      - key: DEMO_MEMBER_TEMP_PASSWORD
+        sync: false
