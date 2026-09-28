@@ -93,14 +93,48 @@ def _locate(pixels: np.ndarray) -> tuple[str, np.ndarray | None]:
 
 
 def examine(image: bytes) -> tuple[str, np.ndarray] | None:
-    """The decoded text and 29 x 29 module grid of the QR code in an image, or None."""
+    """The decoded text and 29 x 29 module grid of the QR code in an image, or None.
+
+    The grid is the one that best matches the badge among small nudges of the
+    detected corners, so a warp that is slightly off still reads the badge.
+    """
     pixels = cv2.imdecode(np.frombuffer(image, dtype=np.uint8), cv2.IMREAD_GRAYSCALE)
     if pixels is None:
         return None
     text, corners = _locate(pixels)
     if corners is None:
         return None
-    return text, _grid(pixels, corners)
+    return text, max(_grids(pixels, corners), key=similarity)
+
+
+#: Corner nudges, in modules. The detector's corners can sit half a module off
+#: (and the fourth corner of a tilted code is only estimated), which shifts every
+#: sample. Trying a few nudges costs little; an unrelated code still agrees on
+#: about half its modules at best, far below THRESHOLD.
+_SHIFTS = (-0.4, 0.0, 0.4)
+_GROWTH = (-0.4, 0.0, 0.4)
+_FOURTH = (-0.6, 0.0, 0.6)
+
+
+def _grids(pixels: np.ndarray, corners: np.ndarray):
+    quad = corners.reshape(4, 2).astype(np.float64)
+    # One module along each edge of the code, in image pixels.
+    across = (quad[1] - quad[0]) / SIZE
+    down = (quad[3] - quad[0]) / SIZE
+    outward = np.array([-1, 1, 1, -1])[:, None] * across + np.array([-1, -1, 1, 1])[:, None] * down
+    for grow in _GROWTH:
+        grown = quad + outward * grow
+        for sx in _SHIFTS:
+            for sy in _SHIFTS:
+                shifted = grown + across * sx + down * sy
+                if sx == sy == 0:
+                    for fx in _FOURTH:
+                        for fy in _FOURTH:
+                            nudged = shifted.copy()
+                            nudged[2] += across * fx + down * fy
+                            yield _grid(pixels, nudged)
+                else:
+                    yield _grid(pixels, shifted)
 
 
 def _grid(pixels: np.ndarray, corners: np.ndarray) -> np.ndarray:

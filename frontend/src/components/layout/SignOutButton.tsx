@@ -25,10 +25,6 @@ export function SignOutButton({ className }: { className?: string }) {
 
   return (
     <div className={cn('items-center gap-2.5', className ?? 'flex')}>
-      <span className="hidden max-w-[12rem] truncate text-xs text-muted xl:inline">
-        <span className="sr-only">{t('auth.signedInAs')}: </span>
-        {user.username}
-      </span>
       <button
         type="button"
         onClick={signOut}

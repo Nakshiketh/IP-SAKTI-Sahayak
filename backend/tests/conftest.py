@@ -34,6 +34,9 @@ import tempfile as _tempfile  # noqa: E402
 
 os.environ.setdefault("SESSION_SECRET", _secrets.token_hex(32))
 os.environ.setdefault("OTP_SECRET", _secrets.token_hex(32))
+# The test client speaks plain http, which drops Secure cookies. A deployed
+# `backend/.env` sets COOKIE_SECURE=true, so pin it off for the suite.
+os.environ["COOKIE_SECURE"] = "false"
 os.environ.setdefault(
     "SAHAYAK_MEMBERS_DB_OVERRIDE",
     os.path.join(_tempfile.mkdtemp(prefix="sahayak-members-"), "accounts.sqlite3"),

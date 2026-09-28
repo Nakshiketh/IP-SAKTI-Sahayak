@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { ClaimText } from '@/components/answer/ClaimText';
 import { SourceCard } from '@/components/answer/SourceCard';
+import { claimReveal, useStreamReveal } from '@/hooks/useStreamReveal';
 import { Badge, ConfidenceMeter, Heading, type HeadingLevel } from '@/components/ui';
 import { cn } from '@/lib/cn';
 import type { Answer, AnswerBlockKind } from '@/types/domain';
@@ -31,6 +32,8 @@ interface AnswerViewProps {
    * without the column.
    */
   hideSources?: boolean;
+  /** Write the answer in as it arrives rather than showing it all at once. */
+  stream?: boolean;
   className?: string;
 }
 
@@ -39,6 +42,7 @@ export function AnswerView({
   confidenceReason,
   headingLevel = 3,
   hideSources = false,
+  stream = false,
   className,
 }: AnswerViewProps) {
   const { t } = useTranslation('common');
@@ -53,6 +57,21 @@ export function AnswerView({
     () => BLOCK_ORDER.flatMap((kind) => answer.blocks.filter((block) => block.kind === kind)),
     [answer.blocks],
   );
+
+  // Where each claim starts in the answer as a whole, so the blocks are written
+  // in the order they are read.
+  const { offsets, total } = useMemo(() => {
+    const starts = new Map<string, number>();
+    let length = 0;
+    for (const block of blocks) {
+      block.claims.forEach((claim, index) => {
+        starts.set(`${block.id}-${index}`, length);
+        length += claim.text.length;
+      });
+    }
+    return { offsets: starts, total: length };
+  }, [blocks]);
+  const { revealed, streaming } = useStreamReveal(total, stream, answer.answer_id);
 
   function selectCitation(citationId: string) {
     setActiveCitationId(citationId);
@@ -82,7 +101,7 @@ export function AnswerView({
 
         <ConfidenceMeter level={answer.confidence} reason={confidenceReason} className="mt-3" />
 
-        <div className="mt-6 space-y-6">
+        <div className="mt-6 space-y-6" aria-busy={streaming || undefined}>
           {blocks.map((block) => (
             <section key={block.id}>
               <Heading level={headingLevel} className="text-base text-muted">
@@ -98,6 +117,15 @@ export function AnswerView({
                         citations={answer.citations}
                         activeCitationId={activeCitationId}
                         onCitationSelect={selectCitation}
+                        {...(stream
+                          ? {
+                              revealed: claimReveal(
+                                offsets.get(`${block.id}-${index}`) ?? 0,
+                                claim.text.length,
+                                revealed,
+                              ),
+                            }
+                          : {})}
                       />
                     ))
                   : block.text}

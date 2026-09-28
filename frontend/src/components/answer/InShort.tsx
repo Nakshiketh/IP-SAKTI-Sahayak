@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import { ClaimText } from '@/components/answer/ClaimText';
+import { claimReveal, useStreamReveal } from '@/hooks/useStreamReveal';
 import { cn } from '@/lib/cn';
 import { summarise } from '@/lib/inShort';
 import type { Answer } from '@/types/domain';
@@ -31,27 +32,51 @@ export function InShort({
   answer,
   numbering,
   onCitationSelect,
+  stream = false,
   className,
 }: {
   answer: Answer;
   numbering: ReadonlyMap<string, number>;
   onCitationSelect?: (citationId: string) => void;
+  /** Write the summary in as it arrives rather than showing it all at once. */
+  stream?: boolean;
   className?: string;
 }) {
   const { t } = useTranslation('sahayak');
   const { claims, truncated } = summarise(answer);
   const actions = answer.blocks.find((block) => block.kind === 'what_to_check');
+  const bullets = actions ? actions.claims.slice(0, MAX_BULLETS) : [];
+
+  // The summary, then the actions, in reading order.
+  const summaryLength = claims.reduce((sum, claim) => sum + claim.text.length, 0);
+  const bulletStarts: number[] = [];
+  bullets.reduce((start, claim) => {
+    bulletStarts.push(start);
+    return start + claim.text.length;
+  }, summaryLength);
+  const total = summaryLength + bullets.reduce((sum, claim) => sum + claim.text.length, 0);
+  const { revealed, streaming } = useStreamReveal(
+    claims.length > 0 && truncated ? total : 0,
+    stream,
+    answer.answer_id,
+  );
+  const reveal = (offset: number, length: number) =>
+    stream ? { revealed: claimReveal(offset, length, revealed) } : {};
 
   // Nothing was left out, so a summary would repeat the answer word for word.
   if (claims.length === 0 || !truncated) return null;
 
   return (
-    <section aria-labelledby="in-short-heading" className={className}>
+    <section
+      aria-labelledby="in-short-heading"
+      aria-busy={streaming || undefined}
+      className={className}
+    >
       <h3 id="in-short-heading" className="text-xs uppercase tracking-wide text-muted">
         {t('inShort.heading')}
       </h3>
       <p className={cn('mt-1.5 text-md')}>
-        {claims.map((claim, index) => (
+        {claims.map((claim, index, all) => (
           <span key={claim.text.slice(0, 40) + String(index)}>
             {index > 0 ? ' ' : ''}
             <ClaimText
@@ -59,16 +84,20 @@ export function InShort({
               numbering={numbering}
               citations={answer.citations}
               {...(onCitationSelect ? { onCitationSelect } : {})}
+              {...reveal(
+                all.slice(0, index).reduce((sum, earlier) => sum + earlier.text.length, 0),
+                claim.text.length,
+              )}
             />
           </span>
         ))}
       </p>
 
-      {actions && actions.claims.length > 0 ? (
+      {bullets.length > 0 ? (
         <div className="mt-4">
           <h3 className="text-xs uppercase tracking-wide text-muted">{t('inShort.meansForYou')}</h3>
           <ul className="mt-1.5 space-y-1.5 text-sm">
-            {actions.claims.slice(0, MAX_BULLETS).map((claim, index) => (
+            {bullets.map((claim, index) => (
               <li key={claim.text.slice(0, 40) + String(index)} className="flex gap-2">
                 <span aria-hidden="true" className="text-muted">
                   —
@@ -79,6 +108,7 @@ export function InShort({
                     numbering={numbering}
                     citations={answer.citations}
                     {...(onCitationSelect ? { onCitationSelect } : {})}
+                    {...reveal(bulletStarts[index]!, claim.text.length)}
                   />
                 </span>
               </li>

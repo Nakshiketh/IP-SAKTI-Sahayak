@@ -47,6 +47,7 @@ import { DESKTOP_QUERY, TABLET_QUERY, useMediaQuery } from '@/hooks/useMediaQuer
 import { findLocale, type LocaleCode } from '@/i18n/languages';
 import { answerToText } from '@/lib/answerText';
 import { cn } from '@/lib/cn';
+import { summarise } from '@/lib/inShort';
 import { QueryError, runQuery, type QueryErrorCode, type QueryResult } from '@/services/query';
 import { sessionId } from '@/services/session';
 import { PRODUCT_CLASSES, type Jurisdiction, type ProductClass } from '@/types/domain';
@@ -469,6 +470,7 @@ export default function Sahayak() {
                           no sentence a source did not supply. */}
                       <InShort
                         className="mt-5"
+                        stream
                         answer={result.answer!}
                         numbering={
                           new Map(
@@ -489,6 +491,9 @@ export default function Sahayak() {
                           result.confidence.reasonVars,
                         )}
                         hideSources
+                        // Written in only when there is no summary above it:
+                        // one thing arrives at a time.
+                        stream={!summarise(result.answer!).truncated}
                       />
 
                       {/* The jargon this answer uses, beside it rather than

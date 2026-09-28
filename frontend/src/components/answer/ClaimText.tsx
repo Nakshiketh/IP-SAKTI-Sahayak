@@ -23,6 +23,13 @@ interface ClaimTextProps {
   citations: readonly Citation[];
   activeCitationId?: string | null;
   onCitationSelect?: (citationId: string) => void;
+  /**
+   * Characters written in so far, while the answer is arriving. The rest of the
+   * sentence is laid out but invisible, so nothing below it moves, and the
+   * citation markers appear only once the sentence they belong to is whole.
+   * Omitted, the claim renders complete.
+   */
+  revealed?: number;
 }
 
 export function ClaimText({
@@ -31,9 +38,13 @@ export function ClaimText({
   citations,
   activeCitationId,
   onCitationSelect,
+  revealed,
 }: ClaimTextProps) {
   const { t } = useTranslation('common');
   const noteId = useId();
+  const written = revealed ?? claim.text.length;
+  const whole = written >= claim.text.length;
+  const text = whole ? claim.text : <Writing text={claim.text} written={written} />;
 
   if (claim.citation_ids.length === 0) {
     return (
@@ -43,7 +54,7 @@ export function ClaimText({
           aria-describedby={noteId}
           className="rounded-data underline decoration-dashed decoration-from-font underline-offset-4 decoration-ink/35"
         >
-          {claim.text}
+          {text}
         </span>
         <span id={noteId} hidden>
           {t('answer.uncited')}
@@ -54,7 +65,7 @@ export function ClaimText({
 
   return (
     <>
-      <span>{claim.text}</span>
+      <span>{text}</span>
       {claim.citation_ids.map((id) => {
         const number = numbering.get(id);
         const citation = citations.find((c) => c.citation_id === id);
@@ -73,12 +84,30 @@ export function ClaimText({
               'rounded-[2px] px-0.5 transition-colors duration-quick ease-incise',
               'hover:bg-stamp/10',
               activeCitationId === id && 'bg-stamp/15',
+              // Out of sight, the tab order and the accessibility tree until
+              // its sentence is whole.
+              !whole && 'invisible',
             )}
           >
             {number}
           </button>
         );
       })}{' '}
+    </>
+  );
+}
+
+/** The written part, a caret, and the rest of the sentence holding its place. */
+function Writing({ text, written }: { text: string; written: number }) {
+  return (
+    <>
+      {text.slice(0, written)}
+      {written > 0 ? (
+        <span aria-hidden="true" className="relative inline-block h-[1.1em] w-0 align-[-0.2em]">
+          <span className="absolute inset-y-0 left-px block w-[2px] bg-ink/70" />
+        </span>
+      ) : null}
+      <span className="invisible">{text.slice(written)}</span>
     </>
   );
 }
