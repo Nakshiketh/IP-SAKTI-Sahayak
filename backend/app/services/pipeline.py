@@ -56,8 +56,8 @@ from app.services.audit import AuditLog, AuditRow, hash_question
 from app.services.context import build_context
 from app.services.guardrails import Refusal, classify_refusal
 from app.services.language import Detection, detect_language
-from app.services.parts import Part, merge_parts, split_question
-from app.services.procedures import expand_procedure
+from app.services.parts import Part, lead_by_part, merge_parts, split_question
+from app.services.procedures import Expansion, expand_procedure
 from app.services.records_service import RecordsService
 from app.services.retrieval import Retriever
 from app.services.routing import Route, route
@@ -449,16 +449,29 @@ class Pipeline:
         cited_passages = [p for p in passages if (p.rerank_score or 0.0) >= floor]
         # A procedural question that landed on a procedure gets every step of
         # it, in order. Confidence was scored above, from retrieval alone.
-        expansion = expand_procedure(request.question, cited_passages, store, floor=floor)
-        if expansion.passages is not cited_passages:
-            cited_passages = expansion.passages
-            known = {p.chunk.chunk_id for p in cited_passages}
-            passages = cited_passages + [p for p in passages if p.chunk.chunk_id not in known]
+        # Not for a question in several parts: one procedure cannot answer
+        # seven questions, and expanding one would give the whole answer to
+        # whichever part happened to name a procedure.
+        if len(parts) > 1:
+            cited_passages, leads = lead_by_part(cited_passages, parts, answered_parts)
+            expansion = Expansion(cited_passages, lead=leads or None)
+        else:
+            expansion = expand_procedure(request.question, cited_passages, store, floor=floor)
+            if expansion.passages is not cited_passages:
+                cited_passages = expansion.passages
+                known = {p.chunk.chunk_id for p in cited_passages}
+                passages = cited_passages + [p for p in passages if p.chunk.chunk_id not in known]
         context = build_context(
             cited_passages,
             token_budget=self._settings.context_token_budget,
             max_share_per_document=self._settings.context_max_share_per_document,
         )
+        if len(parts) > 1 and expansion.lead:
+            # Packing can drop a passage for budget. The leads come first and
+            # packing keeps order, so the ones that survived are the first ones.
+            lead_ids = {p.chunk.chunk_id for p in cited_passages[: expansion.lead]}
+            survived = sum(1 for chunk_id in context.chunk_ids if chunk_id in lead_ids)
+            expansion = Expansion(cited_passages, lead=survived or None)
         yield StageEvent(clock.stage("context"))
 
         all_demo = bool(cited_passages) and all(

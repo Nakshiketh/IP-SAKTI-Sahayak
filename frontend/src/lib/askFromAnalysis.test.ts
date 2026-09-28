@@ -120,6 +120,44 @@ describe('the question built from an analysis', () => {
     expect(questionFromAnalysis(conversation())).toMatch(/what intellectual-property and regulatory requirements apply/i);
   });
 
+  it('asks numbered questions in the words the sources use, after the product', () => {
+    // As one paragraph the neem face pack cleared nothing: every ingredient
+    // name counted against every passage. The backend searches each numbered
+    // question on its own and keeps the text before them as unsearched context.
+    const question = questionFromAnalysis(conversation())!;
+    const [stem, list] = question.split('In order:\n');
+    expect(stem).toContain('Multani Mitti (40%)');
+    const numbered = list!.split('\n');
+    expect(numbered.length).toBeGreaterThanOrEqual(5);
+    numbered.forEach((line, index) => expect(line.startsWith(`${index + 1}. `)).toBe(true));
+    expect(list).toContain('known Ayush ingredients');
+    expect(list).toContain('National Biodiversity Authority');
+    expect(list).not.toContain('Turmeric');
+  });
+
+  it('keeps the reader’s own sentence about use without wrapping it in another', () => {
+    const own = conversation();
+    own.invention.intended_use = 'I developed a herbal face pack for oily skin.';
+    const question = questionFromAnalysis(own)!;
+    expect(question).not.toContain('intended for I developed');
+    expect(question).not.toContain('..');
+    expect(question).toContain('in our words: I developed a herbal face pack for oily skin.');
+  });
+
+  it('writes the open points as words, not as the keys they are stored under', () => {
+    const keyed = conversation();
+    keyed.analysis!.assessment.would_sharpen = ['purpose', 'process', 'novelty'];
+    const question = questionFromAnalysis(keyed)!;
+    expect(question).toContain('what each ingredient does; how it is prepared; what is new about it');
+    expect(question).not.toContain('purpose; process');
+  });
+
+  it('drops the confidentiality question once the product is public', () => {
+    const sold = conversation();
+    sold.invention.disclosure = 'public';
+    expect(questionFromAnalysis(sold)).not.toContain('confidential');
+  });
+
   it('produces nothing at all without a composition', () => {
     // Half a formulation would be answered on facts the reader had not
     // finished giving.

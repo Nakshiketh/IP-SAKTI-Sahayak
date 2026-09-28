@@ -1,4 +1,4 @@
-import { Loader2, SendHorizontal, Trash2 } from 'lucide-react';
+import { Loader2, MessagesSquare, SendHorizontal, Trash2 } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { Roadmap } from '@/components/analyst/Roadmap';
 import { ProtectionMap } from '@/components/answer/ProtectionMap';
 import { askUrlFromAnalysis } from '@/lib/askFromAnalysis';
 import { Journey, type StageState } from '@/components/analyst/Journey';
-import { Badge, Button, Chip, LiveRegion } from '@/components/ui';
+import { Button, buttonStyles, Chip, LiveRegion } from '@/components/ui';
 import { useDocumentMeta } from '@/hooks/useDocumentMeta';
 import { cn } from '@/lib/cn';
 import {
@@ -16,12 +16,10 @@ import {
   createConversation,
   deleteConversation,
   getConversation,
-  getStatus,
   listConversations,
   sendTurn,
   STAGE_IDS,
   type AnalystErrorCode,
-  type AnalystStatus,
   type Conversation,
   type ConversationSummary,
   type InventionEdit,
@@ -74,7 +72,6 @@ export default function Analyst() {
   const { t } = useTranslation('analyst');
   useDocumentMeta(t('meta.title'), t('meta.description'));
 
-  const [status, setStatus] = useState<AnalystStatus | null>(null);
   const [list, setList] = useState<ConversationSummary[]>([]);
   const [conversation, setConversation] = useState<Conversation | null>(null);
   const [draft, setDraft] = useState('');
@@ -102,12 +99,8 @@ export default function Analyst() {
     let cancelled = false;
     void (async () => {
       try {
-        const [found, info] = await Promise.all([
-          listConversations(),
-          getStatus().catch(() => null),
-        ]);
+        const found = await listConversations();
         if (cancelled) return;
-        setStatus(info);
         setList(found);
         const next = found[0] ? await getConversation(found[0].id) : await createConversation();
         if (!cancelled) setConversation(next);
@@ -221,19 +214,9 @@ export default function Analyst() {
   return (
     <article className="mx-auto max-w-[80rem] px-5 py-10">
       <header className="border-b border-rule-strong pb-6">
-        <div className="flex flex-wrap items-center gap-3">
-          <h1 className="text-2xl">{t('heading')}</h1>
-          <Badge tone="caution">{t('label')}</Badge>
-        </div>
+        <h1 className="text-2xl">{t('heading')}</h1>
         <p className="mt-3 max-w-measure text-md text-muted">{t('standfirst')}</p>
-        <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-xs text-muted">
-          {status ? (
-            <span>{t(status.engine === 'model' ? 'engineModel' : 'engineRules')}</span>
-          ) : null}
-          <Link to="/assess/steps" className="text-leaf underline underline-offset-4">
-            {t('stepsLink')}
-          </Link>
-        </div>
+        <p className="mt-2 text-xs text-muted">{t('label')}</p>
       </header>
 
       {showJourney ? (
@@ -316,6 +299,18 @@ export default function Analyst() {
                   >
                     {t('chat.askLink')}
                   </Link>
+                ) : null}
+                {/* Where the conclusion is read, not only at the foot of the
+                    findings: the analyst has said what it found, and the next
+                    thing a reader wants is what to do about it. */}
+                {askHref && !busy && message.id === lastAssistant?.id ? (
+                  <div className="mt-3 border-t border-rule pt-3">
+                    <p className="text-sm text-muted">{t('bridge.inlineBody')}</p>
+                    <Link to={askHref} className={buttonStyles({ className: 'mt-2' })}>
+                      <MessagesSquare size={16} aria-hidden="true" />
+                      {t('bridge.inlineAction')}
+                    </Link>
+                  </div>
                 ) : null}
               </div>
             ))}

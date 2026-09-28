@@ -24,7 +24,7 @@ from app.reasoning.phrases import filter_text
 from app.registry.store import get_registry
 from app.retrieval.store import Namespaces
 from app.services.audit import AuditLog
-from app.services.parts import merge_parts, split_question
+from app.services.parts import lead_by_part, merge_parts, split_question
 from app.services.pipeline import Pipeline, QueryRequest, ResultEvent
 from app.services.translation import build_translator
 
@@ -111,6 +111,25 @@ def test_merging_keeps_the_best_score_and_remembers_which_part(case: dict) -> No
     assert [p.chunk.chunk_id for p in merged] == ["a", "b"]
     assert merged[0].rerank_score == 0.8
     assert answered["a"] == parts[1].part_id, "the part it scored best for"
+
+    # One part with an exact match must not take every slot. Each part leads
+    # with its own best passage, in the order the parts were asked, and each
+    # part's runner-up follows in the same order.
+    merged, answered = merge_parts(
+        [
+            (parts[0], [chunk("p1-best", 0.5), chunk("p1-next", 0.4)]),
+            (parts[1], [chunk("p2-best", 1.0), chunk("p2-next", 0.95), chunk("p2-third", 0.9)]),
+        ]
+    )
+    ordered, leads = lead_by_part(merged, parts[:2], answered)
+    assert leads == 2
+    assert [p.chunk.chunk_id for p in ordered] == [
+        "p1-best",
+        "p2-best",
+        "p1-next",
+        "p2-next",
+        "p2-third",
+    ]
 
 
 # -- the acceptance list ------------------------------------------------------

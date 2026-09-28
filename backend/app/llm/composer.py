@@ -129,7 +129,11 @@ class GroundedComposerClient:
         self, packed: list[str], knowledge: KnowledgeBase, lead: int | None
     ) -> list[GeneratedBlock]:
         if lead:
-            first, rest = packed[:lead], packed[lead : lead + FOLLOW_ON_PASSAGES]
+            # One related passage per leading one, at most: a question in seven
+            # parts has seven answers, and two related passages would leave five
+            # of them with none. A procedure's lead is followed by two at most.
+            follow_on = max(FOLLOW_ON_PASSAGES, lead)
+            first, rest = packed[:lead], packed[lead : lead + follow_on]
         else:
             # The best passage sets the topic. A passage from a different
             # procedure (a trade mark step under a patent question) is related

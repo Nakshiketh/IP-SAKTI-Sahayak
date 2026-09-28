@@ -123,3 +123,40 @@ def merge_parts(
                 answered[chunk_id] = part.part_id
     ordered = sorted(best.values(), key=lambda p: p.rerank_score or 0, reverse=True)
     return ordered, answered
+
+
+def lead_by_part(
+    passages: list[ScoredChunk],
+    parts: tuple[Part, ...],
+    answered: dict[str, str],
+) -> tuple[list[ScoredChunk], int]:
+    """The best passage for each part first, in the order the parts were asked.
+
+    Merged by score alone, one part with an exact match — "how do we register
+    our brand name as a trade mark", which the trade mark passages answer at
+    1.0 — fills every slot of the answer, and the six parts asked before it
+    come back as related material or not at all. Leading with each part's own
+    best passage is what lets a seven-part question get seven answers, in the
+    order it asked them. Returns the passages reordered and how many lead.
+
+    Each part's second-best passage follows the leads, in the same order, so the
+    related material under the answer is spread across the parts too rather
+    than being the rest of whichever part scored highest.
+
+    A part none of whose passages cleared the floor has no lead, and says so by
+    its absence rather than by borrowing another part's passage.
+    """
+    by_part: dict[str, list[ScoredChunk]] = {}
+    for passage in passages:  # already best-first
+        part_id = answered.get(passage.chunk.chunk_id)
+        if part_id is not None:
+            by_part.setdefault(part_id, []).append(passage)
+    leads = [by_part[part.part_id][0] for part in parts if part.part_id in by_part]
+    seconds = [
+        by_part[part.part_id][1]
+        for part in parts
+        if len(by_part.get(part.part_id, ())) > 1
+    ]
+    chosen = {passage.chunk.chunk_id for passage in leads + seconds}
+    rest = [p for p in passages if p.chunk.chunk_id not in chosen]
+    return leads + seconds + rest, len(leads)

@@ -414,6 +414,8 @@
     "heading": "Ask Sahayak about this product",
     "body": "Take what has been analysed here — the composition, the form, what is still open — and put it to Ask Sahayak as a question answered from cited sources.",
     "action": "Ask Sahayak about this product",
-    "note": "The question is written into the box for you to read and edit before you send it. Nothing is carried across that you cannot see."
+    "note": "The question is shown in full with the answer, and you can edit it and ask again. Nothing is carried across that you cannot see.",
+    "inlineBody": "Next: what to do about this product in India — patent, traditional knowledge, biodiversity approval, brand and licence — answered from cited sources.",
+    "inlineAction": "Ask Sahayak what to do next"
   }
 }
