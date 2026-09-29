@@ -22,6 +22,8 @@ dependencies = [
   "pypdf>=5.0",
   # Member passwords: argon2id, a memory-hard KDF. Nothing in the stdlib does it.
   "argon2-cffi>=23.1",
+  # Sign-in codes through Brevo's HTTPS API, where the host blocks SMTP.
+  "httpx>=0.27",
 ]
 
 [project.optional-dependencies]
