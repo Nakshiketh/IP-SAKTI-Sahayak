@@ -175,6 +175,9 @@ class Settings(BaseSettings):
     email_user: str = Field(default="", validation_alias="EMAIL_USER")
     email_password: str = Field(default="", validation_alias="EMAIL_PASSWORD")
     email_from: str = Field(default="", validation_alias="EMAIL_FROM")
+    #: When set, mail goes through Brevo's HTTPS API instead of SMTP. Hosts that
+    #: block outbound SMTP (Render's free plan does) can still reach port 443.
+    brevo_api_key: str = Field(default="", validation_alias="BREVO_API_KEY")
 
     session_secret: str = Field(default="", validation_alias="SESSION_SECRET")
     otp_secret: str = Field(default="", validation_alias="OTP_SECRET")

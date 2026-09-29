@@ -42,6 +42,11 @@ services:
         sync: false
       - key: EMAIL_PASSWORD
         sync: false
+      # Render's free plan blocks outbound SMTP, so on this host the codes go
+      # through Brevo's HTTPS API instead. EMAIL_FROM must be a sender verified
+      # in Brevo; EMAIL_PASSWORD is then unused.
+      - key: BREVO_API_KEY
+        sync: false
       # The disk is not kept, so the member is seeded afresh on every start
       # from this temporary password (changed at first login each time).
       - key: DEMO_MEMBER_TEMP_PASSWORD

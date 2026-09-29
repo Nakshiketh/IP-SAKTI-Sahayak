@@ -77,9 +77,10 @@ TEST_CODE = "123456"
 def _test_email(args: argparse.Namespace) -> int:
     rendered = otp_email(TEST_CODE, "login", datetime.now(UTC), test=True)
     settings = get_settings()
-    print(
-        f"Sending a test message to {args.to} through {settings.email_host}:{settings.email_port}"
+    route = (
+        "Brevo's API" if settings.brevo_api_key else f"{settings.email_host}:{settings.email_port}"
     )
+    print(f"Sending a test message to {args.to} through {route}")
     try:
         sent = email.send_email(
             to=args.to, subject=rendered.subject, html=rendered.html, text=rendered.text

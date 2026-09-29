@@ -5,6 +5,10 @@ Port 465 is implicit TLS (`EMAIL_SECURE=true`, Gmail's default). Port 587 with
 anything is sent; a server that will not upgrade is refused rather than used
 in the clear. Certificates are checked against the system's trust store.
 
+With `BREVO_API_KEY` set, SMTP is not used at all: the message goes to Brevo's
+HTTPS API, from `EMAIL_FROM` (or `EMAIL_USER`), which must be a sender verified
+in Brevo. That path exists for hosts that block outbound SMTP ports.
+
 Nothing here logs or returns a credential. Errors are reported by their type
 and SMTP status code, which say what went wrong without repeating what was
 sent. There is no fallback of any kind: if the email cannot be sent, the caller
@@ -19,7 +23,9 @@ import smtplib
 import ssl
 from dataclasses import dataclass
 from email.message import EmailMessage
-from email.utils import formataddr, make_msgid
+from email.utils import formataddr, make_msgid, parseaddr
+
+import httpx
 
 from app.core.settings import get_settings
 
@@ -28,6 +34,8 @@ from app.core.settings import get_settings
 log = logging.getLogger("uvicorn.error")
 
 TIMEOUT_SECONDS = 15
+
+BREVO_API = "https://api.brevo.com/v3"
 
 
 class EmailNotConfigured(RuntimeError):
@@ -72,9 +80,50 @@ def _connect() -> smtplib.SMTP:
     return server
 
 
+def _brevo_refusal(response: httpx.Response) -> str:
+    """Brevo's status and error code (e.g. `unauthorized`); its body never holds the key."""
+    try:
+        code = response.json().get("code")
+    except ValueError:
+        code = None
+    return f"HTTP {response.status_code}" + (f", {code}" if code else "")
+
+
+def _send_brevo(*, to: str, subject: str, html: str, text: str) -> Sent:
+    settings = get_settings()
+    name, address = parseaddr(settings.email_from or settings.email_user)
+    if not address:
+        raise EmailNotConfigured("EMAIL_FROM or EMAIL_USER must name the sender verified in Brevo.")
+    payload = {
+        "sender": {"name": name or "IP-SAKTI Sahayak", "email": address},
+        "to": [{"email": to}],
+        "subject": subject,
+        "htmlContent": html,
+        "textContent": text,
+    }
+    try:
+        response = httpx.post(
+            f"{BREVO_API}/smtp/email",
+            json=payload,
+            headers={"api-key": settings.brevo_api_key, "accept": "application/json"},
+            timeout=TIMEOUT_SECONDS,
+        )
+    except httpx.HTTPError as error:
+        raise EmailFailed(_describe(error)) from None
+    if response.status_code not in (200, 201, 202):
+        raise EmailFailed(f"message refused ({_brevo_refusal(response)})")
+    try:
+        message_id = str(response.json().get("messageId", ""))
+    except ValueError:
+        message_id = ""
+    return Sent(code=response.status_code, reply=message_id)
+
+
 def send_email(*, to: str, subject: str, html: str, text: str) -> Sent:
     """Send one message with a plain-text and an HTML part. Raises on any failure."""
     settings = get_settings()
+    if settings.brevo_api_key:
+        return _send_brevo(to=to, subject=subject, html=html, text=text)
     sender = settings.email_from or settings.email_user
 
     message = EmailMessage()
@@ -118,6 +167,25 @@ def send_email(*, to: str, subject: str, html: str, text: str) -> Sent:
 
 def verify_transport() -> bool:
     """Connect and log in once, at startup. Logs the outcome; never raises."""
+    settings = get_settings()
+    if settings.brevo_api_key:
+        try:
+            response = httpx.get(
+                f"{BREVO_API}/account",
+                headers={"api-key": settings.brevo_api_key, "accept": "application/json"},
+                timeout=TIMEOUT_SECONDS,
+            )
+        except httpx.HTTPError as error:
+            log.error("email transport failed (Brevo): %s", _describe(error))
+            return False
+        if response.status_code != 200:
+            log.error("email transport failed (Brevo): %s", _brevo_refusal(response))
+            return False
+        if not (settings.email_from or settings.email_user):
+            log.warning("email transport not configured: fill EMAIL_FROM with the Brevo sender")
+            return False
+        log.info("email transport ready (Brevo)")
+        return True
     try:
         server = _connect()
     except EmailNotConfigured:

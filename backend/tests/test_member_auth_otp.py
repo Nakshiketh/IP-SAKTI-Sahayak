@@ -14,6 +14,7 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
+import httpx
 import pytest
 
 from app.auth import cli, email, otp
@@ -354,6 +355,7 @@ def smtp(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setattr(settings, "email_user", "sender@example.org")
     monkeypatch.setattr(settings, "email_password", "app-password-never-shown")
     monkeypatch.setattr(settings, "email_from", "")
+    monkeypatch.setattr(settings, "brevo_api_key", "")
     monkeypatch.setattr(email.smtplib, "SMTP", FakeSMTP)
     monkeypatch.setattr(email.smtplib, "SMTP_SSL", FakeSMTPSSL)
     return settings
@@ -413,6 +415,65 @@ class TestTransport:
         assert email.verify_transport() is False
         assert "SMTPAuthenticationError" in caplog.text
         assert "app-password-never-shown" not in caplog.text
+
+
+@pytest.fixture
+def brevo(monkeypatch: pytest.MonkeyPatch):
+    """Brevo's API, recorded instead of called. SMTP would fail loudly if touched."""
+    settings = get_settings()
+    monkeypatch.setattr(settings, "brevo_api_key", "xkeysib-never-shown")
+    monkeypatch.setattr(settings, "email_user", "")
+    monkeypatch.setattr(settings, "email_from", "Sahayak <sender@example.org>")
+    monkeypatch.setattr(email.smtplib, "SMTP", None)
+    monkeypatch.setattr(email.smtplib, "SMTP_SSL", None)
+    calls: list[dict] = []
+    replies = {"post": (201, {"messageId": "<abc@smtp-relay.mailin.fr>"}), "get": (200, {})}
+
+    def respond(method: str, url: str, **kwargs) -> httpx.Response:
+        calls.append({"method": method, "url": url, **kwargs})
+        status, body = replies[method]
+        return httpx.Response(status, json=body)
+
+    monkeypatch.setattr(email.httpx, "post", lambda url, **kw: respond("post", url, **kw))
+    monkeypatch.setattr(email.httpx, "get", lambda url, **kw: respond("get", url, **kw))
+    return calls, replies
+
+
+class TestBrevoTransport:
+    def test_sends_over_https_with_both_parts(self, brevo) -> None:
+        calls, _ = brevo
+        sent = email.send_email(to=EMAIL, subject="Subject here", html="<p>h</p>", text="plain")
+        (call,) = calls
+        assert call["url"].endswith("/v3/smtp/email")
+        assert call["json"]["sender"] == {"name": "Sahayak", "email": "sender@example.org"}
+        assert call["json"]["to"] == [{"email": EMAIL}]
+        assert call["json"]["htmlContent"] == "<p>h</p>" and call["json"]["textContent"] == "plain"
+        assert sent.code == 201 and "abc@" in sent.reply
+
+    def test_a_refusal_is_described_without_the_key(self, brevo) -> None:
+        _, replies = brevo
+        replies["post"] = (401, {"code": "unauthorized", "message": "Key not found"})
+        with pytest.raises(email.EmailFailed) as raised:
+            email.send_email(to=EMAIL, subject="s", html="h", text="t")
+        assert "401" in str(raised.value) and "unauthorized" in str(raised.value)
+        assert "xkeysib-never-shown" not in str(raised.value)
+
+    def test_needs_a_sender(self, brevo, monkeypatch) -> None:
+        monkeypatch.setattr(get_settings(), "email_from", "")
+        with pytest.raises(email.EmailNotConfigured):
+            email.send_email(to=EMAIL, subject="s", html="h", text="t")
+
+    def test_startup_check(self, brevo, caplog) -> None:
+        caplog.set_level("INFO", logger="uvicorn.error")
+        assert email.verify_transport() is True
+        assert "email transport ready (Brevo)" in caplog.text
+        assert "xkeysib-never-shown" not in caplog.text
+
+    def test_startup_check_reports_a_bad_key(self, brevo, caplog) -> None:
+        _, replies = brevo
+        replies["get"] = (401, {"code": "unauthorized"})
+        assert email.verify_transport() is False
+        assert "HTTP 401" in caplog.text and "xkeysib-never-shown" not in caplog.text
 
 
 class TestTestEmailCommand:
