@@ -66,7 +66,7 @@ if (Test-Listening $ApiPort) {
   Write-Host "== starting the API on $ApiPort" -ForegroundColor Cyan
   $py = Join-Path $Root 'backend\.venv\Scripts\python.exe'
   $p = Start-Process -FilePath $py `
-    -ArgumentList '-m','uvicorn','app.main:app','--host','127.0.0.1','--port',"$ApiPort" `
+    -ArgumentList '-m','uvicorn','app.main:app','--host','127.0.0.1','--port',"$ApiPort",'--no-proxy-headers' `
     -WorkingDirectory (Join-Path $Root 'backend') -WindowStyle Hidden -PassThru `
     -RedirectStandardOutput "$LogDir\backend.out.log" -RedirectStandardError "$LogDir\backend.err.log"
   $started['backend'] = $p.Id

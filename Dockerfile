@@ -29,5 +29,7 @@ COPY --from=web /app/frontend/dist frontend/dist
 
 # The host sets PORT. The API stays on loopback; only the edge is reachable.
 # If either process exits, the container exits and the host restarts it.
+# --no-proxy-headers: the API must see the edge as its peer (127.0.0.1), or it
+# stops trusting X-Forwarded-Host and refuses every sign-in as cross-site.
 EXPOSE 10000
-CMD ["bash", "-c", "(cd backend && exec python -m uvicorn app.main:app --host 127.0.0.1 --port 8000) & node scripts/serve-public.mjs --host 0.0.0.0 --port \"${PORT:-10000}\" & wait -n"]
+CMD ["bash", "-c", "(cd backend && exec python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --no-proxy-headers) & node scripts/serve-public.mjs --host 0.0.0.0 --port \"${PORT:-10000}\" & wait -n"]
