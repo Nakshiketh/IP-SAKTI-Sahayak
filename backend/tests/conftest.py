@@ -42,6 +42,7 @@ os.environ.setdefault(
     os.path.join(_tempfile.mkdtemp(prefix="sahayak-members-"), "accounts.sqlite3"),
 )
 os.environ.pop("DEMO_MEMBER_TEMP_PASSWORD", None)
+os.environ.pop("DEMO_MEMBER_PASSWORD", None)
 
 import pytest  # noqa: E402
 

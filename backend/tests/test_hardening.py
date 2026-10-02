@@ -170,7 +170,8 @@ def test_member_passwords_are_hashed_with_argon2id() -> None:
     hashing = (REPO_ROOT / "backend" / "app" / "auth" / "hashing.py").read_text("utf-8")
     assert "from argon2 import PasswordHasher" in hashing
     # No password is written anywhere in the source, and none is seeded from it:
-    # the demo member's temporary password comes from the environment.
+    # the demo member's password comes from the environment.
     members = (REPO_ROOT / "backend" / "app" / "auth" / "members.py").read_text("utf-8")
-    assert "hash_password(temporary_password)" in members
+    assert "hash_password(password)" in members
+    assert "password = permanent_password or temporary_password" in members
     assert "demo1234" not in (REPO_ROOT / "backend" / "app" / "api" / "auth.py").read_text("utf-8")

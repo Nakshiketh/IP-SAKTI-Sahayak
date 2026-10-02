@@ -412,6 +412,7 @@ def password_forgot(body: ForgotBody, request: Request, background: BackgroundTa
     no longer to answer than a miss.
     """
     check_csrf(request)
+    _refuse_if_password_fixed()
     ip = client_ip(request)
     identifier = body.identifier.strip().lower()
     for limiter, key in (
@@ -437,6 +438,18 @@ def password_forgot(body: ForgotBody, request: Request, background: BackgroundTa
 
     background.add_task(_send_reset_code, challenge_id, ip)
     return ForgotSent(message=FORGOT_SENT, challenge_id=challenge_id)
+
+
+PASSWORD_FIXED = (
+    "The password on this site is kept by its host and cannot be changed here."
+    " Log in with that password, or scan your Member ID."
+)
+
+
+def _refuse_if_password_fixed() -> None:
+    """A change here would be lost the next time the host restarts, so none is taken."""
+    if get_settings().demo_member_password:
+        raise ApiError("password_fixed", PASSWORD_FIXED, 409)
 
 
 def _send_reset_code(challenge_id: str, ip: str) -> None:
@@ -479,6 +492,7 @@ def password_forgot_verify(body: CodeBody, request: Request, response: Response)
 def password_reset(body: ResetBody, request: Request, response: Response) -> Done:
     """Set a new password with the reset cookie. Ends every session the member has."""
     check_csrf(request)
+    _refuse_if_password_fixed()
     raw = request.cookies.get(reset.COOKIE_NAME, "")
     with connect() as connection:
         # Looked at before it is spent, so a password that breaks a rule can be
@@ -526,6 +540,7 @@ def password_reset(body: ResetBody, request: Request, response: Response) -> Don
 def change_password(
     body: ChangePasswordBody, member: Session, request: Request, response: Response
 ) -> NextStep:
+    _refuse_if_password_fixed()
     with connect() as connection:
         row = connection.execute("SELECT * FROM members WHERE id = ?", (member.pk,)).fetchone()
 

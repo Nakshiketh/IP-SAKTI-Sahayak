@@ -46,14 +46,21 @@ def mask_email(email: str) -> str:
     return local[0] + "*" * (len(local) - 2) + local[-1] + "@" + domain
 
 
-def seed_demo_member(connection: sqlite3.Connection, temporary_password: str) -> bool:
+def seed_demo_member(
+    connection: sqlite3.Connection, temporary_password: str, permanent_password: str = ""
+) -> bool:
     """Create the demo member if missing. Returns True if it was created.
+
+    A permanent password, where given, wins: it is seeded without a forced
+    change. Otherwise the temporary one is, and must be changed at first login.
 
     Idempotent: an existing member is left exactly as it is, password included,
     so running the seed again never undoes a password the member has set.
     """
-    if not temporary_password:
+    password = permanent_password or temporary_password
+    if not password:
         raise SeedRefused("DEMO_MEMBER_TEMP_PASSWORD is empty; set it in backend/.env.")
+    must_change = 0 if permanent_password else 1
 
     member = DEMO_MEMBER
     exists = connection.execute(
@@ -66,7 +73,7 @@ def seed_demo_member(connection: sqlite3.Connection, temporary_password: str) ->
     connection.execute(
         "INSERT INTO members (member_id, name, username, email, role, institution,"
         " password_hash, must_change_password, created_at, updated_at)"
-        " VALUES (?, ?, ?, ?, ?, ?, ?, 1, ?, ?)",
+        " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
         (
             member.member_id,
             member.name,
@@ -74,7 +81,8 @@ def seed_demo_member(connection: sqlite3.Connection, temporary_password: str) ->
             member.email.lower(),
             member.role,
             member.institution,
-            hash_password(temporary_password),
+            hash_password(password),
+            must_change,
             now,
             now,
         ),

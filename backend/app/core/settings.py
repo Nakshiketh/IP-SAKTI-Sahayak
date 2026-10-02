@@ -187,6 +187,11 @@ class Settings(BaseSettings):
 
     #: The demo member's temporary password. The seed refuses to run without it.
     demo_member_temp_password: str = Field(default="", validation_alias="DEMO_MEMBER_TEMP_PASSWORD")
+    #: A password the host keeps for the demo member. Where the disk does not
+    #: survive a restart, a password set on the site is lost on every wake, so
+    #: this one is seeded instead, with no forced change, and the site does not
+    #: offer to change it.
+    demo_member_password: str = Field(default="", validation_alias="DEMO_MEMBER_PASSWORD")
     enable_demo_card: bool = Field(default=False, validation_alias="ENABLE_DEMO_CARD")
 
     #: Where the member tables are read from. Overridable so the test suite
