@@ -45,7 +45,8 @@ export function ScannerViewport({
     <div
       className={cn(
         'relative w-full overflow-hidden rounded-[12px] bg-[#0E2419]',
-        'sm:aspect-square sm:min-w-[15rem] sm:max-w-[min(100%,calc(100svh-28rem))]',
+        // Centred when the cap makes it narrower than the card.
+        'sm:mx-auto sm:aspect-square sm:min-w-[15rem] sm:max-w-[min(100%,calc(100svh-28rem))]',
         resting ? 'aspect-[16/7]' : 'aspect-square',
       )}
     >
