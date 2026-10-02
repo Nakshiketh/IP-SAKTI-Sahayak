@@ -51,8 +51,9 @@ services:
       # from this temporary password (changed at first login each time).
       - key: DEMO_MEMBER_TEMP_PASSWORD
         sync: false
-      # Set this instead, and the member keeps the same password after every
-      # wake: it is seeded with no forced change, and the site refuses to
-      # change it (a change would be lost at the next restart anyway).
+      # On Render (which sets RENDER=true) the temporary password above is
+      # kept as the member's password: seeded with no forced change after every
+      # wake, and the site refuses to change it, since a change would be lost
+      # at the next restart. Set this to keep a different password instead.
       - key: DEMO_MEMBER_PASSWORD
         sync: false

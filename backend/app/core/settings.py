@@ -192,11 +192,21 @@ class Settings(BaseSettings):
     #: this one is seeded instead, with no forced change, and the site does not
     #: offer to change it.
     demo_member_password: str = Field(default="", validation_alias="DEMO_MEMBER_PASSWORD")
+    #: Render sets RENDER=true on every service. Its free disk is wiped on
+    #: every sleep, so there the temporary password is kept as the password.
+    on_render: bool = Field(default=False, validation_alias="RENDER")
     enable_demo_card: bool = Field(default=False, validation_alias="ENABLE_DEMO_CARD")
 
     #: Where the member tables are read from. Overridable so the test suite
     #: never writes to the repository's own accounts database.
     members_db_override: Path | None = None
+
+    @property
+    def kept_member_password(self) -> str:
+        """The demo member's password if the host keeps it, else empty."""
+        if self.demo_member_password:
+            return self.demo_member_password
+        return self.demo_member_temp_password if self.on_render else ""
 
     @property
     def members_db_path(self) -> Path:

@@ -4,7 +4,8 @@ The free host this runs on wipes its disk whenever it sleeps, and with it the
 member table and the card's hash. So on every start, if a temporary password is
 configured, the demo member is seeded (a no-op if present). DEMO_MEMBER_PASSWORD,
 where set, is seeded instead and needs no change, so the member's password is
-the same after every wake. And if that member
+the same after every wake; on Render the temporary password is kept that way.
+And if that member
 has never been issued a card, their card is issued. A card that was revoked is
 left revoked: history in the table means somebody decided, and a restart must
 not undo it.
@@ -27,7 +28,7 @@ log = logging.getLogger("uvicorn.error")
 
 def bootstrap_members() -> None:
     settings = get_settings()
-    temporary, permanent = settings.demo_member_temp_password, settings.demo_member_password
+    temporary, permanent = settings.demo_member_temp_password, settings.kept_member_password
     with connect() as connection:
         if not (temporary or permanent):
             log.info("DEMO_MEMBER_TEMP_PASSWORD not set; demo member not seeded")

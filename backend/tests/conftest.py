@@ -43,6 +43,7 @@ os.environ.setdefault(
 )
 os.environ.pop("DEMO_MEMBER_TEMP_PASSWORD", None)
 os.environ.pop("DEMO_MEMBER_PASSWORD", None)
+os.environ.pop("RENDER", None)
 
 import pytest  # noqa: E402
 

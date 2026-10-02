@@ -54,6 +54,15 @@ def test_without_it_the_temporary_password_must_still_be_changed(db) -> None:
     assert member(db)["must_change_password"] == 1
 
 
+def test_on_render_the_temporary_password_is_kept() -> None:
+    from app.core.settings import Settings
+
+    settings = Settings(DEMO_MEMBER_TEMP_PASSWORD="Temp-pass-for-tests-1", RENDER="true")
+    assert settings.kept_member_password == "Temp-pass-for-tests-1"
+    elsewhere = Settings(DEMO_MEMBER_TEMP_PASSWORD="Temp-pass-for-tests-1", RENDER="false")
+    assert elsewhere.kept_member_password == ""
+
+
 @pytest.mark.real_auth
 @pytest.mark.parametrize(
     ("path", "body"),

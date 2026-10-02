@@ -448,7 +448,7 @@ PASSWORD_FIXED = (
 
 def _refuse_if_password_fixed() -> None:
     """A change here would be lost the next time the host restarts, so none is taken."""
-    if get_settings().demo_member_password:
+    if get_settings().kept_member_password:
         raise ApiError("password_fixed", PASSWORD_FIXED, 409)
 
 
