@@ -195,6 +195,9 @@ class Settings(BaseSettings):
     #: Render sets RENDER=true on every service. Its free disk is wiped on
     #: every sleep, so there the temporary password is kept as the password.
     on_render: bool = Field(default=False, validation_alias="RENDER")
+    #: A Postgres database that outlives the host's disk. Where set, a password
+    #: set on the site is kept there and restored after every wake.
+    database_url: str = Field(default="", validation_alias="DATABASE_URL")
     enable_demo_card: bool = Field(default=False, validation_alias="ENABLE_DEMO_CARD")
 
     #: Where the member tables are read from. Overridable so the test suite

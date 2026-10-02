@@ -24,7 +24,7 @@ from fastapi import APIRouter, BackgroundTasks, Depends, Request, Response
 from pydantic import BaseModel, Field
 from starlette.concurrency import run_in_threadpool
 
-from app.auth import limits, otp, passwords, reset, sessions
+from app.auth import durable, limits, otp, passwords, reset, sessions
 from app.auth.cards import BADGE_TOKEN
 from app.auth.deps import (
     CurrentMember,
@@ -440,6 +440,8 @@ def password_forgot(body: ForgotBody, request: Request, background: BackgroundTa
     return ForgotSent(message=FORGOT_SENT, challenge_id=challenge_id)
 
 
+PASSWORD_NOT_KEPT = "The new password could not be saved. Nothing has changed; try again."
+
 PASSWORD_FIXED = (
     "The password on this site is kept by its host and cannot be changed here."
     " Log in with that password, or scan your Member ID."
@@ -447,9 +449,22 @@ PASSWORD_FIXED = (
 
 
 def _refuse_if_password_fixed() -> None:
-    """A change here would be lost the next time the host restarts, so none is taken."""
-    if get_settings().kept_member_password:
+    """A change here would be lost the next time the host restarts, so none is taken.
+
+    Unless a database outside the host keeps it: then the change is kept there.
+    """
+    if get_settings().kept_member_password and not durable.enabled():
         raise ApiError("password_fixed", PASSWORD_FIXED, 409)
+
+
+def _keep(member_id: str, password_hash: str) -> None:
+    """Write the new hash where it survives a restart, before it is used here."""
+    if not durable.enabled():
+        return
+    try:
+        durable.save(member_id, password_hash)
+    except durable.DurableUnavailable:
+        raise ApiError("password_not_kept", PASSWORD_NOT_KEPT, 503) from None
 
 
 def _send_reset_code(challenge_id: str, ip: str) -> None:
@@ -510,6 +525,10 @@ def password_reset(body: ResetBody, request: Request, response: Response) -> Don
         if found:
             raise ApiError(found[0], "The new password does not meet the rules.", 422)
 
+        # Kept first, while the cookie is unspent: if it cannot be kept, the
+        # member can try again with the same reset.
+        new_hash = hash_password(body.new_password)
+        _keep(holder["member_id"], new_hash)
         member_fk = reset.consume(connection, raw)
         if member_fk is None:
             raise ApiError("RESET_EXPIRED", RESET_EXPIRED, 400)
@@ -518,7 +537,7 @@ def password_reset(body: ResetBody, request: Request, response: Response) -> Don
             "UPDATE members SET password_hash = ?, must_change_password = 0,"
             " password_changed_at = ?, failed_login_count = 0, locked_until = NULL,"
             " updated_at = ? WHERE id = ?",
-            (hash_password(body.new_password), now, now, member_fk),
+            (new_hash, now, now, member_fk),
         )
         connection.commit()
         sessions.revoke_all(connection, member_fk)
@@ -561,11 +580,13 @@ def change_password(
         if found:
             raise ApiError(found[0], "The new password does not meet the rules.", 422)
 
+        new_hash = hash_password(body.new_password)
+        _keep(row["member_id"], new_hash)
         now = time.time()
         connection.execute(
             "UPDATE members SET password_hash = ?, must_change_password = 0,"
             " password_changed_at = ?, updated_at = ? WHERE id = ?",
-            (hash_password(body.new_password), now, now, member.pk),
+            (new_hash, now, now, member.pk),
         )
         connection.commit()
         # Every other session ends, this one included; a new full one replaces it.

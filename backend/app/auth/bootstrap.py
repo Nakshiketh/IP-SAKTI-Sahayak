@@ -17,7 +17,7 @@ from __future__ import annotations
 
 import logging
 
-from app.auth import cards
+from app.auth import cards, durable
 from app.auth.members import DEMO_MEMBER, seed_demo_member
 from app.auth.store import connect
 from app.core.settings import get_settings
@@ -35,6 +35,27 @@ def bootstrap_members() -> None:
             return
         if seed_demo_member(connection, temporary, permanent):
             log.info("demo member seeded" + (" with the host's password" if permanent else ""))
+        _restore_kept_passwords(connection)
         if not cards.has_card_history(connection, DEMO_MEMBER.member_id):
             cards.issue_card(connection, DEMO_MEMBER.member_id)
             log.info("demo member card issued")
+
+
+def _restore_kept_passwords(connection) -> None:
+    """Put back any password a member set before the disk was last wiped."""
+    if not durable.enabled():
+        return
+    try:
+        for row in connection.execute("SELECT member_id FROM members").fetchall():
+            kept = durable.load(row["member_id"])
+            if kept is None:
+                continue
+            connection.execute(
+                "UPDATE members SET password_hash = ?, must_change_password = 0"
+                " WHERE member_id = ?",
+                (kept, row["member_id"]),
+            )
+            connection.commit()
+            log.info("kept password restored for %s", row["member_id"])
+    except durable.DurableUnavailable as error:
+        log.warning("kept passwords not restored: %s", error)

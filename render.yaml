@@ -57,3 +57,8 @@ services:
       # at the next restart. Set this to keep a different password instead.
       - key: DEMO_MEMBER_PASSWORD
         sync: false
+      # A Postgres connection string (the free Neon plan does not expire).
+      # Where set, "forgot password" and password changes work: the new
+      # password's hash is kept there and restored after every wake.
+      - key: DATABASE_URL
+        sync: false

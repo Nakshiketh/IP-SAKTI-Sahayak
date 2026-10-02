@@ -24,6 +24,8 @@ dependencies = [
   "argon2-cffi>=23.1",
   # Sign-in codes through Brevo's HTTPS API, where the host blocks SMTP.
   "httpx>=0.27",
+  # A member's new password kept in Postgres, where the host's disk is wiped.
+  "psycopg[binary]>=3.2",
 ]
 
 [project.optional-dependencies]
